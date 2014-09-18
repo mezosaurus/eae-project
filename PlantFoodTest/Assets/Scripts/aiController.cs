@@ -12,5 +12,5 @@ public class aiController : MonoBehaviour
 
 	public AudioClip chaseMusic;
 
-	protected bool alerted;
+	public bool alerted;
 }
