@@ -6,6 +6,11 @@ public class stillAIController : aiController
 	private bool nearWall;
 	private Vector3 moveDir; 
 
+	void Start()
+	{
+		audio.clip = chaseMusic;
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
 		//Debug.Log ("Enter: " + other.tag);
@@ -38,11 +43,30 @@ public class stillAIController : aiController
 		{
 			movement = new Vector3 (0.0f, 0.0f, 0.0f);
 			rigidbody.velocity = movement;
+
+			if (audio.isPlaying)
+			{
+				//audio.Pause();
+			}
+
 			return;
 		}
 
+		if (!audio.isPlaying)
+		{
+			audio.Play();
+		}
 		//Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
+		if (nearWall)
+		{
+			nearWall = false;
+			moveDir.Scale(new Vector3(-1, -1, 0));
+		}
 		rigidbody.velocity = moveDir.normalized * runSpeed;
-		Debug.Log ("Velocity: " + rigidbody.velocity.magnitude);
 	}
 }
+
+
+
+
+//

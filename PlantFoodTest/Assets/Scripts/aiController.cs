@@ -9,5 +9,7 @@ public class aiController : MonoBehaviour
 	public float runSpeed;
 	public GameObject player;
 
+	public AudioClip chaseMusic;
+
 	protected bool alerted;
 }

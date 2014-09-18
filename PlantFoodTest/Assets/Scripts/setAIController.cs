@@ -3,41 +3,40 @@ using System.Collections;
 
 public class setAIController : aiController
 {
-	//public float boundaryX, boundaryZ;
 	public Transform[] moveWayPoints;
 
-	private NavMeshAgent nav;
 	private int wayPointIndex;
+	private bool reverseDirection;
 
 	void Start()
 	{
-		nav = GetComponent<NavMeshAgent> ();
-		wayPointIndex = moveWayPoints.Length - 1;
+		reverseDirection = false;
 	}
 
 	void Update () 
 	{
-		nav.speed = normalSpeed;
-
-		if(nav.remainingDistance == nav.stoppingDistance)
+		if(transform.position == moveWayPoints[wayPointIndex].position)
 		{
-			//Debug.Log("waypoint: " + wayPointIndex);
-			//Debug.Log ("last index: " + (moveWayPoints.Length - 1));
 			if (wayPointIndex == moveWayPoints.Length - 1)
-				wayPointIndex = 0;
+				reverseDirection = true;
+			else if (wayPointIndex == 0)
+				reverseDirection = false;
+
+			if (reverseDirection)
+				wayPointIndex--;
 			else wayPointIndex++;
 		}
 
-		nav.destination = moveWayPoints [wayPointIndex].position;
-
-		// Move in clockwise fashion ( up Z, right X, down Z, left X)
-
-		//float moveHorizontal, moveVertical;
-
-		//if (rigidbody.position.z < boundaryZ)
-			//moveVertical = speed;
-		//else if (rigidbody.position
-		//Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-		//rigidbody.velocity = movement * speed;
+		//Debug.Log ("Way point: " + wayPointIndex);
+		Vector3 position = transform.position;
+		Vector3 goal = moveWayPoints [wayPointIndex].position;
+		float step = normalSpeed * Time.deltaTime;
+		Vector3 movement = Vector3.MoveTowards (position, goal, step);
+		//if (movement > goal)
+		//{
+			//Debug.Log ("Setting to goal position");
+			//transform.position = goal;
+		//}
+		transform.position = movement;
 	}
 }
