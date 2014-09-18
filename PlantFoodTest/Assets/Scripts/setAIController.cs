@@ -7,14 +7,61 @@ public class setAIController : aiController
 
 	private int wayPointIndex;
 	private bool reverseDirection;
+	private Vector3 moveDir;
+	private bool nearWall;
 
 	void Start()
 	{
 		reverseDirection = false;
 	}
 
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Player")
+		{
+			alerted = true;
+			
+			moveDir = transform.position - player.transform.position;
+		}
+		else if (other.tag == "Wall")
+		{
+			nearWall = true;
+		}
+	}
+
+	void OnTriggerExit(Collider other)
+	{
+		if (other.tag == "Player")
+			alerted = false;
+		else if (other.tag == "Wall")
+		{
+			nearWall = false;
+			
+			//transform.rotation = Quaternion.AngleAxis(180, new Vector3(90, 0, 0)) * transform.rotation;
+		}
+	}
+
 	void Update () 
 	{
+		if (grabbed)
+			return;
+		if (alerted)
+		{
+			if (nearWall)
+			{
+				nearWall = false;
+				moveDir.Scale(new Vector3(-1, -1, 0));
+			}
+			else
+				rigidbody.velocity = moveDir.normalized * runSpeed;
+
+			if (!audio.isPlaying)
+			{
+				audio.Play();
+			}
+			
+			return;
+		}
 		if(transform.position == moveWayPoints[wayPointIndex].position)
 		{
 			if (wayPointIndex == moveWayPoints.Length - 1)

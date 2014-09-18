@@ -33,11 +33,16 @@ public class stillAIController : aiController
 		else if (other.tag == "Wall")
 		{
 			nearWall = false;
+
+			//transform.rotation = Quaternion.AngleAxis(180, new Vector3(90, 0, 0)) * transform.rotation;
 		}
 	}
 
 	void Update()
 	{
+		if (grabbed)
+			return;
+
 		Vector3 movement;
 		if (!alerted) 
 		{

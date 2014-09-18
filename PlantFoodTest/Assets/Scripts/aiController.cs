@@ -8,6 +8,7 @@ public class aiController : MonoBehaviour
 	public float normalSpeed;
 	public float runSpeed;
 	public GameObject player;
+	public bool grabbed;
 
 	public AudioClip chaseMusic;
 
