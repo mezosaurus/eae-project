@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using XInputDotNetPure;
 
 [System.Serializable]
 
@@ -24,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private GameObject grabbedNPC;
     private bool started;
     private float percentage;
+    private float rumble, rumbleDirection;
+
+    // Eating cinematic variables
     private int eatHash, grinHash;
     private bool done1, done2;
     float timer, timer2;
@@ -81,6 +85,7 @@ public class PlayerController : MonoBehaviour
             grabbedNPC = null;
         }
 
+        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         Globals.GameState = GameState.INLEVEL_DEFAULT;
     }
 
@@ -102,12 +107,17 @@ public class PlayerController : MonoBehaviour
 
         started = false;
         percentage = 0.5f;
+        rumble = 0.5f;
+
+        if (Random.Range(0f, 1f) > 0.5f) rumbleDirection = 1f;
+        else rumbleDirection = -1f;
     }
 
     private void ChangeStateToEatingCinematic()
     {
         GameObject.Destroy(grabbedNPC);
         animator.SetTrigger("Eat");
+        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
 
         grabbedNPC = null;
         Globals.GameState = GameState.INLEVEL_EATING_CINEMATIC;
@@ -183,6 +193,22 @@ public class PlayerController : MonoBehaviour
             percentage -= (EatingDecay * Time.deltaTime);
 
             if (Input.GetButtonDown("A")) percentage += (EatingIncrease * Time.deltaTime);
+
+            rumble += (Time.deltaTime * rumbleDirection);
+
+            if(rumble > 1f)
+            {
+                rumble = 1f;
+                rumbleDirection *= -1f;
+            }
+
+            if(rumble < 0f)
+            {
+                rumble = 0f;
+                rumbleDirection *= -1f;
+            }
+
+            GamePad.SetVibration(PlayerIndex.One, Random.Range(0f, 0.75f), Random.Range(0f, 0.75f));
         }
         else
         {
