@@ -22,6 +22,7 @@ public enum GameState
 	INLEVEL_DEFAULT,
 	INLEVEL_CHASE,
 	INLEVEL_EATING,
+    INLEVEL_EATING_CINEMATIC,
 	PAUSED,
 };
 
@@ -29,7 +30,7 @@ public static class Globals
 {
 	public static readonly float originalWidth = 1920;
 	public static readonly float originalHeight = 1080;
-	public static GameState GameState = GameState.ENDOFLEVEL_VICTORY;
+	public static GameState GameState = GameState.INLEVEL_DEFAULT;
 	public static SceneEnum CurrentScene = 0;
 
 	public static Matrix4x4 PrepareMatrix ()
