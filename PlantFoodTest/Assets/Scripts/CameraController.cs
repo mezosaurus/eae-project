@@ -9,11 +9,13 @@ public class CameraController : MonoBehaviour {
     public Vector3 ZoomOffset;
 
     private float zoomDifference;
+    private float zoomOutSpeed;
 
 	// Use this for initialization
 	void Start () {
         camera.orthographicSize = ZoomedOutSize;
         zoomDifference = ZoomedOutSize - ZoomedInSize;
+        zoomOutSpeed = zoomDifference / 2.226f;
 	}
 	
 	void Update()
@@ -24,7 +26,7 @@ public class CameraController : MonoBehaviour {
                 // Zoom out if we were zoomed in
                 if(camera.orthographicSize != ZoomedOutSize)
                 {
-                    camera.orthographicSize += ZoomSpeed;
+                    camera.orthographicSize += (zoomOutSpeed * Time.deltaTime);
 
                     if (camera.orthographicSize > ZoomedOutSize) camera.orthographicSize = ZoomedOutSize;
                 }
