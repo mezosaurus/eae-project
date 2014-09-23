@@ -26,6 +26,23 @@ public class randomAIController : aiController
 
 	void FixedUpdate () 
 	{
+		if (grabbed)
+			return;
+		if (alerted)
+		{
+			if (!audio.isPlaying)
+			{
+				audio.Play();
+			}
+			//Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
+			//if (nearWall)
+			//{
+				//nearWall = false;
+				//moveDir.Scale(new Vector3(-1, -1, 0));
+			//}
+			rigidbody2D.velocity = moveDir.normalized * runSpeed;
+			return;
+		}
 		// Five options for moving:
 		//    Up, Down, Left, Right, Still
 
@@ -121,9 +138,8 @@ public class randomAIController : aiController
 	{
 		if (other.tag == "Player")
 		{
-			alerted = true;
-			
 			moveDir = transform.position - player.transform.position;
+			alerted = true;
 		}
 		else if (other.tag == "Wall")
 		{
