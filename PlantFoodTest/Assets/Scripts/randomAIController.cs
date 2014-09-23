@@ -9,11 +9,20 @@ public class Boundary
 
 public class randomAIController : aiController 
 {
-	public int minMovementRepeat, maxMovementRepeat;
+	public float waitTime;
 	public Boundary boundary;
 
 	private float previousMovement;
 	private int moveCounter;
+	private bool nearWall;
+	private Vector3 moveDir;
+	private float nextMoveTime;
+
+	void Start()
+	{
+		float time = Time.time;
+		nextMoveTime = time + waitTime;
+	}
 
 	void FixedUpdate () 
 	{
@@ -24,6 +33,16 @@ public class randomAIController : aiController
 
 		// Get random direction or continue on same path
 		rand = getRandomNumber ();
+
+		float time = Time.time;
+		if (Time.time >= nextMoveTime)
+		{
+			nextMoveTime = Time.time + waitTime;
+			Vector2 randy = Random.insideUnitCircle * 2;
+			Vector3 direction = new Vector3(randy.x, randy.y, 0.0f);
+			rigidbody2D.velocity = direction * normalSpeed;
+		}
+		return;
 
 		// Determine direction to move
 		if (rand < 1) 
@@ -77,7 +96,7 @@ public class randomAIController : aiController
 
 		// Apply random movement to AI
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
-		rigidbody.velocity = movement * normalSpeed;
+		rigidbody2D.velocity = movement * normalSpeed;
 	}
 
 	float getRandomNumber()
@@ -85,7 +104,7 @@ public class randomAIController : aiController
 		float rand;
 		if (moveCounter == 0) 
 		{
-			moveCounter = Mathf.FloorToInt(Random.Range(minMovementRepeat,maxMovementRepeat));
+			//moveCounter = Mathf.FloorToInt(Random.Range(minMovementRepeat,maxMovementRepeat));
 			rand = Random.Range (0, 5);
 			previousMovement = rand;
 		} 
@@ -97,4 +116,31 @@ public class randomAIController : aiController
 
 		return rand;
 	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Player")
+		{
+			alerted = true;
+			
+			moveDir = transform.position - player.transform.position;
+		}
+		else if (other.tag == "Wall")
+		{
+			nearWall = true;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other)
+	{
+		if (other.tag == "Player")
+		{
+			alerted = false;
+		}
+		else if (other.tag == "Wall")
+		{
+			nearWall = false;
+		}
+	}
 }
+	
