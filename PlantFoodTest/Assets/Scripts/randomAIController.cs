@@ -35,11 +35,11 @@ public class randomAIController : aiController
 				audio.Play();
 			}
 			//Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
-			//if (nearWall)
-			//{
-				//nearWall = false;
-				//moveDir.Scale(new Vector3(-1, -1, 0));
-			//}
+			if (nearWall)
+			{
+				nearWall = false;
+				moveDir.Scale(new Vector3(-1, -1, 0));
+			}
 			rigidbody2D.velocity = moveDir.normalized * runSpeed;
 			return;
 		}
