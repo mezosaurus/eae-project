@@ -11,7 +11,7 @@ public class stillAIController : aiController
 		audio.clip = chaseMusic;
 	}
 
-	void OnTriggerEnter(Collider other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
 		//Debug.Log ("Enter: " + other.tag);
 		if (other.tag == "Player")
@@ -26,7 +26,7 @@ public class stillAIController : aiController
 		}
 	}
 
-	void OnTriggerExit(Collider other)
+	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.tag == "Player")
 			alerted = false;
@@ -47,7 +47,7 @@ public class stillAIController : aiController
 		if (!alerted) 
 		{
 			movement = new Vector3 (0.0f, 0.0f, 0.0f);
-			rigidbody.velocity = movement;
+			rigidbody2D.velocity = movement;
 
 			if (audio.isPlaying)
 			{
@@ -67,7 +67,7 @@ public class stillAIController : aiController
 			nearWall = false;
 			moveDir.Scale(new Vector3(-1, -1, 0));
 		}
-		rigidbody.velocity = moveDir.normalized * runSpeed;
+		rigidbody2D.velocity = moveDir.normalized * runSpeed;
 	}
 }
 

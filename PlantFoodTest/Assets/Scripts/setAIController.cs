@@ -10,12 +10,13 @@ public class setAIController : aiController
 	private Vector3 moveDir;
 	private bool nearWall;
 
+
 	void Start()
 	{
 		reverseDirection = false;
 	}
 
-	void OnTriggerEnter(Collider other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Player")
 		{
@@ -29,7 +30,7 @@ public class setAIController : aiController
 		}
 	}
 
-	void OnTriggerExit(Collider other)
+	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.tag == "Player")
 			alerted = false;
@@ -53,7 +54,7 @@ public class setAIController : aiController
 				moveDir.Scale(new Vector3(-1, -1, 0));
 			}
 			else
-				rigidbody.velocity = moveDir.normalized * runSpeed;
+				rigidbody2D.velocity = moveDir.normalized * runSpeed;
 
 			if (!audio.isPlaying)
 			{

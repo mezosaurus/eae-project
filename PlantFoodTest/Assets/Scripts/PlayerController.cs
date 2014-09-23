@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         //LeftArm.transform.Rotate(0f, 0f, -140f);
         //RightArm.transform.Rotate(0f, 0f, 140f);
 
-        rigidbody.isKinematic = false;
+        rigidbody2D.isKinematic = false;
 
         if (grabbedNPC != null)
         {
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
         RightForearm.transform.RotateAround(RightArm.transform.position, new Vector3(0f, 0f, 1f), -80f);
         RightForearm.transform.Rotate(0f, 0f, -110f);
 
-        rigidbody.isKinematic = true;
+        rigidbody2D.isKinematic = true;
         grabbedNPC = npc;
         grabbedNPC.GetComponent<aiController>().grabbed = true;
         Globals.GameState = GameState.INLEVEL_EATING;
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateNormal()
     {
-        rigidbody.velocity = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * Speed;
+        rigidbody2D.velocity = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * Speed;
 
         if (timer2 > 0f && timer2 < 3f) timer2 += Time.deltaTime;
 
@@ -278,19 +278,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnTriggerEnter2D(Collider2D collider)
     {
         if (Globals.GameState == GameState.INLEVEL_DEFAULT)
         {
-            if (collider.gameObject.tag == "NPC") npcsInRange.Add(collider.gameObject);
+            if (collider.gameObject.tag == "NPC") 
+            {
+                var npc = collider.gameObject;
+                float distance = Vector2.Distance(transform.position, npc.transform.position);
+                if (distance <= 3 && !npcsInRange.Contains(collider.gameObject))
+                {
+                    npcsInRange.Add (collider.gameObject);
+                }
+            }
         }
     }
 
-    void OnTriggerLeave(Collider collider)
+    void OnTriggerExit2D(Collider2D collider)
     {
         if (Globals.GameState == GameState.INLEVEL_DEFAULT)
         {
-            if (collider.gameObject.tag == "NPC") npcsInRange.Remove(collider.gameObject);
+            if (collider.gameObject.tag == "NPC") 
+            {
+                var npc = collider.gameObject;
+                float distance = Vector2.Distance(transform.position, npc.transform.position);
+                if (distance > 3)
+                {
+                    npcsInRange.Remove(collider.gameObject);
+                }
+            }
         }
     }
 
