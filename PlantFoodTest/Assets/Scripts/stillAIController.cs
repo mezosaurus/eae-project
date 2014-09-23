@@ -4,7 +4,7 @@ using System.Collections;
 public class stillAIController : aiController 
 {
 	private bool nearWall;
-	private Vector3 moveDir; 
+	private Vector2 moveDir; 
 
 	void Start()
 	{
@@ -13,16 +13,11 @@ public class stillAIController : aiController
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		//Debug.Log ("Enter: " + other.tag);
 		if (other.tag == "Player")
 		{
 			alerted = true;
 
 			moveDir = transform.position - player.transform.position;
-		}
-		else if (other.tag == "Wall")
-		{
-			nearWall = true;
 		}
 	}
 
@@ -30,11 +25,21 @@ public class stillAIController : aiController
 	{
 		if (other.tag == "Player")
 			alerted = false;
-		else if (other.tag == "Wall")
-		{
-			nearWall = false;
+	}
 
-			//transform.rotation = Quaternion.AngleAxis(180, new Vector3(90, 0, 0)) * transform.rotation;
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.tag == "Wall")
+		{
+			RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
+ 			if (raycast.collider != null && raycast.collider.tag == "Wall")
+			{
+				float distance = Vector2.Distance(transform.position, raycast.point);
+				if (distance < 1.5f)
+					nearWall = true;
+				else
+					nearWall = false;
+			}
 		}
 	}
 
@@ -61,12 +66,14 @@ public class stillAIController : aiController
 		{
 			audio.Play();
 		}
-		//Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
+
 		if (nearWall)
 		{
+			//return;
 			nearWall = false;
-			moveDir.Scale(new Vector3(-1, -1, 0));
+			moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
 		}
+		
 		rigidbody2D.velocity = moveDir.normalized * runSpeed;
 	}
 }

@@ -38,8 +38,9 @@ public class randomAIController : aiController
 			if (nearWall)
 			{
 				nearWall = false;
-				moveDir.Scale(new Vector3(-1, -1, 0));
+				moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
 			}
+
 			rigidbody2D.velocity = moveDir.normalized * runSpeed;
 			return;
 		}
@@ -156,6 +157,22 @@ public class randomAIController : aiController
 		else if (other.tag == "Wall")
 		{
 			nearWall = false;
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.tag == "Wall")
+		{
+			RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
+			if (raycast.collider != null && raycast.collider.tag == "Wall")
+			{
+				float distance = Vector2.Distance(transform.position, raycast.point);
+				if (distance < 1.5f)
+					nearWall = true;
+				else
+					nearWall = false;
+			}
 		}
 	}
 }

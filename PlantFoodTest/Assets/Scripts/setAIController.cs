@@ -24,21 +24,27 @@ public class setAIController : aiController
 			
 			moveDir = transform.position - player.transform.position;
 		}
-		else if (other.tag == "Wall")
-		{
-			nearWall = true;
-		}
 	}
 
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.tag == "Player")
 			alerted = false;
-		else if (other.tag == "Wall")
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.tag == "Wall")
 		{
-			nearWall = false;
-			
-			//transform.rotation = Quaternion.AngleAxis(180, new Vector3(90, 0, 0)) * transform.rotation;
+			RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
+			if (raycast.collider != null && raycast.collider.tag == "Wall")
+			{
+				float distance = Vector2.Distance(transform.position, raycast.point);
+				if (distance < 1.5f)
+					nearWall = true;
+				else
+					nearWall = false;
+			}
 		}
 	}
 
@@ -51,7 +57,7 @@ public class setAIController : aiController
 			if (nearWall)
 			{
 				nearWall = false;
-				moveDir.Scale(new Vector3(-1, -1, 0));
+				moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
 			}
 			else
 				rigidbody2D.velocity = moveDir.normalized * runSpeed;
