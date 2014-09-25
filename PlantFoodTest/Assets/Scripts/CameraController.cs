@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour {
 	void Start () {
         camera.orthographicSize = ZoomedOutSize;
         zoomDifference = ZoomedOutSize - ZoomedInSize;
-        zoomOutSpeed = zoomDifference / 2.226f;
+        zoomOutSpeed = zoomDifference / 1.96f;
 	}
 	
 	void Update()

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Texture EatingBarBackground, EatingBarForeground;
     public float EatingDecay, EatingIncrease;
 
+    public AudioClip EatMusic;
     public AudioClip[] Eat;
     public AudioClip Burp, SoulConsumed;
     public GUISkin SoulConsumedSkin;
@@ -91,14 +92,30 @@ public class PlayerController : MonoBehaviour
 
     private void ChangeStateToEating(GameObject npc)
     {
-        LeftArm.transform.Rotate(0f, 0f, 80f);
+        /*LeftArm.transform.Rotate(0f, 0f, 80f);
         LeftForearm.transform.Rotate(0f, 0f, 8f);
         LeftForearm.transform.RotateAround(LeftArm.transform.position, new Vector3(0f, 0f, 1f), 80f);
         LeftForearm.transform.Rotate(0f, 0f, 110f);
         RightArm.transform.Rotate(0f, 0f, -80f);
         RightForearm.transform.Rotate(0f, 0f, -8f);
         RightForearm.transform.RotateAround(RightArm.transform.position, new Vector3(0f, 0f, 1f), -80f);
-        RightForearm.transform.Rotate(0f, 0f, -110f);
+        RightForearm.transform.Rotate(0f, 0f, -110f);*/
+
+        // Stop all other audio
+        foreach (AudioSource audioSource in FindObjectsOfType<AudioSource>()) audioSource.Stop();
+
+        audio.clip = EatMusic;
+
+        audio.Play();
+
+        LeftArm.transform.position = transform.position + new Vector3(-0.409021f, 0.2674716f, 0f);
+        LeftArm.eulerAngles = new Vector3(0f, 0f, 240f);
+        LeftForearm.transform.position = transform.position + new Vector3(-0.699663f, -0.2375197f, 0f);
+        LeftForearm.eulerAngles = new Vector3(0f, 0f, 350f);
+        RightArm.transform.position = transform.position + new Vector3(0.409021f, 0.2674716f, 0f);
+        RightArm.eulerAngles = new Vector3(0f, 0f, 300f);
+        RightForearm.transform.position = transform.position + new Vector3(0.699663f, -0.2375197f, 0f);
+        RightForearm.eulerAngles = new Vector3(0f, 0f, 190f);
 
         rigidbody2D.isKinematic = true;
         grabbedNPC = npc;
@@ -139,7 +156,7 @@ public class PlayerController : MonoBehaviour
     {
         rigidbody2D.velocity = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * Speed;
 
-        if (timer2 > 0f && timer2 < 3f) timer2 += Time.deltaTime;
+        if (timer2 > 0f && timer2 < 2.2f) timer2 += Time.deltaTime;
 
         if(ad1 > 0f)
         {
@@ -192,7 +209,12 @@ public class PlayerController : MonoBehaviour
 
             percentage -= (EatingDecay * Time.deltaTime);
 
-            if (Input.GetButtonDown("A")) percentage += (EatingIncrease * Time.deltaTime);
+            if (Input.GetButtonDown("A"))
+            {
+                percentage += (EatingIncrease * Time.deltaTime);
+
+                if (percentage > 1f) percentage = 1f;
+            }
 
             rumble += (Time.deltaTime * rumbleDirection);
 
@@ -242,8 +264,8 @@ public class PlayerController : MonoBehaviour
 
             audio.Play();
 
-            ad1 = (LeftArm.rotation.eulerAngles.z - 160f) / 2.226f;
-            ad2 = (RightArm.rotation.eulerAngles.z - RightForearm.eulerAngles.z + 8f) / 2.226f;
+            ad1 = (LeftArm.rotation.eulerAngles.z - 160f) / 1.96f;
+            ad2 = (RightArm.rotation.eulerAngles.z - RightForearm.eulerAngles.z + 8f) / 1.96f;
 
             ChangeStateToNormal();
         }
@@ -321,10 +343,10 @@ public class PlayerController : MonoBehaviour
             GUI.DrawTexture(new Rect(x + 5f, y + 5f, EatingBarForeground.width * percentage, EatingBarForeground.height), EatingBarForeground);
         }
 
-        if(timer2 > 0f && timer2 < 3f)
+        if(timer2 > 0f && timer2 < 2.2f)
         {
             GUI.skin = SoulConsumedSkin;
-            GUI.Label(new Rect(0f, 32, Screen.width, 200f), "Soul Consumed");
+            GUI.Label(new Rect(0f, 96f, Screen.width, 200f), "Soul Consumed");
         }
     }
 }
