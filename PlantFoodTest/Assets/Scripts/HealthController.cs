@@ -23,7 +23,7 @@ public class HealthController : MonoBehaviour
 	
 	void OnGUI ()
 	{
-		if( Globals.GameState != GameState.INLEVEL_EATING )
+		if( Globals.GameState == GameState.INLEVEL_DEFAULT || Globals.GameState == GameState.INLEVEL_CHASE || Globals.GameState == GameState.INLEVEL_EATING_CINEMATIC )
 		{
 			GUI.matrix = Globals.PrepareMatrix ();
 
