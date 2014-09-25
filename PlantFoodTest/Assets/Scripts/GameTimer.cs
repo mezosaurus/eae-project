@@ -17,6 +17,8 @@ public class GameTimer : MonoBehaviour
 		boxStyle.alignment = TextAnchor.MiddleCenter;
 		boxStyle.font = timerFont;
 		boxStyle.wordWrap = true;
+
+		Globals.gameTimer = this;
 	}
 	public static void StartTimer ()
 	{

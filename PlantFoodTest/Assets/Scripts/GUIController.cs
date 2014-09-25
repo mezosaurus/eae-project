@@ -75,7 +75,7 @@ public class GUIController : MonoBehaviour
 
 	private void drawIntroBox ()
 	{
-		drawBox ("This is an intro", "Continue", 85);
+		drawBox ("Let the feeding commence", "Begin", 85);
 
 		// create the start button
 		buttonStyle.fontSize = 85;
@@ -130,13 +130,13 @@ public class GUIController : MonoBehaviour
 		if (Globals.GameState == GameState.ENDOFLEVEL_DEFEAT)
 		{
 			boxContent.text = "You Lost!";
-			drawBox ("You Lost!", boxContent.text, 60);
+			drawBox ("Retry!", boxContent.text, 60);
 			displayOutroBox = true;
 		}
 		else if (Globals.GameState == GameState.ENDOFLEVEL_VICTORY)
 		{
 			boxContent.text = "You Won!";
-			drawBox ("You won!", boxContent.text, 60);
+			drawBox ("Continue!", boxContent.text, 60);
 			displayOutroBox = true;
 		}
 		else
@@ -156,7 +156,7 @@ public class GUIController : MonoBehaviour
 
 	private void endBattle ()
 	{
-		Application.LoadLevel ("MAINMENU");
+		Application.LoadLevel ("MainScene");
 	}
 
 	private void opaqueBox (string boxText, string buttonText, int fontSize)
@@ -173,6 +173,7 @@ public class GUIController : MonoBehaviour
 		boxStyle.fontSize = fontSize;
 		GUI.DrawTexture (boxRect, boxImage, ScaleMode.StretchToFill);
 		GUI.Label (new Rect (boxRect.x + 100, boxRect.y + 100, boxRect.width - 200, boxRect.height - 200), boxContent, boxStyle);
+
 		// change the button text
 		buttonContent.text = buttonText;
 	}
@@ -184,6 +185,7 @@ public class GUIController : MonoBehaviour
 		boxStyle.fontSize = fontSize;
 		GUI.DrawTexture (boxRect, boxImage, ScaleMode.StretchToFill);
 		GUI.Label (new Rect (boxRect.x + 100, boxRect.y + 100, boxRect.width - 200, boxRect.height - 200), boxContent, boxStyle);
+
 		// change the button text
 		buttonContent.text = buttonText;
 	}

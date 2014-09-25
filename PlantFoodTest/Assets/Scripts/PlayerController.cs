@@ -248,6 +248,11 @@ public class PlayerController : MonoBehaviour
         {
             done2 = true;
             audio.clip = Burp;
+			Globals.gameTimer.time += 15;
+			Globals.healthController.playerHealth += 25;
+
+			if( Globals.healthController.playerHealth >= Globals.healthController.maxHealth )
+				Globals.GameState = GameState.ENDOFLEVEL_VICTORY;
 
             audio.Play();
         }

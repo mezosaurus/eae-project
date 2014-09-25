@@ -32,6 +32,8 @@ public static class Globals
 	public static readonly float originalHeight = 1080;
 	public static GameState GameState = GameState.INLEVEL_DEFAULT;
 	public static SceneEnum CurrentScene = 0;
+	public static HealthController healthController;
+	public static GameTimer gameTimer;
 
 	public static Matrix4x4 PrepareMatrix ()
 	{

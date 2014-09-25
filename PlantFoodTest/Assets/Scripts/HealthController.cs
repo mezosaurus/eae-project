@@ -13,6 +13,7 @@ public class HealthController : MonoBehaviour
 		int height = 20;
 
 		healthBarRect = new Rect (new Rect ((Globals.originalWidth / 2 - width / 2), 130, width, height));
+		Globals.healthController = this;
 	}
 	
 	// Update is called once per frame
