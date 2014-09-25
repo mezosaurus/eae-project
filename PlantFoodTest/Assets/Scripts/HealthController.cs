@@ -23,20 +23,23 @@ public class HealthController : MonoBehaviour
 	
 	void OnGUI ()
 	{
-		GUI.matrix = Globals.PrepareMatrix ();
+		if( Globals.GameState == GameState.INLEVEL_DEFAULT || Globals.GameState == GameState.INLEVEL_CHASE || Globals.GameState == GameState.INLEVEL_EATING_CINEMATIC )
+		{
+			GUI.matrix = Globals.PrepareMatrix ();
 
-		GUIStyle g2 = new GUIStyle ();
-		Texture2D t2 = new Texture2D (200, 20);
-		
-		g2.normal.background = t2;
+			GUIStyle g2 = new GUIStyle ();
+			Texture2D t2 = new Texture2D (200, 20);
+			
+			g2.normal.background = t2;
 
-		GUI.BeginGroup (healthBarRect);
-		GUI.Box (new Rect(0, 0, healthBarRect.width, healthBarRect.height), "" );
+			GUI.BeginGroup (healthBarRect);
+			GUI.Box (new Rect(0, 0, healthBarRect.width, healthBarRect.height), "" );
 
-		GUI.BeginGroup (new Rect (0, 0, healthBarRect.width * playerHealth / maxHealth, healthBarRect.height));
-		GUI.Box (new Rect(0, 0, healthBarRect.width, healthBarRect.height), GUIContent.none, g2);
-		GUI.EndGroup ();
-		GUI.EndGroup ();
+			GUI.BeginGroup (new Rect (0, 0, healthBarRect.width * playerHealth / maxHealth, healthBarRect.height));
+			GUI.Box (new Rect(0, 0, healthBarRect.width, healthBarRect.height), GUIContent.none, g2);
+			GUI.EndGroup ();
+			GUI.EndGroup ();
+		}
 	}
 
 	public void AddHealth( int health )
