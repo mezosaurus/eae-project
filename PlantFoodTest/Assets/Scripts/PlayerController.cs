@@ -6,7 +6,7 @@ using XInputDotNetPure;
 
 public class PlayerController : MonoBehaviour 
 {
-	public float Speed, MaxSpeed;
+	public float CurrentSpeed, MaxSpeed;
     public Transform LeftArm, RightArm, LeftForearm, RightForearm;
 
     public int EatingBarWidth, EatingBarHeight;
@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
     private void UpdateNormal()
     {
         rigidbody2D.velocity = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * MaxSpeed;
-		Speed = rigidbody2D.velocity.magnitude;
+		CurrentSpeed = rigidbody2D.velocity.magnitude;
 
         if (timer2 > 0f && timer2 < 2.2f) timer2 += Time.deltaTime;
 
