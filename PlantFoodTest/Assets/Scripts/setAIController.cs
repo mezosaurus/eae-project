@@ -7,46 +7,43 @@ public class setAIController : aiController
 
 	private int wayPointIndex;
 	private bool reverseDirection;
-	private Vector3 moveDir;
-	private bool nearWall;
-
 
 	void Start()
 	{
 		reverseDirection = false;
 	}
 
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.tag == "Player")
-		{
-			alerted = true;
-			
-			moveDir = transform.position - player.transform.position;
-		}
-	}
-
-	void OnTriggerExit2D(Collider2D other)
-	{
-		if (other.tag == "Player")
-			alerted = false;
-	}
-
-	void OnTriggerStay2D(Collider2D other)
-	{
-		if (other.tag == "Wall")
-		{
-			RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
-			if (raycast.collider != null && raycast.collider.tag == "Wall")
-			{
-				float distance = Vector2.Distance(transform.position, raycast.point);
-				if (distance < 1.5f)
-					nearWall = true;
-				else
-					nearWall = false;
-			}
-		}
-	}
+//	void OnTriggerEnter2D(Collider2D other)
+//	{
+//		if (other.tag == "Player")
+//		{
+//			alerted = true;
+//			
+//			moveDir = transform.position - player.transform.position;
+//		}
+//	}
+//
+//	void OnTriggerExit2D(Collider2D other)
+//	{
+//		if (other.tag == "Player")
+//			alerted = false;
+//	}
+//
+//	void OnTriggerStay2D(Collider2D other)
+//	{
+//		if (other.tag == "Wall")
+//		{
+//			RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
+//			if (raycast.collider != null && raycast.collider.tag == "Wall")
+//			{
+//				float distance = Vector2.Distance(transform.position, raycast.point);
+//				if (distance < 1.5f)
+//					nearWall = true;
+//				else
+//					nearWall = false;
+//			}
+//		}
+//	}
 
 	void Update () 
 	{
