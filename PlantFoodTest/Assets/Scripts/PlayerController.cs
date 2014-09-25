@@ -6,7 +6,7 @@ using XInputDotNetPure;
 
 public class PlayerController : MonoBehaviour 
 {
-	public float Speed;
+	public float Speed, MaxSpeed;
     public Transform LeftArm, RightArm, LeftForearm, RightForearm;
 
     public int EatingBarWidth, EatingBarHeight;
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(Input.GetAxis("RT") > 0.5f)
+        if(Input.GetAxis("LT") > 0.5f)
         {            
             GameObject npc = FindNearestNPC();
 
@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
     {
         if (started)
         {
-            if (Input.GetAxis("RT") < 0.5f || percentage <= 0f)
+            if (Input.GetAxis("LT") < 0.5f || percentage <= 0f)
             {
                 ad1 = (LeftArm.rotation.eulerAngles.z - 160f);
                 ad2 = (RightArm.rotation.eulerAngles.z - RightForearm.eulerAngles.z + 8f);
@@ -344,7 +344,8 @@ public class PlayerController : MonoBehaviour
         if(Globals.GameState == GameState.INLEVEL_EATING && started)
         {
             float x = (Screen.width - EatingBarBackground.width) / 2f;
-            float y = ((Camera.main.WorldToScreenPoint(transform.position - new Vector3(0f, 1f, 0)).y - EatingBarBackground.height) / 2f);
+			float y = 172f;
+			//float y = ((Camera.main.WorldToScreenPoint(transform.position - new Vector3(0f, 1f, 0)).y - EatingBarBackground.height) / 2f);
 
             GUI.DrawTexture(new Rect(x, y, EatingBarBackground.width, EatingBarBackground.height), EatingBarBackground);
             GUI.DrawTexture(new Rect(x + 5f, y + 5f, EatingBarForeground.width * percentage, EatingBarForeground.height), EatingBarForeground);
@@ -353,7 +354,7 @@ public class PlayerController : MonoBehaviour
         if(timer2 > 0f && timer2 < 2.2f)
         {
             GUI.skin = SoulConsumedSkin;
-            GUI.Label(new Rect(0f, 96f, Screen.width, 200f), "Soul Consumed");
+            GUI.Label(new Rect(0f, 156f, Screen.width, 200f), "Soul Consumed");
         }
     }
 }
