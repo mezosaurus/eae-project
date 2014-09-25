@@ -156,7 +156,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateNormal()
     {
-        rigidbody2D.velocity = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * Speed;
+        rigidbody2D.velocity = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * MaxSpeed;
+		Speed = rigidbody2D.velocity.magnitude;
 
         if (timer2 > 0f && timer2 < 2.2f) timer2 += Time.deltaTime;
 
@@ -248,8 +249,7 @@ public class PlayerController : MonoBehaviour
         {
             done2 = true;
             audio.clip = Burp;
-
-			Globals.gameTimer.time += 5;
+			Globals.gameTimer.time += 15;
 			Globals.healthController.playerHealth += 25;
 
 			if( Globals.healthController.playerHealth >= Globals.healthController.maxHealth )
