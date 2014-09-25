@@ -69,6 +69,8 @@ public class PlayerController : MonoBehaviour
             case GameState.INLEVEL_EATING: UpdateEating();  break;
             case GameState.INLEVEL_EATING_CINEMATIC: UpdateEatingCinematic(); break;
         }
+
+        if (Input.GetButtonDown("Back")) Application.LoadLevel(0);
 	}
 
     private void ChangeStateToNormal()
