@@ -10,17 +10,7 @@ public class stillAIController : aiController
 	{
 		audio.clip = chaseMusic;
 	}
-
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.tag == "Player")
-		{
-			alerted = true;
-
-			moveDir = transform.position - player.transform.position;
-		}
-	}
-
+	
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.tag == "Player")
@@ -39,6 +29,16 @@ public class stillAIController : aiController
 					nearWall = true;
 				else
 					nearWall = false;
+			}
+		}
+		else if (other.tag == "Player")
+		{
+			PlayerController controller = player.GetComponent<PlayerController>();
+			if (controller.CurrentSpeed / controller.MaxSpeed >= 0.5)
+			{
+				alerted = true;
+			
+				moveDir = transform.position - player.transform.position;
 			}
 		}
 	}
