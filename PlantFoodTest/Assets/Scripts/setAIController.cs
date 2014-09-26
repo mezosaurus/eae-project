@@ -46,12 +46,18 @@ public class setAIController : aiController
 //		}
 //	}
 
-	void Update () 
+	void Update ()
 	{
 		if (grabbed || alerted)
 			return;
 		if (panicked)
 		{
+			timePanicked -= Time.deltaTime;
+			if (timePanicked <= 0) {
+				panicked = false;
+				GetComponent<SpriteRenderer>().sprite = normalTexture;
+				return;
+			}
 			if (nearWall)
 			{
 				nearWall = false;

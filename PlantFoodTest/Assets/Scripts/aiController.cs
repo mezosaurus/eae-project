@@ -22,10 +22,14 @@ public class aiController : MonoBehaviour
 	protected bool nearWall;
 	protected Vector2 moveDir; 
 	protected float alertedTime;
+	protected float panicTime;
+	public float panicCooldown;
+	protected float timePanicked;
 
 	public void Start()
 	{
  		audio.clip = chaseMusic;
+		timePanicked = panicCooldown;
 		alerted = false;
 		panicked = false;
 	}
@@ -34,9 +38,9 @@ public class aiController : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
-			panicked = false;
+			//panicked = false;
 			alerted = false;
-			GetComponent<SpriteRenderer>().sprite = normalTexture;
+			//GetComponent<SpriteRenderer>().sprite = normalTexture;
 		}
 	}
 	
@@ -58,6 +62,7 @@ public class aiController : MonoBehaviour
 		{
 			if (panicked)
 			{
+				timePanicked = panicCooldown;
 				return;
 			}
 
@@ -66,16 +71,18 @@ public class aiController : MonoBehaviour
 
 			if (alerted == true)
 			{
-				Debug.Log ("Time: " + Time.time);
-				Debug.Log ("Waiting: " + (alertedTime + alertTimer));
+				//Debug.Log ("Time: " + Time.time);
+				//Debug.Log ("Waiting: " + (alertedTime + alertTimer));
 				if (Time.time >= alertedTime + alertTimer)
 				{
-					Debug.Log ("Alert Timer!");
+					//Debug.Log ("Alert Timer!");
 					alerted = false;
 					if ( playerSpeed >= 0.5)
 					{
 						Debug.Log ("BECOMING PANICKED!");
 						panicked = true;
+						panicTime = Time.time;
+						timePanicked = panicCooldown;
 						moveDir = transform.position - player.transform.position;
 						GetComponent<SpriteRenderer>().sprite = panicTexture;
 					}

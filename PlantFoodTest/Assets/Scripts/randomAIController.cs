@@ -29,6 +29,12 @@ public class randomAIController : aiController
 			return;
 		if (panicked)
 		{
+			timePanicked -= Time.deltaTime;
+			if (timePanicked <= 0) {
+				panicked = false;
+				GetComponent<SpriteRenderer>().sprite = normalTexture;
+				return;
+			}
 			if (!audio.isPlaying)
 			{
 				audio.Play();
