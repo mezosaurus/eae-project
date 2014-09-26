@@ -8,8 +8,9 @@ public class setAIController : aiController
 	private int wayPointIndex;
 	private bool reverseDirection;
 
-	void Start()
+	new void Start()
 	{
+		base.Start ();
 		reverseDirection = false;
 	}
 
@@ -47,9 +48,9 @@ public class setAIController : aiController
 
 	void Update () 
 	{
-		if (grabbed)
+		if (grabbed || alerted)
 			return;
-		if (alerted)
+		if (panicked)
 		{
 			if (nearWall)
 			{

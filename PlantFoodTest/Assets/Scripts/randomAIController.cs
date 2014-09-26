@@ -16,7 +16,7 @@ public class randomAIController : aiController
 	private int moveCounter;
 	private float nextMoveTime;
 
-	void Start()
+	new void Start()
 	{
 		base.Start ();
 		float time = Time.time;
@@ -25,9 +25,9 @@ public class randomAIController : aiController
 
 	void FixedUpdate () 
 	{
-		if (grabbed)
+		if (grabbed || alerted)
 			return;
-		if (alerted)
+		if (panicked)
 		{
 			if (!audio.isPlaying)
 			{

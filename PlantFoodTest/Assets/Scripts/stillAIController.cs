@@ -5,11 +5,11 @@ public class stillAIController : aiController
 {
 	void Update()
 	{
-		if (grabbed)
+		if (grabbed || alerted)
 			return;
 
 		Vector3 movement;
-		if (!alerted) 
+		if (!panicked) 
 		{
 			movement = new Vector3 (0.0f, 0.0f, 0.0f);
 			rigidbody2D.velocity = movement;
