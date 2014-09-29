@@ -12,7 +12,8 @@ public class HealthController : MonoBehaviour
 		int width = 200;
 		int height = 20;
 
-		healthBarRect = new Rect (new Rect ((Globals.originalWidth / 2 - width / 2), 130, width, height));
+        //healthBarRect = new Rect (new Rect ((Globals.originalWidth / 2 - width / 2), 130, width, height));
+        healthBarRect = new Rect(new Rect(96f, 150f, width, height));
 		Globals.healthController = this;
 	}
 	
@@ -23,7 +24,7 @@ public class HealthController : MonoBehaviour
 	
 	void OnGUI ()
 	{
-		if( Globals.GameState == GameState.INLEVEL_DEFAULT || Globals.GameState == GameState.INLEVEL_CHASE || Globals.GameState == GameState.INLEVEL_EATING_CINEMATIC )
+        if (Globals.GameState == GameState.INLEVEL_DEFAULT || Globals.GameState == GameState.INLEVEL_CHASE || Globals.GameState == GameState.INLEVEL_EATING || Globals.GameState == GameState.INLEVEL_EATING_CINEMATIC )
 		{
 			GUI.matrix = Globals.PrepareMatrix ();
 

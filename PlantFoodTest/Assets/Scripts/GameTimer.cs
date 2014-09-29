@@ -52,7 +52,9 @@ public class GameTimer : MonoBehaviour
 		//GUI.contentColor = Color.black;
 		int width = 100;
 		int height = 20;
-		GUI.Box (new Rect ((Globals.originalWidth / 2 - width / 2), height, width, 90), "");
-		GUI.Label (new Rect (Globals.originalWidth / 2 - width / 2, height, width, 100), Mathf.FloorToInt (time).ToString ());
+        //GUI.Box (new Rect ((Globals.originalWidth / 2 - width / 2), height, width, 90), "");
+        //GUI.Label (new Rect (Globals.originalWidth / 2 - width / 2, height, width, 100), Mathf.FloorToInt (time).ToString ());
+        GUI.Box(new Rect(96f, 48f, width, 90), "");
+		GUI.Label (new Rect (96f, 48f, width, 100), Mathf.FloorToInt (time).ToString ());
 	}
 }
