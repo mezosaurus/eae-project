@@ -71,7 +71,7 @@ public class GameTimer : MonoBehaviour
 
 		GUI.skin.GetStyle ("Label").fontSize = 40;
 		GUI.color = new Color (1, 1, 1, popupAlpha);
-		GUI.Label (new Rect (left + width, top, width, height / 2), timerPopup);
+		GUI.Label (new Rect (left + 2 * width / 3, top, width, height / 2), timerPopup);
 	}
 
 	public void AddTime( int time )
