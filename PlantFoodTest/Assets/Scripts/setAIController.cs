@@ -68,7 +68,7 @@ public class setAIController : aiController
 
 			if (!audio.isPlaying)
 			{
-				audio.Play();
+				//audio.Play();
 			}
 			
 			return;

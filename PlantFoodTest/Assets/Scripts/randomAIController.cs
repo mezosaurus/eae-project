@@ -37,7 +37,7 @@ public class randomAIController : aiController
 			}
 			if (!audio.isPlaying)
 			{
-				audio.Play();
+				//audio.Play();
 			}
 			//Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
 			if (nearWall)

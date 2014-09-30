@@ -15,7 +15,7 @@ public class stillAIController : aiController
 			}
 			if (!audio.isPlaying)
 			{
-				audio.Play();
+				//audio.Play();
 			}
 			//Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
 			if (nearWall)
