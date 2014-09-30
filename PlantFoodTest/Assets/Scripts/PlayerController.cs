@@ -356,7 +356,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (audio.clip != Burp)
                     {
-                        Globals.gameTimer.AddTime( 15 );
+                        Globals.gameTimer.AddTime( 5 );
                         Globals.healthController.AddHealth( 25 );
 
                         if (Globals.healthController.playerHealth >= Globals.healthController.maxHealth)
