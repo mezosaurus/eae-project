@@ -1,19 +1,31 @@
 eae-project
 ===========
 
-Plant Food - EAE Project Repository
+Creeping Willow - EAE Project Repository
 
-Matt Barnes - Programming
+Matt Barnes - Engineer
 
-Ethan Hayes - Programming
+Ethan Hayes - Engineer
 
-Calvin Kern - Programming
+Calvin Kern - Engineer
 
-Colton Lillywhite - Programming
+Colton Lillywhite - Engineer
+
+Devon Winkler - Engineer
+
+Aaron Zettler - Engineer
 
 Matt Barnes - Artist
 
-Christian Merrill - Producer/Sound/Design/Art
+Kevin Conley - Artist
 
-Evan Orton - Producer/Design/Art
+Jeff "HEFAY" Jackman - Artist
+
+Richie Selfridge - Artist
+
+Jonathan Kamerath - Artist
+
+Christian Merrill - Team Lead
+
+Evan Orton - Designer
 
