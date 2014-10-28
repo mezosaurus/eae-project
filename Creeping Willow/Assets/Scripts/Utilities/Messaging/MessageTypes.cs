@@ -1,4 +1,5 @@
 ﻿public enum MessageType
 {
-    PlayerMovementTypeChanged
+    PlayerMovementTypeChanged,
+	AbilityStatusChanged
 }
