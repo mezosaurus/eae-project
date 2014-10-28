@@ -11,24 +11,76 @@ public class CycleTimer : MonoBehaviour
 	public int width = 50;
 	public int height = 50;
 
-	private int angle = 0;
+	private float prevTime;
+	private float currentTime;
+	public float totalTime = 90;
 
-	// Use this for initialization
+	private bool running = true;
+
 	void Start ()
 	{
+		currentTime = totalTime;
+		RegisterListeners ();
 	}
-	
-	// Update is called once per frame
+
+	void OnDestroy ()
+	{
+		UnregisterListeners ();
+	}
+
 	void Update ()
 	{
-		angle++;
+		if (running)
+		{
+			if (currentTime > 0)
+			{
+				currentTime -= Time.time - prevTime;
+				prevTime = Time.time;
+			}
+			else
+			{
+				TimerStatusChangedMessage message = new TimerStatusChangedMessage (TimerStatus.Completed);
+				MessageCenter.Instance.Broadcast(message);
+
+				running = false;
+				currentTime = 0;
+			}
+		}
+	}
+
+	protected void RegisterListeners ()
+	{
+		MessageCenter.Instance.RegisterListener (MessageType.TimerStatusChanged, HandleTimerStatusChanged);
+	}
+
+	protected void UnregisterListeners ()
+	{
+		MessageCenter.Instance.UnregisterListener (MessageType.TimerStatusChanged, HandleTimerStatusChanged);
+	}
+
+	protected void HandleTimerStatusChanged (Message message)
+	{
+		TimerStatusChangedMessage mess = message as TimerStatusChangedMessage;
+
+		switch (mess.g_timerStatus)
+		{
+		case TimerStatus.Resume:
+			prevTime = Time.time;
+			running = true;
+			break;
+
+		case TimerStatus.Pause:
+		case TimerStatus.Completed:
+			running = false;
+			break;
+		}
 	}
 
 	void OnGUI ()
 	{
 		// draw the day/night cycle
 		Matrix4x4 oldMatrix = GUI.matrix;
-		GUIUtility.RotateAroundPivot (angle, new Vector2 (left + width / 2, top + height / 2));
+		GUIUtility.RotateAroundPivot (180 - currentTime/totalTime*360, new Vector2 (left + width / 2, top + height / 2));
 		GUI.DrawTexture (new Rect (left, top, width, height), back);
 		GUI.matrix = oldMatrix;
 
