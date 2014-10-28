@@ -15,10 +15,12 @@ public class AIGenerator : MonoBehaviour
 		{
 			lastSpawnTime = Time.time;
 
-			float xSpawn = getSpawnXPosition();
-			float ySpawn = getSpawnYPosition(xSpawn);
+			//float xSpawn = getSpawnXPosition();
+			//float ySpawn = getSpawnYPosition(xSpawn);
 
-			Instantiate (npc, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
+			Vector2 spawnPoint1 = GameObject.FindGameObjectWithTag("Respawn").transform.position;
+			Instantiate (npc, spawnPoint1, Quaternion.identity);
+			//Instantiate (npc, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
 		}
 	}
 
