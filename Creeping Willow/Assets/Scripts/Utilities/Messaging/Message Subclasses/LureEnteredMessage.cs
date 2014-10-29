@@ -5,7 +5,7 @@ public class LureEnteredMessage : Message {
 	public readonly GameObject NPC;
 
 	public LureEnteredMessage(Lure lure, GameObject npc):base(MessageType.LureRadiusEntered){
-		Lure = Lure;
+		Lure = lure;
 		NPC = npc;
 	}
 }
