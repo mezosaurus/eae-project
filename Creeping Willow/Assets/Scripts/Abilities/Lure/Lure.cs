@@ -6,7 +6,9 @@ public class Lure : AbilityClass {
 	public int lurePower;
 
 	void OnTriggerEnter2D(Collider2D collider){
-
-		MessageCenter.Instance.Broadcast(Message)
+		if(collider.GetType() == typeof(BoxCollider2D)){
+			LureEnteredMessage message = new LureEnteredMessage (this, collider.gameObject);
+			MessageCenter.Instance.Broadcast (message);
+		}
 	}
 }
