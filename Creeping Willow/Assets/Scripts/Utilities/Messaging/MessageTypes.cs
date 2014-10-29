@@ -3,6 +3,7 @@
     PlayerMovementTypeChanged,
 	AbilityStatusChanged,
 	TimerStatusChanged,
+	LureRadiusEntered
 }
 
 public enum TimerStatus
