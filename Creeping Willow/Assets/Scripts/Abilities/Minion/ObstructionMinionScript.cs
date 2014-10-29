@@ -67,7 +67,7 @@ public class ObstructionMinionScript : MinionAbilityClass
 			}
 		}
 		// if minion is created
-		else if( Input.GetKeyDown(KeyCode.A) && count > 0 && coolDownInProgress == false && !abilityUsed )
+		else if( (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("A") ) && count > 0 && coolDownInProgress == false && !abilityUsed )
 		{
 			Vector3 direction = new Vector3();
 			float diagMove = Mathf.Sqrt (2) * .5f;

@@ -77,7 +77,7 @@ public class TireRangedScript : RangedAbilityClass
 			}
 		}
 		// if player activates ability and they are able to use the ability
-		else if( Input.GetKeyDown(KeyCode.F) && count > 0 && coolDownInProgress == false && !abilityUsed )
+		else if( (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("B") ) && count > 0 && coolDownInProgress == false && !abilityUsed )
 		{
 			count--;
 			float diagMove = Mathf.Sqrt (2) * .5f;

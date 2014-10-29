@@ -8,7 +8,7 @@ public abstract class AbilityClass : MonoBehaviour {
 
 	// protected properties
 	protected GlobalAbilitiesManager GAM;
-	protected TmpPlayerManager PM;
+	protected PlayerScript PM;
 
 	protected float coolDown;
 	protected float tmpCoolDown;
@@ -23,7 +23,7 @@ public abstract class AbilityClass : MonoBehaviour {
 	public virtual void Start () 
 	{
 		GAM = GameObject.Find ("Global Manager").GetComponent<GlobalAbilitiesManager> ();
-		PM = GameObject.Find ("Player").GetComponent<TmpPlayerManager> ();
+		PM = GameObject.Find ("Player").GetComponent<PlayerScript> ();
 
 		coolDownInProgress = false;
 		timeModifier = .03f;
