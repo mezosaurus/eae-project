@@ -11,6 +11,8 @@ GameObject:
   - 212: {fileID: 21200000}
   - 50: {fileID: 5000000}
   - 114: {fileID: 11400000}
+  - 58: {fileID: 5800000}
+  - 61: {fileID: 6100000}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -45,6 +47,28 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!58 &5800000
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Radius: 3
+  m_Center: {x: 0, y: 0}
+--- !u!61 &6100000
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Size: {x: 1, y: 1}
+  m_Center: {x: 0, y: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -57,6 +81,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  nourishment: 0
+  normalSpeed: 0
+  runSpeed: 0
+  alertTimer: 0
+  player: {fileID: 0}
+  chaseMusic: {fileID: 0}
+  normalTexture: {fileID: 0}
+  alertTexture: {fileID: 0}
+  panicTexture: {fileID: 0}
+  alerted: 0
+  panicked: 0
+  grabbed: 0
+  panicCooldown: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

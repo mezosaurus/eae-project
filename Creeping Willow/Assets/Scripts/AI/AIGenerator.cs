@@ -7,6 +7,12 @@ public class AIGenerator : MonoBehaviour
 	public float spawnTime;
 
 	private float lastSpawnTime;
+	private GameObject[] spawnPoints;
+
+	void Start()
+	{
+		spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+	}
 
 	// Update is called once per frame
 	void Update () 
@@ -15,15 +21,15 @@ public class AIGenerator : MonoBehaviour
 		{
 			lastSpawnTime = Time.time;
 
-			//float xSpawn = getSpawnXPosition();
-			//float ySpawn = getSpawnYPosition(xSpawn);
+			int rand = Random.Range(0, spawnPoints.Length);
+			Vector2 spawnPoint = spawnPoints[rand].transform.position;
+			GameObject newNPC = (GameObject) Instantiate (npc, spawnPoint, Quaternion.identity);
 
-			Vector2 spawnPoint1 = GameObject.FindGameObjectWithTag("Respawn").transform.position;
-			Instantiate (npc, spawnPoint1, Quaternion.identity);
-			//Instantiate (npc, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
+			SubpathScript movePath = GameObject.Find ("Paths").GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+			newNPC.GetComponent<AIController>().setMovingPath(movePath);
 		}
 	}
-
+	
 	float getSpawnXPosition()
 	{
 		return -11;

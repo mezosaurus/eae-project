@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIController : MonoBehaviour {
+public class AIController : GameBehavior {
 
 	/*
 <<<<<<< HEAD
@@ -198,14 +198,36 @@ public class AIController : MonoBehaviour {
 	private bool killSelf = false;
 	
 	// Use this for initialization
-	public void Start () {
-		movePath = GameObject.Find ("Paths").GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+	public void Start () 
+	{
+		// Get path for AI
 		nextPath = movePath.getNextPath (null);
-		//spawnMove = GameObject.Find ("Path1Point1").transform.position;
+
+		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
+		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 	}
-	
+
+	void grabbedListener(Message message)
+	{
+		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+			grabbed = true;
+	}
+
+	void releasedListener(Message message)
+	{
+		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+			grabbed = false;
+	}
+
+	public void setMovingPath(SubpathScript movePath)
+	{
+		this.movePath = movePath;
+	}
+
 	// Update is called once per frame
-	void Update () {
+	protected override void GameUpdate () {
+		if (grabbed)
+			return;
 		Vector3 pathPosition = nextPath.transform.position;
 		if (killSelf)
 		{
