@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerScript : GameBehavior
 {
     public float MaxLowProfileSpeed, MaxHighProfileSpeed;
 
@@ -76,7 +76,7 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetButtonDown("Back")) lowProfileMovement = !lowProfileMovement;
     }
 
-    private void Update()
+    protected override void GameUpdate()
     {
 		if( canMove )
         	UpdateMovement();

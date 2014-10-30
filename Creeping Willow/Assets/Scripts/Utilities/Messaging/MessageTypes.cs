@@ -1,7 +1,9 @@
 ﻿public enum MessageType
 {
+    AbilityStatusChanged,
     PlayerMovementTypeChanged,
-	AbilityStatusChanged,
+    PlayerGrabbedNPCs,
+    PlayerReleasedNPCs,
 	TimerStatusChanged,
 	LureRadiusEntered
 }
