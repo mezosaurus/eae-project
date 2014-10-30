@@ -3,28 +3,35 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour
 {
-    public float MaxSpeed;
-	int direction;
-	bool canMove;
-    
+    public float MaxLowProfileSpeed, MaxHighProfileSpeed;
+
     private PlayerMovementType movementType, lastMovementType;
+    private bool lowProfileMovement;
+    private Vector3 movementStart, movementDestination;
+    private float movementAccumulator;
+    private int direction;
+    private bool canMove;
     
     private void Start()
     {
         movementType = PlayerMovementType.Stationary;
         lastMovementType = PlayerMovementType.Stationary;
+        lowProfileMovement = true;
+        movementDestination = Vector3.zero;
 
 		direction = (int)DirectionState.DOWN;
 		canMove = true;
 
-        MessageCenter.Instance.RegisterListener(MessageType.PlayerMovementTypeChanged, EventTest);
 		MessageCenter.Instance.RegisterListener (MessageType.AbilityStatusChanged, HandleAbilityStatusChanged);
     }
 
     private void UpdateMovement()
     {
-        Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * MaxSpeed * Time.deltaTime;
+        Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
+        float speed = (lowProfileMovement) ? MaxLowProfileSpeed : MaxHighProfileSpeed;
         Vector2 zero = Vector2.zero;
+
+        velocity = velocity * speed * Time.deltaTime;
 
         if (velocity.magnitude <= 0.01f) velocity = zero;
 
@@ -33,21 +40,40 @@ public class PlayerScript : MonoBehaviour
 
         // Update movement type
         if (velocity == zero) movementType = PlayerMovementType.Stationary;
-        else movementType = PlayerMovementType.LowProfile;
+        else movementType = (lowProfileMovement) ? PlayerMovementType.LowProfile : PlayerMovementType.HighProfile;
 
-        rigidbody2D.velocity = velocity;
+        // Handle dashing
+        if(velocity != zero)
+        {
+            if(Input.GetButtonDown("Y"))
+            {
+                Vector3 offset = velocity.normalized;
+
+                movementStart = transform.position;
+                movementDestination = transform.position + (offset * 5f);
+                movementAccumulator = 0f;
+            }
+        }
+
+        if(movementDestination != Vector3.zero)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+            movementType = PlayerMovementType.VeryHighProfile;
+
+            movementAccumulator += Time.deltaTime * 3f;
+
+            transform.position = Vector3.Lerp(movementStart, movementDestination, movementAccumulator);
+
+            if (movementAccumulator >= 1f) movementDestination = Vector3.zero;
+        }
+        else rigidbody2D.velocity = velocity;
 
         if (velocity.x < 0f) transform.localScale = new Vector3(-1f, transform.localScale.y, transform.localScale.z);
         else if (velocity.x > 0f) transform.localScale = new Vector3(1f, transform.localScale.y, transform.localScale.z);
 
         if (movementType != lastMovementType) MessageCenter.Instance.Broadcast(new PlayerMovementTypeChangedMessage(movementType));
-    }
 
-    private void EventTest(Message message)
-    {
-        PlayerMovementTypeChangedMessage theMessage = message as PlayerMovementTypeChangedMessage;
-
-        Debug.Log("Player movement type changed to: " + theMessage.NewMovementType.ToString());
+        if (Input.GetButtonDown("Back")) lowProfileMovement = !lowProfileMovement;
     }
 
     private void Update()
@@ -63,7 +89,6 @@ public class PlayerScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        MessageCenter.Instance.UnregisterListener(MessageType.PlayerMovementTypeChanged, EventTest);
 		MessageCenter.Instance.UnregisterListener(MessageType.AbilityStatusChanged, HandleAbilityStatusChanged);
     }
 
