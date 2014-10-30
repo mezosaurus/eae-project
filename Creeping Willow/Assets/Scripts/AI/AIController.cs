@@ -201,11 +201,26 @@ public class AIController : MonoBehaviour {
 	public void Start () {
 		movePath = GameObject.Find ("Paths").GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
 		nextPath = movePath.getNextPath (null);
+		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
+		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 		//spawnMove = GameObject.Find ("Path1Point1").transform.position;
 	}
-	
+
+	void grabbedListener(Message message)
+	{
+		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+			grabbed = true;
+	}
+
+	void releasedListener(Message message)
+	{
+		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+			grabbed = false;
+	}
 	// Update is called once per frame
 	void Update () {
+		if (grabbed)
+			return;
 		Vector3 pathPosition = nextPath.transform.position;
 		if (killSelf)
 		{
