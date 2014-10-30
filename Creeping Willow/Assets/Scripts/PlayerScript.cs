@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerScript : GameBehavior
 {
     public float MaxLowProfileSpeed, MaxHighProfileSpeed;
 
