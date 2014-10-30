@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIController : MonoBehaviour {
+public class AIController : GameBehavior {
 
 	/*
 <<<<<<< HEAD
@@ -203,7 +203,6 @@ public class AIController : MonoBehaviour {
 		nextPath = movePath.getNextPath (null);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
-		//spawnMove = GameObject.Find ("Path1Point1").transform.position;
 	}
 
 	void grabbedListener(Message message)
@@ -217,8 +216,9 @@ public class AIController : MonoBehaviour {
 		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
 			grabbed = false;
 	}
+
 	// Update is called once per frame
-	void Update () {
+	protected override void GameUpdate () {
 		if (grabbed)
 			return;
 		Vector3 pathPosition = nextPath.transform.position;
