@@ -11,4 +11,9 @@ public class Lure : AbilityClass {
 			MessageCenter.Instance.Broadcast (message);
 		}
 	}
+
+	new void Start(){
+		base.Start ();
+		type = AbilityType.Lure;
+	}
 }

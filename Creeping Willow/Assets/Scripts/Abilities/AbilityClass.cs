@@ -10,7 +10,8 @@ public abstract class AbilityClass : MonoBehaviour {
 	protected GlobalAbilitiesManager GAM;
 	protected PlayerScript PM;
 
-	protected float coolDown;
+	public float coolDown;
+	public float lifetime;
 	protected float tmpCoolDown;
 	protected float timeModifier;
 	protected bool coolDownInProgress;
@@ -18,6 +19,8 @@ public abstract class AbilityClass : MonoBehaviour {
 	protected bool isAbility;
 	protected int count;
 	protected bool abilityUsed;
+	protected float spawnTime;
+	protected AbilityType type;
 
 	// Use this for initialization
 	public virtual void Start () 
@@ -28,6 +31,7 @@ public abstract class AbilityClass : MonoBehaviour {
 		coolDownInProgress = false;
 		timeModifier = .03f;
 		tmpCoolDown = coolDown;
+		spawnTime = Time.time;
 
 		abilityUsed = false;
 
@@ -41,12 +45,19 @@ public abstract class AbilityClass : MonoBehaviour {
 		// update the cooldown;
 		if( coolDownInProgress )
 		{
-			tmpCoolDown -= timeModifier;
-			if( tmpCoolDown < 0 )
-			{
+			float timeElapsed = Time.time - spawnTime;
+			if(timeElapsed > coolDown){
 				coolDownInProgress = false;
-				tmpCoolDown = coolDown;
 			}
+			AbilityCoolDownMessage message = new AbilityCoolDownMessage(type, coolDown, timeElapsed);
+			MessageCenter.Instance.Broadcast(message);
+
+//			tmpCoolDown -= timeModifier;
+//			if( tmpCoolDown < 0 )
+//			{
+//				coolDownInProgress = false;
+//				tmpCoolDown = coolDown;
+//			}
 		}
 	}
 

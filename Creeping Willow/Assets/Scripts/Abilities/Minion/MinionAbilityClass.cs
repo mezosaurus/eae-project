@@ -8,7 +8,6 @@ using System.Collections;
 public abstract class MinionAbilityClass : AbilityClass {
 
 	// protected properties
-	protected float lifetime;
 	protected int size;
 
 	// private properties
@@ -17,7 +16,8 @@ public abstract class MinionAbilityClass : AbilityClass {
 	// Use this for initialization
 	new void Start () {
 		base.Start ();
-
+		
+		type = AbilityType.Minion;
 		tmpLife = lifetime;
 	}
 	

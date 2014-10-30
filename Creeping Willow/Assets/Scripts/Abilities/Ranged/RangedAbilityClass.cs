@@ -13,6 +13,7 @@ public abstract class RangedAbilityClass : AbilityClass {
 	// Use this for initialization
 	new void Start () {
 		base.Start ();
+		type = AbilityType.Ranged;
 	}
 	
 	// Update is called once per frame
