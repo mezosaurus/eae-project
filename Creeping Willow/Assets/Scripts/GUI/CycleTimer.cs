@@ -63,12 +63,10 @@ public class CycleTimer : GameBehavior
 		{
 		case TimerStatus.Resume:
 			prevTime = Time.time;
-			running = true;
 			break;
 
 		case TimerStatus.Pause:
 		case TimerStatus.Completed:
-			running = false;
 			break;
 		}
 	}
