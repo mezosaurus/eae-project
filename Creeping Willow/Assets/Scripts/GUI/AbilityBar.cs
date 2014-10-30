@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AbilityBar : MonoBehaviour
+public class AbilityBar : GameBehavior
 {
 	public Texture2D ability1Texture = null;
 	public Texture2D ability2Texture = null;
@@ -51,6 +51,7 @@ public class AbilityBar : MonoBehaviour
 
 	protected void RegisterListeners()
 	{
+		//TODO active ability changed message
 		MessageCenter.Instance.RegisterListener (MessageType.AbilityCoolDownMessage, HandleAbilityCooldownMessage);
 	}
 	

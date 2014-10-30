@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CycleTimer : MonoBehaviour
+public class CycleTimer : GameBehavior
 {
 	public Texture2D back;
 	public Texture2D cover;
@@ -18,8 +18,6 @@ public class CycleTimer : MonoBehaviour
 	public float startingAngle = -90.0f;
 	public float endingAngle = 180.0f;
 
-	private bool running = true;
-
 	void Start()
 	{
 		currentTime = totalTime;
@@ -33,21 +31,17 @@ public class CycleTimer : MonoBehaviour
 
 	void Update()
 	{
-		if( running )
+		if( currentTime > 0 )
 		{
-			if( currentTime > 0 )
-			{
-				currentTime -= Time.time - prevTime;
-				prevTime = Time.time;
-			}
-			else
-			{
-				TimerStatusChangedMessage message = new TimerStatusChangedMessage( TimerStatus.Completed );
-				MessageCenter.Instance.Broadcast( message );
+			currentTime -= Time.time - prevTime;
+			prevTime = Time.time;
+		}
+		else
+		{
+			TimerStatusChangedMessage message = new TimerStatusChangedMessage( TimerStatus.Completed );
+			MessageCenter.Instance.Broadcast( message );
 
-				running = false;
-				currentTime = 0;
-			}
+			currentTime = 0;
 		}
 	}
 
