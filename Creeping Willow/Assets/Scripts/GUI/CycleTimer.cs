@@ -20,30 +20,30 @@ public class CycleTimer : MonoBehaviour
 
 	private bool running = true;
 
-	void Start ()
+	void Start()
 	{
 		currentTime = totalTime;
-		RegisterListeners ();
+		RegisterListeners();
 	}
 
-	void OnDestroy ()
+	void OnDestroy()
 	{
-		UnregisterListeners ();
+		UnregisterListeners();
 	}
 
-	void Update ()
+	void Update()
 	{
-		if (running)
+		if( running )
 		{
-			if (currentTime > 0)
+			if( currentTime > 0 )
 			{
 				currentTime -= Time.time - prevTime;
 				prevTime = Time.time;
 			}
 			else
 			{
-				TimerStatusChangedMessage message = new TimerStatusChangedMessage (TimerStatus.Completed);
-				MessageCenter.Instance.Broadcast(message);
+				TimerStatusChangedMessage message = new TimerStatusChangedMessage( TimerStatus.Completed );
+				MessageCenter.Instance.Broadcast( message );
 
 				running = false;
 				currentTime = 0;
@@ -51,21 +51,21 @@ public class CycleTimer : MonoBehaviour
 		}
 	}
 
-	protected void RegisterListeners ()
+	protected void RegisterListeners()
 	{
-		MessageCenter.Instance.RegisterListener (MessageType.TimerStatusChanged, HandleTimerStatusChanged);
+		MessageCenter.Instance.RegisterListener( MessageType.TimerStatusChanged, HandleTimerStatusChanged );
 	}
 
-	protected void UnregisterListeners ()
+	protected void UnregisterListeners()
 	{
-		MessageCenter.Instance.UnregisterListener (MessageType.TimerStatusChanged, HandleTimerStatusChanged);
+		MessageCenter.Instance.UnregisterListener( MessageType.TimerStatusChanged, HandleTimerStatusChanged );
 	}
 
-	protected void HandleTimerStatusChanged (Message message)
+	protected void HandleTimerStatusChanged( Message message )
 	{
 		TimerStatusChangedMessage mess = message as TimerStatusChangedMessage;
 
-		switch (mess.g_timerStatus)
+		switch( mess.g_timerStatus )
 		{
 		case TimerStatus.Resume:
 			prevTime = Time.time;
@@ -79,16 +79,16 @@ public class CycleTimer : MonoBehaviour
 		}
 	}
 
-	void OnGUI ()
+	void OnGUI()
 	{
 		// draw the day/night cycle
 		Matrix4x4 oldMatrix = GUI.matrix;
-		float currentAngle = 360 - (startingAngle + (totalTime - currentTime) / totalTime * (endingAngle - startingAngle));
-		GUIUtility.RotateAroundPivot (currentAngle, new Vector2 (left + width / 2, top + height / 2));
-		GUI.DrawTexture (new Rect (left, top, width, height), back);
+		float currentAngle = 360 - ( startingAngle + ( totalTime - currentTime ) / totalTime * ( endingAngle - startingAngle ) );
+		GUIUtility.RotateAroundPivot( currentAngle, new Vector2( left + width / 2, top + height / 2 ) );
+		GUI.DrawTexture( new Rect( left, top, width, height ), back );
 		GUI.matrix = oldMatrix;
 
 		// draw the cover
-		GUI.DrawTexture (new Rect (left, top, width, height), cover);
+		GUI.DrawTexture( new Rect( left, top, width, height ), cover );
 	}
 }
