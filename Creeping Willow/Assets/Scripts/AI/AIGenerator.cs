@@ -21,17 +21,15 @@ public class AIGenerator : MonoBehaviour
 		{
 			lastSpawnTime = Time.time;
 
-			//float xSpawn = getSpawnXPosition();
-			//float ySpawn = getSpawnYPosition(xSpawn);
-
-			//Vector2 spawnPoint1 = GameObject.FindGameObjectWithTag("Respawn").transform.position;
 			int rand = Random.Range(0, spawnPoints.Length);
 			Vector2 spawnPoint = spawnPoints[rand].transform.position;
-			Instantiate (npc, spawnPoint, Quaternion.identity);
-			//Instantiate (npc, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
+			GameObject newNPC = (GameObject) Instantiate (npc, spawnPoint, Quaternion.identity);
+
+			SubpathScript movePath = GameObject.Find ("Paths").GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+			newNPC.GetComponent<AIController>().setMovingPath(movePath);
 		}
 	}
-
+	
 	float getSpawnXPosition()
 	{
 		return -11;

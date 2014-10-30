@@ -198,9 +198,11 @@ public class AIController : GameBehavior {
 	private bool killSelf = false;
 	
 	// Use this for initialization
-	public void Start () {
-		movePath = GameObject.Find ("Paths").GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+	public void Start () 
+	{
+		// Get path for AI
 		nextPath = movePath.getNextPath (null);
+
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 	}
@@ -215,6 +217,11 @@ public class AIController : GameBehavior {
 	{
 		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
 			grabbed = false;
+	}
+
+	public void setMovingPath(SubpathScript movePath)
+	{
+		this.movePath = movePath;
 	}
 
 	// Update is called once per frame
