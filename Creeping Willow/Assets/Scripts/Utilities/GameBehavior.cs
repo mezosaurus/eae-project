@@ -9,5 +9,5 @@ public class GameBehavior : MonoBehaviour
         GameUpdate();
     }
 
-    protected virtual void GameUpdate();
+    protected virtual void GameUpdate() { }
 }
