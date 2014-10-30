@@ -76,7 +76,7 @@ public class PlayerScript : GameBehavior
         if (Input.GetButtonDown("Back")) lowProfileMovement = !lowProfileMovement;
     }
 
-    protected void GameUpdate()
+    protected override void GameUpdate()
     {
 		if( canMove )
         	UpdateMovement();
