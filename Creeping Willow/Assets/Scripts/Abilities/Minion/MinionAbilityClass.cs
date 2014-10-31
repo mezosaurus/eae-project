@@ -24,10 +24,6 @@ public abstract class MinionAbilityClass : AbilityClass {
 	// Update is called once per frame
 	new void Update () {
 		base.Update ();
-
-		if( lifetime < 0 ) {} // Do nothing
-		else if( tmpLife > 0 ) tmpLife -= timeModifier;
-		else Destroy( this.gameObject );
 	}
 
 	/**

@@ -42,22 +42,26 @@ public abstract class AbilityClass : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () 
 	{
+		float timeElapsed = Time.time - spawnTime;
 		// update the cooldown;
 		if( coolDownInProgress )
 		{
-			float timeElapsed = Time.time - spawnTime;
 			if(timeElapsed > coolDown){
 				coolDownInProgress = false;
 			}
 			AbilityCoolDownMessage message = new AbilityCoolDownMessage(type, coolDown, timeElapsed);
 			MessageCenter.Instance.Broadcast(message);
-
 //			tmpCoolDown -= timeModifier;
 //			if( tmpCoolDown < 0 )
 //			{
 //				coolDownInProgress = false;
 //				tmpCoolDown = coolDown;
 //			}
+		}
+		
+		
+		if( lifetime > 0 && timeElapsed > lifetime ){
+			Destroy( this.gameObject );
 		}
 	}
 
