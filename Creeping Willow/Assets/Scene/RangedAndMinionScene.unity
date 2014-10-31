@@ -703,10 +703,9 @@ GameObject:
   - 33: {fileID: 2100213006}
   - 23: {fileID: 2100213005}
   - 61: {fileID: 2100213004}
-  - 114: {fileID: 2100213008}
-  - 114: {fileID: 2100213009}
-  - 114: {fileID: 2100213010}
   - 50: {fileID: 2100213011}
+  - 114: {fileID: 2100213009}
+  - 114: {fileID: 2100213008}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -772,10 +771,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2100213003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 691d6b8e1ad014841a75e0004ea8bbf9, type: 3}
+  m_Script: {fileID: 11500000, guid: 687b19822f748cc42a877425ba891578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  MaxLowProfileSpeed: 10
+  MaxHighProfileSpeed: 15
 --- !u!114 &2100213009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,18 +784,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2100213003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ffe76f613ba264f818d93ced5f1037, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2100213010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2100213003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b980c036a6c458f4294a3105ba92e97b, type: 3}
+  m_Script: {fileID: 11500000, guid: feed41d58dfa15a4e91fc99c92a15f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!50 &2100213011

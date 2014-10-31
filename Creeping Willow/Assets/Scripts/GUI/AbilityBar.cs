@@ -1,56 +1,134 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AbilityBar : MonoBehaviour
+public class AbilityBar : GameBehavior
 {
-	public Texture2D ability1;
-	public Texture2D ability2;
-	public Texture2D ability3;
-	public Texture2D ability4;
-	public Texture2D cover;
+	public Texture2D ability1Texture = null;
+	public Texture2D ability2Texture = null;
+	public Texture2D ability3Texture = null;
+	public Texture2D ability4Texture = null;
 
-	public Texture2D button1;
-	public Texture2D button2;
-	public Texture2D button3;
-	public Texture2D button4;
+	public Texture2D coverTexture = null;
+
+	public Texture2D button1Texture = null;
+	public Texture2D button2Texture = null;
+	public Texture2D button3Texture = null;
+	public Texture2D button4Texture = null;
 
 	public int left = 10;
 	public int top = 500;
 	public int width = 200;
 	public int height = 50;
 
-	// Use this for initialization
-	void Start ()
+	private AbilityType ability1Type;
+	private AbilityType ability2Type;
+	private AbilityType ability3Type;
+	private AbilityType ability4Type;
+
+	private float ability1CooldownPercent = 0.0f;
+	private float ability2CooldownPercent = 0.0f;
+	private float ability3CooldownPercent = 0.0f;
+	private float ability4CooldownPercent = 0.0f;
+
+	private float ability1CooldownTime = 0.0f;
+	private float ability2CooldownTime = 0.0f;
+	private float ability3CooldownTime = 0.0f;
+	private float ability4CooldownTime = 0.0f;
+
+	void Start()
+	{
+		RegisterListeners();
+	}
+
+	void OnDestroy()
+	{
+		UnregisterListeners();
+	}
+
+	void Update()
 	{
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+	protected void RegisterListeners()
 	{
+		//TODO active ability changed message
+		MessageCenter.Instance.RegisterListener (MessageType.AbilityCoolDownMessage, HandleAbilityCooldownMessage);
+	}
+	
+	protected void UnregisterListeners()
+	{
+		MessageCenter.Instance.UnregisterListener (MessageType.AbilityCoolDownMessage, HandleAbilityCooldownMessage);
+	}
+
+	protected void HandleAbilityCooldownMessage( Message message )
+	{
+		AbilityCoolDownMessage mess = message as AbilityCoolDownMessage;
+
+		if( mess.AbilityType == ability1Type )
+		{
+			ability1CooldownTime = mess.CoolDown - mess.TimeElapsed;
+			ability1CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+		}
+		else if( mess.AbilityType == ability2Type )
+		{
+			ability2CooldownTime = mess.CoolDown - mess.TimeElapsed;
+			ability2CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+		}
+		else if( mess.AbilityType == ability3Type )
+		{
+			ability3CooldownTime = mess.CoolDown - mess.TimeElapsed;
+			ability3CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+		}
+		else if( mess.AbilityType == ability4Type )
+		{
+			ability4CooldownTime = mess.CoolDown - mess.TimeElapsed;
+			ability4CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+		}
 	}
 
 	void OnGUI()
 	{
 		// draw the abilities
-		if (ability1 != null)
-			GUI.DrawTexture (new Rect (left, top, width * 0.25f, height), ability1);
+		if( ability1Texture != null )
+			GUI.DrawTexture( new Rect( left, top, width * 0.25f, height ), ability1Texture );
 
-		if (ability2 != null)
-			GUI.DrawTexture (new Rect (left + width * 0.25f, top, width * 0.25f, height), ability2);
+		if( ability2Texture != null )
+			GUI.DrawTexture( new Rect( left + width * 0.25f, top, width * 0.25f, height ), ability2Texture );
 
-		if (ability3 != null)
-			GUI.DrawTexture (new Rect (left + width * 0.5f, top, width * 0.25f, height), ability3);
+		if( ability3Texture != null )
+			GUI.DrawTexture( new Rect( left + width * 0.5f, top, width * 0.25f, height ), ability3Texture );
 
-		if (ability4 != null)
-			GUI.DrawTexture (new Rect (left + width * 0.75f, top, width * 0.25f, height), ability4);
+		if( ability4Texture != null )
+			GUI.DrawTexture( new Rect( left + width * 0.75f, top, width * 0.25f, height ), ability4Texture );
+
+		// draw the cooldown boxes
+		if( ability1CooldownPercent > 0 )
+			GUI.Box( new Rect( left, top, width * 0.25f, height * ability1CooldownPercent ), GUIContent.none );
+
+		if( ability2CooldownPercent > 0 )
+			GUI.Box( new Rect( left + width * 0.25f, top, width * 0.25f, height * ability2CooldownPercent ), GUIContent.none );
+
+		if( ability3CooldownPercent > 0 )
+			GUI.Box( new Rect( left + width * 0.5f, top, width * 0.25f, height * ability3CooldownPercent ), GUIContent.none );
+
+		if( ability4CooldownPercent > 0 )
+			GUI.Box( new Rect( left + width * 0.75f, top, width * 0.25f, height * ability4CooldownPercent ), GUIContent.none );
 
 		// draw the cover
-		GUI.DrawTexture (new Rect (left, top, width * 1.05f, height), cover);
+		if( coverTexture != null )
+			GUI.DrawTexture( new Rect( left, top, width * 1.05f, height ), coverTexture );
 
 		// draw the buttons
-		GUI.DrawTexture (new Rect (left + width * 0.075f, top + height * 0.75f, width * 0.1f, height * 0.4f), button1);
-		GUI.DrawTexture (new Rect (left + width * 0.325f, top + height * 0.75f, width * 0.1f, height * 0.4f), button2);
-		GUI.DrawTexture (new Rect (left + width * 0.575f, top + height * 0.75f, width * 0.1f, height * 0.4f), button3);
-		GUI.DrawTexture (new Rect (left + width * 0.825f, top + height * 0.75f, width * 0.1f, height * 0.4f), button4);
+		if( button1Texture != null )
+			GUI.DrawTexture( new Rect( left + width * 0.075f, top + height * 0.75f, width * 0.1f, height * 0.4f ), button1Texture );
+
+		if( button1Texture != null )
+			GUI.DrawTexture( new Rect( left + width * 0.325f, top + height * 0.75f, width * 0.1f, height * 0.4f ), button2Texture );
+
+		if( button1Texture != null )
+			GUI.DrawTexture( new Rect( left + width * 0.575f, top + height * 0.75f, width * 0.1f, height * 0.4f ), button3Texture );
+
+		if( button1Texture != null )
+			GUI.DrawTexture( new Rect( left + width * 0.825f, top + height * 0.75f, width * 0.1f, height * 0.4f ), button4Texture );
 	}
 }

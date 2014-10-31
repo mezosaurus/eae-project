@@ -42,12 +42,30 @@ public abstract class AbilityClass : GameBehavior {
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
+<<<<<<< HEAD
 		float timeElapsed = Time.time - spawnTime;
+		// update the cooldown;
+		if( coolDownInProgress )
+		{
+			if(timeElapsed > coolDown){
+				coolDownInProgress = false;
+			}
+			AbilityCoolDownMessage message = new AbilityCoolDownMessage(type, coolDown, timeElapsed);
+			MessageCenter.Instance.Broadcast(message);
+//			tmpCoolDown -= timeModifier;
+//			if( tmpCoolDown < 0 )
+//			{
+//				coolDownInProgress = false;
+//				tmpCoolDown = coolDown;
+//			}
 		}
 		
 		
 		if( lifetime > 0 && timeElapsed > lifetime ){
 			Destroy( this.gameObject );
+		}
+=======
+
 	}
 
 	/**
@@ -56,6 +74,7 @@ public abstract class AbilityClass : GameBehavior {
 	public void setDirection(Vector3 dir)
 	{
 		direction = dir;
+>>>>>>> 85b4e5df18b982aa3e0650e3722c063b86a9db52
 	}
 
 	/**

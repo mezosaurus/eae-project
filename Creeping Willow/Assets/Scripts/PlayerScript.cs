@@ -123,7 +123,7 @@ public class PlayerScript : GameBehavior
 	}
 
 	/**
-	 * Return the DirectionState of the player
+	 * Return the DirectionState of the player as an int
 	 **/
 	public int getDirection()
 	{

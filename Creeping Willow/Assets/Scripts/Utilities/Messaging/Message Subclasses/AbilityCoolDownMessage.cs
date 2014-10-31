@@ -1,8 +1,8 @@
 public enum AbilityType{
-	Lure,
-	Trap,
 	Minion,
 	Ranged,
+	Lure,
+	Trap,
 	Movement
 }
 public class AbilityCoolDownMessage:Message

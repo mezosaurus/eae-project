@@ -20,7 +20,20 @@ public abstract class MinionAbilityClass : AbilityClass {
 	}
 	
 	// Update is called once per frame
+<<<<<<< HEAD
+	new void Update () {
+		base.Update ();
+	}
+
+	/**
+	 * Return the amount of minions produced when using this ability
+	 **/
+	public int getSize()
+	{
+		return size;
+=======
 	protected override void GameUpdate () {
 		base.GameUpdate ();
+>>>>>>> 85b4e5df18b982aa3e0650e3722c063b86a9db52
 	}
 }
