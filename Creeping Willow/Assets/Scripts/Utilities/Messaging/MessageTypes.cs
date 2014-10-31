@@ -6,5 +6,6 @@
     PlayerGrabbedNPCs,
     PlayerReleasedNPCs,
 	TimerStatusChanged,
-	LureRadiusEntered
+	LureRadiusEntered,
+	PlayerCaughtInTrap
 }

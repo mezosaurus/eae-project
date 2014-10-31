@@ -4,23 +4,23 @@ using System.Collections;
 /**
  * A base class template of the player's abilities.
  **/
-public abstract class AbilityClass : MonoBehaviour {
+public abstract class AbilityClass : GameBehavior {
 
 	// protected properties
 	protected GlobalAbilitiesManager GAM;
 	protected PlayerScript PM;
 
-	public float coolDown;
+	//public float coolDown;
 	public float lifetime;
 	protected float tmpCoolDown;
-	protected float timeModifier;
+	protected float timeModifier; // used for certain abilities
 	protected bool coolDownInProgress;
+	protected Vector3 direction;
 
-	protected bool isAbility;
-	protected int count;
 	protected bool abilityUsed;
 	protected float spawnTime;
 	protected AbilityType type;
+	protected string prefabPath;
 
 	// Use this for initialization
 	public virtual void Start () 
@@ -29,8 +29,8 @@ public abstract class AbilityClass : MonoBehaviour {
 		PM = GameObject.Find ("Player").GetComponent<PlayerScript> ();
 
 		coolDownInProgress = false;
-		timeModifier = .03f;
-		tmpCoolDown = coolDown;
+		timeModifier = .03f; // used for certain abilities
+		//tmpCoolDown = coolDown;
 		spawnTime = Time.time;
 
 		abilityUsed = false;
@@ -40,36 +40,28 @@ public abstract class AbilityClass : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public virtual void Update () 
+	protected override void GameUpdate () 
 	{
-		// update the cooldown;
-		if( coolDownInProgress )
-		{
-			float timeElapsed = Time.time - spawnTime;
-			if(timeElapsed > coolDown){
-				coolDownInProgress = false;
-			}
-			AbilityCoolDownMessage message = new AbilityCoolDownMessage(type, coolDown, timeElapsed);
-			MessageCenter.Instance.Broadcast(message);
 
-//			tmpCoolDown -= timeModifier;
-//			if( tmpCoolDown < 0 )
-//			{
-//				coolDownInProgress = false;
-//				tmpCoolDown = coolDown;
-//			}
-		}
 	}
 
 	/**
-	 * Return the number of minions available to the player
+	 * Set the direction that the ability should be facing
 	 **/
-	public int getCount()
+	public void setDirection(Vector3 dir)
 	{
-		return count;
+		direction = dir;
 	}
 
-	void OnDestroy()
+	/**
+	 * Return the path of the prefab for this ability
+	 **/
+	public string getPath()
+	{
+		return prefabPath;
+	}
+
+	public virtual void OnDestroy()
 	{
 		// unregister listeners
 		UnregisterListeners ();

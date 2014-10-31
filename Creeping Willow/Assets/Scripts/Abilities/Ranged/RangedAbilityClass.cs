@@ -6,9 +6,8 @@ using System.Collections;
  **/
 public abstract class RangedAbilityClass : AbilityClass {
 
-	// protected properties
-	protected float distance;
-	protected Vector3 direction;
+	public float distance;
+	public float speed;
 
 	// Use this for initialization
 	new void Start () {
@@ -17,7 +16,7 @@ public abstract class RangedAbilityClass : AbilityClass {
 	}
 	
 	// Update is called once per frame
-	new void Update () {
-		base.Update ();
+	protected override void GameUpdate () {
+		base.GameUpdate ();
 	}
 }

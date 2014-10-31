@@ -15,5 +15,6 @@ public class Lure : AbilityClass {
 	new void Start(){
 		base.Start ();
 		type = AbilityType.Lure;
+		prefabPath = "Prefabs/CandyLure";
 	}
 }
