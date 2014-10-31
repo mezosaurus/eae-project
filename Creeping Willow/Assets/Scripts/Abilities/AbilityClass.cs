@@ -43,11 +43,12 @@ public abstract class AbilityClass : GameBehavior {
 	protected override void GameUpdate () 
 	{
 		float timeElapsed = Time.time - spawnTime;
-		}
+
 		
 		
 		if( lifetime > 0 && timeElapsed > lifetime ){
 			Destroy( this.gameObject );
+		}
 	}
 
 	/**
