@@ -103,7 +103,7 @@ public class PlayerAbilityScript : GameBehavior {
 				{
 					coolDownInProgress[3] = true;
 					spawnTime[3] = Time.time;
-					activateAbility(direction,prefabPath[4],false);
+					activateAbility(direction,prefabPath[3],false);
 				}
 			}
 		}
@@ -211,7 +211,7 @@ public class PlayerAbilityScript : GameBehavior {
 		prefabPath[0] = "Prefabs/ObstructionMinion";
 		prefabPath[1] = "Prefabs/TireSwingRanged";
 		prefabPath[2] = "Prefabs/CandyLure";
-		//prefabPath[3] = /*Whatever the path is to the bushtrap
+		prefabPath[3] = "Prefabs/BushTrap";
 	}
 
 	void OnDestroy()
