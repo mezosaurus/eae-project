@@ -8,5 +8,7 @@
 	TimerStatusChanged,
 	LureRadiusEntered,
 	PlayerCaughtInTrap,
-	LureReleased
+	LureReleased,
+	TrapEntered,
+	TrapReleased
 }

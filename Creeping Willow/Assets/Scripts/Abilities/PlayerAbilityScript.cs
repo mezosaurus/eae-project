@@ -97,7 +97,7 @@ public class PlayerAbilityScript : GameBehavior {
 		if( (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("RB") ) && !abilityUsed )
 		{
 			// check which trap ability is chosen
-			/*if( abilityID[3] == AbilityID.BushTrap )
+			if( abilityID[3] == AbilityID.BushTrap )
 			{
 				if( !coolDownInProgress[3] )
 				{
@@ -105,7 +105,7 @@ public class PlayerAbilityScript : GameBehavior {
 					spawnTime[3] = Time.time;
 					activateAbility(direction,prefabPath[4],false);
 				}
-			}*/
+			}
 		}
 		// movement is 5th
 		/*if( (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("B") ) && !abilityUsed )
@@ -182,7 +182,7 @@ public class PlayerAbilityScript : GameBehavior {
 		abilityID [0] = AbilityID.ObstructionMinion;
 		abilityID [1] = AbilityID.TireSwingRanged;
 		abilityID [2] = AbilityID.CandyLure;
-		//abilityID [3] = AbilityID.BushTrap;
+		abilityID [3] = AbilityID.BushTrap;
 		//abilityID [4] = AbilityID.PlayerDash;
 
 		// abilityTypes
@@ -258,7 +258,7 @@ public enum AbilityID
 {
 	ObstructionMinion,
 	TireSwingRanged,
-	CandyLure//,
-	//BushTrap,
+	CandyLure,
+	BushTrap//,
 	//PlayerDash
 }
