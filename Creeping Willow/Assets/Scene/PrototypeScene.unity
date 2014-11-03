@@ -733,6 +733,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1923495605}
+  - 68: {fileID: 1923495606}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -761,6 +762,21 @@ Transform:
   - {fileID: 1323590934}
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!68 &1923495606
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1923495604}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Points:
+  - {x: -22.0616474, y: -.136170208}
+  - {x: -.127233028, y: 12.8642797}
+  - {x: 21.9899101, y: -.0673422813}
+  - {x: -.0700439215, y: -12.7422504}
+  - {x: -22.0628986, y: -.154494405}
 --- !u!1 &2066751165
 GameObject:
   m_ObjectHideFlags: 0

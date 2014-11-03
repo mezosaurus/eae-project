@@ -7,8 +7,8 @@ public class PlayerScript : GameBehavior
 
     private PlayerMovementType movementType, lastMovementType;
     private bool lowProfileMovement;
-    private Vector3 movementStart, movementDestination;
-    private float movementAccumulator;
+    private Vector3 movementDirection;
+    private float movementTimer;
     private int direction;
     private bool canMove;
     
@@ -17,12 +17,18 @@ public class PlayerScript : GameBehavior
         movementType = PlayerMovementType.Stationary;
         lastMovementType = PlayerMovementType.Stationary;
         lowProfileMovement = true;
-        movementDestination = Vector3.zero;
+        movementDirection = Vector3.zero;
+        movementTimer = 0;
 
 		direction = (int)DirectionState.DOWN;
 		canMove = true;
 
 		MessageCenter.Instance.RegisterListener (MessageType.AbilityStatusChanged, HandleAbilityStatusChanged);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (movementTimer > 0f) movementTimer = 0f;
     }
 
     private void UpdateMovement()
@@ -45,26 +51,19 @@ public class PlayerScript : GameBehavior
         // Handle dashing
         if(velocity != zero)
         {
-            if(Input.GetButtonDown("Y"))
+            if(Input.GetButtonDown("Y") && movementTimer <= 0f)
             {
-                Vector3 offset = velocity.normalized;
-
-                movementStart = transform.position;
-                movementDestination = transform.position + (offset * 5f);
-                movementAccumulator = 0f;
+                movementDirection = velocity.normalized * 30f;
+                movementTimer = 0.2f;
             }
         }
 
-        if(movementDestination != Vector3.zero)
+        if(movementTimer > 0f)
         {
-            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.velocity = movementDirection;
             movementType = PlayerMovementType.VeryHighProfile;
 
-            movementAccumulator += Time.deltaTime * 3f;
-
-            transform.position = Vector3.Lerp(movementStart, movementDestination, movementAccumulator);
-
-            if (movementAccumulator >= 1f) movementDestination = Vector3.zero;
+            movementTimer -= Time.deltaTime;
         }
         else rigidbody2D.velocity = velocity;
 
