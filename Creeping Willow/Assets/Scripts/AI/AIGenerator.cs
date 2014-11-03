@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIGenerator : MonoBehaviour 
+public class AIGenerator : GameBehavior 
 {
 	public GameObject npc;
 	public float spawnTime;
@@ -15,7 +15,7 @@ public class AIGenerator : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update () 
+	protected override void GameUpdate () 
 	{
 		if (lastSpawnTime <= Time.time - spawnTime)
 		{

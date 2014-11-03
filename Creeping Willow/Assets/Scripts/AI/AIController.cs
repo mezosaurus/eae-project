@@ -205,17 +205,24 @@ public class AIController : GameBehavior {
 
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
+
+		// Ignore collision with other AI
+		int npcLayer = LayerMask.NameToLayer ("NPC");
+		Debug.Log (npcLayer);
+		Physics2D.IgnoreLayerCollision (npcLayer, npcLayer);
 	}
 
 	void grabbedListener(Message message)
 	{
-		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+		Debug.Log (message);
+		//if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
 			grabbed = true;
 	}
 
 	void releasedListener(Message message)
 	{
-		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+		Debug.Log (message);
+		//if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
 			grabbed = false;
 	}
 
@@ -223,6 +230,7 @@ public class AIController : GameBehavior {
 	{
 		this.movePath = movePath;
 	}
+
 
 	// Update is called once per frame
 	protected override void GameUpdate () {
@@ -252,5 +260,6 @@ public class AIController : GameBehavior {
 				killSelf = true;
 		}
 	}
+
 
 }
