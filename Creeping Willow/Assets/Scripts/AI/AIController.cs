@@ -203,35 +203,67 @@ public class AIController : GameBehavior {
 		// Get path for AI
 		nextPath = movePath.getNextPath (null);
 
+		// Register for all messages that are necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
+		MessageCenter.Instance.RegisterListener (MessageType.TrapEntered, trapEnterListener);
+		MessageCenter.Instance.RegisterListener (MessageType.TrapReleased, trapReleaseListener);
 
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer ("NPC");
-		Debug.Log (npcLayer);
 		Physics2D.IgnoreLayerCollision (npcLayer, npcLayer);
+	}
+
+	void OnDestroy()
+	{
+		Debug.Log ("Destroy");
+		// Unregister for all messages that were previously registered for
+		MessageCenter.Instance.UnregisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.TrapEntered, trapEnterListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.TrapReleased, trapReleaseListener);
 	}
 
 	void grabbedListener(Message message)
 	{
-		Debug.Log (message);
-		//if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
 			grabbed = true;
 	}
 
 	void releasedListener(Message message)
 	{
-		Debug.Log (message);
-		//if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
 			grabbed = false;
+	}
+
+	void trapEnterListener(Message message)
+	{
+		Debug.Log ("Trapped");
+		if (gameObject == null)
+		{
+			Debug.Log ("NULL!!!!");
+		}
+		GameObject trappedNPC = ((TrapEnteredMessage)message).NPC;
+		Debug.Log ("--NPC: " + trappedNPC);
+		Debug.Log ("--this: " + gameObject);
+		if (trappedNPC.Equals(gameObject))
+			grabbed = true;
+	}
+
+	void trapReleaseListener(Message message)
+	{
+		if (((TrapEnteredMessage)message).NPC.Equals(gameObject))
+		{
+			grabbed = false;
+			// TODO: set alert level to panic!
+		}
 	}
 
 	public void setMovingPath(SubpathScript movePath)
 	{
 		this.movePath = movePath;
 	}
-
-
+	
 	// Update is called once per frame
 	protected override void GameUpdate () {
 		if (grabbed)

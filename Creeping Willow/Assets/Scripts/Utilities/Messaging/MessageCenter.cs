@@ -52,7 +52,8 @@ public class MessageCenter
         {
             handleMessageEvent = listeners[message.Type] as EventHandler;
 
-            handleMessageEvent(message);
+			if (handleMessageEvent != null)
+            	handleMessageEvent(message);
         }
     }
 }
