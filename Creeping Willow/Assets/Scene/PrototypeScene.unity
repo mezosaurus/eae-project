@@ -686,7 +686,7 @@ Transform:
   - {fileID: 1187006513}
   - {fileID: 322281137}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &1014536032
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +989,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
   stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
+  spawnTag: Respawn
+  pathTag: Paths
+  benchTag: Bench
   spawnTime: 5
 --- !u!4 &1433867020
 Transform:
@@ -1001,7 +1004,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &1486740185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1031,7 +1034,7 @@ Transform:
   - {fileID: 1804406825}
   - {fileID: 599058436}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
 --- !u!1 &1800115777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,7 +1455,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
       propertyPath: spawnTime

@@ -39,9 +39,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70b8c5c82aced443ae0d4327cbbfe7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathNPC: {fileID: 0}
-  stationaryNPC: {fileID: 0}
-  spawnTime: 0
+  pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
+  stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
+  spawnTag: Respawn
+  pathTag: Paths
+  benchTag: Bench
+  spawnTime: 5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
