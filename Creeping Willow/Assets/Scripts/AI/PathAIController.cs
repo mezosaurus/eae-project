@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using UnityEngine;	
 using System.Collections;
 
 public class PathAIController : AIController 
@@ -27,8 +27,9 @@ public class PathAIController : AIController
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
-		base.GameUpdate ();
-		
+		if (grabbed)
+			return;
+
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 position = transform.position;
 		//Vector3 goal = GameObject.Find ("SpawnMoves/SpawnMove1").transform.position;

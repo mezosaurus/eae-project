@@ -10,7 +10,8 @@ public class StationaryAIController : AIController
 
 	protected override void GameUpdate () 
 	{
-		base.GameUpdate ();
+		if (grabbed)
+			return;
 
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;

@@ -263,12 +263,6 @@ public class AIController : GameBehavior {
 		int rand = Random.Range(0, spawnPoints.Length);
 		return spawnPoints[rand];
 	}
-
-	protected override void GameUpdate()
-	{
-		if (grabbed)
-			return;
-	}
 }
 
 
