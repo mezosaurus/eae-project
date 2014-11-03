@@ -164,6 +164,7 @@ public class AIController : GameBehavior {
 	*/
 
 	// Copied variables
+	/*
 	public float speed;
 	private Vector3 spawnMove;
 	public float nourishment;
@@ -188,21 +189,24 @@ public class AIController : GameBehavior {
 	protected float panicTime;
 	public float panicCooldown;
 	protected float timePanicked;
+	*/
 
 	// New Variables
-	//public float speed;
-	private GameObject nextPath;
 	//private Vector3 moveDir;
 	//private Vector3 spawnMove;
-	private SubpathScript movePath;
-	private bool killSelf = false;
-	
+	public float speed;
+	public bool grabbed;
+	protected GameObject nextPath;
+	protected SubpathScript movePath;
+	protected bool killSelf = false;
+
+	// Tags
+	public string spawnTag = "Respawn";
+	public string npcTag = "NPC";
+
 	// Use this for initialization
 	public void Start () 
 	{
-		// Get path for AI
-		nextPath = movePath.getNextPath (null);
-
 		// Register for all messages that are necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
@@ -210,13 +214,12 @@ public class AIController : GameBehavior {
 		MessageCenter.Instance.RegisterListener (MessageType.TrapReleased, trapReleaseListener);
 
 		// Ignore collision with other AI
-		int npcLayer = LayerMask.NameToLayer ("NPC");
+		int npcLayer = LayerMask.NameToLayer (npcTag);
 		Physics2D.IgnoreLayerCollision (npcLayer, npcLayer);
 	}
 
 	void OnDestroy()
 	{
-		Debug.Log ("Destroy");
 		// Unregister for all messages that were previously registered for
 		MessageCenter.Instance.UnregisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
@@ -233,19 +236,14 @@ public class AIController : GameBehavior {
 	void releasedListener(Message message)
 	{
 		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+		{
 			grabbed = false;
+		}
 	}
 
 	void trapEnterListener(Message message)
 	{
-		Debug.Log ("Trapped");
-		if (gameObject == null)
-		{
-			Debug.Log ("NULL!!!!");
-		}
 		GameObject trappedNPC = ((TrapEnteredMessage)message).NPC;
-		Debug.Log ("--NPC: " + trappedNPC);
-		Debug.Log ("--this: " + gameObject);
 		if (trappedNPC.Equals(gameObject))
 			grabbed = true;
 	}
@@ -258,40 +256,20 @@ public class AIController : GameBehavior {
 			// TODO: set alert level to panic!
 		}
 	}
-
-	public void setMovingPath(SubpathScript movePath)
-	{
-		this.movePath = movePath;
-	}
 	
-	// Update is called once per frame
-	protected override void GameUpdate () {
+	protected GameObject getLeavingPath()
+	{
+		GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag (spawnTag);
+		int rand = Random.Range(0, spawnPoints.Length);
+		return spawnPoints[rand];
+	}
+
+	protected override void GameUpdate()
+	{
 		if (grabbed)
 			return;
-		Vector3 pathPosition = nextPath.transform.position;
-		if (killSelf)
-		{
-			pathPosition = GameObject.FindGameObjectWithTag("Respawn").transform.position;
-		}
-		Vector3 position = transform.position;
-		//Vector3 goal = GameObject.Find ("SpawnMoves/SpawnMove1").transform.position;
-		float step = speed * Time.deltaTime;
-		Vector3 movement = Vector3.MoveTowards (position, pathPosition, step);
-		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
-		transform.position = movement;
-		if (movement == pathPosition)
-		{
-			if (killSelf)
-				Destroy(gameObject);
-			
-			int max = 10;
-			int rand = Random.Range (0, max);
-			if (rand < max - 1)
-				nextPath = movePath.getNextPath(nextPath);
-			else
-				killSelf = true;
-		}
 	}
-
-
 }
+
+
+

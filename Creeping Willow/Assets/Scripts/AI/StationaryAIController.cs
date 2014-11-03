@@ -1,8 +1,50 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Still : AIController {
+public class StationaryAIController : AIController 
+{
+	public float sittingTime;
+	protected GameObject bench;
+	private bool sitting = false;
+	private float leaveTime;
 
+	protected override void GameUpdate () 
+	{
+		base.GameUpdate ();
+
+		Vector3 pathPosition = nextPath.transform.position;
+		Vector3 positionNPC = transform.position;
+		float step = speed * Time.deltaTime;
+
+		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+		transform.position = movement;
+
+		if (movement == pathPosition)
+		{
+			if (killSelf)
+				Destroy(gameObject);
+
+			if (!sitting)
+			{
+				sitting = true;
+				leaveTime = Time.time + sittingTime;
+			}
+
+			if (leaveTime <= Time.time)
+			{
+				killSelf = true;
+				nextPath = getLeavingPath();
+			}
+		}
+	}
+
+	public void setStationaryPoint(GameObject point)
+	{
+		nextPath = point;
+	}
+
+	/*
+	 * Old Stuff
 	void Update()
 	{
 		if (panicked)
@@ -27,6 +69,8 @@ public class Still : AIController {
 			rigidbody2D.velocity = moveDir.normalized * runSpeed;
 			return;
 		}
+
+
 		/*if (grabbed || alerted)
 			return;
 
@@ -70,6 +114,7 @@ public class Still : AIController {
 			moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
 		}
 		
-		rigidbody2D.velocity = moveDir.normalized * runSpeed;*/
+		rigidbody2D.velocity = moveDir.normalized * runSpeed;
 	}
+	*/
 }

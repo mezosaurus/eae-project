@@ -9,6 +9,8 @@ public class Boundary
 
 public class WanderAIController : AIController {
 
+	/*
+	 * OLD
 	public float waitTime;
 	public Boundary boundary;
 	
@@ -76,6 +78,7 @@ public class WanderAIController : AIController {
 		
 		return rand;
 	}
+	*/
 	
 	//	void OnTriggerEnter2D(Collider2D other)
 	//	{

@@ -14,7 +14,7 @@ GameObject:
   - 58: {fileID: 5800000}
   - 61: {fileID: 6100000}
   m_Layer: 8
-  m_Name: NPC
+  m_Name: PathNPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ Rigidbody2D:
   m_AngularDrag: .0500000007
   m_GravityScale: 0
   m_FixedAngle: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 940eacb39b329db40b7646ecb2958933, type: 3}
+  m_Script: {fileID: 11500000, guid: 44ebd456e5c3eab4ba59d818363a6100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5

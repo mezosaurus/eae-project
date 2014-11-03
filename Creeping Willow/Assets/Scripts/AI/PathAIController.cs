@@ -1,19 +1,58 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PathAIController : AIController {
-
-	public Transform[] moveWayPoints;
+public class PathAIController : AIController 
+{
+	// OLD Variables
+	//public Transform[] moveWayPoints;
 	
-	private int wayPointIndex;
-	private bool reverseDirection;
+	//private int wayPointIndex;
+	//private bool reverseDirection;
 	
 	new void Start()
 	{
 		base.Start ();
-		reverseDirection = false;
+
+		// Get path for AI
+		nextPath = movePath.getNextPath (null);
+
+		//reverseDirection = false;	// OLD
+	}
+
+	public void setMovingPath(SubpathScript movePath)
+	{
+		this.movePath = movePath;
 	}
 	
+	// Update is called once per frame
+	protected override void GameUpdate () 
+	{
+		base.GameUpdate ();
+		
+		Vector3 pathPosition = nextPath.transform.position;
+		Vector3 position = transform.position;
+		//Vector3 goal = GameObject.Find ("SpawnMoves/SpawnMove1").transform.position;
+		float step = speed * Time.deltaTime;
+		Vector3 movement = Vector3.MoveTowards (position, pathPosition, step);
+		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
+		transform.position = movement;
+		if (movement == pathPosition)
+		{
+			if (killSelf)
+				Destroy(gameObject);
+			
+			int max = 10;
+			int rand = Random.Range (0, max);
+			if (rand < max - 1)
+				nextPath = movePath.getNextPath(nextPath);
+			else
+			{
+				killSelf = true;
+				nextPath = getLeavingPath();
+			}
+		}
+	}
+
 	//	void OnTriggerEnter2D(Collider2D other)
 	//	{
 	//		if (other.tag == "Player")
@@ -45,7 +84,9 @@ public class PathAIController : AIController {
 	//			}
 	//		}
 	//	}
-	
+
+	/*
+	 * Old Update
 	void Update ()
 	{
 		if (grabbed || alerted)
@@ -97,4 +138,5 @@ public class PathAIController : AIController {
 		//}
 		transform.position = movement;
 	}
+	*/
 }

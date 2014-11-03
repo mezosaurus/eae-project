@@ -21,6 +21,7 @@ public class SubpathScript : MonoBehaviour
 			}
 		}
 		index = (index + 1) % paths.Length;
+		//if (paths[index])
 		return paths[index];
 	}
 }
