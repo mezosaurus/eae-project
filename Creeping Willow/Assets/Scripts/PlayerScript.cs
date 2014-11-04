@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerScript : GameBehavior
 {
@@ -11,6 +11,23 @@ public class PlayerScript : GameBehavior
     private float movementTimer;
     private int direction;
     private bool canMove;
+
+    // Temp
+    public enum State
+    {
+        Normal,
+        Eating,
+        EatingCinematic
+    }
+
+    public State state;
+    private List<GameObject> npcsInRange;
+    public Texture EatingBarBackground, EatingBarForeground;
+    public Texture[] Buttons;
+    public float EatingDecay, EatingIncrease;
+    private string[] buttons = { "A", "B", "X", "Y" };
+    private float percentage;
+    private int qteButton;
     
     private void Start()
     {
@@ -24,11 +41,31 @@ public class PlayerScript : GameBehavior
 		canMove = true;
 
 		MessageCenter.Instance.RegisterListener (MessageType.AbilityStatusChanged, HandleAbilityStatusChanged);
+
+        // Temp
+        state = State.Normal;
+        npcsInRange = new List<GameObject>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (movementTimer > 0f) movementTimer = 0f;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.tag == "NPC")
+        {
+            npcsInRange.Add(collider.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.tag == "NPC")
+        {
+            npcsInRange.Remove(collider.gameObject);
+        }
     }
 
     private void UpdateMovement()
@@ -73,12 +110,96 @@ public class PlayerScript : GameBehavior
         if (movementType != lastMovementType) MessageCenter.Instance.Broadcast(new PlayerMovementTypeChangedMessage(movementType));
 
         if (Input.GetButtonDown("Back")) lowProfileMovement = !lowProfileMovement;
+
+        // Temp
+        if(Input.GetAxis("LT") > 0.2f && npcsInRange.Count > 0)
+        {
+            PlayerGrabbedNPCsMessage message = new PlayerGrabbedNPCsMessage(npcsInRange);
+
+            foreach (GameObject npc in npcsInRange)
+            {
+                Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+                npc.transform.position = transform.position + offset;
+            }
+
+            MessageCenter.Instance.Broadcast(message);
+
+            MessageCenter.Instance.Broadcast(new CameraZoomInMessage());
+
+            state = State.Eating;
+
+            percentage = 0.5f;
+            qteButton = Random.Range(0, 4);
+
+            rigidbody2D.velocity = Vector2.zero;
+        }
+    }
+
+    private void UpdateEating()
+    {
+        if (Input.GetAxis("LT") < 0.5f || percentage <= 0f)
+        {
+            MessageCenter.Instance.Broadcast(new PlayerReleasedNPCsMessage(npcsInRange));
+            state = State.Normal;
+
+            npcsInRange.Clear();
+
+            MessageCenter.Instance.Broadcast(new CameraZoomOutMessage());
+
+            return;
+        }
+
+        if (percentage >= 1f)
+        {
+            foreach (GameObject npc in npcsInRange) GameObject.Destroy(npc);
+
+            npcsInRange.Clear();
+
+            state = State.Normal;
+
+            MessageCenter.Instance.Broadcast(new CameraZoomOutMessage());
+
+            return;
+        }
+
+        Vector3 offset = new Vector3(transform.position.x, transform.position.y - 0.35f, -1f);
+
+        //foreach (NPCOffset npcOffset in npcsInRange) npcOffset.NPC.transform.position = offset + npcOffset.Offset;
+
+        percentage -= (EatingDecay * Time.deltaTime);
+
+        Debug.Log(percentage);
+
+        if (Input.GetButtonDown(buttons[qteButton]))
+        {
+            percentage += (EatingIncrease * Time.deltaTime);
+
+            if (percentage > 1f) percentage = 1f;
+        }
+    }
+
+    private void UpdateEatingCinematic()
+    {
+
     }
 
     protected override void GameUpdate()
     {
-		if( canMove )
-        	UpdateMovement();
+        switch (state)
+        {
+            case State.Normal:
+                if (canMove)
+                    UpdateMovement();
+                break;
+
+            case State.Eating:
+                UpdateEating();
+                break;
+
+            case State.EatingCinematic:
+                UpdateEatingCinematic();
+                break;
+        }
     }
 
     private void LateUpdate()
@@ -144,6 +265,20 @@ public class PlayerScript : GameBehavior
 		else
 			canMove = true;
 	}
+
+    void OnGUI()
+    {
+        if (state == State.Eating)
+        {
+            float x = (Screen.width - EatingBarBackground.width - Buttons[qteButton].width) / 2f;
+            //float y = 172f;
+            float y = ((Camera.main.WorldToScreenPoint(transform.position - new Vector3(0f, 1f, 0)).y - EatingBarBackground.height) / 2f);
+
+            GUI.DrawTexture(new Rect(x, y, EatingBarBackground.width, EatingBarBackground.height), EatingBarBackground);
+            GUI.DrawTexture(new Rect(x + 5f, y + 5f, EatingBarForeground.width * percentage, EatingBarForeground.height), EatingBarForeground);
+            GUI.DrawTexture(new Rect(x + EatingBarBackground.width, y, Buttons[qteButton].width, Buttons[qteButton].height), Buttons[qteButton]);
+        }
+    }
 }
 
 public enum PlayerMovementType

@@ -10,5 +10,7 @@
 	PlayerCaughtInTrap,
 	LureReleased,
 	TrapEntered,
-	TrapReleased
+	TrapReleased,
+    CameraZoomIn,
+    CameraZoomOut
 }
