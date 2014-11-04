@@ -6,9 +6,11 @@ using System.Collections;
  **/
 public class ObstructionMinionScript : MinionAbilityClass
 {
-	// private properties
 	public float growthTime;
 	public float delayTime;
+	public Sprite tree1;
+	public Sprite tree2;
+
 	float tmpTime;
 	bool delayOver;
 
@@ -16,8 +18,6 @@ public class ObstructionMinionScript : MinionAbilityClass
 	new void Start () {
 		base.Start ();
 
-		//growthTime = GAM.obstructionGrowthTime;
-		//delayTime = GAM.obstructionDelayTime;
 		prefabPath = "Prefabs/ObstructionMinion";
 
 		tmpTime = 0;
@@ -26,6 +26,14 @@ public class ObstructionMinionScript : MinionAbilityClass
 
 		lifetime = -1;
 
+
+		// Randomize what tree grows
+		SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer> ();
+		float num = Random.Range (0, 2);
+		if( num < 1 )
+			sr.sprite = tree1;
+		else
+			sr.sprite = tree2;
 	}
 	
 	// Update is called once per frame
@@ -49,8 +57,8 @@ public class ObstructionMinionScript : MinionAbilityClass
 			float scalingModifier = .01f;
 
 			tmpTime += timeModifier;
-			transform.position += new Vector3(0, scalingModifier * .5f, 0);
-			transform.localScale += new Vector3(0, scalingModifier, 0);
+			transform.position += new Vector3(0, scalingModifier * .5f);
+			transform.localScale += new Vector3(.007f, scalingModifier);
 		}
 	}
 

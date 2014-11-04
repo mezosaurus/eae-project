@@ -208,10 +208,10 @@ public class PlayerAbilityScript : GameBehavior {
 
 		// prefab paths
 		prefabPath = new string[numAbilities];
-		prefabPath[0] = "Prefabs/ObstructionMinion";
-		prefabPath[1] = "Prefabs/TireSwingRanged";
-		prefabPath[2] = "Prefabs/CandyLure";
-		prefabPath[3] = "Prefabs/BushTrap";
+		prefabPath[0] = "Prefabs/Abilities/ObstructionMinion";
+		prefabPath[1] = "Prefabs/Abilities/TireSwingRanged";
+		prefabPath[2] = "Prefabs/Abilities/CandyLure";
+		prefabPath[3] = "Prefabs/Abilities/BushTrap";
 	}
 
 	void OnDestroy()

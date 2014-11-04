@@ -50,8 +50,10 @@ public class TireRangedScript : RangedAbilityClass
 			foreach( GameObject npc in npcCaught )
 			{
 				npc.GetComponent<CircleCollider2D>().enabled = true;
-				//npc.GetComponent<SpriteRenderer>().enabled = true;
+				npc.GetComponent<SpriteRenderer>().enabled = true;
+				npc.GetComponent<BoxCollider2D>().enabled = true;
 				// add in player having npcs
+
 			}
 
 			// broadcast ability no longer in use
@@ -81,11 +83,12 @@ public class TireRangedScript : RangedAbilityClass
 		}
 
 		// if the tire swing hits an NPC
-		if( other.gameObject.tag == "Enemy" )
+		if( other.gameObject.tag == "NPC" )
 		{
 			npcCaught.Add(other.gameObject);
 			other.gameObject.GetComponent<CircleCollider2D>().enabled = false;
-			//other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+			other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+			other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
 			// broadcast message
 		}
