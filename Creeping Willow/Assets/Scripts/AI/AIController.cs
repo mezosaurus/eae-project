@@ -8,6 +8,7 @@ public class AIController : GameBehavior {
     public float nourishment;
     public float alertTimer;
     public GameObject player;
+	public float lurePower;
 
     //public Sprite normalTexture;
     //public Sprite alertTexture;
@@ -41,11 +42,14 @@ public class AIController : GameBehavior {
         timePanicked = panicCooldown;
         alerted = false;
         panicked = false;
+
 		// Register for all messages that are necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.TrapEntered, trapEnterListener);
 		MessageCenter.Instance.RegisterListener (MessageType.TrapReleased, trapReleaseListener);
+		MessageCenter.Instance.RegisterListener (MessageType.LureRadiusEntered, lureEnterListener);
+		MessageCenter.Instance.RegisterListener (MessageType.LureReleased, lureReleaseListener);
 
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer (npcTag);
@@ -59,6 +63,8 @@ public class AIController : GameBehavior {
 		MessageCenter.Instance.UnregisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.TrapEntered, trapEnterListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.TrapReleased, trapReleaseListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.LureRadiusEntered, lureEnterListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.LureReleased, lureReleaseListener);
 	}
 
     void OnTriggerExit2D(Collider2D other)
@@ -167,7 +173,28 @@ public class AIController : GameBehavior {
 			// TODO: set alert level to panic!
 		}
 	}
-	
+
+	void lureEnterListener(Message message)
+	{
+		LureEnteredMessage lureMessage = message as LureEnteredMessage;
+		if (lureMessage.NPC.Equals(gameObject))
+		{
+			if (lureMessage.Lure.lurePower >= lurePower)
+			{
+				// TODO: go to lure
+			}
+		}
+	}
+
+	void lureReleaseListener(Message message)
+	{
+		LureReleasedMessage lureMessage = message as LureReleasedMessage;
+		if (lureMessage.NPC.Equals(gameObject))
+		{
+			// TODO: release from lure
+		}
+	}
+
 	protected GameObject getLeavingPath()
 	{
 		GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag (spawnTag);
