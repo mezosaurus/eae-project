@@ -77,7 +77,7 @@ public class AIController : GameBehavior {
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "Immovable")
+        if (other.tag == "Wall")
         {
             RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
             if (raycast.collider != null && raycast.collider.tag == "Wall")
