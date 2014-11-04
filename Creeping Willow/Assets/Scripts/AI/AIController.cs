@@ -179,19 +179,28 @@ public class AIController : GameBehavior {
 		LureEnteredMessage lureMessage = message as LureEnteredMessage;
 		if (lureMessage.NPC.Equals(gameObject))
 		{
+			if (lastLure != null && lastLure.Equals(lureMessage.Lure))
+			{
+				return;
+			}
+
 			if (lureMessage.Lure.lurePower >= lurePower)
 			{
+				grabbed = true;
 				// TODO: go to lure
 			}
 		}
 	}
 
+	private Lure lastLure;
 	void lureReleaseListener(Message message)
 	{
 		LureReleasedMessage lureMessage = message as LureReleasedMessage;
 		if (lureMessage.NPC.Equals(gameObject))
 		{
+			grabbed = false;
 			// TODO: release from lure
+			lastLure = lureMessage.Lure;
 		}
 	}
 
