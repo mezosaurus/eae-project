@@ -6,7 +6,7 @@ public class PlayerScript : GameBehavior
     public float MaxLowProfileSpeed, MaxHighProfileSpeed;
 
     private PlayerMovementType movementType, lastMovementType;
-    private bool lowProfileMovement;
+    public bool lowProfileMovement;
     private Vector3 movementDirection;
     private float movementTimer;
     private int direction;

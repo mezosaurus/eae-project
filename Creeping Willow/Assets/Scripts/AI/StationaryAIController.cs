@@ -13,6 +13,30 @@ public class StationaryAIController : AIController
 		if (grabbed)
 			return;
 
+        if (panicked)
+        {
+            timePanicked -= Time.deltaTime;
+            if (timePanicked <= 0)
+            {
+                panicked = false;
+                //GetComponent<SpriteRenderer>().sprite = normalTexture;
+                return;
+            }
+            /*if (!audio.isPlaying)
+            {
+                //audio.Play();
+            }*/
+            //Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
+            if (nearWall)
+            {
+                nearWall = false;
+                moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
+            }
+
+            rigidbody2D.velocity = moveDir.normalized * speed;
+            return;
+        }
+
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;

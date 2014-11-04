@@ -7,7 +7,7 @@ public class PathAIController : AIController
 	//public Transform[] moveWayPoints;
 	
 	//private int wayPointIndex;
-	//private bool reverseDirection;
+	private bool reverseDirection;
 	
 	new void Start()
 	{
@@ -27,8 +27,33 @@ public class PathAIController : AIController
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
-		if (grabbed)
+		if (grabbed || alerted)
 			return;
+
+        if (panicked)
+        {
+            timePanicked -= Time.deltaTime;
+            if (timePanicked <= 0)
+            {
+                panicked = false;
+                //GetComponent<SpriteRenderer>().sprite = normalTexture;
+                return;
+            }
+            if (nearWall)
+            {
+                nearWall = false;
+                moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
+            }
+            else
+                rigidbody2D.velocity = moveDir.normalized * speed;
+
+            /*if (!audio.isPlaying)
+            {
+                //audio.Play();
+            }*/
+
+            return;
+        }
 
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 position = transform.position;

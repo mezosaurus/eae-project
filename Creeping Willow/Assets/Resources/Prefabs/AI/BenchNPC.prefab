@@ -56,7 +56,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Radius: 3
+  m_Radius: 4
   m_Center: {x: 0, y: 0}
 --- !u!61 &6100000
 BoxCollider2D:
@@ -80,20 +80,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1838546dd2b2ae4ea18ef0668e38755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nourishment: 1
+  alertTimer: 2
+  player: {fileID: 100000, guid: b463b3c0544e6844a97fe18b9a4351d7, type: 2}
   speed: 5
-  nourishment: 0
-  normalSpeed: 0
-  runSpeed: 0
-  alertTimer: 0
-  player: {fileID: 0}
-  chaseMusic: {fileID: 0}
-  normalTexture: {fileID: 0}
-  alertTexture: {fileID: 0}
-  panicTexture: {fileID: 0}
   alerted: 0
-  panicked: 0
   grabbed: 0
-  panicCooldown: 0
+  panicked: 0
+  panicCooldown: 2
+  spawnTag: Respawn
+  npcTag: NPC
   sittingTime: 9
 --- !u!212 &21200000
 SpriteRenderer:

@@ -11,11 +11,11 @@ GameObject:
   - 212: {fileID: 21200000}
   - 50: {fileID: 5000000}
   - 114: {fileID: 11400000}
-  - 58: {fileID: 5800000}
   - 61: {fileID: 6100000}
-  m_Layer: 8
-  m_Name: PathNPC
-  m_TagString: NPC
+  - 114: {fileID: 11400002}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,17 +47,6 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
---- !u!58 &5800000
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Radius: 4
-  m_Center: {x: 0, y: 0}
 --- !u!61 &6100000
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -67,8 +56,8 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 1, y: 1}
-  m_Center: {x: 0, y: 0}
+  m_Size: {x: 3.1500001, y: 3.5666666}
+  m_Center: {x: -.533333302, y: .666666746}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,19 +66,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44ebd456e5c3eab4ba59d818363a6100, type: 3}
+  m_Script: {fileID: 11500000, guid: 687b19822f748cc42a877425ba891578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nourishment: 2
-  alertTimer: 2
-  player: {fileID: 100000, guid: b463b3c0544e6844a97fe18b9a4351d7, type: 2}
-  speed: 5
-  alerted: 0
-  grabbed: 0
-  panicked: 0
-  panicCooldown: 2
-  spawnTag: Respawn
-  npcTag: NPC
+  MaxLowProfileSpeed: 75
+  MaxHighProfileSpeed: 150
+  lowProfileMovement: 0
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feed41d58dfa15a4e91fc99c92a15f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -110,7 +103,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e42370c26fdde724f8166c3de545338c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f6820c6e48954242bfe0e52b1439d73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
