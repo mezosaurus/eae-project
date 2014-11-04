@@ -36,6 +36,7 @@ public class AIController : GameBehavior {
 	// Use this for initialization
 	public void Start () 
 	{
+        player = GameObject.Find("Player");
         // Set initial alert/panick states
         timePanicked = panicCooldown;
         alerted = false;
