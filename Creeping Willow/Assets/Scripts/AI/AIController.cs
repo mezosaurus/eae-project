@@ -186,6 +186,7 @@ public class AIController : GameBehavior {
 
 			if (lureMessage.Lure.lurePower >= lurePower)
 			{
+				//TODO: make lure grab better
 				grabbed = true;
 				// TODO: go to lure
 			}
@@ -198,8 +199,8 @@ public class AIController : GameBehavior {
 		LureReleasedMessage lureMessage = message as LureReleasedMessage;
 		if (lureMessage.NPC.Equals(gameObject))
 		{
+			//TODO: make lure release better
 			grabbed = false;
-			// TODO: release from lure
 			lastLure = lureMessage.Lure;
 		}
 	}
