@@ -20,10 +20,10 @@ public class AbilityBar : GameBehavior
 	public int width = 200;
 	public int height = 50;
 
-	private AbilityType ability1Type;
-	private AbilityType ability2Type;
-	private AbilityType ability3Type;
-	private AbilityType ability4Type;
+	public AbilityType ability1Type;
+	public AbilityType ability2Type;
+	public AbilityType ability3Type;
+	public AbilityType ability4Type;
 
 	private float ability1CooldownPercent = 0.0f;
 	private float ability2CooldownPercent = 0.0f;
@@ -67,22 +67,22 @@ public class AbilityBar : GameBehavior
 		if( mess.AbilityType == ability1Type )
 		{
 			ability1CooldownTime = mess.CoolDown - mess.TimeElapsed;
-			ability1CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+			ability1CooldownPercent = ability1CooldownTime / mess.CoolDown;
 		}
 		else if( mess.AbilityType == ability2Type )
 		{
 			ability2CooldownTime = mess.CoolDown - mess.TimeElapsed;
-			ability2CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+			ability2CooldownPercent = ability2CooldownTime / mess.CoolDown;
 		}
 		else if( mess.AbilityType == ability3Type )
 		{
 			ability3CooldownTime = mess.CoolDown - mess.TimeElapsed;
-			ability3CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+			ability3CooldownPercent = ability3CooldownTime / mess.CoolDown;
 		}
 		else if( mess.AbilityType == ability4Type )
 		{
 			ability4CooldownTime = mess.CoolDown - mess.TimeElapsed;
-			ability4CooldownPercent = mess.TimeElapsed / mess.CoolDown;
+			ability4CooldownPercent = ability4CooldownTime / mess.CoolDown;
 		}
 	}
 
