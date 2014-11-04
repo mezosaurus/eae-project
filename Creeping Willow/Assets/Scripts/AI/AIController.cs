@@ -117,9 +117,9 @@ public class AIController : GameBehavior {
                 {
                     //Debug.Log ("Alert Timer!");
                     alerted = false;
-                    if (playerSpeed >= 0.5)
+                    if (playerSpeed > 75)
                     {
-                        Debug.Log("BECOMING PANICKED!");
+                        //Debug.Log("BECOMING PANICKED!");
                         panicked = true;
                         panicTime = Time.time;
                         timePanicked = panicCooldown;
@@ -128,14 +128,14 @@ public class AIController : GameBehavior {
                     }
                     else
                     {
-                        Debug.Log("BECOMING normal");
+                        //Debug.Log("BECOMING normal");
                         //GetComponent<SpriteRenderer>().sprite = normalTexture;
                     }
                 }
                 return;
             }
 
-            if (playerSpeed >= 75)
+            if (playerSpeed > 75)
             {
                 alerted = true;
                 alertedTime = Time.time;
