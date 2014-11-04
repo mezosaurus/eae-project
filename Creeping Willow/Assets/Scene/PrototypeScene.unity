@@ -1809,6 +1809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
   stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
+  wanderNPC: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
   spawnTag: Respawn
   pathTag: Paths
   benchTag: Bench
@@ -2738,6 +2739,10 @@ Prefab:
       propertyPath: pathNPC
       value: 
       objectReference: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: wanderNPC
+      value: 
+      objectReference: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
   m_RootGameObject: {fileID: 1433867018}

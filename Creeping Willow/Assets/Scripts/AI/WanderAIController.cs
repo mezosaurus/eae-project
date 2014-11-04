@@ -9,14 +9,13 @@ public class Boundary
 
 public class WanderAIController : AIController {
 
-	/*
-	 * OLD
 	public float waitTime;
 	public Boundary boundary;
 	
 	private float previousMovement;
 	private int moveCounter;
 	private float nextMoveTime;
+    private Vector2 pathPosition;
 	
 	new void Start()
 	{
@@ -34,13 +33,13 @@ public class WanderAIController : AIController {
 			timePanicked -= Time.deltaTime;
 			if (timePanicked <= 0) {
 				panicked = false;
-				GetComponent<SpriteRenderer>().sprite = normalTexture;
+				//GetComponent<SpriteRenderer>().sprite = normalTexture;
 				return;
 			}
-			if (!audio.isPlaying)
+			/*if (!audio.isPlaying)
 			{
 				//audio.Play();
-			}
+			}*/
 			//Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
 			if (nearWall)
 			{
@@ -48,16 +47,53 @@ public class WanderAIController : AIController {
 				moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
 			}
 			
-			rigidbody2D.velocity = moveDir.normalized * runSpeed;
+			rigidbody2D.velocity = moveDir.normalized * speed;
 			return;
 		}
+
+        if (killSelf)
+        {
+            Destroy(gameObject);
+        }
 		
 		if (Time.time >= nextMoveTime)
 		{
+
 			nextMoveTime = Time.time + waitTime;
-			Vector2 randy = Random.insideUnitCircle * 2;
-			Vector3 direction = new Vector3(randy.x, randy.y, 0.0f);
-			rigidbody2D.velocity = direction * normalSpeed;
+            pathPosition = Random.insideUnitCircle * 2;
+			//nextPath = Random.insideUnitCircle * 2;
+			Vector3 direction = new Vector3(pathPosition.x, pathPosition.y, 0.0f);
+			rigidbody2D.velocity = direction * speed;
+
+            int max = 30;
+            int rand = Random.Range(0, max);
+            if (rand >= max - 1)
+            {
+                Destroy(gameObject);
+            }
+
+            //Vector3 pathPosition = nextPath.transform.position;
+            /*Vector3 position = transform.position;
+            float step = speed * Time.deltaTime;
+            Vector3 movement = Vector3.MoveTowards(position, pathPosition, step);
+            transform.position = movement;*/
+
+            /*
+            if (movement == pathPosition)
+            {
+                if (killSelf)
+                    Destroy(gameObject);
+
+                int max = 10;
+                int rand = Random.Range(0, max);
+                if (rand >= max - 1)
+                {
+                    killSelf = true;
+                    pathPosition = getLeavingPath().transform.position;
+                    //nextPath = getLeavingPath();
+                }
+            }
+             */
 		}
 	}
 	
@@ -70,7 +106,7 @@ public class WanderAIController : AIController {
 			rand = Random.Range (0, 5);
 			previousMovement = rand;
 		} 
-		else 
+		else
 		{
 			moveCounter--;
 			rand = previousMovement;
@@ -78,7 +114,6 @@ public class WanderAIController : AIController {
 		
 		return rand;
 	}
-	*/
 	
 	//	void OnTriggerEnter2D(Collider2D other)
 	//	{

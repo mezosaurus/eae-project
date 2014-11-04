@@ -5,12 +5,13 @@ public class AIGenerator : GameBehavior
 {
 	public GameObject pathNPC;
 	public GameObject stationaryNPC;
+    public GameObject wanderNPC;
 	public string spawnTag = "Respawn";
 	public string pathTag = "Paths";
 	public string benchTag = "Bench";
 	public float spawnTime;
 
-	private int countNPC = 2;
+	private int countNPC = 3;
 	private float lastSpawnTime;
 	private GameObject[] spawnPoints;
 
@@ -46,6 +47,9 @@ public class AIGenerator : GameBehavior
 		case 1:
 			createStationaryNPC();
 			break;
+        case 2:
+            createWanderNPC();
+            break;
 		}
 	}
 
@@ -65,6 +69,11 @@ public class AIGenerator : GameBehavior
 		int rand = Random.Range (0, benches.Length);
 		newNPC.GetComponent<StationaryAIController> ().setStationaryPoint (benches [rand]);
  	}
+
+    void createWanderNPC()
+    {
+        GameObject wanderNPC = createNPC(this.wanderNPC);
+    }
 
 	GameObject createNPC(GameObject NPC)
 	{
