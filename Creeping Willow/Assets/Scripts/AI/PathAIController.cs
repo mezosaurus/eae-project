@@ -23,6 +23,11 @@ public class PathAIController : AIController
 	{
 		this.movePath = movePath;
 	}
+
+	override protected GameObject getNextPath()
+	{
+		return movePath.getNextPath(null);
+	}
 	
 	// Update is called once per frame
 	protected override void GameUpdate () 
@@ -62,9 +67,9 @@ public class PathAIController : AIController
 		Vector3 movement = Vector3.MoveTowards (position, pathPosition, step);
 		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
 		transform.position = movement;
-		if (movement == pathPosition)
+		if (movement == pathPosition && !lured)
 		{
-			if (killSelf)
+			if (killSelf && nextPath.gameObject.tag.Equals("Respawn"))
 				Destroy(gameObject);
 			
 			int max = 10;

@@ -18,6 +18,7 @@ public class AIController : GameBehavior {
     public bool alerted;
 	public bool grabbed;
     public bool panicked;
+	public bool lured;
 
     protected bool nearWall;
     protected Vector2 moveDir;
@@ -187,8 +188,10 @@ public class AIController : GameBehavior {
 			if (lureMessage.Lure.lurePower >= lurePower)
 			{
 				//TODO: make lure grab better
-				grabbed = true;
+				//grabbed = true;
 				// TODO: go to lure
+				lured = true;
+				nextPath = lureMessage.Lure.gameObject;
 			}
 		}
 	}
@@ -200,8 +203,10 @@ public class AIController : GameBehavior {
 		if (lureMessage.NPC.Equals(gameObject))
 		{
 			//TODO: make lure release better
-			grabbed = false;
+			//grabbed = false;
+			lured = false;
 			lastLure = lureMessage.Lure;
+			nextPath = getNextPath();
 		}
 	}
 
@@ -210,6 +215,13 @@ public class AIController : GameBehavior {
 		GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag (spawnTag);
 		int rand = Random.Range(0, spawnPoints.Length);
 		return spawnPoints[rand];
+	}
+
+	protected virtual GameObject getNextPath()
+	{
+		Debug.Log ("parent");
+		GameObject path = new GameObject ();
+		return path;
 	}
 }
 

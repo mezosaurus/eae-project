@@ -44,9 +44,9 @@ public class StationaryAIController : AIController
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		transform.position = movement;
 
-		if (movement == pathPosition)
+		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals ("Respawn")))
 		{
-			if (killSelf)
+			if (killSelf && nextPath != bench)
 				Destroy(gameObject);
 
 			if (!sitting)
@@ -65,9 +65,15 @@ public class StationaryAIController : AIController
 
 	public void setStationaryPoint(GameObject point)
 	{
+		bench = point;
 		nextPath = point;
 	}
 
+	override protected GameObject getNextPath()
+	{
+		Debug.Log ("Child");
+		return bench;
+	}
 	/*
 	 * Old Stuff
 	void Update()
