@@ -51,76 +51,82 @@ public class PlayerAbilityScript : GameBehavior {
 	 **/
 	private void checkForInputs()
 	{
-		// Minion
-		if( (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("A") ) && !abilityUsed )
-		{
-			// check which minion ability is chosen
-			if( abilityID[0] == AbilityID.ObstructionMinion )
-			{
-				if( !coolDownInProgress[0] )
-				{
-					coolDownInProgress[0] = true;
-					spawnTime[0] = Time.time;
-					activateAbility(direction,prefabPath[0],false);
-				}
-			}
-		}
-		// Ranged
-		if( (Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("B") ) && !abilityUsed )
-		{
-			// check which ranged ability is chosen
-			if( abilityID[1] == AbilityID.TireSwingRanged )
-			{
-				if( !coolDownInProgress[1] )
-				{
-					coolDownInProgress[1] = true;
-					spawnTime[1] = Time.time;
-					activateAbility(direction,prefabPath[1],true);
-				}
-			}
-		}
-		// Lure
-		if( (Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X") ) && !abilityUsed )
-		{
-			// check which lure ability is chosen
-			if( abilityID[2] == AbilityID.CandyLure )
-			{
-				if( !coolDownInProgress[2] )
-				{
-					coolDownInProgress[2] = true;
-					spawnTime[2] = Time.time;
-					activateAbility(direction,prefabPath[2],false);
-				}
-			}
-		}
-		// Trap
-		if( (Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("RB") ) && !abilityUsed )
-		{
-			// check which trap ability is chosen
-			if( abilityID[3] == AbilityID.BushTrap )
-			{
-				if( !coolDownInProgress[3] )
-				{
-					coolDownInProgress[3] = true;
-					spawnTime[3] = Time.time;
-					activateAbility(direction,prefabPath[3],false);
-				}
-			}
-		}
-		// movement is 5th
-		/*if( (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("B") ) && !abilityUsed )
-		{
-			// check which movement ability is chosen
-			if( abilityID[4] == AbilityID.PlayerDash )
-			{
-				if( !coolDownInProgress[4] )
-				{
-					coolDownInProgress[4] = true;
-					spawnTime[4] = Time.time;
-					// don't create object, do something else
-				}
-			}
-		}*/
+        PlayerScript player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+
+        if (player.state == PlayerScript.State.Normal)
+        {
+
+            // Minion
+            if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("A")) && !abilityUsed)
+            {
+                // check which minion ability is chosen
+                if (abilityID[0] == AbilityID.ObstructionMinion)
+                {
+                    if (!coolDownInProgress[0])
+                    {
+                        coolDownInProgress[0] = true;
+                        spawnTime[0] = Time.time;
+                        activateAbility(direction, prefabPath[0], false);
+                    }
+                }
+            }
+            // Ranged
+            if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("B")) && !abilityUsed)
+            {
+                // check which ranged ability is chosen
+                if (abilityID[1] == AbilityID.TireSwingRanged)
+                {
+                    if (!coolDownInProgress[1])
+                    {
+                        coolDownInProgress[1] = true;
+                        spawnTime[1] = Time.time;
+                        activateAbility(direction, prefabPath[1], true);
+                    }
+                }
+            }
+            // Lure
+            if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X")) && !abilityUsed)
+            {
+                // check which lure ability is chosen
+                if (abilityID[2] == AbilityID.CandyLure)
+                {
+                    if (!coolDownInProgress[2])
+                    {
+                        coolDownInProgress[2] = true;
+                        spawnTime[2] = Time.time;
+                        activateAbility(direction, prefabPath[2], false);
+                    }
+                }
+            }
+            // Trap
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetButtonDown("RB")) && !abilityUsed)
+            {
+                // check which trap ability is chosen
+                if (abilityID[3] == AbilityID.BushTrap)
+                {
+                    if (!coolDownInProgress[3])
+                    {
+                        coolDownInProgress[3] = true;
+                        spawnTime[3] = Time.time;
+                        activateAbility(direction, prefabPath[3], false);
+                    }
+                }
+            }
+            // movement is 5th
+            /*if( (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("B") ) && !abilityUsed )
+            {
+                // check which movement ability is chosen
+                if( abilityID[4] == AbilityID.PlayerDash )
+                {
+                    if( !coolDownInProgress[4] )
+                    {
+                        coolDownInProgress[4] = true;
+                        spawnTime[4] = Time.time;
+                        // don't create object, do something else
+                    }
+                }
+            }*/
+        }
 	}
 
 	/**

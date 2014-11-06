@@ -147,13 +147,13 @@ public class AIController : GameBehavior {
 
 	void grabbedListener(Message message)
 	{
-		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
-			grabbed = true;
+        if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+        { grabbed = true; Debug.Log("Gotcha"); }
 	}
 
 	void releasedListener(Message message)
 	{
-		if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
+		if (((PlayerReleasedNPCsMessage)message).NPCs.Contains(gameObject))
 		{
 			grabbed = false;
 		}
