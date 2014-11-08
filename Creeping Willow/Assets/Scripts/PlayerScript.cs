@@ -41,6 +41,7 @@ public class PlayerScript : GameBehavior
 		canMove = true;
 
 		MessageCenter.Instance.RegisterListener (MessageType.AbilityStatusChanged, HandleAbilityStatusChanged);
+		MessageCenter.Instance.RegisterListener (MessageType.PauseChanged, HandlePauseChanged);
 
         // Temp
         state = State.Normal;
@@ -210,6 +211,7 @@ public class PlayerScript : GameBehavior
     private void OnDestroy()
     {
 		MessageCenter.Instance.UnregisterListener(MessageType.AbilityStatusChanged, HandleAbilityStatusChanged);
+		MessageCenter.Instance.UnregisterListener(MessageType.AbilityStatusChanged, HandlePauseChanged);
     }
 
 	/**
@@ -264,6 +266,14 @@ public class PlayerScript : GameBehavior
 		}
 		else
 			canMove = true;
+	}
+
+	protected void HandlePauseChanged(Message message)
+	{
+		PauseChangedMessage mess = message as PauseChangedMessage;
+
+		canMove = !mess.isPaused;
+		transform.rigidbody2D.velocity = new Vector2(0,0);
 	}
 
     void OnGUI()

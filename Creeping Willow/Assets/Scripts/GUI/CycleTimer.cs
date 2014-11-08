@@ -31,6 +31,12 @@ public class CycleTimer : GameBehavior
 
 	void Update()
 	{
+		if (paused)
+		{
+			prevTime = Time.time;
+			return;
+		}
+
 		if( currentTime > 0 )
 		{
 			currentTime -= Time.time - prevTime;

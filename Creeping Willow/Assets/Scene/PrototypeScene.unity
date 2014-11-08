@@ -347,6 +347,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1923495605}
   m_RootOrder: 5
+--- !u!1 &186483088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 186483090}
+  - 131: {fileID: 186483089}
+  m_Layer: 0
+  m_Name: PauseGUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!131 &186483089
+GUITexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 186483088}
+  m_Enabled: 1
+  m_Texture: {fileID: 10400, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: -64
+    y: -29
+    width: 128
+    height: 58
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
+--- !u!4 &186483090
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 186483088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .5, y: .5, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!1 &208167412
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +989,12 @@ MonoBehaviour:
   MaxLowProfileSpeed: 75
   MaxHighProfileSpeed: 150
   lowProfileMovement: 0
+  state: 0
+  EatingBarBackground: {fileID: 2800000, guid: e07bb70a74e2e4b4b8055ee8078c7be3, type: 3}
+  EatingBarForeground: {fileID: 2800000, guid: 48f3696dfc41cc745b1b9e66263b52bc, type: 3}
+  Buttons: []
+  EatingDecay: 0
+  EatingIncrease: 0
 --- !u!50 &630803623
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -2270,6 +2323,7 @@ GameObject:
   - 124: {fileID: 1913401373}
   - 81: {fileID: 1913401372}
   - 114: {fileID: 1913401377}
+  - 114: {fileID: 1913401378}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2354,6 +2408,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToFollow: {fileID: 630803621}
+--- !u!114 &1913401378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1913401371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169a61df47228d64f854156d1acd5030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseScreen: {fileID: 186483089}
 --- !u!1001 &1920940038
 Prefab:
   m_ObjectHideFlags: 0

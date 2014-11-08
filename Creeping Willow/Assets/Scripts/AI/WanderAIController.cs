@@ -26,6 +26,9 @@ public class WanderAIController : AIController {
 	
 	void FixedUpdate () 
 	{
+		if( paused )
+			return;
+
 		if (grabbed || alerted)
 			return;
 		if (panicked)

@@ -12,5 +12,6 @@
 	TrapEntered,
 	TrapReleased,
     CameraZoomIn,
-    CameraZoomOut
+    CameraZoomOut,
+	PauseChanged
 }
