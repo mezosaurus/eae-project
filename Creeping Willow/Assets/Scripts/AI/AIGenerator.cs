@@ -11,7 +11,7 @@ public class AIGenerator : GameBehavior
 	public string benchTag = "Bench";
 	public float spawnTime;
 
-	private int numberOfNPCs = 3;
+	private int numberOfNPCs = 2;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
 	private GameObject[] spawnPoints;
 
@@ -27,6 +27,8 @@ public class AIGenerator : GameBehavior
 		stationaryAIList = new ArrayList ();
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
+
+		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
 	}
 
 	// Update is called once per frame
@@ -125,6 +127,19 @@ public class AIGenerator : GameBehavior
 		GameObject npc = (GameObject)Instantiate (NPC, getRandomSpawnPoint (), Quaternion.identity);
 		aiList.Add (npc);
 		return npc;
+	}
+
+	void NPCDestroyListener(Message message)
+	{
+		NPCDestroyedMessage npcMessage = message as NPCDestroyedMessage;
+		GameObject NPC = npcMessage.NPC;
+
+		if (pathAIList.Contains(NPC))
+			pathAIList.Remove(NPC);
+		else if (stationaryAIList.Contains(NPC))
+			stationaryAIList.Remove(NPC);
+		else if (wanderAIList.Contains(NPC))
+			wanderAIList.Remove(NPC);
 	}
 
 	// For use when updating spawn points to 'gates'
