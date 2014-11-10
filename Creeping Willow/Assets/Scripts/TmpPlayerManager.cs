@@ -143,9 +143,9 @@ public class TmpPlayerManager : MonoBehaviour
 	 **/
 	private void keyboardMove() 
 	{
-		float diagonalSpeed = Mathf.Sqrt (2) * .5f * speed;
+		/*float diagonalSpeed = Mathf.Sqrt (2) * .5f * speed;
 		
-		/**** Needs to be updated for xbox controller ****/
+		/**** Needs to be updated for xbox controller
 		if( ( Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.UpArrow) ) )
 		{
 			transform.position += new Vector3( diagonalSpeed, diagonalSpeed );
@@ -185,7 +185,7 @@ public class TmpPlayerManager : MonoBehaviour
 		{
 			transform.position += new Vector3( 0, -speed );
 			direction = (int)DirectionState.DOWN;
-		}
+		}*/
 	}
 	
 	

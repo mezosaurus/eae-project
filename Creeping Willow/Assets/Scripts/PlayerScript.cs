@@ -11,6 +11,7 @@ public class PlayerScript : GameBehavior
     private float movementTimer;
     private int direction;
     private bool canMove;
+    private bool keyboardControl = false;
 
     // Temp
     public enum State
@@ -74,7 +75,19 @@ public class PlayerScript : GameBehavior
 
     private void UpdateMovement()
     {
-        Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
+        if (Input.anyKey) keyboardControl = true;
+        
+        Vector2 velocity = Vector2.zero;
+
+        if (keyboardControl)
+        {
+
+            // Keyboard support :(
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) velocity.x = (Input.GetKey(KeyCode.LeftArrow)) ? -1f : 1f;
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) velocity.y = (Input.GetKey(KeyCode.UpArrow)) ? 1f : -1f;
+        }
+        else velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
+
         float speed = (lowProfileMovement) ? MaxLowProfileSpeed : MaxHighProfileSpeed;
         Vector2 zero = Vector2.zero;
 
