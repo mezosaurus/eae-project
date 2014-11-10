@@ -13,5 +13,6 @@
 	TrapReleased,
     CameraZoomIn,
     CameraZoomOut,
-	PauseChanged
+	PauseChanged,
+	NPCDestroyed
 }

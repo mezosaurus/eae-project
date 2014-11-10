@@ -66,6 +66,9 @@ public class AIController : GameBehavior {
 		MessageCenter.Instance.UnregisterListener (MessageType.TrapReleased, trapReleaseListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.LureRadiusEntered, lureEnterListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.LureReleased, lureReleaseListener);
+
+		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject);
+		MessageCenter.Instance.Broadcast (message);
 	}
 
     void OnTriggerExit2D(Collider2D other)

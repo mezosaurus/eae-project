@@ -1867,6 +1867,7 @@ MonoBehaviour:
   pathTag: Paths
   benchTag: Bench
   spawnTime: 5
+  maxNumberOfEachNPC: 1
 --- !u!4 &1433867020
 Transform:
   m_ObjectHideFlags: 0
@@ -2809,6 +2810,10 @@ Prefab:
       propertyPath: wanderNPC
       value: 
       objectReference: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: maxNumberOfEachNPC
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
   m_RootGameObject: {fileID: 1433867018}
