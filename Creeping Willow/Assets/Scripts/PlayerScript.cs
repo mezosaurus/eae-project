@@ -28,6 +28,7 @@ public class PlayerScript : GameBehavior
     private string[] buttons = { "A", "B", "X", "Y" };
     private float percentage;
     private int qteButton;
+    private float xScale;
     
     private void Start()
     {
@@ -46,6 +47,8 @@ public class PlayerScript : GameBehavior
         // Temp
         state = State.Normal;
         npcsInRange = new List<GameObject>();
+
+        xScale = transform.localScale.x;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -105,8 +108,8 @@ public class PlayerScript : GameBehavior
         }
         else rigidbody2D.velocity = velocity;
 
-        if (velocity.x < 0f) transform.localScale = new Vector3(-1f, transform.localScale.y, transform.localScale.z);
-        else if (velocity.x > 0f) transform.localScale = new Vector3(1f, transform.localScale.y, transform.localScale.z);
+        if (velocity.x < 0f) transform.localScale = new Vector3(-xScale, transform.localScale.y, transform.localScale.z);
+        else if (velocity.x > 0f) transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
 
         if (movementType != lastMovementType) MessageCenter.Instance.Broadcast(new PlayerMovementTypeChangedMessage(movementType));
 
