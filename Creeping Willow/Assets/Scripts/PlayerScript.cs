@@ -130,7 +130,7 @@ public class PlayerScript : GameBehavior
             state = State.Eating;
 
             percentage = 0.5f;
-            qteButton = Random.Range(0, 4);
+            qteButton = Random.Range(0, 3);
 
             rigidbody2D.velocity = Vector2.zero;
         }
