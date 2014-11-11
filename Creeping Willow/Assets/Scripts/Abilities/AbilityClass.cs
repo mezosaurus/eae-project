@@ -7,7 +7,6 @@ using System.Collections;
 public abstract class AbilityClass : GameBehavior {
 
 	// protected properties
-	protected GlobalAbilitiesManager GAM;
 	protected PlayerScript PM;
 
 	//public float coolDown;
@@ -25,7 +24,6 @@ public abstract class AbilityClass : GameBehavior {
 	// Use this for initialization
 	public virtual void Start () 
 	{
-		GAM = GameObject.Find ("Global Manager").GetComponent<GlobalAbilitiesManager> ();
 		PM = GameObject.Find ("Player").GetComponent<PlayerScript> ();
 
 		coolDownInProgress = false;

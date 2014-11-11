@@ -76,7 +76,9 @@ public class PlayerScript : GameBehavior
     private void UpdateMovement()
     {
         if (Input.anyKey) keyboardControl = true;
-        
+
+		if( Input.GetAxis("LSX") != 0 || Input.GetAxis("LSY") != 0 ) keyboardControl = false;
+
         Vector2 velocity = Vector2.zero;
 
         if (keyboardControl)
@@ -227,7 +229,7 @@ public class PlayerScript : GameBehavior
     private void OnDestroy()
     {
 		MessageCenter.Instance.UnregisterListener(MessageType.AbilityStatusChanged, HandleAbilityStatusChanged);
-		MessageCenter.Instance.UnregisterListener(MessageType.AbilityStatusChanged, HandlePauseChanged);
+		MessageCenter.Instance.UnregisterListener(MessageType.PauseChanged, HandlePauseChanged);
     }
 
 	/**

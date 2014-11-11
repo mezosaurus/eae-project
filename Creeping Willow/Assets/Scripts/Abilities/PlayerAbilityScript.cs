@@ -36,6 +36,9 @@ public class PlayerAbilityScript : GameBehavior {
 	
 	// Update is called once per frame
 	protected override void GameUpdate () {
+		if (paused)
+			return;
+
 		// get current direction
 		direction = player.getDirection ();
 
