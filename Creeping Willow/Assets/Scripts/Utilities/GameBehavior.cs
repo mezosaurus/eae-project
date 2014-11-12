@@ -4,6 +4,7 @@ using System.Collections;
 public class GameBehavior : MonoBehaviour
 {
 	protected bool paused = false;
+	bool skipFrame = false;
 
 	void Awake()
 	{
@@ -14,7 +15,13 @@ public class GameBehavior : MonoBehaviour
     {
         // Check to see if paused
 		if( !paused )
-        	GameUpdate();
+		{
+			// This is used to invalidate any getButtonDown inputs from exiting the pause menu
+			if( skipFrame ) 
+				skipFrame = false;
+			else
+        		GameUpdate();
+		}
     }
 
     protected virtual void GameUpdate() { }
@@ -29,5 +36,8 @@ public class GameBehavior : MonoBehaviour
 		PauseChangedMessage mess = message as PauseChangedMessage;
 
 		paused = mess.isPaused;
+
+		if( paused == false )
+			skipFrame = true;
 	}
 }

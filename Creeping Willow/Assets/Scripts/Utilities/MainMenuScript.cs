@@ -30,14 +30,14 @@ public class MainMenuScript : MonoBehaviour {
 	void Update () {
 
 		// wait for controller to rest
-		if( controllerInUse && Input.GetAxis("LeftStickY") == 0)
+		if( controllerInUse && Input.GetAxis("PauseStickY") == 0)
 			controllerInUse = false;
 
-		if( controllerInUse && (Input.GetAxis("LeftStickY") < 0 || Input.GetAxis("LeftStickY") > 0) )
+		if( controllerInUse && (Input.GetAxis("PauseStickY") < 0 || Input.GetAxis("PauseStickY") > 0) )
 			return;
 
 		// check for change
-		if( Input.GetAxis("LeftStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
+		if( Input.GetAxis("PauseStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
 		{
 			if( state == (int)MenuState.PLAY )
 				state = (int)MenuState.QUIT;
@@ -46,7 +46,7 @@ public class MainMenuScript : MonoBehaviour {
 			controllerInUse = true;
 		}
 
-		if( Input.GetAxis("LeftStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
+		if( Input.GetAxis("PauseStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
 		{
 			if( state == (int)MenuState.QUIT )
 				state = (int)MenuState.PLAY;
