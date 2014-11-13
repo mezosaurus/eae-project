@@ -40,15 +40,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e94a6b244ee769f41b74453cc62b61d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  back: {fileID: 2800000, guid: fc698dd3d58e31f4e97da0411c22a0b1, type: 3}
-  cover: {fileID: 2800000, guid: 7a1ba2a6a5b50594eac0c64a9e267cfa, type: 3}
-  left: 200
-  top: 10
-  width: 200
-  height: 200
-  totalTime: 10
-  startingAngle: -90
-  endingAngle: 180
+  cycleTexture: {fileID: 2800000, guid: fc698dd3d58e31f4e97da0411c22a0b1, type: 3}
+  coverTexture: {fileID: 2800000, guid: 7a1ba2a6a5b50594eac0c64a9e267cfa, type: 3}
+  limitTime: 0
+  totalTime: 0
+  dayLength: 30
+  startingAngle: 90
+  endingAngle: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
