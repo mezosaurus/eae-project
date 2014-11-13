@@ -36,7 +36,6 @@ public class GameBehavior : MonoBehaviour
 		}
 
 		g_previousTime = g_currentTime;
-		}
 	}
 
 	protected virtual void GameUpdate() { }
