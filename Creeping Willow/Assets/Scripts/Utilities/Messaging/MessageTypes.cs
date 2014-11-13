@@ -2,6 +2,7 @@
 {
     AbilityStatusChanged,
 	AbilityCoolDownMessage,
+	AbilityPlaced,
     PlayerMovementTypeChanged,
     PlayerGrabbedNPCs,
     PlayerReleasedNPCs,
