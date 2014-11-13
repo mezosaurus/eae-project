@@ -30,19 +30,31 @@ public class AIController : GameBehavior {
 	protected GameObject nextPath;
 	protected SubpathScript movePath;
 	protected bool killSelf = false;
+    protected double panicThreshold = 10;
+    protected double alertThreshold = 5;
+    protected float alertLevel;
+    // This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
+    public float detectLevel;
+    // playerSpeed = playerCurrentSpeed / playerMaxSpeed;
+    // alertLevel += playerSpeed * detectLevel
+    // if (alertLevel >= alertThreshold)
+            // NPC ALERT
+    // else if (alertLevel >= panicThreshold)
+            // NPC PANIC
 
 	// Tags
 	public string spawnTag = "Respawn";
 	public string npcTag = "NPC";
 
 	// Use this for initialization
-	public void Start () 
+	public void Start ()
 	{
         player = GameObject.Find("Player");
         // Set initial alert/panick states
         timePanicked = panicCooldown;
         alerted = false;
         panicked = false;
+        alertLevel = 0f;
 
 		// Register for all messages that are necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
@@ -101,19 +113,51 @@ public class AIController : GameBehavior {
                 return;
             }
 
-            PlayerScript controller = player.GetComponent<PlayerScript>();
-            bool lowProfileMovement = controller.lowProfileMovement;
-            float playerSpeed;
-            if (controller.lowProfileMovement)
+            var playerSpeed = player.rigidbody2D.velocity;
+            //PlayerScript controller = player.GetComponent<PlayerScript>();
+            //bool lowProfileMovement = controller.lowProfileMovement;
+            //float playerSpeed = controller.MaxLowProfiledSpeed / 
+            /*if (playerSpeed == Vector2.zero)
             {
-                playerSpeed = controller.MaxLowProfileSpeed;
+                speed = 1.0f;
+                alerted = false;
+                panicked = false;
+                alertLevel = 0;
+            }*/
+            /*if (controller.lowProfileMovement)
+            {
+                playerSpeed = controller.MaxLowProfileSpeed / 100;
             }
             else
             {
-                playerSpeed = controller.MaxHighProfileSpeed;
+                playerSpeed = controller.MaxHighProfileSpeed / 100;
+            }*/
+
+            if (alertLevel >= alertThreshold)
+            {
+                //Debug.Log("ALERTED");
+                alerted = true;
+                alertedTime = Time.time;
+
+            }
+            if (alertLevel >= panicThreshold)
+            {
+                //Debug.Log("PANICKED");
+                speed = 1.5f;
+                alerted = false;
+                panicked = true;
+                panicked = true;
+                panicTime = Time.time;
+                timePanicked = panicCooldown;
+                moveDir = transform.position - player.transform.position;
             }
 
-            if (alerted == true)
+            // Increment alertLevel
+            //Debug.Log("ALERT LEVEL = " + alertLevel);
+            Debug.Log("MAGNITUDE = " + playerSpeed.magnitude);
+            alertLevel += playerSpeed.magnitude * detectLevel;
+
+            /*if (alerted == true)
             {
                 //Debug.Log ("Time: " + Time.time);
                 //Debug.Log ("Waiting: " + (alertedTime + alertTimer));
@@ -144,7 +188,7 @@ public class AIController : GameBehavior {
                 alerted = true;
                 alertedTime = Time.time;
                 //GetComponent<SpriteRenderer>().sprite = alertTexture;
-            }
+            }*/
         }
     }
 

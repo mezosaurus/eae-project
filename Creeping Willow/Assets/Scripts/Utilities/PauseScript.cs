@@ -37,10 +37,10 @@ public class PauseScript : MonoBehaviour {
 	void Update () {
 
 		// wait for controller to be at rest
-		if( controllerInUse && Input.GetAxis("LeftStickY") == 0)
+		if( controllerInUse && Input.GetAxis("PauseStickY") == 0)
 			controllerInUse = false;
 		
-		if( controllerInUse && (Input.GetAxis("LeftStickY") < 0 || Input.GetAxis("LeftStickY") > 0) )
+		if( controllerInUse && (Input.GetAxis("PauseStickY") < 0 || Input.GetAxis("PauseStickY") > 0) )
 			return;
 
 		if( isPaused )
@@ -60,7 +60,7 @@ public class PauseScript : MonoBehaviour {
 				// if resume state
 				if( state == (int)PauseState.RESUME )
 				{
-					if( Input.GetAxis("LeftStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
+					if( Input.GetAxis("PauseStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
 					{
 						state = (int)PauseState.SETTINGS;
 						pauseScreenSettings.enabled = true;
@@ -79,14 +79,14 @@ public class PauseScript : MonoBehaviour {
 				// settings state
 				else if( state == (int)PauseState.SETTINGS )
 				{
-					if( Input.GetAxis("LeftStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
+					if( Input.GetAxis("PauseStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
 					{
 						state = (int)PauseState.QUIT;
 						pauseScreenSettings.enabled = false;
 						pauseScreenQuit.enabled = true;
 						controllerInUse = true;
 					}
-					else if( Input.GetAxis("LeftStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
+					else if( Input.GetAxis("PauseStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
 					{
 						state = (int)PauseState.RESUME;
 						pauseScreenSettings.enabled = false;
@@ -103,7 +103,7 @@ public class PauseScript : MonoBehaviour {
 				// quit state
 				else if( state == (int)PauseState.QUIT )
 				{
-					if( Input.GetAxis("LeftStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
+					if( Input.GetAxis("PauseStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
 					{
 						state = (int)PauseState.SETTINGS;
 						pauseScreenSettings.enabled = true;

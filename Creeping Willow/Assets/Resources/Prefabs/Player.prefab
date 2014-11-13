@@ -38,7 +38,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mass: 1
+  m_Mass: 8000
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b19822f748cc42a877425ba891578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxLowProfileSpeed: 75
+  MaxLowProfileSpeed: 40
   MaxHighProfileSpeed: 150
   lowProfileMovement: 0
   state: 0
