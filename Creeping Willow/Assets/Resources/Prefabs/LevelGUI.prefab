@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
+  - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: LevelGUI
   m_TagString: Untagged
@@ -75,6 +76,21 @@ MonoBehaviour:
   ability2Type: 1
   ability3Type: 2
   ability4Type: 3
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9188188fd122d8d4eb99f4ea65e7a346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guiFont: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+  boxImage: {fileID: 2800000, guid: 62c262b7a1013f046a7364e3138ccdee, type: 3}
+  buttonImage: {fileID: 0}
+  sound: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
