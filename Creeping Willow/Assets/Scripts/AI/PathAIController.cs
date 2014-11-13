@@ -41,6 +41,8 @@ public class PathAIController : AIController
             if (timePanicked <= 0)
             {
                 panicked = false;
+                speed = 1;
+                alertLevel = 0;
                 //GetComponent<SpriteRenderer>().sprite = normalTexture;
                 return;
             }

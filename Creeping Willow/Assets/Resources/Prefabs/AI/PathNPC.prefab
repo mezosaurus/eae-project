@@ -56,7 +56,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Radius: 4
+  m_Radius: 2
   m_Center: {x: 0, y: 0}
 --- !u!61 &6100000
 BoxCollider2D:
@@ -90,6 +90,7 @@ MonoBehaviour:
   panicked: 0
   lured: 0
   panicCooldown: 2
+  detectLevel: .100000001
   spawnTag: Respawn
   npcTag: NPC
 --- !u!212 &21200000

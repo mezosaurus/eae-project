@@ -19,6 +19,8 @@ public class StationaryAIController : AIController
             if (timePanicked <= 0)
             {
                 panicked = false;
+                alertLevel = 0;
+                speed = 1;
                 //GetComponent<SpriteRenderer>().sprite = normalTexture;
                 return;
             }
