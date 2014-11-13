@@ -19,8 +19,10 @@ public class StationaryAIController : AIController
             if (timePanicked <= 0)
             {
                 panicked = false;
-                alertLevel = 0;
+				alertLevel = alertThreshold - 0.1f;
                 speed = 1;
+				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Normal);
+				MessageCenter.Instance.Broadcast (message);
                 //GetComponent<SpriteRenderer>().sprite = normalTexture;
                 return;
             }
@@ -38,6 +40,23 @@ public class StationaryAIController : AIController
             rigidbody2D.velocity = moveDir.normalized * speed;
             return;
         }
+
+		if (playerInRange)
+		{
+			Vector2 playerSpeed = player.rigidbody2D.velocity;
+			if (playerSpeed == Vector2.zero && alertLevel > 0)
+			{
+				// decrement alert level
+				alertLevel -= (panicThreshold * 0.05f);
+			}
+		}
+		else if (alertLevel > 0)
+		{
+			alertLevel -= (panicThreshold * 0.05f);
+		}
+		// Make sure alert level does not go below 0
+		if (alertLevel < 0)
+			alertLevel = 0;
 
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;

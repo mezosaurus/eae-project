@@ -3,6 +3,18 @@ using System.Collections;
 
 public class AIController : GameBehavior {
 
+	public enum NPCDirection
+	{
+		T,
+		TL,
+		TR,
+		B,
+		BL,
+		BR,
+		L,
+		R
+	}
+	public NPCDirection npcDir;
 	//private Vector3 moveDir;
 	//private Vector3 spawnMove;
     public float nourishment;
@@ -19,6 +31,7 @@ public class AIController : GameBehavior {
 	public bool grabbed;
     public bool panicked;
 	public bool lured;
+	protected bool playerInRange;
 
     protected bool nearWall;
     protected Vector2 moveDir;
@@ -30,8 +43,8 @@ public class AIController : GameBehavior {
 	protected GameObject nextPath;
 	protected SubpathScript movePath;
 	protected bool killSelf = false;
-    protected double panicThreshold = 10;
-    protected double alertThreshold = 5;
+    protected float panicThreshold = 10;
+    protected float alertThreshold = 5;
     protected float alertLevel;
     // This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
     public float detectLevel;
@@ -55,6 +68,7 @@ public class AIController : GameBehavior {
         alerted = false;
         panicked = false;
         alertLevel = 0f;
+		playerInRange = false;
 
 		// Register for all messages that are necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
@@ -87,9 +101,17 @@ public class AIController : GameBehavior {
     {
         if (other.tag == "Player")
         {
-            alerted = false;
+			playerInRange = false;
         }
     }
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Player") 
+		{
+			playerInRange = true;
+		}
+	}
 
     void OnTriggerStay2D(Collider2D other)
     {
@@ -114,30 +136,14 @@ public class AIController : GameBehavior {
             }
 
             var playerSpeed = player.rigidbody2D.velocity;
-            //PlayerScript controller = player.GetComponent<PlayerScript>();
-            //bool lowProfileMovement = controller.lowProfileMovement;
-            //float playerSpeed = controller.MaxLowProfiledSpeed / 
-            /*if (playerSpeed == Vector2.zero)
-            {
-                speed = 1.0f;
-                alerted = false;
-                panicked = false;
-                alertLevel = 0;
-            }*/
-            /*if (controller.lowProfileMovement)
-            {
-                playerSpeed = controller.MaxLowProfileSpeed / 100;
-            }
-            else
-            {
-                playerSpeed = controller.MaxHighProfileSpeed / 100;
-            }*/
 
             if (alertLevel >= alertThreshold)
             {
                 //Debug.Log("ALERTED");
                 alerted = true;
                 alertedTime = Time.time;
+				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Alert);
+				MessageCenter.Instance.Broadcast (message);
 
             }
             if (alertLevel >= panicThreshold)
@@ -146,49 +152,17 @@ public class AIController : GameBehavior {
                 speed = 1.5f;
                 alerted = false;
                 panicked = true;
-                panicked = true;
                 panicTime = Time.time;
                 timePanicked = panicCooldown;
                 moveDir = transform.position - player.transform.position;
+				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Panic);
+				MessageCenter.Instance.Broadcast (message);
             }
 
             // Increment alertLevel
             //Debug.Log("ALERT LEVEL = " + alertLevel);
             Debug.Log("MAGNITUDE = " + playerSpeed.magnitude);
             alertLevel += playerSpeed.magnitude * detectLevel;
-
-            /*if (alerted == true)
-            {
-                //Debug.Log ("Time: " + Time.time);
-                //Debug.Log ("Waiting: " + (alertedTime + alertTimer));
-                if (Time.time >= alertedTime + alertTimer)
-                {
-                    //Debug.Log ("Alert Timer!");
-                    alerted = false;
-                    if (playerSpeed > 75)
-                    {
-                        //Debug.Log("BECOMING PANICKED!");
-                        panicked = true;
-                        panicTime = Time.time;
-                        timePanicked = panicCooldown;
-                        moveDir = transform.position - player.transform.position;
-                        //GetComponent<SpriteRenderer>().sprite = panicTexture;
-                    }
-                    else
-                    {
-                        //Debug.Log("BECOMING normal");
-                        //GetComponent<SpriteRenderer>().sprite = normalTexture;
-                    }
-                }
-                return;
-            }
-
-            if (playerSpeed > 75)
-            {
-                alerted = true;
-                alertedTime = Time.time;
-                //GetComponent<SpriteRenderer>().sprite = alertTexture;
-            }*/
         }
     }
 
