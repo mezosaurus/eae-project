@@ -91,7 +91,9 @@ public class PathAIController : AIController
 		float step = speed * Time.deltaTime;
 		Vector3 movement = Vector3.MoveTowards (position, pathPosition, step);
 		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
+		determineDirectionChange(transform.position, movement);
 		transform.position = movement;
+
 		if (movement == pathPosition && !lured)
 		{
 			if (killSelf && nextPath.gameObject.tag.Equals("Respawn"))

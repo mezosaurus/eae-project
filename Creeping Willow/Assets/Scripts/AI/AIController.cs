@@ -216,7 +216,9 @@ public class AIController : GameBehavior {
 
 			return true;
 		}
-		
+
+		// TODO: check for player
+
 		if (playerInRange)
 		{
 			Vector2 playerSpeed = player.rigidbody2D.velocity;
@@ -256,6 +258,11 @@ public class AIController : GameBehavior {
 				return true;
 		}
 		return false;
+	}
+
+	protected void determineDirectionChange(Vector3 npcPosition, Vector3 newPosition)
+	{
+		// TODO: change npcDir and sprite direction
 	}
 
 	protected GameObject getLeavingPath()
