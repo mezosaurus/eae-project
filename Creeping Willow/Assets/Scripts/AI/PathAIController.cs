@@ -42,7 +42,9 @@ public class PathAIController : AIController
             {
                 panicked = false;
                 speed = 1;
-                alertLevel = 0;
+                alertLevel = alertThreshold - 0.1f;
+				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Normal);
+				MessageCenter.Instance.Broadcast (message);
                 //GetComponent<SpriteRenderer>().sprite = normalTexture;
                 return;
             }
@@ -61,6 +63,23 @@ public class PathAIController : AIController
 
             return;
         }
+
+		if (playerInRange)
+		{
+			Vector2 playerSpeed = player.rigidbody2D.velocity;
+			if (playerSpeed == Vector2.zero && alertLevel > 0)
+			{
+				// decrement alert level
+				alertLevel -= (panicThreshold * 0.05f);
+			}
+		}
+		else if (alertLevel > 0)
+		{
+			alertLevel -= (panicThreshold * 0.05f);
+		}
+		// Make sure alert level does not go below 0
+		if (alertLevel < 0)
+			alertLevel = 0;
 
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 position = transform.position;

@@ -15,5 +15,6 @@
     CameraZoomIn,
     CameraZoomOut,
 	PauseChanged,
-	NPCDestroyed
+	NPCDestroyed,
+	NPCAlertLevel
 }

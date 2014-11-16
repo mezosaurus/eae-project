@@ -8,7 +8,7 @@ public class ConeOfVisionTestScript : GameBehavior {
 
 	float angleOffset; // max offset of angle from NPC's view
 	bool aware;
-	Vector3 playerPos; 
+	Vector3 playerPos;
 	Vector3 forward; // Defined where NPC is looking.
 	GameObject player;
 
