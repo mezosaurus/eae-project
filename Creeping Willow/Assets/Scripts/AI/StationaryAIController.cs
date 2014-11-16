@@ -10,6 +10,7 @@ public class StationaryAIController : AIController
 
 	protected override void GameUpdate () 
 	{
+		/*
 		if (grabbed)
 			return;
 
@@ -29,7 +30,7 @@ public class StationaryAIController : AIController
             /*if (!audio.isPlaying)
             {
                 //audio.Play();
-            }*/
+            }*//*
             //Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
             if (nearWall)
             {
@@ -57,7 +58,10 @@ public class StationaryAIController : AIController
 		// Make sure alert level does not go below 0
 		if (alertLevel < 0)
 			alertLevel = 0;
-
+		*/
+		if (updateNPC ())
+			return;
+		
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;

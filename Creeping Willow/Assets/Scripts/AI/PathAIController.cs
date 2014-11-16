@@ -32,6 +32,7 @@ public class PathAIController : AIController
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
+		/*
 		if (grabbed || alerted)
 			return;
 
@@ -59,7 +60,7 @@ public class PathAIController : AIController
             /*if (!audio.isPlaying)
             {
                 //audio.Play();
-            }*/
+            }//*//*
 
             return;
         }
@@ -80,6 +81,9 @@ public class PathAIController : AIController
 		// Make sure alert level does not go below 0
 		if (alertLevel < 0)
 			alertLevel = 0;
+		*/
+		if (updateNPC())
+			return;
 
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 position = transform.position;

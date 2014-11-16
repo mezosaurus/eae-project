@@ -3,17 +3,18 @@ using System.Collections;
 
 public class AIController : GameBehavior {
 
-	public enum NPCDirection
+	public class NPCDirection
 	{
-		T = Vector3(0,1),
-		TL = Vector3(-Mathf.Sqrt(2)/2, Mathf.Sqrt (2)/2),
-		TR = Vector3(Mathf.Sqrt(2)/2, Mathf.Sqrt(2)/2),
-		B = Vector3(0, -1),
-		BL = Vector3(-Mathf.Sqrt(2)/2, -Mathf.Sqrt (2)/2),
-		BR = Vector3(Mathf.Sqrt(2)/2, -Mathf.Sqrt (2)/2),
-		L = Vector3(-1,0),
-		R = Vector3(0,1)
+		public static Vector3 T = new Vector3(0,1),
+		TL = new Vector3(-Mathf.Sqrt(2)/2, Mathf.Sqrt (2)/2),
+		TR = new Vector3(Mathf.Sqrt(2)/2, Mathf.Sqrt(2)/2),
+		B = new Vector3(0, -1),
+		BL = new Vector3(-Mathf.Sqrt(2)/2, -Mathf.Sqrt (2)/2),
+		BR = new Vector3(Mathf.Sqrt(2)/2, -Mathf.Sqrt (2)/2),
+		L = new Vector3(-1,0),
+		R = new Vector3(0,1);
 	}
+
 	//private Vector3 moveDir;
 	//private Vector3 spawnMove;
     public float nourishment;
@@ -62,7 +63,7 @@ public class AIController : GameBehavior {
 	// Cone of Vision variables
 	public float visionDistance; // distance that player's view extends to
 	public float visionAngleSize; // The total angle size that the player can see
-	public NPCDirection npcDir;
+	public Vector3 npcDir;
 	
 	protected float visionAngleOffset; // max offset of angle from NPC's view
 
@@ -186,6 +187,56 @@ public class AIController : GameBehavior {
 	// Helper Methods
 	//-----------------------
 
+	protected bool updateNPC()
+	{
+		// In stationary, alerted doesn't return
+		if (grabbed || alerted)
+			return true;
+		
+		if (panicked)
+		{
+			timePanicked -= Time.deltaTime;
+			if (timePanicked <= 0)
+			{
+				panicked = false;
+				speed = 1;
+				alertLevel = alertThreshold - 0.1f;
+				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Normal);
+				MessageCenter.Instance.Broadcast (message);
+				//GetComponent<SpriteRenderer>().sprite = normalTexture;
+				return true;
+			}
+			if (nearWall)
+			{
+				nearWall = false;
+				moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
+			}
+			else  // In stationary, no else
+				rigidbody2D.velocity = moveDir.normalized * speed;
+
+			return true;
+		}
+		
+		if (playerInRange)
+		{
+			Vector2 playerSpeed = player.rigidbody2D.velocity;
+			if (playerSpeed == Vector2.zero && alertLevel > 0)
+			{
+				// decrement alert level
+				alertLevel -= (panicThreshold * 0.05f);
+			}
+		}
+		else if (alertLevel > 0)
+		{
+			alertLevel -= (panicThreshold * 0.05f);
+		}
+		// Make sure alert level does not go below 0
+		if (alertLevel < 0)
+			alertLevel = 0;
+
+		return false;
+	}
+
 	protected bool checkForPlayer()
 	{
 		Vector3 playerPos = player.transform.position;
@@ -200,7 +251,7 @@ public class AIController : GameBehavior {
 
 			// get angle of direction 
 			float angle = Vector3.Angle(direction, npcDir);
-			
+
 			if( angle <= visionAngleOffset )
 				return true;
 		}
