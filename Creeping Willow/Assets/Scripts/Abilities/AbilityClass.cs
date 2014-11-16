@@ -24,7 +24,7 @@ public abstract class AbilityClass : GameBehavior {
 	// Use this for initialization
 	public virtual void Start () 
 	{
-		PM = GameObject.Find ("Player").GetComponent<PlayerScript> ();
+		//PM = GameObject.Find ("Player").GetComponent<PlayerScript> ();
 
 		coolDownInProgress = false;
 		timeModifier = .03f; // used for certain abilities
@@ -41,8 +41,6 @@ public abstract class AbilityClass : GameBehavior {
 	protected override void GameUpdate () 
 	{
 		float timeElapsed = Time.time - spawnTime;
-
-		
 		
 		if( lifetime > 0 && timeElapsed > lifetime ){
 			Destroy( this.gameObject );
@@ -69,6 +67,10 @@ public abstract class AbilityClass : GameBehavior {
 	{
 		// unregister listeners
 		UnregisterListeners ();
+
+		//send out a message that the object was removed
+		AbilityObjectRemovedMessage mess = new AbilityObjectRemovedMessage(type);
+		MessageCenter.Instance.Broadcast (mess);
 	}
 
 	/**
