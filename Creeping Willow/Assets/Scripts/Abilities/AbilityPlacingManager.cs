@@ -9,7 +9,7 @@ public class AbilityPlacingManager : GameBehavior {
 	}
 	
 	// Update is called once per frame
-	void GameUpdate () {
+	protected override void GameUpdate () {
 	
 	}
 
