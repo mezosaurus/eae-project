@@ -81,6 +81,10 @@ public class PathAIController : AIController
 		if (alertLevel < 0)
 			alertLevel = 0;
 
+
+		// if lure is deleted
+		if( nextPath == null ) return;
+
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 position = transform.position;
 		//Vector3 goal = GameObject.Find ("SpawnMoves/SpawnMove1").transform.position;

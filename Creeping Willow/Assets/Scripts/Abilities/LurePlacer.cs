@@ -14,13 +14,18 @@ public class LurePlacer : ObjectPlacer {
 
 	protected override void HandleInput(){
 		base.HandleInput();
-		if(Input.GetButtonDown("A")&& canPlace && luresPlaced < luresAllowed){
+		if((Input.GetButtonDown("A")||Input.GetKeyDown(KeyCode.D))&& canPlace && luresPlaced < luresAllowed){
 			AbilityPlacedMessage message = new AbilityPlacedMessage (transform.position.x,transform.position.y, type);
 			MessageCenter.Instance.Broadcast (message);
 			luresPlaced++;
 			if(luresPlaced >= luresAllowed){
 				Exit();
 			}
+		}
+
+		if( Input.GetKeyDown(KeyCode.Backspace) || Input.GetButtonDown("B") )
+		{
+			Exit();
 		}
 	}
 

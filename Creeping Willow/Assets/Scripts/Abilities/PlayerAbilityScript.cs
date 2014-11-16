@@ -58,7 +58,7 @@ public class PlayerAbilityScript : GameBehavior {
 
         if (player.state == PlayerScript.State.Normal)
         {
-
+			/*
             // Minion
             if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("A")) && !abilityUsed)
             {
@@ -114,7 +114,7 @@ public class PlayerAbilityScript : GameBehavior {
                         activateAbility(direction, prefabPath[3], false);
                     }
                 }
-            }
+            }*/
             // movement is 5th
             /*if( (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("B") ) && !abilityUsed )
             {

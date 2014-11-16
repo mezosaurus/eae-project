@@ -58,6 +58,10 @@ public class StationaryAIController : AIController
 		if (alertLevel < 0)
 			alertLevel = 0;
 
+
+		// if lure is deleted
+		if( nextPath == null ) return;
+
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
