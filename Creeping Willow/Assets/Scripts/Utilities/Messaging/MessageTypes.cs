@@ -8,6 +8,7 @@
     PlayerReleasedNPCs,
 	TimerStatusChanged,
 	LureRadiusEntered,
+	LurePlaced,
 	PlayerCaughtInTrap,
 	LureReleased,
 	TrapEntered,
