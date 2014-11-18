@@ -14,6 +14,18 @@ TagManager:
   - 
   - Wall
   - 
+  - PlayerLegs
+  - PlayerFace
+  - PlayerLeftArm
+  - PlayerRightArm
+  - ProgressBar
+  - PlayerLeftUpperArm
+  - PlayerLeftLowerBackgroundArm
+  - PlayerLeftLowerForegroundArm
+  - PlayerRightUpperArm
+  - PlayerRightLowerArm
+  - GrabbedNPC
+  - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
   Builtin Layer 2: Ignore Raycast
@@ -54,4 +66,8 @@ TagManager:
   - name: Default
     userID: 0
     uniqueID: 0
+    locked: 0
+  - name: GUI
+    userID: 2
+    uniqueID: 3618055817
     locked: 0

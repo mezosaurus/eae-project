@@ -5,9 +5,9 @@ using System.Linq;
 public class CameraScript : MonoBehaviour
 {
     public Transform ObjectToFollow;
+    public Vector3 ObjectToFollowOffset;
 
     private bool zoomedIn = false;
-    bool dum = true;
 
     // Use this for initialization
     void Start()
@@ -29,13 +29,13 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ObjectToFollow != null) transform.position = new Vector3(ObjectToFollow.position.x, ObjectToFollow.position.y, transform.position.z);
+        if(ObjectToFollow != null) transform.position = new Vector3(ObjectToFollow.position.x, ObjectToFollow.position.y, transform.position.z) + ObjectToFollowOffset;
 
-        if(zoomedIn && camera.orthographicSize != 2)
+        if(zoomedIn && camera.orthographicSize != 1.5f)
         {
             camera.orthographicSize -= (20f * Time.deltaTime);
 
-            if (camera.orthographicSize < 2) camera.orthographicSize = 2;
+            if (camera.orthographicSize < 1.5f) camera.orthographicSize = 1.5f;
         }
 
         if (!zoomedIn && camera.orthographicSize != 5)
@@ -52,9 +52,32 @@ public class CameraScript : MonoBehaviour
 
         sprites = sprites.OrderByDescending(x => x.gameObject.transform.position.y).ToArray();
 
-        for(int i = 0; i < sprites.Length; i++)
+        int player = -1;
+        int playerFace = -1;
+        int playerLegs = -1;
+        int playerLeftArm = -1;
+        int playerRightArm = -1;
+        int j = 0;
+
+        for (int i = 0; i < sprites.Length; i++)
         {
-            sprites[i].sortingOrder = i;
+            if (sprites[i].sortingLayerName == "GUI") continue;
+            
+            if (sprites[i].gameObject.tag == "Player") { j += 8; player = i; }
+            if (sprites[i].gameObject.tag == "PlayerFace") playerFace = i;
+            if (sprites[i].gameObject.tag == "PlayerLegs") playerLegs = i;
+            if (sprites[i].gameObject.tag == "PlayerLeftArm") playerLeftArm = i;
+            if (sprites[i].gameObject.tag == "PlayerRightArm") playerRightArm = i;
+
+            sprites[i].sortingOrder = j++;
+
+            if (sprites[i].gameObject.tag == "Player") j += 8;
         }
+
+        /*sprites[playerFace].sortingOrder = sprites[player].sortingOrder + 2;
+        sprites[playerLegs].sortingOrder = sprites[player].sortingOrder - 2;*/
+        sprites[player].GetComponent<TreeController>().UpdateSorting();
+        //sprites[playerLeftArm].sortingOrder = sprites[player].sortingOrder + 1;
+        //sprites[playerRightArm].sortingOrder = sprites[player].sortingOrder + 1;
     }
 }
