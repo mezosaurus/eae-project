@@ -203,7 +203,8 @@ public class TreeController : GameBehavior
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "NPC") npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
+		if (collider.tag == "NPC" && !npcsInRange.ContainsKey(collider.gameObject.GetInstanceID())) npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
+		//if (collider.tag == "NPC") npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D collider)
