@@ -131,6 +131,7 @@ public class AIGenerator : GameBehavior
 
 	void NPCDestroyListener(Message message)
 	{
+		lastSpawnTime = Time.time;
 		NPCDestroyedMessage npcMessage = message as NPCDestroyedMessage;
 		GameObject NPC = npcMessage.NPC;
 
