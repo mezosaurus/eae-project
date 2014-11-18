@@ -70,6 +70,9 @@ public class AIController : GameBehavior {
 	
 	protected float visionAngleOffset; // max offset of angle from NPC's view
 
+	// Sprite
+	private float xScale;
+
 	// Use this for initialization
 	public void Start ()
 	{
@@ -97,6 +100,7 @@ public class AIController : GameBehavior {
 		// TODO: Make this vector match NPC's view
 		//forwardLookingDirection = new Vector3 (-1, 0);
 		npcDir = NPCDirection.L;
+		xScale = transform.localScale.x;
 
 		// Register for all messages that are necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
@@ -328,6 +332,14 @@ public class AIController : GameBehavior {
 		Vector3 biasPosition = new Vector3 (newPosition.x - npcPosition.x, newPosition.y - npcPosition.y);
 		// Compute the tangent of the new position to compare for angles
 		float biasTan = (Mathf.Abs(biasPosition.y) / Mathf.Abs (biasPosition.x));
+
+		float yScale = transform.localScale.y;
+		float zScale = transform.localScale.z;
+
+		if (biasPosition.x > 0)
+			transform.localScale = new Vector3 (-xScale, yScale, zScale);
+		else
+			transform.localScale = new Vector3(xScale, yScale, zScale);
 
 		if (biasPosition.x >= 0 && biasPosition.y >= 0)
 		{

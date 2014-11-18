@@ -71,6 +71,7 @@ public class StationaryAIController : AIController
 		float step = speed * Time.deltaTime;
 
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+		determineDirectionChange (transform.position, movement);
 		transform.position = movement;
 
 		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals ("Respawn")))
