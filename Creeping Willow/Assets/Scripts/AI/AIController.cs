@@ -173,8 +173,7 @@ public class AIController : GameBehavior {
 				alertTexture.renderer.enabled = true;
                 alerted = true;
                 alertedTime = Time.time;
-				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Alert);
-				MessageCenter.Instance.Broadcast (message);
+				broadcastAlertLevelChanged(AlertLevelType.Alert);
 
             }
             if (alertLevel >= panicThreshold)
@@ -188,8 +187,7 @@ public class AIController : GameBehavior {
                 panicTime = Time.time;
                 timePanicked = panicCooldown;
                 moveDir = transform.position - player.transform.position;
-				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Panic);
-				MessageCenter.Instance.Broadcast (message);
+				broadcastAlertLevelChanged(AlertLevelType.Panic);
             }
 
             // Increment alertLevel
@@ -205,10 +203,29 @@ public class AIController : GameBehavior {
 
 	protected bool updateNPC()
 	{
-		// In stationary, alerted doesn't return
-		if (grabbed || alerted)
+		if (grabbed)
 			return true;
+
+		if (playerInRange)
+		{
+			Vector2 playerSpeed = player.rigidbody2D.velocity;
+			if (playerSpeed == Vector2.zero && alertLevel > 0)
+			{
+				decrementAlertLevel();
+			}
+		}
+		else if (alertLevel > 0)
+		{
+			decrementAlertLevel();
+		}
 		
+		// Make sure alert level does not go below 0
+		if (alertLevel < 0)
+			alertLevel = 0;
+
+		if (alerted)
+			return true;
+
 		if (panicked)
 		{
 			timePanicked -= Time.deltaTime;
@@ -218,8 +235,7 @@ public class AIController : GameBehavior {
 				panicTexture.renderer.enabled = false;
 				speed = 1;
 				alertLevel = alertThreshold - 0.1f;
-				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Normal);
-				MessageCenter.Instance.Broadcast (message);
+				broadcastAlertLevelChanged(AlertLevelType.Normal);
 				//GetComponent<SpriteRenderer>().sprite = normalTexture;
 				return true;
 			}
@@ -236,26 +252,27 @@ public class AIController : GameBehavior {
 
 		// TODO: check for player
 
-		if (playerInRange)
-		{
-			Vector2 playerSpeed = player.rigidbody2D.velocity;
-			if (playerSpeed == Vector2.zero && alertLevel > 0)
-			{
-				// decrement alert level
-				alertLevel -= (panicThreshold * 0.05f);
-			}
-		}
-		else if (alertLevel > 0)
-		{
-			alertLevel -= (panicThreshold * 0.05f);
-		}
-		// Make sure alert level does not go below 0
-		if (alertLevel < 0)
-			alertLevel = 0;
-
 		return false;
 	}
 
+	protected void decrementAlertLevel()
+	{
+		float oldLevel = alertLevel;
+		alertLevel -= (panicThreshold * 0.05f);
+		if (oldLevel >= alertThreshold && alertLevel < alertThreshold)
+		{
+			broadcastAlertLevelChanged(AlertLevelType.Normal);
+			alertTexture.renderer.enabled = false;
+			alerted = false;
+		}
+	}
+	
+	protected void broadcastAlertLevelChanged(AlertLevelType type)
+	{
+		NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, type);
+		MessageCenter.Instance.Broadcast (message);
+	}
+	
 	protected bool checkForPlayer()
 	{
 		Vector3 playerPos = player.transform.position;
