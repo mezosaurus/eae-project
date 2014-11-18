@@ -366,7 +366,7 @@ public class AIController : GameBehavior {
 	
 	protected void setNPCDirection(Vector3 direction)
 	{
-		//*
+		/*
 		Debug.Log (direction);
 		if (direction.Equals(NPCDirection.R))
 			Debug.Log ("Right");
