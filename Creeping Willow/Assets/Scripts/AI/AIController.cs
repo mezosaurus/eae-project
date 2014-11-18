@@ -384,7 +384,7 @@ public class AIController : GameBehavior {
 			Debug.Log ("Bottom");
 		else
 			Debug.Log ("Bottom Right");
-		//*/
+		*/
 
 		npcDir = direction;
 		// TODO: Sprite Magic
