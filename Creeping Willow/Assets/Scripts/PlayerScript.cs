@@ -107,11 +107,11 @@ public class PlayerScript : GameBehavior
         // Handle dashing
         if(velocity != zero)
         {
-            if(Input.GetButtonDown("Y") && movementTimer <= 0f)
+            /*if(Input.GetButtonDown("Y") && movementTimer <= 0f)
             {
                 movementDirection = velocity.normalized * 30f;
                 movementTimer = 0.2f;
-            }
+            }*/
         }
 
         if(movementTimer > 0f)
