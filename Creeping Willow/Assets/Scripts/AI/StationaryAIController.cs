@@ -72,6 +72,16 @@ public class StationaryAIController : AIController
 
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		determineDirectionChange (transform.position, movement);
+		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
+
+		if (biasPosition.x == 0)
+		{
+			//To the right
+			gameObject.GetComponent<Animator>().SetInteger("direction", 0);
+		}
+		else
+			gameObject.GetComponent<Animator>().SetInteger("direction", 1);
+	
 		transform.position = movement;
 
 		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals ("Respawn")))
@@ -95,8 +105,9 @@ public class StationaryAIController : AIController
 
 	public void setStationaryPoint(GameObject point)
 	{
-		bench = point;
-		nextPath = point;
+		bench = new GameObject ();
+		bench.transform.position = new Vector3(point.transform.position.x, point.transform.position.y - gameObject.transform.renderer.bounds.size.y/4);
+		nextPath = bench;
 	}
 
 	override protected GameObject getNextPath()

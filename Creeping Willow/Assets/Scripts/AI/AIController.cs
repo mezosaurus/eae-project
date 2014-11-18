@@ -337,10 +337,13 @@ public class AIController : GameBehavior {
 		float zScale = transform.localScale.z;
 
 		if (biasPosition.x > 0)
+		{
 			transform.localScale = new Vector3 (-xScale, yScale, zScale);
+		}
 		else
+		{
 			transform.localScale = new Vector3(xScale, yScale, zScale);
-
+		}
 		if (biasPosition.x >= 0 && biasPosition.y >= 0)
 		{
 			// Quadrant 1
