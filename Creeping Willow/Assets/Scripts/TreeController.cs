@@ -17,7 +17,7 @@ public class TreeController : GameBehavior
     GameObject leftUpperArm, leftLowerBackgroundArm, leftLowerForegroundArm, rightUpperArm, rightLowerArm, theGrabbedNPC;
     ProgressBarController progressBar;
     SpriteRenderer spriteRenderer;
-    Tree.State state;
+    public Tree.State state;
     float xScale;
     Vector2 velocity;
     Tree.Direction direction;
@@ -84,6 +84,8 @@ public class TreeController : GameBehavior
             theList.Add(grabbedNPC);
             MessageCenter.Instance.Broadcast(new PlayerReleasedNPCsMessage(theList));
             grabbedNPC.GetComponent<SpriteRenderer>().enabled = true;
+            grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = true;
+            grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 
@@ -108,6 +110,8 @@ public class TreeController : GameBehavior
 
     private void ChangeStateToEating()
     {
+        rigidbody2D.velocity = Vector2.zero;
+        
         Debug.Log(npcsInRange.Count);
         state = Tree.State.Eating;
         this.velocity = Vector2.zero;
@@ -166,6 +170,8 @@ public class TreeController : GameBehavior
 
         MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(theList));
         grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
+        grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = false;
+        grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     private void ChangeStateToEatingCinematic()
@@ -224,22 +230,25 @@ public class TreeController : GameBehavior
 
     private void UpdateNormal()
     {
-
-        // Check to see if the player is grabbing
-        if(Input.GetAxis("LT") > 0.5f && npcsInRange.Count > 0)
+        if (!GetComponent<PlayerAbilityScript_v2>().abilityInUse)
         {
-            ChangeStateToEating();
+            // Check to see if the player is grabbing
+            if (Input.GetAxis("LT") > 0.5f && npcsInRange.Count > 0)
+            {
+                ChangeStateToEating();
 
-            return;
+                return;
+            }
+
+            velocity = velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
+
+            // Keyboard Input
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) velocity.x = (Input.GetKey(KeyCode.LeftArrow)) ? -1f : 1f;
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) velocity.y = (Input.GetKey(KeyCode.UpArrow)) ? 1f : -1f;
+
+            rigidbody2D.velocity = velocity * Mathf.Lerp(0f, Speed, Time.deltaTime);
         }
-
-        velocity = velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
-
-        // Keyboard Input
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) velocity.x = (Input.GetKey(KeyCode.LeftArrow)) ? -1f : 1f;
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) velocity.y = (Input.GetKey(KeyCode.UpArrow)) ? 1f : -1f;
-
-        rigidbody2D.velocity = velocity * Mathf.Lerp(0f, Speed, Time.deltaTime);
+        else rigidbody2D.velocity = Vector2.zero;
 
         UpdateDirection();
         UpdateSprites();
@@ -263,9 +272,8 @@ public class TreeController : GameBehavior
 
         if(percentage >= 1f)
         {
-            /*LeaveEatingState();
-            ChangeStateToNormal();*/
-            percentage = 0f;
+            LeaveEatingState();
+            ChangeStateToNormal();
 
             return;
         }
