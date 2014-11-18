@@ -181,6 +181,7 @@ public class AIController : GameBehavior {
             if (alertLevel >= panicThreshold)
             {
                 //Debug.Log("PANICKED");
+				/*
 				alertTexture.renderer.enabled = false;
 				panicTexture.renderer.enabled = true;
                 speed = 1.5f;
@@ -190,6 +191,8 @@ public class AIController : GameBehavior {
                 timePanicked = panicCooldown;
                 moveDir = transform.position - player.transform.position;
 				broadcastAlertLevelChanged(AlertLevelType.Panic);
+				*/
+				panic();
             }
 
             // Increment alertLevel
@@ -203,11 +206,24 @@ public class AIController : GameBehavior {
 	// Helper Methods
 	//-----------------------
 
+	private void panic()
+	{
+		alertTexture.renderer.enabled = false;
+		panicTexture.renderer.enabled = true;
+		speed = 1.5f;
+		alerted = false;
+		panicked = true;
+		panicTime = Time.time;
+		timePanicked = panicCooldown;
+		moveDir = transform.position - player.transform.position;
+		broadcastAlertLevelChanged(AlertLevelType.Panic);
+	}
+	
 	protected bool updateNPC()
 	{
 		if (grabbed)
 			return true;
-
+		
 		if (playerInRange)
 		{
 			Vector2 playerSpeed = player.rigidbody2D.velocity;
@@ -245,14 +261,23 @@ public class AIController : GameBehavior {
 			{
 				nearWall = false;
 				moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
+
 			}
-			else  // In stationary, no else
-				rigidbody2D.velocity = moveDir.normalized * speed;
+			//else  // In stationary, no else
+			// TODO: Make more like other updates in AI
+			Vector3 oldVelocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
+			rigidbody2D.velocity = moveDir.normalized * speed;
+			determineDirectionChange(oldVelocity, new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y));
 
 			return true;
 		}
 
-		// TODO: check for player
+		if (checkForPlayer() && player.rigidbody2D.velocity != Vector2.zero)
+		{
+			// TODO: Balance better
+			panic ();
+			return true;
+		}
 
 		return false;
 	}
@@ -284,8 +309,9 @@ public class AIController : GameBehavior {
 		{
 			// get direction of player from NPC's point of view
 			Vector3 direction = playerPos - transform.position;
-			
+
 			// TODO: Update forward vector by NPC's direction or what not
+			// TODO: Get rid of above todo
 
 			// get angle of direction 
 			float angle = Vector3.Angle(direction, npcDir);
@@ -298,7 +324,70 @@ public class AIController : GameBehavior {
 
 	protected void determineDirectionChange(Vector3 npcPosition, Vector3 newPosition)
 	{
-		// TODO: change npcDir and sprite direction
+		// Translate the new position to compare against the origin (easier)
+		Vector3 biasPosition = new Vector3 (newPosition.x - npcPosition.x, newPosition.y - npcPosition.y);
+		// Compute the tangent of the new position to compare for angles
+		float biasTan = (Mathf.Abs(biasPosition.y) / Mathf.Abs (biasPosition.x));
+
+		if (biasPosition.x >= 0 && biasPosition.y >= 0)
+		{
+			// Quadrant 1
+			testDirectionChange(biasTan, NPCDirection.R, NPCDirection.TR, NPCDirection.T);
+		}
+		else if (biasPosition.x < 0 && biasPosition.y >= 0)
+		{
+			// Quadrant 2
+			testDirectionChange(biasTan, NPCDirection.L, NPCDirection.TL, NPCDirection.T);
+		}
+		else if (biasPosition.x < 0 && biasPosition.y < 0)
+		{
+			// Quadrant 3
+			testDirectionChange(biasTan, NPCDirection.L, NPCDirection.BL, NPCDirection.B);
+		}
+		else
+		{
+			// Quadrant 4
+			testDirectionChange(biasTan, NPCDirection.R, NPCDirection.BR, NPCDirection.B);
+		}
+	}
+
+	private void testDirectionChange(float biasTan, Vector3 low, Vector3 middle, Vector3 high)
+	{
+		float smallTan = Mathf.Tan (22.5f);
+		float largeTan = Mathf.Tan (67.5f);
+
+		if (biasTan < smallTan)
+			setNPCDirection(low);
+		else if (biasTan < largeTan)
+			setNPCDirection(middle);
+		else
+			setNPCDirection(high);
+	}
+	
+	protected void setNPCDirection(Vector3 direction)
+	{
+		//*
+		Debug.Log (direction);
+		if (direction.Equals(NPCDirection.R))
+			Debug.Log ("Right");
+		else if (direction.Equals(NPCDirection.TR))
+			Debug.Log ("Top Right");
+		else if (direction.Equals(NPCDirection.T))
+			Debug.Log ("Top");
+		else if (direction.Equals(NPCDirection.TL))
+			Debug.Log ("Top Left");
+		else if (direction.Equals(NPCDirection.L))
+			Debug.Log ("Left");
+		else if (direction.Equals(NPCDirection.BL))
+			Debug.Log ("Bottom Left");
+		else if (direction.Equals(NPCDirection.B))
+			Debug.Log ("Bottom");
+		else
+			Debug.Log ("Bottom Right");
+		//*/
+
+		npcDir = direction;
+		// TODO: Sprite Magic
 	}
 
 	protected GameObject getLeavingPath()

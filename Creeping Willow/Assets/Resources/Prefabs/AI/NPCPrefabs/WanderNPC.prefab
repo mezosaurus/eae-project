@@ -84,6 +84,8 @@ MonoBehaviour:
   alertTimer: 1
   player: {fileID: 100000, guid: b463b3c0544e6844a97fe18b9a4351d7, type: 2}
   lurePower: 3
+  alertTexture: {fileID: 0}
+  panicTexture: {fileID: 0}
   speed: 2
   alerted: 0
   grabbed: 0
@@ -93,6 +95,9 @@ MonoBehaviour:
   detectLevel: 0
   spawnTag: Respawn
   npcTag: NPC
+  visionDistance: 0
+  visionAngleSize: 0
+  npcDir: {x: 0, y: 0, z: 0}
   waitTime: 1
   boundary:
     xMin: 0
