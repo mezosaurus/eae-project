@@ -73,17 +73,19 @@ public class AIController : GameBehavior {
 	// Use this for initialization
 	public void Start ()
 	{
-		alertTexture = GameObject.Find ("AIAlert");
-		Instantiate (alertTexture);
+		// Alert Texture
+		alertTexture = (GameObject)Instantiate (GameObject.Find ("AIAlert"));
 		alertTexture.renderer.enabled = false;
 		TextureScript alertTs = alertTexture.GetComponent<TextureScript> ();
 		alertTs.target = gameObject;
-		panicTexture = GameObject.Find ("AIPanic");
-		Instantiate (panicTexture);
+
+		// Panic Texture
+		panicTexture = (GameObject)Instantiate (GameObject.Find ("AIPanic"));
 		panicTexture.renderer.enabled = false;
 		TextureScript panicTs = panicTexture.GetComponent<TextureScript> ();
 		panicTs.target = gameObject;
-        player = GameObject.Find("Player");
+        
+		player = GameObject.Find("Player");
         // Set initial alert/panick states
         timePanicked = panicCooldown;
         alerted = false;
