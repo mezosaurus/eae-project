@@ -668,7 +668,7 @@ Transform:
   - {fileID: 2069813268}
   - {fileID: 1411849312}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!82 &91972640
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1314,8 +1314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd90c2aa52856dd4ea46bf4af1af80e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectToFollow: {fileID: 0}
-  ObjectToFollowOffset: {x: 0, y: 0, z: 0}
+  ObjectToFollow: {fileID: 91972639}
+  ObjectToFollowOffset: {x: 0, y: .150000006, z: 0}
 --- !u!114 &175926698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12628,6 +12628,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
   m_RootGameObject: {fileID: 91972638}
@@ -15016,7 +15020,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &1989538139
 GameObject:
   m_ObjectHideFlags: 0
