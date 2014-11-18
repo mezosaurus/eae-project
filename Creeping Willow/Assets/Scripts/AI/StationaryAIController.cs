@@ -106,7 +106,7 @@ public class StationaryAIController : AIController
 	public void setStationaryPoint(GameObject point)
 	{
 		bench = new GameObject ();
-		bench.transform.position = new Vector3(point.transform.position.x, point.transform.position.y - gameObject.transform.renderer.bounds.size.y/4);
+		bench.transform.position = new Vector3(point.transform.position.x, point.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
 		nextPath = bench;
 	}
 
