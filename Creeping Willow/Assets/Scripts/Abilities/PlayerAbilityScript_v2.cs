@@ -5,7 +5,7 @@ public class PlayerAbilityScript_v2 : GameBehavior {
 
 	public int luresAllowed;
 	private int luresLeft;
-	private bool abilityInUse;
+	public bool abilityInUse;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,7 @@ public class PlayerAbilityScript_v2 : GameBehavior {
 	}
 
 	void HandleInput(){
-		if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X")))
+		if (((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X"))) && GameObject.FindGameObjectWithTag("Player").GetComponent<TreeController>().state != Tree.State.Eating)
 		{
 			if(luresLeft > 0 && !abilityInUse){
 				AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
