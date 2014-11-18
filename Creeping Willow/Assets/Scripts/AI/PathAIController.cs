@@ -8,6 +8,7 @@ public class PathAIController : AIController
 	
 	//private int wayPointIndex;
 	private bool reverseDirection;
+
 	
 	new void Start()
 	{

@@ -25,6 +25,9 @@ public class AIController : GameBehavior {
     //public Sprite normalTexture;
     //public Sprite alertTexture;
     //public Sprite panicTexture;
+	//public Texture alertTexture;
+	public GameObject alertTexture;
+	public GameObject panicTexture;
 
 	public float speed;
     public bool alerted;
@@ -70,6 +73,16 @@ public class AIController : GameBehavior {
 	// Use this for initialization
 	public void Start ()
 	{
+		alertTexture = GameObject.Find ("AIAlert");
+		Instantiate (alertTexture);
+		alertTexture.renderer.enabled = false;
+		TextureScript alertTs = alertTexture.GetComponent<TextureScript> ();
+		alertTs.target = gameObject;
+		panicTexture = GameObject.Find ("AIPanic");
+		Instantiate (panicTexture);
+		panicTexture.renderer.enabled = false;
+		TextureScript panicTs = panicTexture.GetComponent<TextureScript> ();
+		panicTs.target = gameObject;
         player = GameObject.Find("Player");
         // Set initial alert/panick states
         timePanicked = panicCooldown;
@@ -157,6 +170,7 @@ public class AIController : GameBehavior {
             if (alertLevel >= alertThreshold)
             {
                 //Debug.Log("ALERTED");
+				alertTexture.renderer.enabled = true;
                 alerted = true;
                 alertedTime = Time.time;
 				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Alert);
@@ -166,6 +180,8 @@ public class AIController : GameBehavior {
             if (alertLevel >= panicThreshold)
             {
                 //Debug.Log("PANICKED");
+				alertTexture.renderer.enabled = false;
+				panicTexture.renderer.enabled = true;
                 speed = 1.5f;
                 alerted = false;
                 panicked = true;
@@ -199,6 +215,7 @@ public class AIController : GameBehavior {
 			if (timePanicked <= 0)
 			{
 				panicked = false;
+				panicTexture.renderer.enabled = false;
 				speed = 1;
 				alertLevel = alertThreshold - 0.1f;
 				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Normal);

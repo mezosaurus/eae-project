@@ -80,11 +80,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ebd456e5c3eab4ba59d818363a6100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcDir: 0
   nourishment: 2
   alertTimer: 1
-  player: {fileID: 100000, guid: b463b3c0544e6844a97fe18b9a4351d7, type: 2}
+  player: {fileID: 0}
   lurePower: 3
+  alertTexture: {fileID: 0}
+  panicTexture: {fileID: 0}
   speed: 1
   alerted: 0
   grabbed: 0
@@ -94,6 +95,9 @@ MonoBehaviour:
   detectLevel: 1
   spawnTag: Respawn
   npcTag: NPC
+  visionDistance: 0
+  visionAngleSize: 0
+  npcDir: {x: 0, y: 0, z: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
