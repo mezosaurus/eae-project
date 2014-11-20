@@ -25,7 +25,6 @@ public class OutroScript : MonoBehaviour
 		buttonStyle = new GUIStyle();
 		boxContent = new GUIContent();
 		buttonContent = new GUIContent();
-		GlobalGameStateManager.GameState = GameState.BEGINLEVEL;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
 		mapAudio = gameObject.AddComponent<AudioSource>();
 		mapAudio.clip = sound;

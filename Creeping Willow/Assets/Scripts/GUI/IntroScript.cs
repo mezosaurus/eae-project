@@ -24,7 +24,7 @@ public class IntroScript : MonoBehaviour
 		buttonStyle = new GUIStyle();
 		boxContent = new GUIContent();
 		buttonContent = new GUIContent();
-		GlobalGameStateManager.GameState = GameState.BEGINLEVEL;
+		GlobalGameStateManager.LevelState = LevelState.BEGINLEVEL;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
 		mapAudio = gameObject.AddComponent<AudioSource>();
 		mapAudio.clip = sound;
@@ -69,7 +69,7 @@ public class IntroScript : MonoBehaviour
 
 	private void startBattle()
 	{
-		GlobalGameStateManager.GameState = GameState.INLEVEL_DEFAULT;
+		GlobalGameStateManager.LevelState = LevelState.INLEVEL;
 		this.enabled = false;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
 	}

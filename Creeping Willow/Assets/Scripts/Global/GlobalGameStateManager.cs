@@ -14,22 +14,29 @@ public enum SceneEnum
 	LEVEL_1 = 2,
 };
 
-public enum GameState
+public enum LevelState
 {
 	BEGINLEVEL,
+	INLEVEL,
 	ENDOFLEVEL_VICTORY,
 	ENDOFLEVEL_DEFEAT,
-	INLEVEL_DEFAULT,
-	INLEVEL_CHASE,
-	INLEVEL_EATING,
-    INLEVEL_EATING_CINEMATIC,
 };
+
+public enum PlayerState
+{
+	DEFAULT,
+	EATING_MINIGAME,
+	EATING_CINEMATIC,
+	POSSESION_CASTING,
+	POSSESION_POSSESED,
+}
 
 public static class GlobalGameStateManager
 {
 	public static readonly float originalWidth = 1920;
 	public static readonly float originalHeight = 1080;
-	public static GameState GameState = GameState.INLEVEL_DEFAULT;
+	public static LevelState LevelState = LevelState.BEGINLEVEL;
+	public static PlayerState PlayerState = PlayerState.DEFAULT;
 	public static SceneEnum CurrentScene = 0;
 
 	public static Matrix4x4 PrepareMatrix ()
