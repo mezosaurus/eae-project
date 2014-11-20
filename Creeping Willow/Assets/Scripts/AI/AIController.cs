@@ -121,10 +121,14 @@ public class AIController : GameBehavior {
 		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject);
 		MessageCenter.Instance.Broadcast (message);
 
-		if (alerted && alertTexture != null)
-			alertTexture.renderer.enabled = false;
-		if (panicked && panicTexture != null)
-			panicTexture.renderer.enabled = false;
+		if (alertTexture != null)
+		{
+			Destroy(alertTexture.gameObject);
+		}
+		if (panicTexture != null)
+		{
+			Destroy (panicTexture.gameObject);
+		}
 	}
 
 	//-----------------------
@@ -172,69 +176,19 @@ public class AIController : GameBehavior {
             if (alertLevel >= alertThreshold)
             {
                 //Debug.Log("ALERTED");
-				/*
-				alertTexture.renderer.enabled = true;
-                alerted = true;
-                alertedTime = Time.time;
-				broadcastAlertLevelChanged(AlertLevelType.Alert);
-				//*/
 				alert();
             }
 
 			if (alertLevel >= panicThreshold)
             {
                 //Debug.Log("PANICKED");
-				/*
-				alertTexture.renderer.enabled = false;
-				panicTexture.renderer.enabled = true;
-                speed = 1.5f;
-                alerted = false;
-                panicked = true;
-                panicTime = Time.time;
-                timePanicked = panicCooldown;
-                moveDir = transform.position - player.transform.position;
-				broadcastAlertLevelChanged(AlertLevelType.Panic);
-				//*/
 				panic();
             }
 
             // Increment alertLevel
-            //Debug.Log("ALERT LEVEL = " + alertLevel);
-            //Debug.Log("MAGNITUDE = " + playerSpeed.magnitude);
 			increaseAlertLevel(hearingAlertMultiplier);
         }
     }
-
-	//-----------------------
-	// Helper Methods
-	//-----------------------
-
-	private void panic()
-	{
-		alertTexture.renderer.enabled = false;
-		panicTexture.renderer.enabled = true;
-		speed = 1.5f;
-		alerted = false;
-		panicked = true;
-		panicTime = Time.time;
-		timePanicked = panicCooldownSeconds;
-		moveDir = transform.position - player.transform.position;
-		broadcastAlertLevelChanged(AlertLevelType.Panic);
-	}
-
-	private void increaseAlertLevel(float sensitivity)
-	{
-	    var playerSpeed = player.rigidbody2D.velocity;
-		alertLevel += playerSpeed.magnitude * detectLevel * sensitivity;
-	}
-
-	private void alert()
-	{
-		alertTexture.renderer.enabled = true;
-		alerted = true;
-		//alertedTime = Time.time;	// OLD
-		broadcastAlertLevelChanged(AlertLevelType.Alert);
-	}
 	
 	protected bool updateNPC()
 	{
@@ -256,7 +210,7 @@ public class AIController : GameBehavior {
 		
 		if (alerted)
 			return true;
-
+		
 		if (panicked)
 		{
 			timePanicked -= Time.deltaTime;
@@ -267,24 +221,23 @@ public class AIController : GameBehavior {
 				speed = 1;
 				alertLevel = alertThreshold - 0.1f;
 				broadcastAlertLevelChanged(AlertLevelType.Normal);
-				//GetComponent<SpriteRenderer>().sprite = normalTexture;
 				return true;
 			}
 			if (nearWall)
 			{
 				nearWall = false;
 				moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
-
+				
 			}
 			//else  // In stationary, no else
 			// TODO: Make more like other updates in AI
 			Vector3 oldVelocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
 			rigidbody2D.velocity = moveDir.normalized * speed;
 			determineDirectionChange(oldVelocity, new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y));
-
+			
 			return true;
 		}
-
+		
 		if (checkForPlayer() && player.rigidbody2D.velocity != Vector2.zero)
 		{
 			// TODO: Balance better
@@ -300,10 +253,31 @@ public class AIController : GameBehavior {
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
 
+	//-----------------------
+	// Helper Methods
+	//-----------------------
+
+	protected void setAnimatorInteger(string key, int animation)
+	{
+		gameObject.GetComponent<Animator>().SetInteger(key, animation);
+	}
+
+	protected void broadcastAlertLevelChanged(AlertLevelType type)
+	{
+		NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, type);
+		MessageCenter.Instance.Broadcast (message);
+	}
+	
+	private void increaseAlertLevel(float sensitivity)
+	{
+		var playerSpeed = player.rigidbody2D.velocity;
+		alertLevel += playerSpeed.magnitude * detectLevel * sensitivity;
+	}
+	
 	protected void decrementAlertLevel()
 	{
 		float oldLevel = alertLevel;
@@ -314,18 +288,32 @@ public class AIController : GameBehavior {
 			alertTexture.renderer.enabled = false;
 			alerted = false;
 		}
-
+		
 		// Make sure alert level does not go below 0
 		if (alertLevel < 0)
 			alertLevel = 0;
 	}
 	
-	protected void broadcastAlertLevelChanged(AlertLevelType type)
+	protected virtual void alert()
 	{
-		NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, type);
-		MessageCenter.Instance.Broadcast (message);
+		alertTexture.renderer.enabled = true;
+		alerted = true;
+		broadcastAlertLevelChanged(AlertLevelType.Alert);
 	}
 	
+	private void panic()
+	{
+		alertTexture.renderer.enabled = false;
+		panicTexture.renderer.enabled = true;
+		speed = 1.5f;
+		alerted = false;
+		panicked = true;
+		panicTime = Time.time;
+		timePanicked = panicCooldownSeconds;
+		moveDir = transform.position - player.transform.position;
+		broadcastAlertLevelChanged(AlertLevelType.Panic);
+	}
+
 	protected bool checkForPlayer()
 	{
 		Vector3 playerPos = player.transform.position;
@@ -335,9 +323,6 @@ public class AIController : GameBehavior {
 		{
 			// get direction of player from NPC's point of view
 			Vector3 direction = playerPos - transform.position;
-
-			// TODO: Update forward vector by NPC's direction or what not
-			// TODO: Get rid of above todo
 
 			// get angle of direction 
 			float angle = Vector3.Angle(direction, npcDir);
@@ -403,28 +388,7 @@ public class AIController : GameBehavior {
 	
 	protected void setNPCDirection(Vector3 direction)
 	{
-		/*
-		Debug.Log (direction);
-		if (direction.Equals(NPCDirection.R))
-			Debug.Log ("Right");
-		else if (direction.Equals(NPCDirection.TR))
-			Debug.Log ("Top Right");
-		else if (direction.Equals(NPCDirection.T))
-			Debug.Log ("Top");
-		else if (direction.Equals(NPCDirection.TL))
-			Debug.Log ("Top Left");
-		else if (direction.Equals(NPCDirection.L))
-			Debug.Log ("Left");
-		else if (direction.Equals(NPCDirection.BL))
-			Debug.Log ("Bottom Left");
-		else if (direction.Equals(NPCDirection.B))
-			Debug.Log ("Bottom");
-		else
-			Debug.Log ("Bottom Right");
-		*/
-
 		npcDir = direction;
-		// TODO: Sprite Magic
 	}
 
 	protected GameObject getLeavingPath()
@@ -436,7 +400,6 @@ public class AIController : GameBehavior {
 	
 	protected virtual GameObject getNextPath()
 	{
-		Debug.Log ("parent");
 		GameObject path = new GameObject ();
 		return path;
 	}
@@ -462,7 +425,6 @@ public class AIController : GameBehavior {
 		{
 			grabbed = false;
 			panic();
-			panicTexture.renderer.enabled = true;
 		}
 	}
 
@@ -470,7 +432,11 @@ public class AIController : GameBehavior {
 	{
 		GameObject trappedNPC = ((TrapEnteredMessage)message).NPC;
 		if (trappedNPC.Equals(gameObject))
+		{
 			grabbed = true;
+			alertTexture.renderer.enabled = false;
+			panicTexture.renderer.enabled = false;
+		}
 	}
 
 	void trapReleaseListener(Message message)

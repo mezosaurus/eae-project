@@ -18,7 +18,7 @@ public class TextureScript : MonoBehaviour {
 			//renderer.enabled = true;
 			//Debug.Log (target.position);
 			//var wantedPos = Camera.main.WorldToScreenPoint (target.position);
-			Vector2 pos = new Vector2(target.transform.position.x, (target.transform.position.y + target.renderer.bounds.size.y));
+			Vector2 pos = new Vector2(target.transform.position.x, (target.transform.position.y + target.renderer.bounds.size.y/2));
 			transform.position = pos;
 		}
 	}

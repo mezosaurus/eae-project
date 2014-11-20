@@ -84,8 +84,6 @@ public class TreeController : GameBehavior
             theList.Add(grabbedNPC);
             MessageCenter.Instance.Broadcast(new PlayerReleasedNPCsMessage(theList));
             grabbedNPC.GetComponent<SpriteRenderer>().enabled = true;
-            grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = true;
-            grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 

@@ -8,6 +8,15 @@ public class StationaryAIController : AIController
 	private bool sitting = false;
 	private float leaveTime;
 
+	private static string oldManWalkingKey = "direction";
+
+	private enum OldManWalkingDirection
+	{
+		STILL = 0,
+		LEFT = 1,
+		RIGHT = 2
+	}
+
 	protected override void GameUpdate () 
 	{
 		/*
@@ -77,14 +86,14 @@ public class StationaryAIController : AIController
 		if (biasPosition.x == 0)
 		{
 			//To the right
-			gameObject.GetComponent<Animator>().SetInteger("direction", 0);
+			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.STILL);
 		}
 		else
-			gameObject.GetComponent<Animator>().SetInteger("direction", 1);
-	
+			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
+
 		transform.position = movement;
 
-		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals ("Respawn")))
+		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals (spawnTag)))
 		{
 			if (killSelf && nextPath != bench)
 				Destroy(gameObject);
@@ -110,9 +119,15 @@ public class StationaryAIController : AIController
 		nextPath = bench;
 	}
 
+	protected override void alert()
+	{
+		base.alert ();
+		setAnimatorInteger (oldManWalkingKey, (int)OldManWalkingDirection.STILL);
+	}
+
 	override protected GameObject getNextPath()
 	{
-		Debug.Log ("Child");
+		//Debug.Log ("Child");
 		return bench;
 	}
 	/*
