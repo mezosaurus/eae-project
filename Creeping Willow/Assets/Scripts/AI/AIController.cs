@@ -15,82 +15,75 @@ public class AIController : GameBehavior {
 		R = new Vector3(0,1);
 	}
 
-	//private Vector3 moveDir;
-	//private Vector3 spawnMove;
-    public float nourishment;
-    public float alertTimer;
-    public GameObject player;
-	public float lurePower;
+	// Tags
+	public string spawnTag = "Respawn";
+	public string npcTag = "NPC";
 
-    //public Sprite normalTexture;
-    //public Sprite alertTexture;
-    //public Sprite panicTexture;
-	//public Texture alertTexture;
-	public GameObject alertTexture;
-	public GameObject panicTexture;
+	// NPC variables
+	//public float nourishment = 1;			// Nourishment for player goal (Not currently Implemented)
+	public float lurePower = 3;
+	public float speed = 1;					// NPC speed (when not running)
+	public float panicCooldownSeconds = 2;	// How long the NPC will be panicked for
+	public float detectLevel = 0.2f; 		// This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
+	public float visionDistance = 3; 		// distance that player's view extends to
+	public float visionAngleSize = 120; 	// The total angle size that the player can see
+	public float hearingAlertMultiplier = 1.0f;	// How aware they are of their hearing
+	public float sightAlertMultiplier = 1.5f; // How aware they are of their sight
 
-	public float speed;
+	// NPC state variables
     public bool alerted;
 	public bool grabbed;
     public bool panicked;
 	public bool lured;
 	protected bool playerInRange;
-
     protected bool nearWall;
-    protected Vector2 moveDir;
-    protected float alertedTime;
-    protected float panicTime;
-    public float panicCooldown;
-    protected float timePanicked;
-	protected Lure lastLure;
+	protected bool killSelf = false;
 
+	// Scene variables
+	protected Lure lastLure;
+	protected GameObject player;
+
+	// Movement variables
+	protected Vector2 moveDir;
 	protected GameObject nextPath;
 	protected SubpathScript movePath;
-	protected bool killSelf = false;
+
+	// Panic variables
     protected float panicThreshold = 10;
+    protected float panicTime;
+    protected float timePanicked;
+
+	// Alert variables
     protected float alertThreshold = 5;
     protected float alertLevel;
-    // This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
-    public float detectLevel;
-    // playerSpeed = playerCurrentSpeed / playerMaxSpeed;
-    // alertLevel += playerSpeed * detectLevel
-    // if (alertLevel >= alertThreshold)
-            // NPC ALERT
-    // else if (alertLevel >= panicThreshold)
-            // NPC PANIC
-
-	// Tags
-	public string spawnTag = "Respawn";
-	public string npcTag = "NPC";
-
-	// Cone of Vision variables
-	public float visionDistance; // distance that player's view extends to
-	public float visionAngleSize; // The total angle size that the player can see
-	public Vector3 npcDir;
 	
+	// Cone of Vision variables
 	protected float visionAngleOffset; // max offset of angle from NPC's view
+	protected Vector3 npcDir;
 
 	// Sprite
 	private float xScale;
+	public GameObject alertTexture;
+	public GameObject panicTexture;
 
 	// Use this for initialization
 	public void Start ()
 	{
 		// Alert Texture
-		alertTexture = (GameObject)Instantiate (GameObject.Find ("AIAlert"));
+		alertTexture = (GameObject)Instantiate(Resources.Load("prefabs/AI/SceneInitPrefabs/AIAlert"));
 		alertTexture.renderer.enabled = false;
 		TextureScript alertTs = alertTexture.GetComponent<TextureScript> ();
 		alertTs.target = gameObject;
 
 		// Panic Texture
-		panicTexture = (GameObject)Instantiate (GameObject.Find ("AIPanic"));
+		panicTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIPanic"));
 		panicTexture.renderer.enabled = false;
 		TextureScript panicTs = panicTexture.GetComponent<TextureScript> ();
 		panicTs.target = gameObject;
         
 		player = GameObject.Find("Player");
         // Set initial alert/panick states
-        timePanicked = panicCooldown;
+        timePanicked = panicCooldownSeconds;
         alerted = false;
         panicked = false;
         alertLevel = 0f;
@@ -127,6 +120,11 @@ public class AIController : GameBehavior {
 
 		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject);
 		MessageCenter.Instance.Broadcast (message);
+
+		if (alerted && alertTexture != null)
+			alertTexture.renderer.enabled = false;
+		if (panicked && panicTexture != null)
+			panicTexture.renderer.enabled = false;
 	}
 
 	//-----------------------
@@ -167,22 +165,23 @@ public class AIController : GameBehavior {
         {
             if (panicked)
             {
-                timePanicked = panicCooldown;
+                timePanicked = panicCooldownSeconds;
                 return;
             }
-
-            var playerSpeed = player.rigidbody2D.velocity;
 
             if (alertLevel >= alertThreshold)
             {
                 //Debug.Log("ALERTED");
+				/*
 				alertTexture.renderer.enabled = true;
                 alerted = true;
                 alertedTime = Time.time;
 				broadcastAlertLevelChanged(AlertLevelType.Alert);
-
+				//*/
+				alert();
             }
-            if (alertLevel >= panicThreshold)
+
+			if (alertLevel >= panicThreshold)
             {
                 //Debug.Log("PANICKED");
 				/*
@@ -195,14 +194,14 @@ public class AIController : GameBehavior {
                 timePanicked = panicCooldown;
                 moveDir = transform.position - player.transform.position;
 				broadcastAlertLevelChanged(AlertLevelType.Panic);
-				*/
+				//*/
 				panic();
             }
 
             // Increment alertLevel
             //Debug.Log("ALERT LEVEL = " + alertLevel);
             //Debug.Log("MAGNITUDE = " + playerSpeed.magnitude);
-            alertLevel += playerSpeed.magnitude * detectLevel;
+			increaseAlertLevel(hearingAlertMultiplier);
         }
     }
 
@@ -218,9 +217,23 @@ public class AIController : GameBehavior {
 		alerted = false;
 		panicked = true;
 		panicTime = Time.time;
-		timePanicked = panicCooldown;
+		timePanicked = panicCooldownSeconds;
 		moveDir = transform.position - player.transform.position;
 		broadcastAlertLevelChanged(AlertLevelType.Panic);
+	}
+
+	private void increaseAlertLevel(float sensitivity)
+	{
+	    var playerSpeed = player.rigidbody2D.velocity;
+		alertLevel += playerSpeed.magnitude * detectLevel * sensitivity;
+	}
+
+	private void alert()
+	{
+		alertTexture.renderer.enabled = true;
+		alerted = true;
+		//alertedTime = Time.time;	// OLD
+		broadcastAlertLevelChanged(AlertLevelType.Alert);
 	}
 	
 	protected bool updateNPC()
@@ -241,10 +254,6 @@ public class AIController : GameBehavior {
 			decrementAlertLevel();
 		}
 		
-		// Make sure alert level does not go below 0
-		if (alertLevel < 0)
-			alertLevel = 0;
-
 		if (alerted)
 			return true;
 
@@ -279,8 +288,17 @@ public class AIController : GameBehavior {
 		if (checkForPlayer() && player.rigidbody2D.velocity != Vector2.zero)
 		{
 			// TODO: Balance better
-			panic ();
-			return true;
+			increaseAlertLevel(sightAlertMultiplier);
+			if (alertLevel >= alertThreshold)
+			{
+				alert ();
+				return true;
+			}
+			else if (alertLevel >= panicThreshold)
+			{
+				panic ();
+				return true;
+			}
 		}
 
 		return false;
@@ -296,6 +314,10 @@ public class AIController : GameBehavior {
 			alertTexture.renderer.enabled = false;
 			alerted = false;
 		}
+
+		// Make sure alert level does not go below 0
+		if (alertLevel < 0)
+			alertLevel = 0;
 	}
 	
 	protected void broadcastAlertLevelChanged(AlertLevelType type)
@@ -426,7 +448,12 @@ public class AIController : GameBehavior {
 	void grabbedListener(Message message)
 	{
         if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
-        { grabbed = true; Debug.Log("Gotcha"); }
+        { 
+			grabbed = true; 
+			Debug.Log("Gotcha"); 
+			alertTexture.renderer.enabled = false;
+			panicTexture.renderer.enabled = false;
+		}
 	}
 
 	void releasedListener(Message message)
@@ -434,6 +461,8 @@ public class AIController : GameBehavior {
 		if (((PlayerReleasedNPCsMessage)message).NPCs.Contains(gameObject))
 		{
 			grabbed = false;
+			panic();
+			panicTexture.renderer.enabled = true;
 		}
 	}
 
