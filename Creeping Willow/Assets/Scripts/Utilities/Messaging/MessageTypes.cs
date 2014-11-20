@@ -18,5 +18,6 @@
     CameraZoomOut,
 	PauseChanged,
 	NPCDestroyed,
-	NPCAlertLevel
+	NPCAlertLevel,
+	NotorietyMaxed,
 }
