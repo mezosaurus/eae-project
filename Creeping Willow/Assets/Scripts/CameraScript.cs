@@ -14,6 +14,15 @@ public class CameraScript : MonoBehaviour
     {
         MessageCenter.Instance.RegisterListener(MessageType.CameraZoomIn, HandleCameraZoomInMessage);
         MessageCenter.Instance.RegisterListener(MessageType.CameraZoomOut, HandleCameraZoomOutMessage);
+
+        SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
+
+        sprites = sprites.Where(item => item.sortingLayerName == "Background").OrderByDescending(x => x.gameObject.transform.position.y).ThenBy(x => x.gameObject.transform.position.x).ToArray();
+
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            sprites[i].sortingOrder = i;
+        }
     }
 
     void HandleCameraZoomInMessage(Message message)
@@ -50,7 +59,7 @@ public class CameraScript : MonoBehaviour
     {
         SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
 
-        sprites = sprites.OrderByDescending(x => x.gameObject.transform.position.y).ToArray();
+        sprites = sprites.Where(item => item.sortingLayerName == "Default").OrderByDescending(x => x.gameObject.transform.position.y).ToArray();
 
         int player = -1;
         int playerFace = -1;
