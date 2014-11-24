@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Linq;
 
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
+
 public class CameraScript : MonoBehaviour
 {
     public Transform ObjectToFollow;
@@ -58,6 +62,22 @@ public class CameraScript : MonoBehaviour
 
             if (camera.orthographicSize > 5) camera.orthographicSize = 5;
         }
+
+#if UNITY_EDITOR
+        SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
+
+        sprites = sprites.Where(item => item.sortingLayerName == "Background").OrderByDescending(x => x.gameObject.transform.position.y).ThenBy(x => x.gameObject.transform.position.x).ToArray();
+
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            sprites[i].sortingOrder = i;
+        }
+
+        foreach(SpriteRenderer sprite in FindObjectsOfType<SpriteRenderer>())
+        {
+            Debug.Log(sprite.sortingLayerName);
+        }
+#endif
     }
 
     void LateUpdate()
