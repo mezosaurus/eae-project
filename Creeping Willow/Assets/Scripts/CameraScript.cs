@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 #endif
 
+[ExecuteInEditMode]
 public class CameraScript : MonoBehaviour
 {
     public Transform ObjectToFollow;
