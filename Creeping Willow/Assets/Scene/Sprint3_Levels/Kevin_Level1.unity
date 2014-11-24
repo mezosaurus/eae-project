@@ -29070,6 +29070,7 @@ GameObject:
   - 92: {fileID: 1031609269}
   - 124: {fileID: 1031609268}
   - 81: {fileID: 1031609267}
+  - 114: {fileID: 1031609272}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -29142,6 +29143,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1031609272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1031609266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd90c2aa52856dd4ea46bf4af1af80e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToFollow: {fileID: 0}
+  ObjectToFollowOffset: {x: 0, y: .150000006, z: 0}
 --- !u!1 &1034005221
 GameObject:
   m_ObjectHideFlags: 0

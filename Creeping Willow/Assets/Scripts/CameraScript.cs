@@ -23,6 +23,11 @@ public class CameraScript : MonoBehaviour
         {
             sprites[i].sortingOrder = i;
         }
+
+        foreach(SpriteRenderer sprite in FindObjectsOfType<SpriteRenderer>())
+        {
+            Debug.Log(sprite.sortingLayerName);
+        }
     }
 
     void HandleCameraZoomInMessage(Message message)
@@ -59,7 +64,7 @@ public class CameraScript : MonoBehaviour
     {
         SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
 
-        sprites = sprites.Where(item => item.sortingLayerName == "Default").OrderByDescending(x => x.gameObject.transform.position.y).ToArray();
+        sprites = sprites.Where(item => item.sortingLayerName == "").OrderByDescending(x => x.gameObject.transform.position.y).ToArray();
 
         int player = -1;
         int playerFace = -1;
@@ -85,7 +90,7 @@ public class CameraScript : MonoBehaviour
 
         /*sprites[playerFace].sortingOrder = sprites[player].sortingOrder + 2;
         sprites[playerLegs].sortingOrder = sprites[player].sortingOrder - 2;*/
-        sprites[player].GetComponent<TreeController>().UpdateSorting();
+        if(player >= 0) sprites[player].GetComponent<TreeController>().UpdateSorting();
         //sprites[playerLeftArm].sortingOrder = sprites[player].sortingOrder + 1;
         //sprites[playerRightArm].sortingOrder = sprites[player].sortingOrder + 1;
     }
