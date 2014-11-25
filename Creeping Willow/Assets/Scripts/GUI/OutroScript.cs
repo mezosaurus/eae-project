@@ -39,28 +39,69 @@ public class OutroScript : MonoBehaviour
 
 	protected void RegisterListeners()
 	{
-		MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		MessageCenter.Instance.RegisterListener( MessageType.LevelFinished, HandleNPCAlertMessage );
 	}
 	
 	protected void UnregisterListeners()
 	{
-		MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		MessageCenter.Instance.UnregisterListener( MessageType.LevelFinished, HandleNPCAlertMessage );
 	}
 
 	protected void HandleNPCAlertMessage( Message message )
 	{
-		NPCAlertLevelMessage mess = message as NPCAlertLevelMessage;
+		LevelFinishedMessage mess = message as LevelFinishedMessage;
 
-		switch( mess.alertLevelType )
+		if( mess.Type == LevelFinishedType.Loss )
 		{
-		case AlertLevelType.Panic:
-			this.enabled = true;
-			this.message = "You have failed\n\nThe NPC noticed you and got scared";
-			MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
-			break;
+			switch( mess.Reason )
+			{
+			case LevelFinishedReason.MaxNPCsPanicked:
+				this.enabled = true;
+				this.message = "You have failed\n\nThe NPC noticed you and got scared";
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				break;
 
-		default:
-			break;
+			case LevelFinishedReason.PlayerDied:
+				this.enabled = true;
+				this.message = "You have failed\n\nYour tree was chopped down and made into evil little toothpicks";
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				break;
+
+			case LevelFinishedReason.TimerOut:
+				this.enabled = true;
+				this.message = "You have failed\n\nYou ran out of time";
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				break;
+
+			default:
+				break;
+			}
+		}
+		else if( mess.Type == LevelFinishedType.Win )
+		{
+			switch( mess.Reason )
+			{
+			case LevelFinishedReason.TargetNPCEaten:
+				this.enabled = true;
+				this.message = "You have won\n\nYour target has been consumed";
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				break;
+				
+			case LevelFinishedReason.NumNPCsEaten:
+				this.enabled = true;
+				this.message = "You have won\n\nYour tree has feasted upon many souls";
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				break;
+				
+			case LevelFinishedReason.TimerOut:
+				this.enabled = true;
+				this.message = "You have won\n\nYou survived the day";
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				break;
+				
+			default:
+				break;
+			}
 		}
 	}
 
