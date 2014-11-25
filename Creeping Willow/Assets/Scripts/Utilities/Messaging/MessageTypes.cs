@@ -20,4 +20,5 @@
 	NPCDestroyed,
 	NPCAlertLevel,
 	NotorietyMaxed,
+	ScoreChanged
 }

@@ -405,6 +405,16 @@ public class AIController : GameBehavior {
 	}
 
 	//-----------------------
+	// Accessor Methods
+	//-----------------------
+
+	// needed for scoring
+	public Lure getLastLure()
+	{
+		return lastLure;
+	}
+
+	//-----------------------
 	// Listener Methods
 	//-----------------------
 
