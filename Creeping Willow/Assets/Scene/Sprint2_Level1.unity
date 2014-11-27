@@ -14537,6 +14537,7 @@ GameObject:
   - 114: {fileID: 1896610428}
   - 114: {fileID: 1896610429}
   - 114: {fileID: 1896610430}
+  - 114: {fileID: 1896610431}
   m_Layer: 0
   m_Name: LevelGUI
   m_TagString: Untagged
@@ -14673,6 +14674,17 @@ MonoBehaviour:
   UseMaxNPCsPanicked: 1
   TimeOutIsLoss: 0
   UseTimerOut: 0
+--- !u!114 &1896610431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1896610423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5b947123433ac45a6fe9e7daea21a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1902448221
 GameObject:
   m_ObjectHideFlags: 0
