@@ -6,6 +6,7 @@ public class AIGenerator : GameBehavior
 	public GameObject pathNPC;
 	public GameObject stationaryNPC;
     public GameObject wanderNPC;
+	public GameObject enemyNPC;
 	public string spawnTag = "Respawn";
 	public string pathTag = "Paths";
 	public string benchTag = "Bench";
@@ -19,6 +20,7 @@ public class AIGenerator : GameBehavior
 	private ArrayList stationaryAIList;
 	private ArrayList pathAIList;
 	private ArrayList wanderAIList;
+	private ArrayList enemyAIList;
 
 	void Start()
 	{
@@ -27,13 +29,25 @@ public class AIGenerator : GameBehavior
 		stationaryAIList = new ArrayList ();
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
+		enemyAIList = new ArrayList ();
 
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
+		MessageCenter.Instance.RegisterListener (MessageType.NPCAlertLevel, NPCAlertedListener);
+	}
+
+	private void NPCAlertedListener(Message message)
+	{
+		NPCAlertLevelMessage alertMessage = message as NPCAlertLevelMessage;
+		if (alertMessage.alertLevelType == AlertLevelType.Panic)
+			createEnemyNPC (alertMessage.NPC.transform.position);
 	}
 
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
+		if (Input.GetMouseButtonDown (0))
+						createEnemyNPC (Input.mousePosition);
+		
 		if (lastSpawnTime <= Time.time - spawnTime && isRoomAvailableForNewNPC())
 		{
 			lastSpawnTime = Time.time;
@@ -131,6 +145,12 @@ public class AIGenerator : GameBehavior
         GameObject wanderNPC = createNPC(this.wanderNPC, wanderAIList);
     }
 
+	void createEnemyNPC(Vector3 panickedNPCPosition)
+	{
+		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
+		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPCPosition);
+	}
+
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
 	{
 		GameObject npc = (GameObject)Instantiate (NPC, getRandomSpawnPoint (), Quaternion.identity);
@@ -140,9 +160,11 @@ public class AIGenerator : GameBehavior
 
 	void NPCDestroyListener(Message message)
 	{
-		lastSpawnTime = Time.time;
 		NPCDestroyedMessage npcMessage = message as NPCDestroyedMessage;
 		GameObject NPC = npcMessage.NPC;
+
+		if (lastSpawnTime <= Time.time - spawnTime && NPC.GetComponent<EnemyAIController>() == null)
+			lastSpawnTime = Time.time;
 
 		if (pathAIList.Contains(NPC))
 			pathAIList.Remove(NPC);
@@ -150,6 +172,8 @@ public class AIGenerator : GameBehavior
 			stationaryAIList.Remove(NPC);
 		else if (wanderAIList.Contains(NPC))
 			wanderAIList.Remove(NPC);
+		else if (enemyAIList.Contains(NPC))
+			enemyAIList.Remove(NPC);
 	}
 
 	// For use when updating spawn points to 'gates'

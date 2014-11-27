@@ -7,7 +7,7 @@ public class PathAIController : AIController
 	//public Transform[] moveWayPoints;
 	
 	//private int wayPointIndex;
-	private bool reverseDirection;
+	//private bool reverseDirection;
 
 	new void Start()
 	{

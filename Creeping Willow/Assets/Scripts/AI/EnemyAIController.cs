@@ -3,64 +3,116 @@ using System.Collections;
 
 public class EnemyAIController : AIController 
 {
-	// OLD Variables
-	//public Transform[] moveWayPoints;
+	public float sittingTime;
+	protected Vector3 panickedNPCPosition;
+	private bool sitting = false;
+	private float leaveTime;
 	
-	//private int wayPointIndex;
-	private bool reverseDirection;
+	private static string axeManWalkingKey = "direction";
 	
-	new void Start()
+	private enum AxeManWalkingDirection
 	{
-		base.Start ();
-		
-		// Get path for AI
-		nextPath = movePath.getNextPath (null);
-		
-		//reverseDirection = false;	// OLD
+		STILL = 0,
+		LEFT = 1,
+		RIGHT = 2
 	}
 	
-	public void setMovingPath(SubpathScript movePath)
-	{
-		this.movePath = movePath;
-	}
-	
-	override protected GameObject getNextPath()
-	{
-		return movePath.getNextPath(null);
-	}
-	
-	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
-		if (updateNPC())
+		if (updateNPC ())
 			return;
+		
 		
 		// if lure is deleted
 		if( nextPath == null ) return;
 		
 		Vector3 pathPosition = nextPath.transform.position;
-		Vector3 position = transform.position;
-		//Vector3 goal = GameObject.Find ("SpawnMoves/SpawnMove1").transform.position;
+		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
-		Vector3 movement = Vector3.MoveTowards (position, pathPosition, step);
-		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
-		determineDirectionChange(transform.position, movement);
-		transform.position = movement;
 		
-		if (movement == pathPosition && !lured)
+		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+		determineDirectionChange (transform.position, movement);
+		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
+		
+		if (biasPosition.x == 0)
 		{
-			if (killSelf && nextPath.gameObject.tag.Equals("Respawn"))
+			//To the right
+			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
+		}
+		else
+			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.LEFT);
+		
+		transform.position = movement;
+
+		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || nextPath.tag.Equals (spawnTag)))
+		{
+			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
 				Destroy(gameObject);
 			
-			int max = 10;
-			int rand = Random.Range (0, max);
-			if (rand < max - 1)
-				nextPath = movePath.getNextPath(nextPath);
-			else
+			if (!sitting)
 			{
+				sitting = true;
+				leaveTime = Time.time + sittingTime;
+			}
+			
+			if (leaveTime <= Time.time)
+			{
+				sitting = false;
 				killSelf = true;
 				nextPath = getLeavingPath();
+				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 		}
-	}	
+	}
+
+	public void setStationaryPoint(Vector3 point)
+	{
+		Debug.Log (point);
+		panickedNPCPosition = point;
+		nextPath = new GameObject ();
+		nextPath.transform.position = panickedNPCPosition;
+	}
+
+	protected override void alert()
+	{
+		base.alert ();
+		//setAnimatorInteger (axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
+	}
+	
+	new protected Vector3 getNextPath()
+	{
+
+		return panickedNPCPosition;
+	}
+
+	override protected void panic()
+	{
+		base.panic ();
+		this.GetComponent<BoxCollider2D>().isTrigger = false;
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		/*
+		if (!killSelf && !panicked && collision.collider.Equals (panickedNPCPosition.collider2D)) {
+			this.GetComponent<BoxCollider2D> ().isTrigger = true;
+		}
+		*/
+	}
+
+	override protected void OnTriggerEnter2D(Collider2D other)
+	{
+		base.OnTriggerEnter2D (other);
+	}
+
+	override protected void OnTriggerExit2D(Collider2D other)
+	{
+		base.OnTriggerEnter2D (other);
+		
+	}
+
+	override protected void OnTriggerStay2D(Collider2D other)
+	{
+		base.OnTriggerStay2D (other);
+	}
 }
