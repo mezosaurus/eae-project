@@ -92,7 +92,13 @@ public class StationaryAIController : AIController
 			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
 
 		transform.position = movement;
-
+	/*
+		if (!sitting) {
+			Debug.Log ("!Sitting");
+		}
+		else
+			Debug.Log ("Sitting");
+*/
 		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals (spawnTag)))
 		{
 			if (killSelf && nextPath != bench)
@@ -106,16 +112,18 @@ public class StationaryAIController : AIController
 
 			if (leaveTime <= Time.time)
 			{
+				sitting = false;
 				killSelf = true;
 				nextPath = getLeavingPath();
+				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 		}
 	}
 
 	public void setStationaryPoint(GameObject point)
 	{
-		bench = new GameObject ();
-		bench.transform.position = new Vector3(point.transform.position.x, point.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
+		bench = point;
+//		bench.transform.position = new Vector3(point.transform.position.x, point.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
 		nextPath = bench;
 	}
 
@@ -130,6 +138,50 @@ public class StationaryAIController : AIController
 		//Debug.Log ("Child");
 		return bench;
 	}
+
+	override protected void panic()
+	{
+		base.panic ();
+		this.GetComponent<BoxCollider2D>().isTrigger = false;
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (!killSelf && !panicked && collision.collider.Equals (bench.collider2D)) {
+			this.GetComponent<BoxCollider2D> ().isTrigger = true;
+		}
+	}
+	
+	override protected void OnTriggerEnter2D(Collider2D other)
+	{
+	/*
+		if (other.Equals (bench.collider2D))
+			this.GetComponent<BoxCollider2D> ().enabled = false;
+	*/
+	    base.OnTriggerEnter2D (other);
+	}
+
+	override protected void OnTriggerExit2D(Collider2D other)
+	{
+	/*
+		if (other.Equals (bench.collider2D))
+			this.GetComponent<BoxCollider2D> ().enabled = true;
+	*/
+	    base.OnTriggerEnter2D (other);
+
+	}
+
+	override protected void OnTriggerStay2D(Collider2D other)
+	{
+	/*
+		if (other.Equals (bench.collider2D)) {
+			//Physics2D.IgnoreCollision (this.collider2D, other);
+		}
+		else
+	*/
+		base.OnTriggerStay2D (other);
+	}
+
 	/*
 	 * Old Stuff
 	void Update()

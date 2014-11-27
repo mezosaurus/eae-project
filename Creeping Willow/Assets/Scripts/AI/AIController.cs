@@ -135,7 +135,7 @@ public class AIController : GameBehavior {
 	// Trigger Methods
 	//-----------------------
 
-    void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
@@ -143,7 +143,7 @@ public class AIController : GameBehavior {
         }
     }
 
-	void OnTriggerEnter2D(Collider2D other)
+	protected virtual void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Player") 
 		{
@@ -151,7 +151,7 @@ public class AIController : GameBehavior {
 		}
 	}
 
-    void OnTriggerStay2D(Collider2D other)
+	protected virtual void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Wall")
         {
@@ -238,7 +238,7 @@ public class AIController : GameBehavior {
 			return true;
 		}
 		
-		if (checkForPlayer() && player.rigidbody2D.velocity != Vector2.zero)
+		if (checkForPlayer() && player.rigidbody2D != null && player.rigidbody2D.velocity != Vector2.zero)
 		{
 			// TODO: Balance better
 			increaseAlertLevel(sightAlertMultiplier);
@@ -301,7 +301,7 @@ public class AIController : GameBehavior {
 		broadcastAlertLevelChanged(AlertLevelType.Alert);
 	}
 	
-	private void panic()
+	protected virtual void panic()
 	{
 		alertTexture.renderer.enabled = false;
 		panicTexture.renderer.enabled = true;

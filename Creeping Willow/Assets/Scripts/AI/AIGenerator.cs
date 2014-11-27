@@ -43,6 +43,14 @@ public class AIGenerator : GameBehavior
 
 	bool isRoomAvailableForNewNPC()
 	{
+		if (pathAIList == null) {
+			Debug.Log ("PATH");
+			pathAIList = new ArrayList();
+		}
+		if (stationaryAIList == null) {
+			Debug.Log ("STATION");
+			stationaryAIList = new ArrayList();
+		}
 		if (pathAIList.Count >= maxNumberOfEachNPC
 		    && stationaryAIList.Count >= maxNumberOfEachNPC
 //		    && wanderAIList.Count >= maxNumberOfEachNPC	// Taken out for basic build
@@ -72,6 +80,7 @@ public class AIGenerator : GameBehavior
 			{
 				// TODO: Make better
 				//	Idea: make a list of all available AI in isRoomAvailable... to get an enum of creating NPCs
+				// 	Idea: Make a recursive method of createNewNPC that takes in the rand and the number of overflows (call from here with 0) that way each type gets called
 				createNewNPC ();
 			}
 			break;
