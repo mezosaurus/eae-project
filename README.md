@@ -3,7 +3,7 @@ eae-project
 
 Creeping Willow - EAE Project Repository
 
-Matt Barnes - Engineer
+Matt Lawton - Engineer
 
 Ethan Hayes - Engineer
 
