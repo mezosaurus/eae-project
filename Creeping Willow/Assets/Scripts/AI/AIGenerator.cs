@@ -147,6 +147,8 @@ public class AIGenerator : GameBehavior
 
 	void createEnemyNPC(Vector3 panickedNPCPosition)
 	{
+		if (this.enemyNPC == null)
+			return;
 		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
 		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPCPosition);
 	}
