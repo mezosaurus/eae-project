@@ -7,7 +7,8 @@ public class EnemyAIController : AIController
 	protected Vector3 panickedNPCPosition;
 	private bool sitting = false;
 	private float leaveTime;
-	
+	private bool calledToPoint = false;
+
 	private static string axeManWalkingKey = "direction";
 	
 	private enum AxeManWalkingDirection
@@ -20,8 +21,7 @@ public class EnemyAIController : AIController
 	protected override void GameUpdate () 
 	{
 		if (updateNPC ())
-			return;
-		
+			return;	
 		
 		// if lure is deleted
 		if( nextPath == null ) return;
@@ -44,7 +44,7 @@ public class EnemyAIController : AIController
 		
 		transform.position = movement;
 
-		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || nextPath.tag.Equals (spawnTag)))
+		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf))
 		{
 			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
 				Destroy(gameObject);
@@ -59,16 +59,21 @@ public class EnemyAIController : AIController
 			{
 				sitting = false;
 				killSelf = true;
+				if (calledToPoint)
+				{
+					calledToPoint = false;
+					Destroy(nextPath);
+				}
 				nextPath = getLeavingPath();
 				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 		}
 	}
 
-	public void setStationaryPoint(Vector3 point)
+	public void setStationaryPoint(GameObject panickedNPC)
 	{
-		Debug.Log (point);
-		panickedNPCPosition = point;
+		panickedNPCPosition = panickedNPC.transform.position;
+		calledToPoint = true;
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
 	}

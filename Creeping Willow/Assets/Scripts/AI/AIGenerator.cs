@@ -39,15 +39,12 @@ public class AIGenerator : GameBehavior
 	{
 		NPCAlertLevelMessage alertMessage = message as NPCAlertLevelMessage;
 		if (alertMessage.alertLevelType == AlertLevelType.Panic)
-			createEnemyNPC (alertMessage.NPC.transform.position);
+			createEnemyNPC (alertMessage.NPC);
 	}
 
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
-		if (Input.GetMouseButtonDown (0))
-						createEnemyNPC (Input.mousePosition);
-		
 		if (lastSpawnTime <= Time.time - spawnTime && isRoomAvailableForNewNPC())
 		{
 			lastSpawnTime = Time.time;
@@ -77,6 +74,8 @@ public class AIGenerator : GameBehavior
 	Vector2 getRandomSpawnPoint()
 	{
 		int rand = Random.Range(0, spawnPoints.Length);
+		if (spawnPoints [rand] == null)
+			Debug.Log ("Wat?");
 		return spawnPoints[rand].transform.position;
 	}
 	
@@ -145,12 +144,12 @@ public class AIGenerator : GameBehavior
         GameObject wanderNPC = createNPC(this.wanderNPC, wanderAIList);
     }
 
-	void createEnemyNPC(Vector3 panickedNPCPosition)
+	void createEnemyNPC(GameObject panickedNPC)
 	{
 		if (this.enemyNPC == null)
 			return;
 		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
-		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPCPosition);
+		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPC);
 	}
 
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
