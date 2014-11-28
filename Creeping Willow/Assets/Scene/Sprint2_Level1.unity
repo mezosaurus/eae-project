@@ -777,7 +777,7 @@ MonoBehaviour:
   Prefabs:
     LeftThumbStick: {fileID: 100000, guid: a36c9a10082a7bf44a701b1a69576640, type: 2}
     RightThumbStick: {fileID: 100000, guid: 2e0723bd5ed20d8429f13a118aa506dc, type: 2}
-  Speed: 50
+  Speed: 20
   state: 0
 --- !u!58 &91972642
 CircleCollider2D:
@@ -12720,7 +12720,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
       propertyPath: Speed
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
