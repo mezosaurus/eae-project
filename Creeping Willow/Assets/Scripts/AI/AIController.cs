@@ -62,7 +62,7 @@ public class AIController : GameBehavior {
 	protected Vector3 npcDir;
 
 	// Sprite
-	private float xScale;
+	protected float xScale;
 	public GameObject alertTexture;
 	public GameObject panicTexture;
 

@@ -72,7 +72,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: old_man_breathing_anim
-  m_Speed: 1
+  m_Speed: .5
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: f0a46671563e4d348882ac4d82a90b28, type: 2}
@@ -87,7 +87,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: old_man_walking_anim
-  m_Speed: 1
+  m_Speed: .5
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: 17db054a058e85b478ef44a94c6ce646, type: 2}
@@ -114,13 +114,13 @@ StateMachine:
       first: {fileID: 0}
       second: []
     data:
-      first: {fileID: 110213751}
-      second:
-      - {fileID: 110149750}
-    data:
       first: {fileID: 110200000}
       second:
       - {fileID: 110100000}
+    data:
+      first: {fileID: 110213751}
+      second:
+      - {fileID: 110149750}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

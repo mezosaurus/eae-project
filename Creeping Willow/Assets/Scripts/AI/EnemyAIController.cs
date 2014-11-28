@@ -17,7 +17,13 @@ public class EnemyAIController : AIController
 		LEFT = 1,
 		RIGHT = 2
 	}
-	
+
+	new public void Start()
+	{
+		base.Start ();
+		xScale = -xScale;
+	}
+
 	protected override void GameUpdate () 
 	{
 		if (updateNPC ())
@@ -25,36 +31,9 @@ public class EnemyAIController : AIController
 		
 		// if lure is deleted
 		if( nextPath == null ) return;
-		
-		Vector3 pathPosition = nextPath.transform.position;
-		Vector3 positionNPC = transform.position;
-		float step = speed * Time.deltaTime;
-		
-		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
-		determineDirectionChange (transform.position, movement);
-		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		
-		if (biasPosition.x == 0)
-		{
-			//To the right
-			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
-		}
-		else
-			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.LEFT);
-		
-		transform.position = movement;
 
-		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf))
+		if (sitting)
 		{
-			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
-				Destroy(gameObject);
-			
-			if (!sitting)
-			{
-				sitting = true;
-				leaveTime = Time.time + sittingTime;
-			}
-			
 			if (leaveTime <= Time.time)
 			{
 				sitting = false;
@@ -67,7 +46,49 @@ public class EnemyAIController : AIController
 				nextPath = getLeavingPath();
 				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
+
+			investigate();
 		}
+
+		Vector3 pathPosition = nextPath.transform.position;
+		Vector3 positionNPC = transform.position;
+		float step = speed * Time.deltaTime;
+		
+		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+
+		animateCharacter(movement);
+		
+		transform.position = movement;
+
+		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf))
+		{
+			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
+				Destroy(gameObject);
+			
+			if (!sitting)
+			{
+				sitting = true;
+				leaveTime = Time.time + sittingTime;
+			}			
+		}
+	}
+
+	private void animateCharacter(Vector3 movement)
+	{
+		determineDirectionChange (transform.position, movement);
+		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
+		if (biasPosition.x == 0)
+		{
+			//To the right
+			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
+		}
+		//else
+			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.LEFT);
+	}
+
+	private void investigate()
+	{
+
 	}
 
 	public void setStationaryPoint(GameObject panickedNPC)

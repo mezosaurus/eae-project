@@ -114,7 +114,6 @@ public class PathAIController : AIController
 			}
 		}
 	}
-
 	//	void OnTriggerEnter2D(Collider2D other)
 	//	{
 	//		if (other.tag == "Player")

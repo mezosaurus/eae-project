@@ -62,6 +62,7 @@ public class AIGenerator : GameBehavior
 			Debug.Log ("STATION");
 			stationaryAIList = new ArrayList();
 		}
+
 		if (pathAIList.Count >= maxNumberOfEachNPC
 		    && stationaryAIList.Count >= maxNumberOfEachNPC
 //		    && wanderAIList.Count >= maxNumberOfEachNPC	// Taken out for basic build
@@ -75,7 +76,10 @@ public class AIGenerator : GameBehavior
 	{
 		int rand = Random.Range(0, spawnPoints.Length);
 		if (spawnPoints [rand] == null)
-			Debug.Log ("Wat?");
+		{
+			Debug.Log ("Wat? " + rand);
+			spawnPoints = GameObject.FindGameObjectsWithTag(spawnTag);
+		}
 		return spawnPoints[rand].transform.position;
 	}
 	
