@@ -301,6 +301,11 @@ public class AIController : GameBehavior {
 		alertTexture.renderer.enabled = true;
 		alerted = true;
 		broadcastAlertLevelChanged(AlertLevelType.Alert);
+		Vector3 direction = player.transform.position - gameObject.transform.position;
+		if (direction.x > 0)
+			flipXScale (true);
+		else
+			flipXScale (false);
 	}
 	
 	protected virtual void panic()
@@ -382,10 +387,10 @@ public class AIController : GameBehavior {
 		}
 	}
 
-	protected void flipXScale(bool left)
+	protected void flipXScale(bool right)
 	{
 		float scaleByX = xScale;
-		if (left)
+		if (right)
 			scaleByX = -xScale;
 
 		transform.localScale = new Vector3 (scaleByX, transform.localScale.y, transform.localScale.z);

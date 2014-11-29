@@ -18,62 +18,13 @@ public class StationaryAIController : AIController
 
 	protected override void GameUpdate () 
 	{
-		/*
-		if (grabbed)
-			return;
-
-        if (panicked)
-        {
-            timePanicked -= Time.deltaTime;
-            if (timePanicked <= 0)
-            {
-                panicked = false;
-				alertLevel = alertThreshold - 0.1f;
-                speed = 1;
-				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Normal);
-				MessageCenter.Instance.Broadcast (message);
-                //GetComponent<SpriteRenderer>().sprite = normalTexture;
-                return;
-            }
-            /*if (!audio.isPlaying)
-            {
-                //audio.Play();
-            }*//*
-            //Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
-            if (nearWall)
-            {
-                nearWall = false;
-                moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
-            }
-
-            rigidbody2D.velocity = moveDir.normalized * speed;
-            return;
-        }
-
-		if (playerInRange)
-		{
-			Vector2 playerSpeed = player.rigidbody2D.velocity;
-			if (playerSpeed == Vector2.zero && alertLevel > 0)
-			{
-				// decrement alert level
-				alertLevel -= (panicThreshold * 0.05f);
-			}
-		}
-		else if (alertLevel > 0)
-		{
-			alertLevel -= (panicThreshold * 0.05f);
-		}
-		// Make sure alert level does not go below 0
-		if (alertLevel < 0)
-			alertLevel = 0;
-		*/
 		if (updateNPC ())
 			return;
 		
 		// if lure is deleted
 		if( nextPath == null ) return;
 
-		Vector3 pathPosition = nextPath.transform.position;
+		Vector3 pathPosition = nextPath == bench ? getBenchOffsetVector() : nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
 		
@@ -84,6 +35,7 @@ public class StationaryAIController : AIController
 		if (biasPosition.x == 0)
 		{
 			//To the right
+			flipXScale(false);
 			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.STILL);
 		}
 		else
@@ -118,6 +70,11 @@ public class StationaryAIController : AIController
 		nextPath = bench;
 	}
 
+	private Vector3 getBenchOffsetVector()
+	{
+		return new Vector3(bench.transform.position.x, bench.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
+
+	}
 	protected override void alert()
 	{
 		base.alert ();
