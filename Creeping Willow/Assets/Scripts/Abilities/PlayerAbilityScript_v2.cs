@@ -28,12 +28,20 @@ public class PlayerAbilityScript_v2 : GameBehavior {
 			if(luresLeft > 0 && !abilityInUse){
 				AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
 				MessageCenter.Instance.Broadcast(message);
-				GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/LurePlacer");
+				GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/Possessor");
 				LurePlacer lp = obj.GetComponent<LurePlacer>();
 				lp.luresAllowed = luresLeft;
 				GameObject.Instantiate(lp, transform.position, Quaternion.identity);
 				abilityInUse = true;
 			}
+		}
+		if (Input.GetButtonDown ("A") && !abilityInUse && GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.Eating) {
+			AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
+			MessageCenter.Instance.Broadcast(message);
+			GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/Possessor");
+			Possessor possessor = obj.GetComponent<Possessor>();
+			GameObject.Instantiate(possessor, transform.position, Quaternion.identity);
+			abilityInUse = true;
 		}
 	}
 	

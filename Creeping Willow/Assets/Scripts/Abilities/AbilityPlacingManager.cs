@@ -9,6 +9,7 @@ public class AbilityPlacingManager : GameBehavior {
 	void Start () {
 		prefabPaths = new Dictionary<AbilityType, string> ();
 		prefabPaths.Add (AbilityType.Lure, "Prefabs/Abilities/CandyLure");
+		prefabPaths.Add (AbilityType.PossessionLure, "Prefabs/Abilities/BasicLure");
 		MessageCenter.Instance.RegisterListener (MessageType.AbilityPlaced, HandleAbilityPlaced);
 	}
 	

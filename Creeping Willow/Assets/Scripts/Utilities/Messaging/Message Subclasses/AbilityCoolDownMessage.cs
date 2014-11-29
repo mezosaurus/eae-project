@@ -2,6 +2,7 @@ public enum AbilityType{
 	Minion,
 	Ranged,
 	Lure,
+	PossessionLure,
 	Trap,
 	Movement
 }

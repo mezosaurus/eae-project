@@ -3,25 +3,29 @@ using System.Collections;
 
 public abstract class Possessable : GameBehavior {
 	bool possessed;
+	protected float baseX;
+	protected float baseY;
 
 	void Start(){
+		baseX = transform.position.x;
+		baseY = transform.position.y;
 		possessed = false;
 	}
 	// Update is called once per frame
 	protected override abstract void GameUpdate ();
 	protected abstract void act();
 
-	protected void useAbility(){
+	public void useAbility(){
 		if (possessed) {
 			act();
 		}
 	}
 
-	protected void possess(){
+	public virtual void possess(){
 		possessed = true;
 	}
 
-	protected void exorcise(){
+	public virtual void exorcise(){
 		possessed = false;
 	}
 
