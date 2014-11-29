@@ -14672,11 +14672,11 @@ MonoBehaviour:
   TargetNPC: {fileID: 0}
   UseTargetNPC: 0
   NumNPCsEaten: 1
-  UseNPCsEaten: 0
+  UseNPCsEaten: 1
   LossConditionsRequired: 1
   UsePlayerDied: 1
   MaxNPCsPanicked: 1
-  UseMaxNPCsPanicked: 0
+  UseMaxNPCsPanicked: 1
   TimeOutIsLoss: 0
   UseTimerOut: 0
 --- !u!114 &1896610431
@@ -15111,11 +15111,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400010, guid: 25339d73221062946b64e720c3069606, type: 2}
       propertyPath: UseNPCsEaten
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400010, guid: 25339d73221062946b64e720c3069606, type: 2}
       propertyPath: UseMaxNPCsPanicked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400010, guid: 25339d73221062946b64e720c3069606, type: 2}
       propertyPath: MaxNPCsPanicked
