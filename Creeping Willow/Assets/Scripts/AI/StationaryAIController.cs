@@ -14,7 +14,6 @@ public class StationaryAIController : AIController
 	{
 		STILL = 0,
 		LEFT = 1,
-		RIGHT = 2
 	}
 
 	protected override void GameUpdate () 
@@ -71,14 +70,13 @@ public class StationaryAIController : AIController
 		if (updateNPC ())
 			return;
 		
-
 		// if lure is deleted
 		if( nextPath == null ) return;
 
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
-
+		
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		determineDirectionChange (transform.position, movement);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
@@ -92,13 +90,6 @@ public class StationaryAIController : AIController
 			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
 
 		transform.position = movement;
-	/*
-		if (!sitting) {
-			Debug.Log ("!Sitting");
-		}
-		else
-			Debug.Log ("Sitting");
-*/
 		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals (spawnTag)))
 		{
 			if (killSelf && nextPath != bench)
@@ -143,6 +134,7 @@ public class StationaryAIController : AIController
 	{
 		base.panic ();
 		this.GetComponent<BoxCollider2D>().isTrigger = false;
+		setAnimatorInteger (oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
@@ -152,36 +144,6 @@ public class StationaryAIController : AIController
 		}
 	}
 	
-	override protected void OnTriggerEnter2D(Collider2D other)
-	{
-	/*
-		if (other.Equals (bench.collider2D))
-			this.GetComponent<BoxCollider2D> ().enabled = false;
-	*/
-	    base.OnTriggerEnter2D (other);
-	}
-
-	override protected void OnTriggerExit2D(Collider2D other)
-	{
-	/*
-		if (other.Equals (bench.collider2D))
-			this.GetComponent<BoxCollider2D> ().enabled = true;
-	*/
-	    base.OnTriggerEnter2D (other);
-
-	}
-
-	override protected void OnTriggerStay2D(Collider2D other)
-	{
-	/*
-		if (other.Equals (bench.collider2D)) {
-			//Physics2D.IgnoreCollision (this.collider2D, other);
-		}
-		else
-	*/
-		base.OnTriggerStay2D (other);
-	}
-
 	/*
 	 * Old Stuff
 	void Update()

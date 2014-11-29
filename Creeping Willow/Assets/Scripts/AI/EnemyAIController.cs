@@ -9,13 +9,14 @@ public class EnemyAIController : AIController
 	private float leaveTime;
 	private bool calledToPoint = false;
 
+	private float nextInvestigateTime = 0;
+
 	private static string axeManWalkingKey = "direction";
-	
+
 	private enum AxeManWalkingDirection
 	{
 		STILL = 0,
-		LEFT = 1,
-		RIGHT = 2
+		WALK = 1,
 	}
 
 	new public void Start()
@@ -34,6 +35,12 @@ public class EnemyAIController : AIController
 
 		if (sitting)
 		{
+			/*
+			if (movement == pathPosition)
+				setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.WALK);
+			else
+				setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
+			*/
 			if (leaveTime <= Time.time)
 			{
 				sitting = false;
@@ -46,14 +53,14 @@ public class EnemyAIController : AIController
 				nextPath = getLeavingPath();
 				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
-
+			
 			investigate();
 		}
 
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
-		
+
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 
 		animateCharacter(movement);
@@ -77,24 +84,24 @@ public class EnemyAIController : AIController
 	{
 		determineDirectionChange (transform.position, movement);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		if (biasPosition.x == 0)
+		if (biasPosition.x == 0 && biasPosition.y == 0)
 		{
-			//To the right
-			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
+			//no movement
+			//flipXScale(!lastDirectionWasRight);
+			setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
 		}
-		//else
-			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.LEFT);
+		else
+			setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.WALK);
 	}
-
-	private float nextInvestigateTime = 0;
 
 	private void investigate()
 	{
 		if (nextInvestigateTime <= Time.time)
 		{
+			setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.WALK);
 			nextInvestigateTime = Time.time + sittingTime/4;
 			Vector2 position = Random.insideUnitCircle;
-			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f);
+			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
 		}
 	}
 
@@ -115,7 +122,6 @@ public class EnemyAIController : AIController
 	
 	new protected Vector3 getNextPath()
 	{
-
 		return panickedNPCPosition;
 	}
 
@@ -127,26 +133,6 @@ public class EnemyAIController : AIController
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		/*
-		if (!killSelf && !panicked && collision.collider.Equals (panickedNPCPosition.collider2D)) {
-			this.GetComponent<BoxCollider2D> ().isTrigger = true;
-		}
-		*/
-	}
-
-	override protected void OnTriggerEnter2D(Collider2D other)
-	{
-		base.OnTriggerEnter2D (other);
-	}
-
-	override protected void OnTriggerExit2D(Collider2D other)
-	{
-		base.OnTriggerEnter2D (other);
-		
-	}
-
-	override protected void OnTriggerStay2D(Collider2D other)
-	{
-		base.OnTriggerStay2D (other);
+		// TODO: It's axe time
 	}
 }

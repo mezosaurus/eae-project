@@ -63,6 +63,7 @@ public class AIController : GameBehavior {
 
 	// Sprite
 	protected float xScale;
+	protected bool lastDirectionWasRight = false;
 	public GameObject alertTexture;
 	public GameObject panicTexture;
 
@@ -223,6 +224,7 @@ public class AIController : GameBehavior {
 				broadcastAlertLevelChanged(AlertLevelType.Normal);
 				return true;
 			}
+
 			if (nearWall)
 			{
 				nearWall = false;
@@ -340,16 +342,23 @@ public class AIController : GameBehavior {
 		// Compute the tangent of the new position to compare for angles
 		float biasTan = (Mathf.Abs(biasPosition.y) / Mathf.Abs (biasPosition.x));
 
-		float yScale = transform.localScale.y;
-		float zScale = transform.localScale.z;
-
 		if (biasPosition.x > 0)
 		{
-			transform.localScale = new Vector3 (-xScale, yScale, zScale);
+			lastDirectionWasRight = true;
+			flipXScale(true);
+		}
+		else if (biasPosition.x < 0)
+		{
+			lastDirectionWasRight = false;
+			flipXScale(false);
+		}
+		else if (lastDirectionWasRight)
+		{
+			flipXScale(true);
 		}
 		else
 		{
-			transform.localScale = new Vector3(xScale, yScale, zScale);
+			flipXScale(false);
 		}
 		if (biasPosition.x >= 0 && biasPosition.y >= 0)
 		{
@@ -371,6 +380,15 @@ public class AIController : GameBehavior {
 			// Quadrant 4
 			testDirectionChange(biasTan, NPCDirection.R, NPCDirection.BR, NPCDirection.B);
 		}
+	}
+
+	protected void flipXScale(bool left)
+	{
+		float scaleByX = xScale;
+		if (left)
+			scaleByX = -xScale;
+
+		transform.localScale = new Vector3 (scaleByX, transform.localScale.y, transform.localScale.z);
 	}
 
 	private void testDirectionChange(float biasTan, Vector3 low, Vector3 middle, Vector3 high)

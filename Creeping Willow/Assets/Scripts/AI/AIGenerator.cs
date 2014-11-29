@@ -32,20 +32,19 @@ public class AIGenerator : GameBehavior
 		enemyAIList = new ArrayList ();
 
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
-		MessageCenter.Instance.RegisterListener (MessageType.NPCAlertLevel, NPCAlertedListener);
+		MessageCenter.Instance.RegisterListener (MessageType.NotorietyMaxed, NotorietyMeterListener);
 	}
 
 	void OnDestroy()
 	{
 		MessageCenter.Instance.UnregisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
-		MessageCenter.Instance.UnregisterListener (MessageType.NPCAlertLevel, NPCAlertedListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.NotorietyMaxed, NotorietyMeterListener);
 	}
 
-	private void NPCAlertedListener(Message message)
+	private void NotorietyMeterListener(Message message)
 	{
-		NPCAlertLevelMessage alertMessage = message as NPCAlertLevelMessage;
-		if (alertMessage.alertLevelType == AlertLevelType.Panic)
-			createEnemyNPC (alertMessage.NPC);
+		NotorietyMaxedMessage notorietyMessage = message as NotorietyMaxedMessage;
+		createEnemyNPC (notorietyMessage.NPC);
 	}
 
 	// Update is called once per frame
@@ -61,13 +60,11 @@ public class AIGenerator : GameBehavior
 	bool isRoomAvailableForNewNPC()
 	{
 		if (pathAIList == null) {
-			Debug.Log ("PATH");
-			pathAIList = new ArrayList();
+			Debug.Log ("PATH ERROR");
 			return false;
 		}
 		if (stationaryAIList == null) {
-			Debug.Log ("STATION");
-			stationaryAIList = new ArrayList();
+			Debug.Log ("STATIONARY ERROR");
 			return false;
 		}
 
@@ -83,11 +80,6 @@ public class AIGenerator : GameBehavior
 	Vector2 getRandomSpawnPoint()
 	{
 		int rand = Random.Range(0, spawnPoints.Length);
-		if (spawnPoints [rand] == null)
-		{
-			Debug.Log ("Wat? " + rand);
-			spawnPoints = GameObject.FindGameObjectsWithTag(spawnTag);
-		}
 		return spawnPoints[rand].transform.position;
 	}
 	
@@ -183,7 +175,7 @@ public class AIGenerator : GameBehavior
 			stationaryAIList.Remove(NPC);
 		else if (wanderAIList.Contains(NPC))
 			wanderAIList.Remove(NPC);
-		else if (enemyAIList.Contains(NPC))
+		else if (enemyAIList.Contains(NPC)) 
 			enemyAIList.Remove(NPC);
 	}
 
