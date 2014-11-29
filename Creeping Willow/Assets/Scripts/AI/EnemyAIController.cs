@@ -86,14 +86,22 @@ public class EnemyAIController : AIController
 			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.LEFT);
 	}
 
+	private float nextInvestigateTime = 0;
+
 	private void investigate()
 	{
-
+		if (nextInvestigateTime <= Time.time)
+		{
+			nextInvestigateTime = Time.time + sittingTime/4;
+			Vector2 position = Random.insideUnitCircle;
+			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f);
+		}
 	}
 
 	public void setStationaryPoint(GameObject panickedNPC)
 	{
 		panickedNPCPosition = panickedNPC.transform.position;
+		panickedNPCPosition = new Vector3 (panickedNPCPosition.x, panickedNPCPosition.y);
 		calledToPoint = true;
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;

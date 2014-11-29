@@ -13,7 +13,7 @@ GameObject:
   - 61: {fileID: 6100000}
   - 212: {fileID: 21200000}
   - 95: {fileID: 9500000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyNPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   lured: 0
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
-  sittingTime: 5
+  sittingTime: 10
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

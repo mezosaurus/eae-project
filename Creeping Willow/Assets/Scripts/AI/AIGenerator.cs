@@ -35,6 +35,12 @@ public class AIGenerator : GameBehavior
 		MessageCenter.Instance.RegisterListener (MessageType.NPCAlertLevel, NPCAlertedListener);
 	}
 
+	void OnDestroy()
+	{
+		MessageCenter.Instance.UnregisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.NPCAlertLevel, NPCAlertedListener);
+	}
+
 	private void NPCAlertedListener(Message message)
 	{
 		NPCAlertLevelMessage alertMessage = message as NPCAlertLevelMessage;
@@ -57,10 +63,12 @@ public class AIGenerator : GameBehavior
 		if (pathAIList == null) {
 			Debug.Log ("PATH");
 			pathAIList = new ArrayList();
+			return false;
 		}
 		if (stationaryAIList == null) {
 			Debug.Log ("STATION");
 			stationaryAIList = new ArrayList();
+			return false;
 		}
 
 		if (pathAIList.Count >= maxNumberOfEachNPC
@@ -150,8 +158,6 @@ public class AIGenerator : GameBehavior
 
 	void createEnemyNPC(GameObject panickedNPC)
 	{
-		if (this.enemyNPC == null)
-			return;
 		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
 		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPC);
 	}
