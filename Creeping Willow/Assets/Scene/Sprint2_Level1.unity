@@ -1599,6 +1599,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: enemyNPC
+      value: 
+      objectReference: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
   m_RootGameObject: {fileID: 1771423460}
@@ -13761,6 +13765,7 @@ MonoBehaviour:
   pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
   stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
   wanderNPC: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
+  enemyNPC: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
   spawnTag: Respawn
   pathTag: Paths
   benchTag: Bench
@@ -14537,6 +14542,7 @@ GameObject:
   - 114: {fileID: 1896610428}
   - 114: {fileID: 1896610429}
   - 114: {fileID: 1896610430}
+  - 114: {fileID: 1896610431}
   m_Layer: 0
   m_Name: LevelGUI
   m_TagString: Untagged
@@ -14673,6 +14679,17 @@ MonoBehaviour:
   UseMaxNPCsPanicked: 1
   TimeOutIsLoss: 0
   UseTimerOut: 0
+--- !u!114 &1896610431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1896610423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5b947123433ac45a6fe9e7daea21a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1902448221
 GameObject:
   m_ObjectHideFlags: 0

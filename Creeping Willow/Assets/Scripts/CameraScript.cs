@@ -76,7 +76,7 @@ public class CameraScript : MonoBehaviour
 
         foreach(SpriteRenderer sprite in FindObjectsOfType<SpriteRenderer>())
         {
-            Debug.Log(sprite.sortingLayerName);
+            //Debug.Log(sprite.sortingLayerName);
         }
 #endif
     }

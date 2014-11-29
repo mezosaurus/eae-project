@@ -6,6 +6,7 @@ public class AIGenerator : GameBehavior
 	public GameObject pathNPC;
 	public GameObject stationaryNPC;
     public GameObject wanderNPC;
+	public GameObject enemyNPC;
 	public string spawnTag = "Respawn";
 	public string pathTag = "Paths";
 	public string benchTag = "Bench";
@@ -19,6 +20,7 @@ public class AIGenerator : GameBehavior
 	private ArrayList stationaryAIList;
 	private ArrayList pathAIList;
 	private ArrayList wanderAIList;
+	private ArrayList enemyAIList;
 
 	void Start()
 	{
@@ -27,8 +29,22 @@ public class AIGenerator : GameBehavior
 		stationaryAIList = new ArrayList ();
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
+		enemyAIList = new ArrayList ();
 
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
+		MessageCenter.Instance.RegisterListener (MessageType.NotorietyMaxed, NotorietyMeterListener);
+	}
+
+	void OnDestroy()
+	{
+		MessageCenter.Instance.UnregisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.NotorietyMaxed, NotorietyMeterListener);
+	}
+
+	private void NotorietyMeterListener(Message message)
+	{
+		NotorietyMaxedMessage notorietyMessage = message as NotorietyMaxedMessage;
+		createEnemyNPC (notorietyMessage.NPC);
 	}
 
 	// Update is called once per frame
@@ -43,6 +59,15 @@ public class AIGenerator : GameBehavior
 
 	bool isRoomAvailableForNewNPC()
 	{
+		if (pathAIList == null) {
+			Debug.Log ("PATH ERROR");
+			return false;
+		}
+		if (stationaryAIList == null) {
+			Debug.Log ("STATIONARY ERROR");
+			return false;
+		}
+
 		if (pathAIList.Count >= maxNumberOfEachNPC
 		    && stationaryAIList.Count >= maxNumberOfEachNPC
 //		    && wanderAIList.Count >= maxNumberOfEachNPC	// Taken out for basic build
@@ -72,6 +97,7 @@ public class AIGenerator : GameBehavior
 			{
 				// TODO: Make better
 				//	Idea: make a list of all available AI in isRoomAvailable... to get an enum of creating NPCs
+				// 	Idea: Make a recursive method of createNewNPC that takes in the rand and the number of overflows (call from here with 0) that way each type gets called
 				createNewNPC ();
 			}
 			break;
@@ -122,6 +148,12 @@ public class AIGenerator : GameBehavior
         GameObject wanderNPC = createNPC(this.wanderNPC, wanderAIList);
     }
 
+	void createEnemyNPC(GameObject panickedNPC)
+	{
+		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
+		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPC);
+	}
+
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
 	{
 		GameObject npc = (GameObject)Instantiate (NPC, getRandomSpawnPoint (), Quaternion.identity);
@@ -131,9 +163,11 @@ public class AIGenerator : GameBehavior
 
 	void NPCDestroyListener(Message message)
 	{
-		lastSpawnTime = Time.time;
 		NPCDestroyedMessage npcMessage = message as NPCDestroyedMessage;
 		GameObject NPC = npcMessage.NPC;
+
+		if (lastSpawnTime <= Time.time - spawnTime && NPC.GetComponent<EnemyAIController>() == null)
+			lastSpawnTime = Time.time;
 
 		if (pathAIList.Contains(NPC))
 			pathAIList.Remove(NPC);
@@ -141,6 +175,8 @@ public class AIGenerator : GameBehavior
 			stationaryAIList.Remove(NPC);
 		else if (wanderAIList.Contains(NPC))
 			wanderAIList.Remove(NPC);
+		else if (enemyAIList.Contains(NPC)) 
+			enemyAIList.Remove(NPC);
 	}
 
 	// For use when updating spawn points to 'gates'

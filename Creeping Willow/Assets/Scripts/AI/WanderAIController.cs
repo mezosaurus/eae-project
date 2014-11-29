@@ -61,7 +61,6 @@ public class WanderAIController : AIController {
 		
 		if (Time.time >= nextMoveTime)
 		{
-
 			nextMoveTime = Time.time + waitTime;
             pathPosition = Random.insideUnitCircle * 2;
 			//nextPath = Random.insideUnitCircle * 2;

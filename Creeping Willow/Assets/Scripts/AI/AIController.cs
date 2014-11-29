@@ -62,7 +62,8 @@ public class AIController : GameBehavior {
 	protected Vector3 npcDir;
 
 	// Sprite
-	private float xScale;
+	protected float xScale;
+	protected bool lastDirectionWasRight = false;
 	public GameObject alertTexture;
 	public GameObject panicTexture;
 
@@ -135,7 +136,7 @@ public class AIController : GameBehavior {
 	// Trigger Methods
 	//-----------------------
 
-    void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
@@ -143,7 +144,7 @@ public class AIController : GameBehavior {
         }
     }
 
-	void OnTriggerEnter2D(Collider2D other)
+	protected virtual void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Player") 
 		{
@@ -151,7 +152,7 @@ public class AIController : GameBehavior {
 		}
 	}
 
-    void OnTriggerStay2D(Collider2D other)
+	protected virtual void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Wall")
         {
@@ -223,6 +224,7 @@ public class AIController : GameBehavior {
 				broadcastAlertLevelChanged(AlertLevelType.Normal);
 				return true;
 			}
+
 			if (nearWall)
 			{
 				nearWall = false;
@@ -238,7 +240,7 @@ public class AIController : GameBehavior {
 			return true;
 		}
 		
-		if (checkForPlayer() && player.rigidbody2D.velocity != Vector2.zero)
+		if (checkForPlayer() && player.rigidbody2D != null && player.rigidbody2D.velocity != Vector2.zero)
 		{
 			// TODO: Balance better
 			increaseAlertLevel(sightAlertMultiplier);
@@ -299,9 +301,14 @@ public class AIController : GameBehavior {
 		alertTexture.renderer.enabled = true;
 		alerted = true;
 		broadcastAlertLevelChanged(AlertLevelType.Alert);
+		Vector3 direction = player.transform.position - gameObject.transform.position;
+		if (direction.x > 0)
+			flipXScale (true);
+		else
+			flipXScale (false);
 	}
 	
-	private void panic()
+	protected virtual void panic()
 	{
 		alertTexture.renderer.enabled = false;
 		panicTexture.renderer.enabled = true;
@@ -340,16 +347,23 @@ public class AIController : GameBehavior {
 		// Compute the tangent of the new position to compare for angles
 		float biasTan = (Mathf.Abs(biasPosition.y) / Mathf.Abs (biasPosition.x));
 
-		float yScale = transform.localScale.y;
-		float zScale = transform.localScale.z;
-
 		if (biasPosition.x > 0)
 		{
-			transform.localScale = new Vector3 (-xScale, yScale, zScale);
+			lastDirectionWasRight = true;
+			flipXScale(true);
+		}
+		else if (biasPosition.x < 0)
+		{
+			lastDirectionWasRight = false;
+			flipXScale(false);
+		}
+		else if (lastDirectionWasRight)
+		{
+			flipXScale(true);
 		}
 		else
 		{
-			transform.localScale = new Vector3(xScale, yScale, zScale);
+			flipXScale(false);
 		}
 		if (biasPosition.x >= 0 && biasPosition.y >= 0)
 		{
@@ -371,6 +385,15 @@ public class AIController : GameBehavior {
 			// Quadrant 4
 			testDirectionChange(biasTan, NPCDirection.R, NPCDirection.BR, NPCDirection.B);
 		}
+	}
+
+	protected void flipXScale(bool right)
+	{
+		float scaleByX = xScale;
+		if (right)
+			scaleByX = -xScale;
+
+		transform.localScale = new Vector3 (scaleByX, transform.localScale.y, transform.localScale.z);
 	}
 
 	private void testDirectionChange(float biasTan, Vector3 low, Vector3 middle, Vector3 high)

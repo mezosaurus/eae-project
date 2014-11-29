@@ -7,9 +7,8 @@ public class PathAIController : AIController
 	//public Transform[] moveWayPoints;
 	
 	//private int wayPointIndex;
-	private bool reverseDirection;
+	//private bool reverseDirection;
 
-	
 	new void Start()
 	{
 		base.Start ();
@@ -115,7 +114,6 @@ public class PathAIController : AIController
 			}
 		}
 	}
-
 	//	void OnTriggerEnter2D(Collider2D other)
 	//	{
 	//		if (other.tag == "Player")

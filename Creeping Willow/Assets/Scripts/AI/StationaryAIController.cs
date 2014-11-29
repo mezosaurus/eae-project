@@ -14,71 +14,20 @@ public class StationaryAIController : AIController
 	{
 		STILL = 0,
 		LEFT = 1,
-		RIGHT = 2
 	}
 
 	protected override void GameUpdate () 
 	{
-		/*
-		if (grabbed)
-			return;
-
-        if (panicked)
-        {
-            timePanicked -= Time.deltaTime;
-            if (timePanicked <= 0)
-            {
-                panicked = false;
-				alertLevel = alertThreshold - 0.1f;
-                speed = 1;
-				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, AlertLevelType.Normal);
-				MessageCenter.Instance.Broadcast (message);
-                //GetComponent<SpriteRenderer>().sprite = normalTexture;
-                return;
-            }
-            /*if (!audio.isPlaying)
-            {
-                //audio.Play();
-            }*//*
-            //Debug.Log ("Move: " + moveDir.x + ", " + moveDir.y);
-            if (nearWall)
-            {
-                nearWall = false;
-                moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
-            }
-
-            rigidbody2D.velocity = moveDir.normalized * speed;
-            return;
-        }
-
-		if (playerInRange)
-		{
-			Vector2 playerSpeed = player.rigidbody2D.velocity;
-			if (playerSpeed == Vector2.zero && alertLevel > 0)
-			{
-				// decrement alert level
-				alertLevel -= (panicThreshold * 0.05f);
-			}
-		}
-		else if (alertLevel > 0)
-		{
-			alertLevel -= (panicThreshold * 0.05f);
-		}
-		// Make sure alert level does not go below 0
-		if (alertLevel < 0)
-			alertLevel = 0;
-		*/
 		if (updateNPC ())
 			return;
 		
-
 		// if lure is deleted
 		if( nextPath == null ) return;
 
-		Vector3 pathPosition = nextPath.transform.position;
+		Vector3 pathPosition = nextPath == bench ? getBenchOffsetVector() : nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
-
+		
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		determineDirectionChange (transform.position, movement);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
@@ -86,13 +35,13 @@ public class StationaryAIController : AIController
 		if (biasPosition.x == 0)
 		{
 			//To the right
+			flipXScale(false);
 			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.STILL);
 		}
 		else
 			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
 
 		transform.position = movement;
-
 		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals (spawnTag)))
 		{
 			if (killSelf && nextPath != bench)
@@ -106,19 +55,26 @@ public class StationaryAIController : AIController
 
 			if (leaveTime <= Time.time)
 			{
+				sitting = false;
 				killSelf = true;
 				nextPath = getLeavingPath();
+				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 		}
 	}
 
 	public void setStationaryPoint(GameObject point)
 	{
-		bench = new GameObject ();
-		bench.transform.position = new Vector3(point.transform.position.x, point.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
+		bench = point;
+//		bench.transform.position = new Vector3(point.transform.position.x, point.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
 		nextPath = bench;
 	}
 
+	private Vector3 getBenchOffsetVector()
+	{
+		return new Vector3(bench.transform.position.x, bench.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
+
+	}
 	protected override void alert()
 	{
 		base.alert ();
@@ -130,6 +86,21 @@ public class StationaryAIController : AIController
 		//Debug.Log ("Child");
 		return bench;
 	}
+
+	override protected void panic()
+	{
+		base.panic ();
+		this.GetComponent<BoxCollider2D>().isTrigger = false;
+		setAnimatorInteger (oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (!killSelf && !panicked && collision.collider.Equals (bench.collider2D)) {
+			this.GetComponent<BoxCollider2D> ().isTrigger = true;
+		}
+	}
+	
 	/*
 	 * Old Stuff
 	void Update()
