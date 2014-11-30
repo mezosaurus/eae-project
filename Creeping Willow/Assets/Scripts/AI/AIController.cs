@@ -38,6 +38,7 @@ public class AIController : GameBehavior {
 	protected bool playerInRange;
     protected bool nearWall;
 	protected bool killSelf = false;
+	protected bool enteredMap;
 
 	// Scene variables
 	protected Lure lastLure;
@@ -70,6 +71,7 @@ public class AIController : GameBehavior {
 	// Use this for initialization
 	public void Start ()
 	{
+		enteredMap = false;
 		// Alert Texture
 		alertTexture = (GameObject)Instantiate(Resources.Load("prefabs/AI/SceneInitPrefabs/AIAlert"));
 		alertTexture.renderer.enabled = false;
@@ -108,6 +110,10 @@ public class AIController : GameBehavior {
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer (npcTag);
 		Physics2D.IgnoreLayerCollision (npcLayer, npcLayer);
+
+		
+		// Broadcast start of lifecycle
+		MessageCenter.Instance.Broadcast (new NPCCreatedMessage (gameObject));
 	}
 
 	void OnDestroy()
@@ -141,6 +147,11 @@ public class AIController : GameBehavior {
         {
 			playerInRange = false;
         }
+		if (other.tag == "Border")
+		{
+			enteredMap = true;
+			ignoreBorder (false, other);
+		}
     }
 
 	protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -154,10 +165,19 @@ public class AIController : GameBehavior {
 				panic ();
 			}
 		}
+		if (other.tag == "Border")
+		{
+			// Only ignore collisions with the border if the NPC has not entered the map yet
+			if (!enteredMap || killSelf)
+			{
+				ignoreBorder (true, other);
+			}
+		}
 	}
 
 	protected virtual void OnTriggerStay2D(Collider2D other)
     {
+
         if (other.tag == "Wall")
         {
             RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
@@ -278,6 +298,12 @@ public class AIController : GameBehavior {
 		
 		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
 		MessageCenter.Instance.Broadcast (message);
+	}
+
+	protected void ignoreBorder(bool ignore, Collider2D other)
+	{
+		BoxCollider2D box = gameObject.GetComponent<BoxCollider2D>();
+		Physics2D.IgnoreCollision(other, box, ignore);
 	}
 
 	protected void setAnimatorInteger(string key, int animation)

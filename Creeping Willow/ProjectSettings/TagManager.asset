@@ -25,6 +25,7 @@ TagManager:
   - PlayerRightUpperArm
   - PlayerRightLowerArm
   - GrabbedNPC
+  - Border
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -66,6 +67,10 @@ TagManager:
   - name: Background
     userID: 1
     uniqueID: 4081728647
+    locked: 0
+  - name: UpperBackground
+    userID: 5
+    uniqueID: 643788029
     locked: 0
   - name: Default
     userID: 0

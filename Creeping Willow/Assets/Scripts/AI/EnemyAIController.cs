@@ -73,7 +73,7 @@ public class EnemyAIController : AIController
 		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf))
 		{
 			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
-				Destroy(gameObject);
+				destroyNPC();
 			
 			if (!sitting)
 			{

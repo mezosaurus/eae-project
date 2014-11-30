@@ -45,7 +45,7 @@ public class StationaryAIController : AIController
 		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals (spawnTag)))
 		{
 			if (killSelf && nextPath != bench)
-				Destroy(gameObject);
+				destroyNPC();
 
 			if (!sitting && nextPath == bench)
 			{

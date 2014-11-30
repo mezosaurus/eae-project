@@ -48,20 +48,21 @@ public class EndConditions : MonoBehaviour
 	{
 		MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
 		MessageCenter.Instance.RegisterListener( MessageType.TimerStatusChanged, HandleTimerStatusChangedMessage );
-		MessageCenter.Instance.RegisterListener( MessageType.NPCDestroyed, HandleNPCDestroyedMessage );
+		MessageCenter.Instance.RegisterListener( MessageType.NPCEaten, HandleNPCEatenMessage );
 	}
 	
 	protected void UnregisterListeners()
 	{
 		MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
 		MessageCenter.Instance.UnregisterListener( MessageType.TimerStatusChanged, HandleTimerStatusChangedMessage );
-		MessageCenter.Instance.UnregisterListener( MessageType.NPCDestroyed, HandleNPCDestroyedMessage );
+		MessageCenter.Instance.UnregisterListener( MessageType.NPCEaten, HandleNPCEatenMessage );
 	}
 
-	protected void HandleNPCDestroyedMessage( Message message )
+	protected void HandleNPCEatenMessage( Message message )
 	{
 		NPCDestroyedMessage mess = message as NPCDestroyedMessage;
-
+		NPCsEaten++;
+		
 		if (mess.eaten)
 			NPCsEaten++;
 		

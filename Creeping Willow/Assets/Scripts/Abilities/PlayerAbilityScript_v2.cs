@@ -28,7 +28,7 @@ public class PlayerAbilityScript_v2 : GameBehavior {
 			if(luresLeft > 0 && !abilityInUse){
 				AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
 				MessageCenter.Instance.Broadcast(message);
-				GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/Possessor");
+				GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/LurePlacer");
 				LurePlacer lp = obj.GetComponent<LurePlacer>();
 				lp.luresAllowed = luresLeft;
 				GameObject.Instantiate(lp, transform.position, Quaternion.identity);
