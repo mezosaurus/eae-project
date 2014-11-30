@@ -150,6 +150,9 @@ public class AIGenerator : GameBehavior
 
 	void createEnemyNPC(GameObject panickedNPC)
 	{
+		if (enemyAIList.Count > 15)
+			return;
+		
 		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
 		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPC);
 	}
