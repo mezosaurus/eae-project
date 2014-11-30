@@ -5,9 +5,11 @@ using UnityEngine;
 public class NPCDestroyedMessage : Message
 {
 	public readonly GameObject NPC;
+	public readonly bool eaten = false;
 
-	public NPCDestroyedMessage (GameObject NPC):base(MessageType.NPCDestroyed)
+	public NPCDestroyedMessage (GameObject NPC, bool wasEaten = true):base(MessageType.NPCDestroyed)
 	{
 		this.NPC = NPC;
+		eaten = wasEaten;
 	}
 }

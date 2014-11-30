@@ -60,10 +60,12 @@ public class EndConditions : MonoBehaviour
 
 	protected void HandleNPCEatenMessage( Message message )
 	{
+		NPCDestroyedMessage mess = message as NPCDestroyedMessage;
 		NPCsEaten++;
-
-		NPCEatenMessage mess = message as NPCEatenMessage;
-
+		
+		if (mess.eaten)
+			NPCsEaten++;
+		
 		if( UseTargetNPC && mess.NPC == TargetNPC )
 			AddWin( LevelFinishedReason.TargetNPCEaten, null );
 		else if( UseNPCsEaten && NPCsEaten == NumNPCsEaten )

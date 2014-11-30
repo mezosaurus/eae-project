@@ -38,6 +38,7 @@ public class AIController : GameBehavior {
 	protected bool playerInRange;
     protected bool nearWall;
 	protected bool killSelf = false;
+	protected bool enteredMap;
 
 	// Scene variables
 	protected Lure lastLure;
@@ -70,7 +71,7 @@ public class AIController : GameBehavior {
 	// Use this for initialization
 	public void Start ()
 	{
-
+		enteredMap = false;
 		// Alert Texture
 		alertTexture = (GameObject)Instantiate(Resources.Load("prefabs/AI/SceneInitPrefabs/AIAlert"));
 		alertTexture.renderer.enabled = false;
@@ -104,6 +105,7 @@ public class AIController : GameBehavior {
 		MessageCenter.Instance.RegisterListener (MessageType.TrapReleased, trapReleaseListener);
 		MessageCenter.Instance.RegisterListener (MessageType.LureRadiusEntered, lureEnterListener);
 		MessageCenter.Instance.RegisterListener (MessageType.LureReleased, lureReleaseListener);
+		MessageCenter.Instance.RegisterListener (MessageType.AbilityPlaced, abilityPlacedListener);
 
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer (npcTag);
@@ -123,9 +125,7 @@ public class AIController : GameBehavior {
 		MessageCenter.Instance.UnregisterListener (MessageType.TrapReleased, trapReleaseListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.LureRadiusEntered, lureEnterListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.LureReleased, lureReleaseListener);
-
-		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject);
-		MessageCenter.Instance.Broadcast (message);
+		MessageCenter.Instance.UnregisterListener (MessageType.AbilityPlaced, abilityPlacedListener);
 
 		if (alertTexture != null)
 		{
@@ -147,6 +147,11 @@ public class AIController : GameBehavior {
         {
 			playerInRange = false;
         }
+		if (other.tag == "Border")
+		{
+			enteredMap = true;
+			ignoreBorder (false, other);
+		}
     }
 
 	protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -154,11 +159,25 @@ public class AIController : GameBehavior {
 		if (other.tag == "Player") 
 		{
 			playerInRange = true;
+			TreeController script = player.GetComponent<TreeController>();
+			if (script != null && script.state != Tree.State.Normal)
+			{
+				panic ();
+			}
+		}
+		if (other.tag == "Border")
+		{
+			// Only ignore collisions with the border if the NPC has not entered the map yet
+			if (!enteredMap || killSelf)
+			{
+				ignoreBorder (true, other);
+			}
 		}
 	}
 
 	protected virtual void OnTriggerStay2D(Collider2D other)
     {
+
         if (other.tag == "Wall")
         {
             RaycastHit2D raycast = Physics2D.Raycast(transform.position, moveDir);
@@ -236,12 +255,17 @@ public class AIController : GameBehavior {
 				moveDir = Quaternion.AngleAxis(90, transform.forward) * -moveDir;
 				
 			}
-			//else  // In stationary, no else
-			// TODO: Make more like other updates in AI
-			Vector3 oldVelocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
-			rigidbody2D.velocity = moveDir.normalized * speed;
-			determineDirectionChange(oldVelocity, new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y));
-			
+
+			Vector3 npcPosition = transform.position;
+			float step = speed * Time.deltaTime;
+			transform.position = new Vector3(moveDir.normalized.x * step, moveDir.normalized.y * step) + npcPosition;
+			determineDirectionChange(npcPosition, transform.position);
+
+			// OLD
+			//Vector3 oldVelocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
+			//rigidbody2D.velocity = moveDir.normalized * speed;
+			//determineDirectionChange(oldVelocity, new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y));
+
 			return true;
 		}
 		
@@ -268,6 +292,20 @@ public class AIController : GameBehavior {
 	// Helper Methods
 	//-----------------------
 
+	protected void destroyNPC()
+	{
+		Destroy (gameObject);
+		
+		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
+		MessageCenter.Instance.Broadcast (message);
+	}
+
+	protected void ignoreBorder(bool ignore, Collider2D other)
+	{
+		BoxCollider2D box = gameObject.GetComponent<BoxCollider2D>();
+		Physics2D.IgnoreCollision(other, box, ignore);
+	}
+
 	protected void setAnimatorInteger(string key, int animation)
 	{
 		gameObject.GetComponent<Animator>().SetInteger(key, animation);
@@ -285,7 +323,7 @@ public class AIController : GameBehavior {
 		alertLevel += playerSpeed.magnitude * detectLevel * sensitivity;
 	}
 	
-	protected void decrementAlertLevel()
+	protected virtual void decrementAlertLevel()
 	{
 		float oldLevel = alertLevel;
 		alertLevel -= (panicThreshold * 0.05f);
@@ -513,6 +551,16 @@ public class AIController : GameBehavior {
 			lastLure = lureMessage.Lure;
 			//TODO: make getNextPath better
 			nextPath = getNextPath();
+		}
+	}
+
+	void abilityPlacedListener(Message message)
+	{
+		AbilityPlacedMessage placedMessage = message as AbilityPlacedMessage;
+		if (placedMessage.AType.Equals(AbilityType.PossessionLure))
+	    {
+			if (Vector3.Distance(transform.position, new Vector3(placedMessage.X, placedMessage.Y)) <= GetComponent<CircleCollider2D>().radius)
+				Debug.Log("BOOOOOOOOOOOM");
 		}
 	}
 

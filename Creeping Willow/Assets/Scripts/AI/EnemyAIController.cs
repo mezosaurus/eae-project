@@ -6,6 +6,7 @@ public class EnemyAIController : AIController
 	public float sittingTime;
 	protected Vector3 panickedNPCPosition;
 	private bool sitting = false;
+	private bool angry = false;
 	private float leaveTime;
 	private bool calledToPoint = false;
 
@@ -27,20 +28,23 @@ public class EnemyAIController : AIController
 
 	protected override void GameUpdate () 
 	{
+		if (grabbed)
+			return;
+
+		if (angry)
+		{
+			chasePlayer();
+			return;
+		}
+
 		if (updateNPC ())
 			return;	
-		
+
 		// if lure is deleted
 		if( nextPath == null ) return;
 
 		if (sitting)
 		{
-			/*
-			if (movement == pathPosition)
-				setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.WALK);
-			else
-				setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
-			*/
 			if (leaveTime <= Time.time)
 			{
 				sitting = false;
@@ -51,7 +55,6 @@ public class EnemyAIController : AIController
 					Destroy(nextPath);
 				}
 				nextPath = getLeavingPath();
-				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 			
 			investigate();
@@ -63,14 +66,14 @@ public class EnemyAIController : AIController
 
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 
-		animateCharacter(movement);
+		animateCharacter(movement, pathPosition);
 		
 		transform.position = movement;
 
 		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf))
 		{
 			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
-				Destroy(gameObject);
+				destroyNPC();
 			
 			if (!sitting)
 			{
@@ -79,12 +82,13 @@ public class EnemyAIController : AIController
 			}			
 		}
 	}
-
-	private void animateCharacter(Vector3 movement)
+	
+	private void animateCharacter(Vector3 movement, Vector3 moveTo)
 	{
 		determineDirectionChange (transform.position, movement);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		if (biasPosition.x == 0 && biasPosition.y == 0)
+		//if (biasPosition.x == 0 && biasPosition.y == 0)
+		if (movement == moveTo && biasPosition.x == 0 && biasPosition.y == 0)
 		{
 			//no movement
 			//flipXScale(!lastDirectionWasRight);
@@ -94,11 +98,24 @@ public class EnemyAIController : AIController
 			setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.WALK);
 	}
 
+	private void chasePlayer()
+	{
+		rigidbody2D.velocity = Vector2.zero;
+		Vector3 pathPosition = player.transform.position;
+		Vector3 positionNPC = transform.position;
+		float step = speed * Time.deltaTime;
+		
+		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+		
+		animateCharacter(movement, pathPosition);
+		
+		transform.position = movement;
+	}
+
 	private void investigate()
 	{
 		if (nextInvestigateTime <= Time.time)
 		{
-			setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.WALK);
 			nextInvestigateTime = Time.time + sittingTime/4;
 			Vector2 position = Random.insideUnitCircle;
 			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
@@ -116,23 +133,42 @@ public class EnemyAIController : AIController
 
 	protected override void alert()
 	{
-		base.alert ();
-		//setAnimatorInteger (axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
+		if (!angry)
+		{
+			base.alert ();
+			setAnimatorInteger (axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
+		}
 	}
 	
-	new protected Vector3 getNextPath()
+	new protected GameObject getNextPath()
 	{
-		return panickedNPCPosition;
+		nextPath = new GameObject ();
+		nextPath.transform.position = panickedNPCPosition;
+		return nextPath;
 	}
 
 	override protected void panic()
 	{
-		base.panic ();
-		this.GetComponent<BoxCollider2D>().isTrigger = false;
+		if (!angry)
+		{
+			base.panic ();
+			panicked = false;
+
+			angry = true;
+		}
+	}
+
+	override protected void decrementAlertLevel()
+	{
+		if (!angry)
+			base.decrementAlertLevel();
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		// TODO: It's axe time
+		if (angry && collision.gameObject.tag.Equals(player.tag))
+		{
+			// TODO: It's axe time
+		}
 	}
 }

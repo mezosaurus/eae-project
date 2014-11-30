@@ -101,7 +101,7 @@ public class PathAIController : AIController
 		if (movement == pathPosition && !lured)
 		{
 			if (killSelf && nextPath.gameObject.tag.Equals("Respawn"))
-				Destroy(gameObject);
+				destroyNPC();
 			
 			int max = 10;
 			int rand = Random.Range (0, max);
