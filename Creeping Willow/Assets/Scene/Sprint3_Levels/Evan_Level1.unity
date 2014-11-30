@@ -286,7 +286,7 @@ GameObject:
   - 4: {fileID: 54974068}
   - 212: {fileID: 54974069}
   m_Layer: 0
-  m_Name: Sidewalk_medium2
+  m_Name: Sidewalk_Medium2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -337,7 +337,7 @@ GameObject:
   - 4: {fileID: 55650157}
   - 212: {fileID: 55650156}
   m_Layer: 0
-  m_Name: Sidewalk_short1
+  m_Name: Sidewalk_Short1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -712,6 +712,8 @@ GameObject:
   - 58: {fileID: 91972642}
   - 114: {fileID: 91972641}
   - 82: {fileID: 91972640}
+  - 114: {fileID: 91972648}
+  - 114: {fileID: 91972647}
   - 114: {fileID: 91972646}
   m_Layer: 0
   m_Name: Player
@@ -883,7 +885,7 @@ Rigidbody2D:
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 0
-  m_FixedAngle: 0
+  m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -923,6 +925,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   luresAllowed: 1
+  abilityInUse: 0
+--- !u!114 &91972647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: ffb2edaa74832db4084ca48066a4fdcf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1697037061}
+  m_GameObject: {fileID: 91972638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5b947123433ac45a6fe9e7daea21a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: .5
+--- !u!114 &91972648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: ffb2edaa74832db4084ca48066a4fdcf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1697037061}
+  m_GameObject: {fileID: 91972638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71eeb80d7e16c4b4397e7f475c30d1f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  luresAllowed: 0
   abilityInUse: 0
 --- !u!1001 &104472141
 Prefab:
@@ -2063,6 +2092,8 @@ GameObject:
   - 4: {fileID: 241093259}
   - 212: {fileID: 241093261}
   - 68: {fileID: 241093260}
+  - 114: {fileID: 241093263}
+  - 50: {fileID: 241093262}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -2121,6 +2152,34 @@ SpriteRenderer:
   m_SortingOrder: 60
   m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &241093262
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 1496953817}
+  m_GameObject: {fileID: 241093258}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &241093263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 1496953817}
+  m_GameObject: {fileID: 241093258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &249182070
 Prefab:
   m_ObjectHideFlags: 0
@@ -2227,7 +2286,7 @@ GameObject:
   - 4: {fileID: 252926581}
   - 212: {fileID: 252926580}
   m_Layer: 0
-  m_Name: Sidewalk_medium1
+  m_Name: Sidewalk_Medium1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2329,7 +2388,7 @@ GameObject:
   - 4: {fileID: 268778044}
   - 212: {fileID: 268778045}
   m_Layer: 0
-  m_Name: Sidewalk_medium1
+  m_Name: Sidewalk_Medium1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2924,7 +2983,7 @@ GameObject:
   - 4: {fileID: 352781749}
   - 212: {fileID: 352781748}
   m_Layer: 0
-  m_Name: Sidewalk_short2
+  m_Name: Sidewalk_Short2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4221,6 +4280,8 @@ GameObject:
   - 4: {fileID: 546705533}
   - 212: {fileID: 546705535}
   - 68: {fileID: 546705534}
+  - 114: {fileID: 546705537}
+  - 50: {fileID: 546705536}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -4284,6 +4345,34 @@ SpriteRenderer:
   m_SortingOrder: 82
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &546705536
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1730480859}
+  m_GameObject: {fileID: 546705532}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &546705537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1730480859}
+  m_GameObject: {fileID: 546705532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &547929597
 Prefab:
   m_ObjectHideFlags: 0
@@ -6155,7 +6244,7 @@ GameObject:
   - 4: {fileID: 770404364}
   - 212: {fileID: 770404365}
   m_Layer: 0
-  m_Name: Sidewalk_medium1
+  m_Name: Sidewalk_Medium1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6258,6 +6347,8 @@ GameObject:
   - 4: {fileID: 782311923}
   - 212: {fileID: 782311925}
   - 68: {fileID: 782311924}
+  - 114: {fileID: 782311927}
+  - 50: {fileID: 782311926}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -6316,6 +6407,34 @@ SpriteRenderer:
   m_SortingOrder: 145
   m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &782311926
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 1731712698}
+  m_GameObject: {fileID: 782311922}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &782311927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 1731712698}
+  m_GameObject: {fileID: 782311922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &797968576
 GameObject:
   m_ObjectHideFlags: 0
@@ -6477,6 +6596,8 @@ GameObject:
   - 4: {fileID: 850236909}
   - 212: {fileID: 850236911}
   - 68: {fileID: 850236910}
+  - 114: {fileID: 850236913}
+  - 50: {fileID: 850236912}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -6535,6 +6656,34 @@ SpriteRenderer:
   m_SortingOrder: 32
   m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &850236912
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 413464634}
+  m_GameObject: {fileID: 850236908}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &850236913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 413464634}
+  m_GameObject: {fileID: 850236908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &850924387
 Prefab:
   m_ObjectHideFlags: 0
@@ -6928,6 +7077,7 @@ GameObject:
   - 4: {fileID: 871013883}
   - 212: {fileID: 871013885}
   - 68: {fileID: 871013884}
+  - 114: {fileID: 871013886}
   m_Layer: 0
   m_Name: Bench6
   m_TagString: Bench
@@ -6983,9 +7133,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 128
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &871013886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1296575897}
+  m_GameObject: {fileID: 871013882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &873508777
 Prefab:
   m_ObjectHideFlags: 0
@@ -7044,6 +7206,7 @@ GameObject:
   - 4: {fileID: 875312765}
   - 212: {fileID: 875312764}
   - 68: {fileID: 875312763}
+  - 114: {fileID: 875312766}
   m_Layer: 0
   m_Name: Bench1
   m_TagString: Bench
@@ -7087,7 +7250,7 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 143
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &875312765
@@ -7102,6 +7265,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1980107505}
   m_RootOrder: 0
+--- !u!114 &875312766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1777703465}
+  m_GameObject: {fileID: 875312762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &881538522
 GameObject:
   m_ObjectHideFlags: 0
@@ -7708,7 +7883,7 @@ GameObject:
   - 4: {fileID: 965728305}
   - 212: {fileID: 965728306}
   m_Layer: 0
-  m_Name: Sidewalk_long2
+  m_Name: Sidewalk_Long2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7858,6 +8033,8 @@ GameObject:
   - 4: {fileID: 977065064}
   - 212: {fileID: 977065066}
   - 68: {fileID: 977065065}
+  - 114: {fileID: 977065068}
+  - 50: {fileID: 977065067}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -7921,6 +8098,34 @@ SpriteRenderer:
   m_SortingOrder: 130
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &977065067
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1736269949}
+  m_GameObject: {fileID: 977065063}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &977065068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1736269949}
+  m_GameObject: {fileID: 977065063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &994188049
 GameObject:
   m_ObjectHideFlags: 0
@@ -8031,6 +8236,7 @@ GameObject:
   - 4: {fileID: 997798229}
   - 212: {fileID: 997798231}
   - 68: {fileID: 997798230}
+  - 114: {fileID: 997798232}
   m_Layer: 0
   m_Name: Bench8
   m_TagString: Bench
@@ -8086,9 +8292,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 132
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &997798232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 2104286171}
+  m_GameObject: {fileID: 997798228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1002917923
 GameObject:
   m_ObjectHideFlags: 0
@@ -8099,6 +8317,8 @@ GameObject:
   - 4: {fileID: 1002917924}
   - 212: {fileID: 1002917926}
   - 68: {fileID: 1002917925}
+  - 114: {fileID: 1002917928}
+  - 50: {fileID: 1002917927}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -8162,6 +8382,34 @@ SpriteRenderer:
   m_SortingOrder: 140
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &1002917927
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1111040725}
+  m_GameObject: {fileID: 1002917923}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1002917928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1111040725}
+  m_GameObject: {fileID: 1002917923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1006000254
 Prefab:
   m_ObjectHideFlags: 0
@@ -8534,6 +8782,8 @@ GameObject:
   - 4: {fileID: 1094527624}
   - 212: {fileID: 1094527626}
   - 68: {fileID: 1094527625}
+  - 114: {fileID: 1094527628}
+  - 50: {fileID: 1094527627}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -8597,6 +8847,34 @@ SpriteRenderer:
   m_SortingOrder: 75
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &1094527627
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1570663504}
+  m_GameObject: {fileID: 1094527623}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1094527628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1570663504}
+  m_GameObject: {fileID: 1094527623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1094808432
 Prefab:
   m_ObjectHideFlags: 0
@@ -8870,6 +9148,7 @@ GameObject:
   - 4: {fileID: 1117870960}
   - 212: {fileID: 1117870962}
   - 68: {fileID: 1117870961}
+  - 114: {fileID: 1117870963}
   m_Layer: 0
   m_Name: Bench
   m_TagString: Bench
@@ -8925,9 +9204,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 95
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1117870963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 157708704}
+  m_GameObject: {fileID: 1117870959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1118387499
 Prefab:
   m_ObjectHideFlags: 0
@@ -9275,6 +9566,7 @@ GameObject:
   - 4: {fileID: 1190658016}
   - 212: {fileID: 1190658018}
   - 68: {fileID: 1190658017}
+  - 114: {fileID: 1190658019}
   m_Layer: 0
   m_Name: Bench2
   m_TagString: Bench
@@ -9330,9 +9622,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 47
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1190658019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1416570487}
+  m_GameObject: {fileID: 1190658015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1201089872
 GameObject:
   m_ObjectHideFlags: 0
@@ -9408,6 +9712,8 @@ GameObject:
   - 4: {fileID: 1201490601}
   - 212: {fileID: 1201490603}
   - 68: {fileID: 1201490602}
+  - 114: {fileID: 1201490605}
+  - 50: {fileID: 1201490604}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -9466,6 +9772,34 @@ SpriteRenderer:
   m_SortingOrder: 55
   m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &1201490604
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 1098874770}
+  m_GameObject: {fileID: 1201490600}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1201490605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 1098874770}
+  m_GameObject: {fileID: 1201490600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1216562864
 GameObject:
   m_ObjectHideFlags: 0
@@ -9857,6 +10191,7 @@ GameObject:
   - 4: {fileID: 1293849167}
   - 212: {fileID: 1293849169}
   - 68: {fileID: 1293849168}
+  - 114: {fileID: 1293849170}
   m_Layer: 0
   m_Name: Bench4
   m_TagString: Bench
@@ -9912,9 +10247,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 56
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1293849170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 925776664}
+  m_GameObject: {fileID: 1293849166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1296575897
 Prefab:
   m_ObjectHideFlags: 0
@@ -10364,7 +10711,7 @@ GameObject:
   - 4: {fileID: 1389803999}
   - 212: {fileID: 1389804000}
   m_Layer: 0
-  m_Name: Sidewalk_short2
+  m_Name: Sidewalk_Short2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10768,6 +11115,8 @@ GameObject:
   - 4: {fileID: 1417152100}
   - 212: {fileID: 1417152102}
   - 68: {fileID: 1417152101}
+  - 114: {fileID: 1417152104}
+  - 50: {fileID: 1417152103}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -10831,6 +11180,34 @@ SpriteRenderer:
   m_SortingOrder: 21
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &1417152103
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800921412}
+  m_GameObject: {fileID: 1417152099}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1417152104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1800921412}
+  m_GameObject: {fileID: 1417152099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1419506153
 Prefab:
   m_ObjectHideFlags: 0
@@ -10893,6 +11270,8 @@ GameObject:
   - 4: {fileID: 1424735757}
   - 212: {fileID: 1424735759}
   - 68: {fileID: 1424735758}
+  - 114: {fileID: 1424735761}
+  - 50: {fileID: 1424735760}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -10956,6 +11335,34 @@ SpriteRenderer:
   m_SortingOrder: 39
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &1424735760
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1618171925}
+  m_GameObject: {fileID: 1424735756}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1424735761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1618171925}
+  m_GameObject: {fileID: 1424735756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1431375798
 GameObject:
   m_ObjectHideFlags: 0
@@ -11733,7 +12140,7 @@ GameObject:
   - 4: {fileID: 1523479195}
   - 212: {fileID: 1523479196}
   m_Layer: 0
-  m_Name: Sidewalk_short2
+  m_Name: Sidewalk_Short2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11887,6 +12294,8 @@ GameObject:
   - 4: {fileID: 1545302625}
   - 212: {fileID: 1545302627}
   - 68: {fileID: 1545302626}
+  - 114: {fileID: 1545302629}
+  - 50: {fileID: 1545302628}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -11950,6 +12359,34 @@ SpriteRenderer:
   m_SortingOrder: 152
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &1545302628
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 2020128521}
+  m_GameObject: {fileID: 1545302624}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1545302629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 2020128521}
+  m_GameObject: {fileID: 1545302624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1569194618
 Prefab:
   m_ObjectHideFlags: 0
@@ -12226,7 +12663,7 @@ GameObject:
   - 4: {fileID: 1603789661}
   - 212: {fileID: 1603789662}
   m_Layer: 0
-  m_Name: Sidewalk_medium2
+  m_Name: Sidewalk_Medium2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12771,6 +13208,7 @@ GameObject:
   - 4: {fileID: 1696973091}
   - 212: {fileID: 1696973093}
   - 68: {fileID: 1696973092}
+  - 114: {fileID: 1696973094}
   m_Layer: 0
   m_Name: Bench5
   m_TagString: Bench
@@ -12826,9 +13264,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 136
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1696973094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 738692928}
+  m_GameObject: {fileID: 1696973090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1697037061
 Prefab:
   m_ObjectHideFlags: 0
@@ -12866,7 +13316,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
       propertyPath: m_RootOrder
-      value: 39
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
       propertyPath: m_IsActive
@@ -12918,6 +13368,7 @@ GameObject:
   - 4: {fileID: 1702009080}
   - 212: {fileID: 1702009082}
   - 68: {fileID: 1702009081}
+  - 114: {fileID: 1702009083}
   m_Layer: 0
   m_Name: Bench7
   m_TagString: Bench
@@ -12973,9 +13424,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 86
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1702009083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 335519529}
+  m_GameObject: {fileID: 1702009079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1704307882
 GameObject:
   m_ObjectHideFlags: 0
@@ -12986,7 +13449,7 @@ GameObject:
   - 4: {fileID: 1704307883}
   - 212: {fileID: 1704307884}
   m_Layer: 0
-  m_Name: Sidewalk_long2
+  m_Name: Sidewalk_Long2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13647,6 +14110,7 @@ MonoBehaviour:
   pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
   stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
   wanderNPC: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
+  enemyNPC: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
   spawnTag: Respawn
   pathTag: Paths
   benchTag: Bench
@@ -15700,7 +16164,7 @@ GameObject:
   - 4: {fileID: 2036527567}
   - 212: {fileID: 2036527568}
   m_Layer: 0
-  m_Name: Sidewalk_medium2
+  m_Name: Sidewalk_Medium2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15803,6 +16267,8 @@ GameObject:
   - 4: {fileID: 2040384499}
   - 212: {fileID: 2040384501}
   - 68: {fileID: 2040384500}
+  - 114: {fileID: 2040384503}
+  - 50: {fileID: 2040384502}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -15866,6 +16332,34 @@ SpriteRenderer:
   m_SortingOrder: 93
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &2040384502
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1240925827}
+  m_GameObject: {fileID: 2040384498}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &2040384503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1240925827}
+  m_GameObject: {fileID: 2040384498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2047459296
 GameObject:
   m_ObjectHideFlags: 0
@@ -16071,6 +16565,8 @@ GameObject:
   - 4: {fileID: 2072091281}
   - 212: {fileID: 2072091283}
   - 68: {fileID: 2072091282}
+  - 114: {fileID: 2072091285}
+  - 50: {fileID: 2072091284}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -16134,6 +16630,34 @@ SpriteRenderer:
   m_SortingOrder: 46
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &2072091284
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 2097303672}
+  m_GameObject: {fileID: 2072091280}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &2072091285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 2097303672}
+  m_GameObject: {fileID: 2072091280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2079197270
 GameObject:
   m_ObjectHideFlags: 0
@@ -16378,6 +16902,7 @@ GameObject:
   - 4: {fileID: 2089713428}
   - 212: {fileID: 2089713430}
   - 68: {fileID: 2089713429}
+  - 114: {fileID: 2089713431}
   m_Layer: 0
   m_Name: Bench3
   m_TagString: Bench
@@ -16433,9 +16958,21 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 98
+  m_SortingOrder: 29
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &2089713431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1481112579}
+  m_GameObject: {fileID: 2089713427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2092262954
 GameObject:
   m_ObjectHideFlags: 0
@@ -16696,7 +17233,7 @@ GameObject:
   - 4: {fileID: 2123101125}
   - 212: {fileID: 2123101126}
   m_Layer: 0
-  m_Name: Sidewalk_medium2
+  m_Name: Sidewalk_Medium2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16877,6 +17414,8 @@ GameObject:
   - 4: {fileID: 2140823191}
   - 212: {fileID: 2140823193}
   - 68: {fileID: 2140823192}
+  - 114: {fileID: 2140823195}
+  - 50: {fileID: 2140823194}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -16935,6 +17474,34 @@ SpriteRenderer:
   m_SortingOrder: 137
   m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &2140823194
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 680225621}
+  m_GameObject: {fileID: 2140823190}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &2140823195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 680225621}
+  m_GameObject: {fileID: 2140823190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2141635536
 GameObject:
   m_ObjectHideFlags: 0
@@ -16996,7 +17563,7 @@ GameObject:
   - 4: {fileID: 2142207486}
   - 212: {fileID: 2142207487}
   m_Layer: 0
-  m_Name: Sidewalk_long2
+  m_Name: Sidewalk_Long2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

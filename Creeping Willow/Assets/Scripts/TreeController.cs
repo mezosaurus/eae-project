@@ -183,6 +183,10 @@ public class TreeController : GameBehavior
         audio.Play();
 
         npcsInRange.Remove(grabbedNPC.GetInstanceID());
+
+		// Broadcast NPC being eaten
+		MessageCenter.Instance.Broadcast (new NPCEatenMessage(grabbedNPC));
+
         Destroy(grabbedNPC);
 
         grabbedNPC = null;

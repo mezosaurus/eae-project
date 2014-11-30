@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ScoreScript : MonoBehaviour {
+public enum BountyState
+{
+	BOUNTY_HIDDEN,
+	BOUNTY_HIDING,
+	BOUNTY_SHOWN,
+	BOUNTY_SHOWING
+}
+
+public class ScoreScript : GameBehavior {
 
 	/*
 	 * SCORING SYSTEM:
@@ -10,16 +18,23 @@ public class ScoreScript : MonoBehaviour {
 	 * Eating an npc - 50 pts
 	 * Avoiding axeman detection - 100 pts
 	 * Luring an npc - 25 pts
-	 * 
+	 * Grabbing an npc - 25
 	 * 
 	 */
-	public static int NPC_EATEN = 50;
-	public static int AVOIDED_AXEMAN = 100;
-	public static int LURED_NPC = 25;
-	public static int NPC_GRABBED = 25;
+	public readonly int NPC_EATEN = 50;
+	public readonly int AVOIDED_AXEMAN = 100;
+	public readonly int LURED_NPC = 25;
+	public readonly int NPC_GRABBED = 25;
+	public readonly int BOUNTY_EATEN = 100;
+
+	/**
+	 * Probability that next npc will be the new targeted bounty.
+	 **/
+	public float frequency;
 
 
-	// GUI variables
+
+	// Score GUI variables
 	float offsetX = 200;
 	float offsetY = 50;
 	float sizeX = 150;
@@ -30,17 +45,34 @@ public class ScoreScript : MonoBehaviour {
 	float popupIncrement = 0;
 
 
+	
 	int _score;
 	int chainLength;
-	readonly int chainMax = 20;
+	readonly int chainMax = 10;
 	bool scoreDisplay;
-
+	
 	int displayScore;
 	int displayMultiplier;
 
 
+	// Bounty GUI variables
+	float bountySizeX;
+	float bountyLabelSizeY;
+	float bountyRectSizeY;
+
+	int bountyState;
+	float bountyIncrement = 0;
+
+	GameObject BountyNPC;
+	Texture2D BountyNPCImage;
+
+
 	// Use this for initialization
 	void Start () {
+
+		if( frequency > 1 || frequency < 0 )
+			frequency = .5f;
+
 		RegisterListeners ();
 		_score = 0;
 		chainLength = 1;
@@ -48,15 +80,44 @@ public class ScoreScript : MonoBehaviour {
 		scoreDisplay = false;
 		displayMultiplier = chainLength;
 		displayScore = 0;
+
+		bountyState = (int)BountyState.BOUNTY_HIDDEN;
+		BountyNPCImage = new Texture2D (1, 1);
+
+		// bounty
+		bountySizeX = (int)Screen.width * .2f;
+		bountyLabelSizeY = 30;
+		bountyRectSizeY = (int)Screen.height * .2f;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	protected override void GameUpdate () {
+		if( GetComponent<TreeController>().state == Tree.State.Eating )
+			return;
+
+		if( Input.GetButtonDown("RB") )
+		{
+			if( bountyState == (int)BountyState.BOUNTY_SHOWING || bountyState == (int)BountyState.BOUNTY_HIDING )
+			{
+				// Do nothing
+			}
+			else
+			{
+				if( bountyState == (int)BountyState.BOUNTY_SHOWN )
+				{
+					bountyState = (int)BountyState.BOUNTY_HIDING;
+				}
+				else if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
+				{
+					bountyState = (int)BountyState.BOUNTY_SHOWING;
+				}
+			}
+		}
 	}
 
 	void OnGUI()
 	{
+		/***** Scoring GUI *****/
 		GUIStyle myStyle = new GUIStyle ();
 		myStyle.fontSize = 50;
 
@@ -88,6 +149,64 @@ public class ScoreScript : MonoBehaviour {
 		myStyle.fontSize = 30;
 		myStyle.normal.textColor = Color.white;
 		GUI.Box (new Rect (Screen.width-offsetX, Screen.height-offsetY, sizeX, sizeY), "SCORE: " + _score, myStyle);
+
+
+
+
+		/***** Bounty GUI *****/
+
+		// probably should use switch-case, but meh
+		/*if( BountyNPC == null )
+		{
+			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (None)");
+		}
+		else*/ if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
+		{
+			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
+			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height,bountySizeX,bountyRectSizeY), BountyNPCImage);
+		}
+		else if( bountyState == (int)BountyState.BOUNTY_SHOWN )
+		{
+			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyRectSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
+			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyRectSizeY,bountySizeX,bountyRectSizeY), BountyNPCImage);
+		}
+		else if( bountyState == (int)BountyState.BOUNTY_SHOWING )
+		{
+			if( bountyIncrement >= bountyRectSizeY )
+			{
+				bountyState = (int)BountyState.BOUNTY_SHOWN;
+				bountyIncrement = bountyRectSizeY;
+			}
+			else
+			{
+				bountyIncrement += 2f;
+				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
+				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyIncrement,bountySizeX,bountyRectSizeY), BountyNPCImage);
+			}
+
+
+		}
+		else if( bountyState == (int)BountyState.BOUNTY_HIDING )
+		{
+			if( bountyIncrement <= 0 )
+			{
+				bountyState = (int)BountyState.BOUNTY_HIDDEN;
+				bountyIncrement = 0;
+			}
+			else
+			{
+				bountyIncrement -= 2f;
+				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
+				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyIncrement,bountySizeX,bountyRectSizeY), BountyNPCImage);
+			}
+
+		}
+		else // default - BOUNTY_HIDDEN
+		{
+			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
+			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height,bountySizeX,bountyRectSizeY), BountyNPCImage);
+		}
+
 	}
 
 	void addScore(int score)
@@ -127,7 +246,8 @@ public class ScoreScript : MonoBehaviour {
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, HandleGrabbedNPCs);
 		MessageCenter.Instance.RegisterListener (MessageType.NPCAlertLevel, HandleNPCAlertLevel);
 		MessageCenter.Instance.RegisterListener (MessageType.LureReleased, HandleLureReleased);
-		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, HandleNPCDestroyed);
+		MessageCenter.Instance.RegisterListener (MessageType.NPCEaten, HandleNPCEaten);
+		MessageCenter.Instance.RegisterListener (MessageType.NPCCreated, HandleNPCCreated);
 	}
 
 	void UnregisterListeners()
@@ -136,7 +256,9 @@ public class ScoreScript : MonoBehaviour {
 		MessageCenter.Instance.UnregisterListener(MessageType.PlayerGrabbedNPCs, HandleGrabbedNPCs);
 		MessageCenter.Instance.UnregisterListener(MessageType.NPCAlertLevel, HandleNPCAlertLevel);
 		MessageCenter.Instance.UnregisterListener(MessageType.LureReleased, HandleLureReleased);
-		MessageCenter.Instance.UnregisterListener(MessageType.NPCDestroyed, HandleNPCDestroyed);
+		MessageCenter.Instance.UnregisterListener(MessageType.NPCEaten, HandleNPCEaten);
+		MessageCenter.Instance.UnregisterListener (MessageType.NPCCreated, HandleNPCCreated);
+
 	}
 
 	/*
@@ -172,6 +294,8 @@ public class ScoreScript : MonoBehaviour {
 		int num = mess.NPCs.Count;
 
 		addScore (addMultiplier (NPC_GRABBED, chainLength));
+
+		bountyState = (int)BountyState.BOUNTY_HIDDEN;
 	}
 
 	void HandleNPCAlertLevel(Message message)
@@ -200,10 +324,47 @@ public class ScoreScript : MonoBehaviour {
 		LureReleasedMessage mess = message as LureReleasedMessage;
 	}
 
-	void HandleNPCDestroyed(Message message)
+	void HandleNPCEaten(Message message)
 	{
-		NPCDestroyedMessage mess = message as NPCDestroyedMessage;
+		NPCEatenMessage mess = message as NPCEatenMessage;
 
-		//addScore (addMultiplier (NPC_EATEN, chainLength));
+		if( BountyNPC.Equals(mess.NPC) )
+		{
+			addScore (addMultiplier (BOUNTY_EATEN, chainLength));
+			BountyNPC = null;
+			BountyNPCImage = new Texture2D(1,1);
+		}
+		else
+			addScore (addMultiplier (NPC_EATEN, chainLength));
+	}
+
+	void HandleNPCCreated(Message message)
+	{
+		if( BountyNPC != null || GetComponent<TreeController>().state == Tree.State.Eating)
+			return;
+
+		if( Random.value > frequency )
+			return;
+
+		NPCCreatedMessage mess = message as NPCCreatedMessage;
+
+		BountyNPC = mess.NPC;
+
+		Sprite sprite = mess.NPC.GetComponent<SpriteRenderer> ().sprite;
+		Color[] pixels = sprite.texture.GetPixels (
+			(int)sprite.textureRect.x, 
+			(int)sprite.textureRect.y, 
+			(int)sprite.textureRect.width, 
+			(int)sprite.textureRect.height
+			);
+
+		BountyNPCImage = new Texture2D ((int)sprite.rect.width, (int)sprite.rect.height);
+
+		BountyNPCImage.SetPixels (pixels);
+		BountyNPCImage.Apply ();
+		
+		//BountyNPCImage = mess.NPC.GetComponent<SpriteRenderer> ().sprite.texture;
+		
+		bountyState = (int)BountyState.BOUNTY_SHOWING;
 	}
 }

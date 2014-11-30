@@ -70,6 +70,7 @@ public class AIController : GameBehavior {
 	// Use this for initialization
 	public void Start ()
 	{
+
 		// Alert Texture
 		alertTexture = (GameObject)Instantiate(Resources.Load("prefabs/AI/SceneInitPrefabs/AIAlert"));
 		alertTexture.renderer.enabled = false;
@@ -107,6 +108,10 @@ public class AIController : GameBehavior {
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer (npcTag);
 		Physics2D.IgnoreLayerCollision (npcLayer, npcLayer);
+
+		
+		// Broadcast start of lifecycle
+		MessageCenter.Instance.Broadcast (new NPCCreatedMessage (gameObject));
 	}
 
 	void OnDestroy()
