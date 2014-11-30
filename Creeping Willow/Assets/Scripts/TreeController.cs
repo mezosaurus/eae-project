@@ -109,6 +109,7 @@ public class TreeController : GameBehavior
     private void ChangeStateToEating()
     {
         rigidbody2D.velocity = Vector2.zero;
+        legs.GetComponent<Animator>().enabled = false;
         
         Debug.Log(npcsInRange.Count);
         state = Tree.State.Eating;
@@ -170,6 +171,14 @@ public class TreeController : GameBehavior
         grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
         grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = false;
         grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = false;
+
+        theGrabbedNPC.GetComponent<Animator>().enabled = (grabbedNPC.name.Contains("BenchNPC")) ? false : true;
+        float angle = (grabbedNPC.name.Contains("BenchNPC")) ? 53f : 0f;
+
+        //theGrabbedNPC.transform.eulerAngles = new Vector3(0f, 0f, angle);
+        theGrabbedNPC.transform.localEulerAngles = new Vector3(0f, 0f, angle);
+
+        if (grabbedNPC.name.Contains("BenchNPC")) theGrabbedNPC.GetComponent<SpriteRenderer>().sprite = Textures.GrabbedNPCs.OldMan;
     }
 
     private void ChangeStateToEatingCinematic()
@@ -242,7 +251,7 @@ public class TreeController : GameBehavior
                 return;
             }
 
-            velocity = velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
+            velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
 
             // Keyboard Input
             if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) velocity.x = (Input.GetKey(KeyCode.LeftArrow)) ? -1f : 1f;
@@ -417,7 +426,7 @@ public class TreeController : GameBehavior
     }
 
     public void UpdateSorting()
-    {
+    {        
         if (state == Tree.State.Normal)
         {
             leftArm.GetComponent<SpriteRenderer>().sortingOrder = spriteRenderer.sortingOrder + 1;
@@ -459,6 +468,11 @@ public class TreeController : GameBehavior
     private void UpdateSprites()
     {
         int index = (velocity == Vector2.zero) ? 0 : 3;
+
+        Animator legsAnimator = legs.GetComponent<Animator>();
+
+        legsAnimator.enabled = (velocity != Vector2.zero);
+        legsAnimator.speed = Mathf.Clamp(velocity.magnitude, 0f, 1f);
 
         switch (direction)
         {
@@ -545,8 +559,15 @@ namespace Tree
             public Sprite[] Front, FrontRight, Right;
         }
 
+        [System.Serializable]
+        public class _GrabbedNPCs
+        {
+            public Sprite OldMan, MowerMan;
+        }
+
         public _Body Body;
         public _Face Face;
+        public _GrabbedNPCs GrabbedNPCs;
         public Texture2D[] Buttons;
     }
 
