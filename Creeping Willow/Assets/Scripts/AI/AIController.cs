@@ -515,6 +515,25 @@ public class AIController : GameBehavior {
 			nextPath = getNextPath();
 		}
 	}
+
+
+	/**
+	 * ObjectAvoidance:
+	 * Checks for objects to avoid and alters their path to compensate for this
+	 **/
+	void objectAvoidance()
+	{
+		// spherecast
+
+		// if object is hit with rigidbody
+			// if object collides with getNextPath()
+				// getNextPath(getNextPath())
+			// else
+				// change nextPath
+
+
+
+	}
 }
 
 

@@ -27,10 +27,27 @@ public class ScoreScript : GameBehavior {
 	public readonly int NPC_GRABBED = 25;
 	public readonly int BOUNTY_EATEN = 100;
 
+
+	public readonly int stealthMultiplier = 6;
+	public readonly int droppingFliesMultiplier = 3;
+	public readonly int lureMultiplier = 2;
+
+	float timeSinceLastKill = -1;
+	float lastKillTime = -100;
+	readonly float lastKillBonus = 30;
+
 	/**
 	 * Probability that next npc will be the new targeted bounty.
 	 **/
 	public float frequency;
+
+
+	bool luresInUse = false;
+	int luresInUseCount = 0;
+	ArrayList luredNPCs = new ArrayList();
+
+
+	//Queue scoreQueue = new Queue();
 
 
 
@@ -43,6 +60,8 @@ public class ScoreScript : GameBehavior {
 	float popupX = 100;
 	float popupY = 30;
 	float popupIncrement = 0;
+	readonly float popupIncrementMax = 100;
+	float popupAlpha;
 
 
 	
@@ -92,6 +111,8 @@ public class ScoreScript : GameBehavior {
 	
 	// Update is called once per frame
 	protected override void GameUpdate () {
+		timeSinceLastKill = Time.time - lastKillTime;
+
 		if( GetComponent<TreeController>().state == Tree.State.Eating )
 			return;
 
@@ -121,8 +142,33 @@ public class ScoreScript : GameBehavior {
 		GUIStyle myStyle = new GUIStyle ();
 		myStyle.fontSize = 50;
 
+		Color guiColor = GUI.color;
+		Color savedGuiColor = GUI.color;
+
 		if( scoreDisplay )
 		{
+			if( popupIncrement <= .4f * popupIncrementMax )
+			{
+				popupAlpha = GUI.color.a * popupIncrement / (.4f * popupIncrementMax );
+				guiColor.a = popupAlpha;
+				GUI.color = guiColor;
+			}
+			else if( popupIncrement >= .6f * popupIncrementMax )
+			{
+				popupAlpha = GUI.color.a * ( popupIncrementMax - popupIncrement ) / (.4f * popupIncrementMax );
+				guiColor.a = popupAlpha;
+				GUI.color = guiColor;
+			}
+			/*
+			// apply alpha changes
+			if( popupIncrement <= .2f * popupIncrementMax || popupIncrement >= .8f * popupIncrementMax )
+			{
+				GUI.color = new Color() { a = .2f };
+			}
+			else
+			{
+				GUI.color = new Color() { a = alpha };
+			}*/
 
 			// score pop-up text
 			myStyle.normal.textColor = Color.black;
@@ -137,13 +183,15 @@ public class ScoreScript : GameBehavior {
 			popupIncrement += 1.5f;
 
 			// check statement for pop-up statements
-			if( popupIncrement > 100 )
+			if( popupIncrement > popupIncrementMax )
 			{
 				scoreDisplay = false;
 				popupIncrement = 0;
 			}
 
   		}
+
+		GUI.color = savedGuiColor; // revert to previous alpha
 
 		// score
 		myStyle.fontSize = 30;
@@ -212,7 +260,7 @@ public class ScoreScript : GameBehavior {
 	void addScore(int score)
 	{
 		_score += score;
-		chainLength++;
+		//chainLength++;
 		scoreDisplay = true;
 		//MessageCenter.Instance.Broadcast (new ScoreChangedMessage (score, chainLength));
 	}
@@ -221,6 +269,7 @@ public class ScoreScript : GameBehavior {
 	{
 		displayScore = score;
 		displayMultiplier = multiplier(multi);
+
 
 		return score * multiplier(multi);
 	}
@@ -282,9 +331,14 @@ public class ScoreScript : GameBehavior {
 
 		if( mess.Lure.lurePower >= NPC.GetComponent<AIController>().lurePower )
 		{
+			luresInUseCount++;
+			luresInUse = true;
+
 			// add score
-			addScore(addMultiplier(LURED_NPC,chainLength));
+			addScore(addMultiplier(LURED_NPC,1));
 		}
+
+		luredNPCs.Add (NPC);
 	}
 
 	void HandleGrabbedNPCs(Message message)
@@ -293,7 +347,7 @@ public class ScoreScript : GameBehavior {
 
 		int num = mess.NPCs.Count;
 
-		addScore (addMultiplier (NPC_GRABBED, chainLength));
+		addScore (addMultiplier (NPC_GRABBED, 1));
 
 		bountyState = (int)BountyState.BOUNTY_HIDDEN;
 	}
@@ -304,14 +358,15 @@ public class ScoreScript : GameBehavior {
 
 		if(mess.alertLevelType == AlertLevelType.Alert)
 		{
-			if( chainLength > 2 )
+			chainLength = 1;
+			/*if( chainLength > 2 )
 			{
 				chainLength -= 2;
 			}
 			else
 			{
 				chainLength = 1;
-			}
+			}*/
 		}
 		else if( mess.alertLevelType == AlertLevelType.Panic )
 		{
@@ -322,6 +377,15 @@ public class ScoreScript : GameBehavior {
 	void HandleLureReleased(Message message)
 	{
 		LureReleasedMessage mess = message as LureReleasedMessage;
+
+		GameObject NPC = mess.NPC;
+
+		luredNPCs.Remove (NPC);
+
+		luresInUseCount--;
+
+		if( luresInUseCount == 0 )
+			luresInUse = false;
 	}
 
 	void HandleNPCEaten(Message message)
@@ -333,12 +397,30 @@ public class ScoreScript : GameBehavior {
 
 		if( BountyNPC.Equals(mess.NPC) )
 		{
-			addScore (addMultiplier (BOUNTY_EATEN, chainLength));
+			if( timeSinceLastKill < 15 )
+				addScore (addMultiplier (BOUNTY_EATEN, droppingFliesMultiplier * chainLength));
+			else
+				addScore (addMultiplier (BOUNTY_EATEN, chainLength));
+
 			BountyNPC = null;
 			BountyNPCImage = new Texture2D(1,1);
 		}
 		else
-			addScore (addMultiplier (NPC_EATEN, chainLength));
+		{
+			if( timeSinceLastKill < 15 )
+				addScore (addMultiplier (NPC_EATEN, droppingFliesMultiplier * chainLength));
+			else
+				addScore (addMultiplier (NPC_EATEN, chainLength));
+		}
+
+		if( luredNPCs.Contains(mess.NPC) )
+		{
+			luredNPCs.Remove(mess.NPC);
+			addScore(addMultiplier(LURED_NPC, lureMultiplier));
+		}
+
+		lastKillTime = Time.time;
+		chainLength++;
 	}
 
 	void HandleNPCCreated(Message message)
@@ -353,6 +435,7 @@ public class ScoreScript : GameBehavior {
 
 		BountyNPC = mess.NPC;
 
+		// used to convert from sprite sheet to current sprite
 		Sprite sprite = mess.NPC.GetComponent<SpriteRenderer> ().sprite;
 		Color[] pixels = sprite.texture.GetPixels (
 			(int)sprite.textureRect.x, 
