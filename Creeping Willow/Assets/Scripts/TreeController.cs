@@ -168,7 +168,7 @@ public class TreeController : GameBehavior
         theList.Add(grabbedNPC);
 
         MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(theList));
-        grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
+        //grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
         grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = false;
         grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = false;
 
@@ -536,7 +536,7 @@ public class TreeController : GameBehavior
             int height = Textures.Buttons[0].height;
             Vector3 position = Camera.main.WorldToScreenPoint(progressBar.transform.position);
 
-            GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - 256f, width, height), Textures.Buttons[button]);
+            GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (256f * transform.localScale.y), width, height), Textures.Buttons[button]);
         }
     }
 }
