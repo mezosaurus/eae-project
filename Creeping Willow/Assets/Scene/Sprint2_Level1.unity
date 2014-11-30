@@ -513,6 +513,8 @@ GameObject:
   - 4: {fileID: 76925391}
   - 212: {fileID: 76925393}
   - 68: {fileID: 76925392}
+  - 114: {fileID: 76925395}
+  - 50: {fileID: 76925394}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -576,6 +578,34 @@ SpriteRenderer:
   m_SortingOrder: 134
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &76925394
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 716670055}
+  m_GameObject: {fileID: 76925390}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &76925395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 716670055}
+  m_GameObject: {fileID: 76925390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &89226652
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,6 +673,7 @@ GameObject:
   - 58: {fileID: 91972642}
   - 114: {fileID: 91972641}
   - 82: {fileID: 91972640}
+  - 114: {fileID: 91972647}
   - 114: {fileID: 91972646}
   m_Layer: 0
   m_Name: Player
@@ -855,6 +886,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   luresAllowed: 1
   abilityInUse: 0
+--- !u!114 &91972647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400004, guid: ffb2edaa74832db4084ca48066a4fdcf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1697037061}
+  m_GameObject: {fileID: 91972638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71eeb80d7e16c4b4397e7f475c30d1f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  luresAllowed: 0
+  abilityInUse: 0
 --- !u!1001 &109440962
 Prefab:
   m_ObjectHideFlags: 0
@@ -909,6 +954,8 @@ GameObject:
   - 4: {fileID: 116363957}
   - 212: {fileID: 116363959}
   - 68: {fileID: 116363958}
+  - 114: {fileID: 116363961}
+  - 50: {fileID: 116363960}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -967,6 +1014,34 @@ SpriteRenderer:
   m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &116363960
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 427612479}
+  m_GameObject: {fileID: 116363956}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &116363961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 427612479}
+  m_GameObject: {fileID: 116363956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &120881421
 GameObject:
   m_ObjectHideFlags: 0
@@ -4540,6 +4615,8 @@ GameObject:
   - 4: {fileID: 610179946}
   - 212: {fileID: 610179948}
   - 68: {fileID: 610179947}
+  - 114: {fileID: 610179950}
+  - 50: {fileID: 610179949}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -4598,6 +4675,34 @@ SpriteRenderer:
   m_SortingOrder: 88
   m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &610179949
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 259973131}
+  m_GameObject: {fileID: 610179945}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &610179950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 259973131}
+  m_GameObject: {fileID: 610179945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &640699768
 Prefab:
   m_ObjectHideFlags: 0
@@ -6875,6 +6980,8 @@ GameObject:
   - 4: {fileID: 967784277}
   - 212: {fileID: 967784279}
   - 68: {fileID: 967784278}
+  - 114: {fileID: 967784281}
+  - 50: {fileID: 967784280}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -6938,6 +7045,34 @@ SpriteRenderer:
   m_SortingOrder: 121
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &967784280
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1963105513}
+  m_GameObject: {fileID: 967784276}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &967784281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1963105513}
+  m_GameObject: {fileID: 967784276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &982187745
 GameObject:
   m_ObjectHideFlags: 0
@@ -7609,6 +7744,8 @@ GameObject:
   - 4: {fileID: 1098125057}
   - 212: {fileID: 1098125056}
   - 68: {fileID: 1098125055}
+  - 114: {fileID: 1098125059}
+  - 50: {fileID: 1098125058}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -7667,6 +7804,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 120881422}
   m_RootOrder: 0
+--- !u!50 &1098125058
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 2079526864}
+  m_GameObject: {fileID: 1098125054}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1098125059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 5d1fc8b66b46f07449abed87392a9b23,
+    type: 2}
+  m_PrefabInternal: {fileID: 2079526864}
+  m_GameObject: {fileID: 1098125054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1102796498
 GameObject:
   m_ObjectHideFlags: 0
@@ -11749,6 +11914,8 @@ GameObject:
   - 4: {fileID: 1600905526}
   - 212: {fileID: 1600905525}
   - 68: {fileID: 1600905524}
+  - 114: {fileID: 1600905528}
+  - 50: {fileID: 1600905527}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -11812,6 +11979,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 154107192}
   m_RootOrder: 4
+--- !u!50 &1600905527
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 42523292}
+  m_GameObject: {fileID: 1600905523}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1600905528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 42523292}
+  m_GameObject: {fileID: 1600905523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1605202730
 Prefab:
   m_ObjectHideFlags: 0
@@ -13360,6 +13555,8 @@ GameObject:
   - 4: {fileID: 1755982640}
   - 212: {fileID: 1755982639}
   - 68: {fileID: 1755982638}
+  - 114: {fileID: 1755982642}
+  - 50: {fileID: 1755982641}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -13423,6 +13620,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 154107192}
   m_RootOrder: 1
+--- !u!50 &1755982641
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 296646776}
+  m_GameObject: {fileID: 1755982637}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1755982642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 296646776}
+  m_GameObject: {fileID: 1755982637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1766471312
 GameObject:
   m_ObjectHideFlags: 0
@@ -15559,6 +15784,8 @@ GameObject:
   - 4: {fileID: 2041202965}
   - 212: {fileID: 2041202967}
   - 68: {fileID: 2041202966}
+  - 114: {fileID: 2041202969}
+  - 50: {fileID: 2041202968}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -15622,6 +15849,34 @@ SpriteRenderer:
   m_SortingOrder: 17
   m_Sprite: {fileID: 21300000, guid: a0820f03d6233284ab97647e9a3df168, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!50 &2041202968
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1770181929}
+  m_GameObject: {fileID: 2041202964}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &2041202969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 190835a3b95024d4ca2538885f619cae,
+    type: 2}
+  m_PrefabInternal: {fileID: 1770181929}
+  m_GameObject: {fileID: 2041202964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2047459296
 GameObject:
   m_ObjectHideFlags: 0

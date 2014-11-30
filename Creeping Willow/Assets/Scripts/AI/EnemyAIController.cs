@@ -63,7 +63,7 @@ public class EnemyAIController : AIController
 
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 
-		animateCharacter(movement);
+		animateCharacter(movement, pathPosition);
 		
 		transform.position = movement;
 
@@ -80,11 +80,12 @@ public class EnemyAIController : AIController
 		}
 	}
 
-	private void animateCharacter(Vector3 movement)
+	private void animateCharacter(Vector3 movement, Vector3 moveTo)
 	{
 		determineDirectionChange (transform.position, movement);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		if (biasPosition.x == 0 && biasPosition.y == 0)
+		//if (biasPosition.x == 0 && biasPosition.y == 0)
+		if (movement == moveTo)
 		{
 			//no movement
 			//flipXScale(!lastDirectionWasRight);
@@ -98,7 +99,6 @@ public class EnemyAIController : AIController
 	{
 		if (nextInvestigateTime <= Time.time)
 		{
-			setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.WALK);
 			nextInvestigateTime = Time.time + sittingTime/4;
 			Vector2 position = Random.insideUnitCircle;
 			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
@@ -128,6 +128,7 @@ public class EnemyAIController : AIController
 	override protected void panic()
 	{
 		base.panic ();
+		sitting = false;
 		this.GetComponent<BoxCollider2D>().isTrigger = false;
 	}
 

@@ -47,13 +47,13 @@ public class StationaryAIController : AIController
 			if (killSelf && nextPath != bench)
 				Destroy(gameObject);
 
-			if (!sitting)
+			if (!sitting && nextPath == bench)
 			{
 				sitting = true;
 				leaveTime = Time.time + sittingTime;
 			}
 
-			if (leaveTime <= Time.time)
+			if (leaveTime <= Time.time && !nextPath.tag.Equals(spawnTag))
 			{
 				sitting = false;
 				killSelf = true;
@@ -90,6 +90,7 @@ public class StationaryAIController : AIController
 	override protected void panic()
 	{
 		base.panic ();
+		sitting = false;
 		this.GetComponent<BoxCollider2D>().isTrigger = false;
 		setAnimatorInteger (oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
 	}
