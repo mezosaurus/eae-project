@@ -220,7 +220,7 @@ public class ScoreScript : GameBehavior {
 	int addMultiplier(int score, int multi)
 	{
 		displayScore = score;
-		displayMultiplier = multi;
+		displayMultiplier = multiplier(multi);
 
 		return score * multiplier(multi);
 	}
@@ -327,6 +327,9 @@ public class ScoreScript : GameBehavior {
 	void HandleNPCEaten(Message message)
 	{
 		NPCEatenMessage mess = message as NPCEatenMessage;
+
+		if( BountyNPC == null || mess.NPC == null )
+			return;
 
 		if( BountyNPC.Equals(mess.NPC) )
 		{
