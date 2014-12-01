@@ -21,6 +21,7 @@ public class Possessor : GameBehavior {
 		colliding = false;
 		possessing = false;
 		objectToPossess = null;
+        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 	
 	// Update is called once per frame
@@ -37,7 +38,7 @@ public class Possessor : GameBehavior {
 			velocity = velocity * speed * Time.deltaTime;
 			transform.position += (Vector3) velocity;
 			
-			if (Vector3.Distance (player.transform.position, transform.position) > 5) {
+			if (Vector3.Distance (player.transform.position, transform.position) > 6) {
 				transform.position = prevPosition;
 			}
 		}
@@ -63,6 +64,7 @@ public class Possessor : GameBehavior {
 						renderer.color = color;
 					}
 				}else{
+                    MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
 					ExitPossession();
 				}
 			}

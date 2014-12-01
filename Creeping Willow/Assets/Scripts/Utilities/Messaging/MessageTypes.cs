@@ -14,7 +14,7 @@ public enum MessageType
 	LureReleased,
 	TrapEntered,
 	TrapReleased,
-    CameraZoomIn,
+    CameraZoom,
     CameraZoomOut,
 	PauseChanged,
 	NPCCreated,
@@ -24,6 +24,7 @@ public enum MessageType
 	NotorietyMaxed,
 	ScoreChanged,
 	LevelFinished,
+    CameraChangedObjectFollowed,
 	PlayerKilled,
 	NPCPanickedOffMap,
 }
