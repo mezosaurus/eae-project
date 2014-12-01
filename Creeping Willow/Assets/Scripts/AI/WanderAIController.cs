@@ -33,12 +33,12 @@ public class WanderAIController : AIController {
 			return;
 		if (panicked)
 		{
-			timePanicked -= Time.deltaTime;
+			/*timePanicked -= Time.deltaTime;
 			if (timePanicked <= 0) {
 				panicked = false;
 				//GetComponent<SpriteRenderer>().sprite = normalTexture;
 				return;
-			}
+			}*/
 			/*if (!audio.isPlaying)
 			{
 				//audio.Play();
