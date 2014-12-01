@@ -21,13 +21,14 @@ public class NotorietyMeter : MonoBehaviour
 
 	protected void RegisterListeners()
 	{
-		MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		//MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
 		MessageCenter.Instance.RegisterListener (MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
 	}
 	
 	protected void UnregisterListeners()
 	{
-		MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		//MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		MessageCenter.Instance.UnregisterListener (MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
 	}
 
 	protected void HandleNPCPanickedMessage( Message message )
@@ -44,6 +45,7 @@ public class NotorietyMeter : MonoBehaviour
 		}
 	}
 
+	/*
 	protected void HandleNPCAlertMessage( Message message )
 	{
 		NPCAlertLevelMessage mess = message as NPCAlertLevelMessage;
@@ -65,7 +67,8 @@ public class NotorietyMeter : MonoBehaviour
 			break;
 		}
 	}
-
+	*/
+	
 	void Update()
 	{
 	
