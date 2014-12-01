@@ -151,8 +151,9 @@ public class AIController : GameBehavior {
 		{
 			if (panicked)
 			{
-				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, type);
+				NPCPanickedOffMapMessage message = new NPCPanickedOffMapMessage (gameObject.transform.position);
 				MessageCenter.Instance.Broadcast (message);
+				destroyNPC();
 			}
 			enteredMap = true;
 			ignoreBorder (false, other);
