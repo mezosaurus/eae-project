@@ -51,8 +51,8 @@ public class AIController : GameBehavior {
 
 	// Panic variables
     protected float panicThreshold = 10;
-    protected float panicTime;
-    protected float timePanicked;
+    //protected float panicTime;
+    //protected float timePanicked;
 
 	// Alert variables
     protected float alertThreshold = 5;
@@ -86,7 +86,7 @@ public class AIController : GameBehavior {
         
 		player = GameObject.Find("Player");
         // Set initial alert/panick states
-        timePanicked = panicCooldownSeconds;
+        //timePanicked = panicCooldownSeconds;
         alerted = false;
         panicked = false;
         alertLevel = 0f;
@@ -200,7 +200,7 @@ public class AIController : GameBehavior {
         {
             if (panicked)
             {
-                timePanicked = panicCooldownSeconds;
+                //timePanicked = panicCooldownSeconds;
                 return;
             }
 
@@ -244,7 +244,7 @@ public class AIController : GameBehavior {
 		
 		if (panicked)
 		{
-			timePanicked -= Time.deltaTime;
+			/*timePanicked -= Time.deltaTime;
 			if (timePanicked <= 0)
 			{
 				panicked = false;
@@ -253,7 +253,7 @@ public class AIController : GameBehavior {
 				alertLevel = alertThreshold - 0.1f;
 				broadcastAlertLevelChanged(AlertLevelType.Normal);
 				return true;
-			}
+			}*/
 
 			if (nearWall)
 			{
@@ -364,8 +364,8 @@ public class AIController : GameBehavior {
 		speed = 1.5f;
 		alerted = false;
 		panicked = true;
-		panicTime = Time.time;
-		timePanicked = panicCooldownSeconds;
+		//panicTime = Time.time;
+		//timePanicked = panicCooldownSeconds;
 		moveDir = transform.position - player.transform.position;
 		broadcastAlertLevelChanged(AlertLevelType.Panic);
 	}
@@ -473,8 +473,26 @@ public class AIController : GameBehavior {
 	protected GameObject getLeavingPath()
 	{
 		GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag (spawnTag);
-		int rand = Random.Range(0, spawnPoints.Length);
-		return spawnPoints[rand];
+		float minDistance = 0f;
+		int retIndex = 0;
+		if (spawnPoints.Length == 1)
+			return spawnPoints[0];
+		for (int i = 0; i < spawnPoints.Length; i++)
+		{
+			Vector3 pathPointPos = spawnPoints[i].transform.position;
+			Vector3 npcPos = gameObject.transform.position;
+			float distance = Vector3.Distance(pathPointPos, npcPos);
+			if (minDistance == 0f)
+				minDistance = distance;
+			if (distance <= minDistance)
+			{
+				minDistance = distance;
+				retIndex = i;
+			}
+		}
+		return spawnPoints [retIndex];
+		//int rand = Random.Range(0, spawnPoints.Length);
+		//return spawnPoints[rand];
 	}
 	
 	protected virtual GameObject getNextPath()
