@@ -73,6 +73,7 @@ public class AIController : GameBehavior {
 	protected bool lastDirectionWasRight = false;
 	public GameObject alertTexture;
 	public GameObject panicTexture;
+	public GameObject scaredTexture;
 
 	// Use this for initialization
 	public void Start ()
@@ -89,7 +90,13 @@ public class AIController : GameBehavior {
 		panicTexture.renderer.enabled = false;
 		TextureScript panicTs = panicTexture.GetComponent<TextureScript> ();
 		panicTs.target = gameObject;
-        
+
+		// Scare Texture
+		scaredTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIScared"));
+		scaredTexture.renderer.enabled = false;
+		TextureScript scaredTs = scaredTexture.GetComponent<TextureScript> ();
+		scaredTs.target = gameObject;
+
 		player = GameObject.Find("Player");
         // Set initial alert/panick states
         //timePanicked = panicCooldownSeconds;
@@ -141,6 +148,8 @@ public class AIController : GameBehavior {
 		{
 			Destroy (panicTexture.gameObject);
 		}
+		if (scaredTexture != null)
+			Destroy (scaredTexture.gameObject);
 	}
 
 	//-----------------------
@@ -302,7 +311,10 @@ public class AIController : GameBehavior {
 			scaredTimeLeft -= Time.deltaTime;
 
 			if (scaredTimeLeft <= 0)
+			{
 				scared = false;
+				scaredTexture.renderer.enabled = false;
+			}
 
 			Vector3 npcPosition = transform.position;
 			float step = speed * Time.deltaTime;
@@ -385,6 +397,8 @@ public class AIController : GameBehavior {
 	{
 		alertTexture.renderer.enabled = false;
 		panicTexture.renderer.enabled = true;
+		scaredTexture.renderer.enabled = false;
+		scared = false;
 		speed = 1.5f;
 		alerted = false;
 		panicked = true;
@@ -401,7 +415,7 @@ public class AIController : GameBehavior {
 			return;
 
 		alertTexture.renderer.enabled = false;
-		//scaredTexture.renderer.enabled = true;
+		scaredTexture.renderer.enabled = true;
 
 		scared = true;
 		scaredTimeLeft = scaredCooldownSeconds;
