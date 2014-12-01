@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class EndConditions : MonoBehaviour
@@ -49,6 +49,7 @@ public class EndConditions : MonoBehaviour
 		MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
 		MessageCenter.Instance.RegisterListener( MessageType.TimerStatusChanged, HandleTimerStatusChangedMessage );
 		MessageCenter.Instance.RegisterListener( MessageType.NPCEaten, HandleNPCEatenMessage );
+		MessageCenter.Instance.RegisterListener( MessageType.PlayerKilled, HandlePlayerKilledMessage );
 	}
 	
 	protected void UnregisterListeners()
@@ -56,6 +57,12 @@ public class EndConditions : MonoBehaviour
 		MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
 		MessageCenter.Instance.UnregisterListener( MessageType.TimerStatusChanged, HandleTimerStatusChangedMessage );
 		MessageCenter.Instance.UnregisterListener( MessageType.NPCEaten, HandleNPCEatenMessage );
+		MessageCenter.Instance.UnregisterListener( MessageType.PlayerKilled, HandlePlayerKilledMessage );
+	}
+
+	protected void HandlePlayerKilledMessage( Message message )
+	{
+		AddFail (LevelFinishedReason.PlayerDied, (message as PlayerKilledMessage).NPC);
 	}
 
 	protected void HandleNPCEatenMessage( Message message )

@@ -169,6 +169,8 @@ public class EnemyAIController : AIController
 		if (angry && collision.gameObject.tag.Equals(player.tag))
 		{
 			// TODO: It's axe time
+			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
+			MessageCenter.Instance.Broadcast(message);
 		}
 	}
 }

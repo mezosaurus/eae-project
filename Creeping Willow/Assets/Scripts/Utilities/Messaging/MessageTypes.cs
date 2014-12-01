@@ -1,4 +1,4 @@
-﻿public enum MessageType
+public enum MessageType
 {
     AbilityStatusChanged,
 	AbilityCoolDownMessage,
@@ -24,4 +24,6 @@
 	NotorietyMaxed,
 	ScoreChanged,
 	LevelFinished,
+	PlayerKilled,
+	NPCPanickedOffMap,
 }
