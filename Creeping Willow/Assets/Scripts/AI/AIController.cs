@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class AIController : GameBehavior {
@@ -98,7 +98,7 @@ public class AIController : GameBehavior {
 		npcDir = NPCDirection.L;
 		xScale = transform.localScale.x;
 
-		// Register for all messages that are necessary
+		// Register for all messages that entre necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.TrapEntered, trapEnterListener);
