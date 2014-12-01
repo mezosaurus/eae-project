@@ -1,4 +1,4 @@
-﻿public enum MessageType
+public enum MessageType
 {
     AbilityStatusChanged,
 	AbilityCoolDownMessage,
@@ -25,4 +25,6 @@
 	ScoreChanged,
 	LevelFinished,
     CameraChangedObjectFollowed,
+	PlayerKilled,
+	NPCPanickedOffMap,
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class NotorietyMeter : MonoBehaviour
@@ -21,14 +21,31 @@ public class NotorietyMeter : MonoBehaviour
 
 	protected void RegisterListeners()
 	{
-		MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		//MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		MessageCenter.Instance.RegisterListener (MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
 	}
 	
 	protected void UnregisterListeners()
 	{
-		MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		//MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
+		MessageCenter.Instance.UnregisterListener (MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
 	}
 
+	protected void HandleNPCPanickedMessage( Message message )
+	{
+		NPCPanickedOffMapMessage mess = message as NPCPanickedOffMapMessage;
+
+		notoriety += 30.0f;
+		
+		if( notoriety > notorietyMax )
+		{
+			MessageCenter.Instance.Broadcast( new NotorietyMaxedMessage( mess.PanickedPosition ) );
+			notoriety = notorietyMax;
+			axemanCount++;
+		}
+	}
+
+	/*
 	protected void HandleNPCAlertMessage( Message message )
 	{
 		NPCAlertLevelMessage mess = message as NPCAlertLevelMessage;
@@ -50,7 +67,8 @@ public class NotorietyMeter : MonoBehaviour
 			break;
 		}
 	}
-
+	*/
+	
 	void Update()
 	{
 	
