@@ -853,7 +853,7 @@ MonoBehaviour:
   Prefabs:
     LeftThumbStick: {fileID: 100000, guid: a36c9a10082a7bf44a701b1a69576640, type: 2}
     RightThumbStick: {fileID: 100000, guid: 2e0723bd5ed20d8429f13a118aa506dc, type: 2}
-  Speed: 20
+  Speed: 40
   state: 0
 --- !u!58 &91972642
 CircleCollider2D:
@@ -1780,7 +1780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectToFollow: {fileID: 91972639}
   ObjectToFollowOffset: {x: 0, y: .150000006, z: 0}
-  TargetSize: 0
+  TargetSize: 4
 --- !u!114 &175926698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2948,7 +2948,7 @@ GameObject:
   - 4: {fileID: 327738172}
   m_Layer: 0
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13512,7 +13512,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
       propertyPath: Speed
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
       propertyPath: luresAllowed
