@@ -71,7 +71,7 @@ public class EndConditions : MonoBehaviour
 		NPCsEaten++;
 		
 		//if (mess.eaten)
-			NPCsEaten++;
+			//NPCsEaten++;
 		
 		if( UseTargetNPC && mess.NPC == TargetNPC )
 			AddWin( LevelFinishedReason.TargetNPCEaten, null );
