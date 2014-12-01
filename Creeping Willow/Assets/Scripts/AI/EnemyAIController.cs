@@ -43,6 +43,9 @@ public class EnemyAIController : AIController
 		// if lure is deleted
 		if( nextPath == null ) return;
 
+		if (nextPath.Equals(Vector3.zero))
+			Debug.Log ("har");
+
 		if (sitting)
 		{
 			if (leaveTime <= Time.time)
@@ -140,7 +143,7 @@ public class EnemyAIController : AIController
 		}
 	}
 	
-	new protected GameObject getNextPath()
+	override protected GameObject getNextPath()
 	{
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;

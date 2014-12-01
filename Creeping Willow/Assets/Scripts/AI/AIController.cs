@@ -23,7 +23,7 @@ public class AIController : GameBehavior {
 	//public float nourishment = 1;			// Nourishment for player goal (Not currently Implemented)
 	public float lurePower = 3;
 	public float speed = 1;					// NPC speed (when not running)
-	public float scaredCooldownSeconds = 2;	// How long the NPC will be scared for
+	public float scaredCooldownSeconds = 6;	// How long the NPC will be scared for
 	public float panicCooldownSeconds = 2;	// How long the NPC will be panicked for
 	public float detectLevel = 0.2f; 		// This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
 	public float visionDistance = 3; 		// distance that player's view extends to
@@ -150,6 +150,9 @@ public class AIController : GameBehavior {
 		}
 		if (scaredTexture != null)
 			Destroy (scaredTexture.gameObject);
+
+		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
+		MessageCenter.Instance.Broadcast (message);
 	}
 
 	//-----------------------
@@ -309,7 +312,6 @@ public class AIController : GameBehavior {
 		if (scared)
 		{
 			scaredTimeLeft -= Time.deltaTime;
-
 			if (scaredTimeLeft <= 0)
 			{
 				scared = false;
@@ -333,10 +335,7 @@ public class AIController : GameBehavior {
 
 	protected void destroyNPC()
 	{
-		Destroy (gameObject);
-		
-		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
-		MessageCenter.Instance.Broadcast (message);
+		Destroy (gameObject);		
 	}
 
 	protected void ignoreBorder(bool ignore, Collider2D other)
@@ -399,6 +398,7 @@ public class AIController : GameBehavior {
 		panicTexture.renderer.enabled = true;
 		scaredTexture.renderer.enabled = false;
 		scared = false;
+
 		speed = 1.5f;
 		alerted = false;
 		panicked = true;
@@ -565,10 +565,15 @@ public class AIController : GameBehavior {
 	{
         if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
         { 
+			alerted = false;
+			scared = false;
+
 			grabbed = true; 
 			Debug.Log("Gotcha"); 
+
 			alertTexture.renderer.enabled = false;
 			panicTexture.renderer.enabled = false;
+			scaredTexture.renderer.enabled = false;
 		}
 	}
 
@@ -603,6 +608,9 @@ public class AIController : GameBehavior {
 
 	void lureEnterListener(Message message)
 	{
+//		if (true)
+//			return;
+
 		LureEnteredMessage lureMessage = message as LureEnteredMessage;
 		if (lureMessage.NPC.Equals(gameObject))
 		{
@@ -621,6 +629,8 @@ public class AIController : GameBehavior {
 
 	void lureReleaseListener(Message message)
 	{
+//		if (true)
+//			return;
 		LureReleasedMessage lureMessage = message as LureReleasedMessage;
 		if (lureMessage.NPC.Equals(gameObject))
 		{
