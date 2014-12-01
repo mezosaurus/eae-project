@@ -364,6 +364,13 @@ public class AIController : GameBehavior {
 		broadcastAlertLevelChanged(AlertLevelType.Panic);
 	}
 
+	protected virtual void scared(Vector3 scaredPosition)
+	{
+		if (panicked)
+			return;
+
+	}
+
 	protected bool checkForPlayer()
 	{
 		Vector3 playerPos = player.transform.position;
@@ -559,8 +566,9 @@ public class AIController : GameBehavior {
 		AbilityPlacedMessage placedMessage = message as AbilityPlacedMessage;
 		if (placedMessage.AType.Equals(AbilityType.PossessionLure))
 	    {
-			if (Vector3.Distance(transform.position, new Vector3(placedMessage.X, placedMessage.Y)) <= GetComponent<CircleCollider2D>().radius)
-				Debug.Log("BOOOOOOOOOOOM");
+			Vector3 possessedPosition = new Vector3(placedMessage.X, placedMessage.Y);
+			if (Vector3.Distance(transform.position, possessedPosition) <= GetComponent<CircleCollider2D>().radius)
+				scared(possessedPosition);
 		}
 	}
 

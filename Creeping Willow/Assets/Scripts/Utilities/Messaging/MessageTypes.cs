@@ -25,4 +25,5 @@ public enum MessageType
 	ScoreChanged,
 	LevelFinished,
 	PlayerKilled,
+	NPCPanickedOffMap,
 }
