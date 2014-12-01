@@ -473,8 +473,26 @@ public class AIController : GameBehavior {
 	protected GameObject getLeavingPath()
 	{
 		GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag (spawnTag);
-		int rand = Random.Range(0, spawnPoints.Length);
-		return spawnPoints[rand];
+		float minDistance = 0f;
+		int retIndex = 0;
+		if (spawnPoints.Length == 1)
+			return spawnPoints[0];
+		for (int i = 0; i < spawnPoints.Length; i++)
+		{
+			Vector3 pathPointPos = spawnPoints[i].transform.position;
+			Vector3 npcPos = gameObject.transform.position;
+			float distance = Vector3.Distance(pathPointPos, npcPos);
+			if (minDistance == 0f)
+				minDistance = distance;
+			if (distance <= minDistance)
+			{
+				minDistance = distance;
+				retIndex = i;
+			}
+		}
+		return spawnPoints [retIndex];
+		//int rand = Random.Range(0, spawnPoints.Length);
+		//return spawnPoints[rand];
 	}
 	
 	protected virtual GameObject getNextPath()
