@@ -44,7 +44,7 @@ public class AIGenerator : GameBehavior
 	private void NotorietyMeterListener(Message message)
 	{
 		NotorietyMaxedMessage notorietyMessage = message as NotorietyMaxedMessage;
-		createEnemyNPC (notorietyMessage.NPC);
+		createEnemyNPC (notorietyMessage.panickedPosition);
 	}
 
 	// Update is called once per frame
@@ -148,13 +148,15 @@ public class AIGenerator : GameBehavior
         GameObject wanderNPC = createNPC(this.wanderNPC, wanderAIList);
     }
 
-	void createEnemyNPC(GameObject panickedNPC)
+	void createEnemyNPC(Vector3 panickedPosition)
 	{
 		if (enemyAIList.Count > 15)
 			return;
 		
 		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
-		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedNPC);
+		GameObject panickedPoint = new GameObject ();
+		panickedPoint.transform.position = panickedPosition;
+		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedPoint);
 	}
 
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
