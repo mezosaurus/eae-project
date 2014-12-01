@@ -58,7 +58,6 @@ public class StationaryAIController : AIController
 				sitting = false;
 				killSelf = true;
 				nextPath = getLeavingPath();
-				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 		}
 	}
@@ -100,6 +99,13 @@ public class StationaryAIController : AIController
 		if (!killSelf && !panicked && collision.collider.Equals (bench.collider2D)) {
 			this.GetComponent<BoxCollider2D> ().isTrigger = true;
 		}
+	}
+
+	protected override void OnTriggerExit2D (Collider2D other)
+	{
+		if (other.Equals(bench.collider2D))
+			this.GetComponent<BoxCollider2D>().isTrigger = false;
+		base.OnTriggerExit2D (other);
 	}
 	
 	/*

@@ -23,6 +23,7 @@ public class AIController : GameBehavior {
 	//public float nourishment = 1;			// Nourishment for player goal (Not currently Implemented)
 	public float lurePower = 3;
 	public float speed = 1;					// NPC speed (when not running)
+	public float scaredCooldownSeconds = 2;	// How long the NPC will be scared for
 	public float panicCooldownSeconds = 2;	// How long the NPC will be panicked for
 	public float detectLevel = 0.2f; 		// This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
 	public float visionDistance = 3; 		// distance that player's view extends to
@@ -34,6 +35,7 @@ public class AIController : GameBehavior {
     public bool alerted;
 	public bool grabbed;
     public bool panicked;
+	public bool scared;
 	public bool lured;
 	protected bool playerInRange;
     protected bool nearWall;
@@ -48,6 +50,9 @@ public class AIController : GameBehavior {
 	protected Vector2 moveDir;
 	protected GameObject nextPath;
 	protected SubpathScript movePath;
+
+	// Scared variables
+	protected float scaredTimeLeft;
 
 	// Panic variables
     protected float panicThreshold = 10;
@@ -290,7 +295,22 @@ public class AIController : GameBehavior {
 				return true;
 			}
 		}
-		
+
+		if (scared)
+		{
+			scaredTimeLeft -= Time.deltaTime;
+
+			if (scaredTimeLeft <= 0)
+				scared = false;
+
+			Vector3 npcPosition = transform.position;
+			float step = speed * Time.deltaTime;
+			transform.position = new Vector3(moveDir.normalized.x * step, moveDir.normalized.y * step) + npcPosition;
+			determineDirectionChange(npcPosition, transform.position);
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -347,6 +367,9 @@ public class AIController : GameBehavior {
 	
 	protected virtual void alert()
 	{
+		if (scared)
+			return;
+
 		alertTexture.renderer.enabled = true;
 		alerted = true;
 		broadcastAlertLevelChanged(AlertLevelType.Alert);
@@ -370,11 +393,18 @@ public class AIController : GameBehavior {
 		broadcastAlertLevelChanged(AlertLevelType.Panic);
 	}
 
-	protected virtual void scared(Vector3 scaredPosition)
+	protected virtual void scare(Vector3 scaredPosition)
 	{
 		if (panicked)
 			return;
 
+		alertTexture.renderer.enabled = false;
+		//scaredTexture.renderer.enabled = true;
+
+		scared = true;
+		scaredTimeLeft = scaredCooldownSeconds;
+		moveDir = transform.position - scaredPosition;
+		broadcastAlertLevelChanged (AlertLevelType.Scared);
 	}
 
 	protected bool checkForPlayer()
@@ -574,7 +604,7 @@ public class AIController : GameBehavior {
 	    {
 			Vector3 possessedPosition = new Vector3(placedMessage.X, placedMessage.Y);
 			if (Vector3.Distance(transform.position, possessedPosition) <= GetComponent<CircleCollider2D>().radius)
-				scared(possessedPosition);
+				scare(possessedPosition);
 		}
 	}
 
