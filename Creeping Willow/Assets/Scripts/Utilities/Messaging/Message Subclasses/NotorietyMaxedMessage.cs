@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class NotorietyMaxedMessage : Message
 {
-	public GameObject NPC;
+	public Vector3 panickedPosition;
 	
-	public NotorietyMaxedMessage( GameObject npc ) : base( MessageType.NotorietyMaxed )
+	public NotorietyMaxedMessage( Vector3 position ) : base( MessageType.NotorietyMaxed )
 	{
-		NPC = npc;
+		panickedPosition = position;
 	}
 }
