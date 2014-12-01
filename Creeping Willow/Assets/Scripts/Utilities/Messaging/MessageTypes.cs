@@ -14,7 +14,7 @@
 	LureReleased,
 	TrapEntered,
 	TrapReleased,
-    CameraZoomIn,
+    CameraZoom,
     CameraZoomOut,
 	PauseChanged,
 	NPCCreated,
@@ -24,4 +24,5 @@
 	NotorietyMaxed,
 	ScoreChanged,
 	LevelFinished,
+    CameraChangedObjectFollowed,
 }

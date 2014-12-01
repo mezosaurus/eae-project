@@ -143,7 +143,7 @@ public class PlayerScript : GameBehavior
 
             MessageCenter.Instance.Broadcast(message);
 
-            MessageCenter.Instance.Broadcast(new CameraZoomInMessage());
+            //MessageCenter.Instance.Broadcast(new CameraZoomInMessage());
 
             state = State.Eating;
 

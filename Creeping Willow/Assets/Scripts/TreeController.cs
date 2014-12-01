@@ -22,6 +22,7 @@ public class TreeController : GameBehavior
     Vector2 velocity;
     Tree.Direction direction;
     Dictionary<int, GameObject> npcsInRange;
+    float zoomOutSize, zoomOutSize2;
 
     // Eating variables phase 1
     GameObject grabbedNPC = null;
@@ -58,6 +59,8 @@ public class TreeController : GameBehavior
         spriteRenderer = GetComponent<SpriteRenderer>();
         xScale = transform.localScale.x;
         npcsInRange = new Dictionary<int, GameObject>();
+        zoomOutSize = Camera.main.orthographicSize;
+        zoomOutSize2 = zoomOutSize * 2f;
 
         ChangeStateToNormal();
     }
@@ -65,7 +68,7 @@ public class TreeController : GameBehavior
     private void ChangeStateToNormal()
     {
         state = Tree.State.Normal;
-        MessageCenter.Instance.Broadcast(new CameraZoomOutMessage());
+        MessageCenter.Instance.Broadcast(new CameraZoomMessage(zoomOutSize, 5f));
         if(audio.clip == Sounds.Music) audio.Stop();
         face.GetComponent<Animator>().enabled = false;
         leftUpperArm.GetComponent<SpriteRenderer>().enabled = false;
@@ -116,7 +119,7 @@ public class TreeController : GameBehavior
         this.velocity = Vector2.zero;
         if (transform.localScale.x < 0f) transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
         face.GetComponent<SpriteRenderer>().sprite = Textures.Face.Crazy;
-        MessageCenter.Instance.Broadcast(new CameraZoomInMessage());
+        MessageCenter.Instance.Broadcast(new CameraZoomMessage(2f, 20f));
         startTimer = 0f;
         percentage = 0f;
         phase1 = true;
@@ -168,7 +171,7 @@ public class TreeController : GameBehavior
         theList.Add(grabbedNPC);
 
         MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(theList));
-        //grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
+        grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
         grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = false;
         grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = false;
 
@@ -241,6 +244,13 @@ public class TreeController : GameBehavior
 
     private void UpdateNormal()
     {
+        if (Camera.main.orthographicSize > zoomOutSize)
+        {
+            if (Input.GetAxis("DY") > 0.5f)  MessageCenter.Instance.Broadcast(new CameraZoomMessage(zoomOutSize, 10f));
+
+            return;
+        }
+        
         if (!GetComponent<PlayerAbilityScript_v2>().abilityInUse)
         {
             // Check to see if the player is grabbing
@@ -252,6 +262,13 @@ public class TreeController : GameBehavior
             }
 
             velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
+
+            if (Input.GetAxis("DY") < -0.5f)
+            {
+                MessageCenter.Instance.Broadcast(new CameraZoomMessage(zoomOutSize2, 10f));
+
+                return;
+            }
 
             // Keyboard Input
             if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) velocity.x = (Input.GetKey(KeyCode.LeftArrow)) ? -1f : 1f;
@@ -267,7 +284,7 @@ public class TreeController : GameBehavior
 
     private void UpdateEating()
     {
-        if (Camera.main.orthographicSize > 1.5f) return;
+        if (Camera.main.orthographicSize != Camera.main.GetComponent<CameraScript>().TargetSize) return;
 
         if (phase1) UpdateEatingPhase1();
         else UpdateEatingPhase2();

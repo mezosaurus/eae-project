@@ -733,7 +733,7 @@ Transform:
   m_GameObject: {fileID: 91972638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.42307854, y: -2.39355373, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.39999998, y: 1.39999998, z: 1}
   m_Children:
   - {fileID: 1766999307}
   - {fileID: 1519406570}
@@ -865,8 +865,8 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Radius: 1
-  m_Center: {x: 0, y: .5}
+  m_Radius: .670000017
+  m_Center: {x: 0, y: 0}
 --- !u!61 &91972643
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1743,7 +1743,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1780,6 +1780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectToFollow: {fileID: 91972639}
   ObjectToFollowOffset: {x: 0, y: .150000006, z: 0}
+  TargetSize: 4
 --- !u!114 &175926698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13554,6 +13555,26 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 6f73c810f9e904047b29f076d90cf62b,
         type: 3}
+    - target: {fileID: 400008, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800000, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
+      propertyPath: m_Radius
+      value: .670000017
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffb2edaa74832db4084ca48066a4fdcf, type: 2}
   m_RootGameObject: {fileID: 91972638}
@@ -15278,7 +15299,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 107091247}
   m_GameObject: {fileID: 1897359430}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e94a6b244ee769f41b74453cc62b61d9, type: 3}
   m_Name: 
