@@ -149,6 +149,11 @@ public class AIController : GameBehavior {
         }
 		if (other.tag == "Border")
 		{
+			if (panicked)
+			{
+				NPCAlertLevelMessage message = new NPCAlertLevelMessage (gameObject, type);
+				MessageCenter.Instance.Broadcast (message);
+			}
 			enteredMap = true;
 			ignoreBorder (false, other);
 		}
