@@ -14,7 +14,7 @@ public class PathAIController : AIController
 		base.Start ();
 
 		// Get path for AI
-		nextPath = movePath.getNextPath (null);
+		nextPath = movePath.getNextPath (null, gameObject);
 
 		//reverseDirection = false;	// OLD
 	}
@@ -26,7 +26,7 @@ public class PathAIController : AIController
 
 	override protected GameObject getNextPath()
 	{
-		return movePath.getNextPath(null);
+		return movePath.getNextPath(null, gameObject);
 	}
 	
 	// Update is called once per frame
@@ -106,7 +106,7 @@ public class PathAIController : AIController
 			int max = 10;
 			int rand = Random.Range (0, max);
 			if (rand < max - 1)
-				nextPath = movePath.getNextPath(nextPath);
+				nextPath = movePath.getNextPath(nextPath, gameObject);
 			else
 			{
 				killSelf = true;

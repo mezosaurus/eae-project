@@ -168,7 +168,7 @@ public class AIController : GameBehavior {
 		if (other.tag == "Border")
 		{
 			// Only ignore collisions with the border if the NPC has not entered the map yet
-			if (!enteredMap || killSelf)
+			if (!enteredMap || killSelf || panicked)
 			{
 				ignoreBorder (true, other);
 			}
