@@ -51,6 +51,7 @@ public class AIController : GameBehavior {
 
 	// Panic variables
     protected float panicThreshold = 10;
+	protected Vector3 panickedPos;
     //protected float panicTime;
     //protected float timePanicked;
 
@@ -151,7 +152,7 @@ public class AIController : GameBehavior {
 		{
 			if (panicked)
 			{
-				NPCPanickedOffMapMessage message = new NPCPanickedOffMapMessage (gameObject.transform.position);
+				NPCPanickedOffMapMessage message = new NPCPanickedOffMapMessage (panickedPos);
 				MessageCenter.Instance.Broadcast (message);
 				destroyNPC();
 			}
@@ -364,6 +365,7 @@ public class AIController : GameBehavior {
 		speed = 1.5f;
 		alerted = false;
 		panicked = true;
+		panickedPos = gameObject.transform.position;
 		//panicTime = Time.time;
 		//timePanicked = panicCooldownSeconds;
 		moveDir = transform.position - player.transform.position;
