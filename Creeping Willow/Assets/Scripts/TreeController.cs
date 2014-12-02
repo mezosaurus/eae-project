@@ -94,19 +94,20 @@ public class TreeController : GameBehavior
     private int GetClosestNPC()
     {
         float distance = float.MaxValue;
-        int index = -1;
+        int index = int.MinValue;
         
         foreach(int id in npcsInRange.Keys)
         {
-            if (invalidNpcsInRange.ContainsKey(id))
-            {
-                float d = (npcsInRange[id].transform.position - transform.position).magnitude;
+            if(npcsInRange[id] == null) throw new System.Exception("Something is terribly wrong.");
 
-                if (d < distance)
-                {
-                    distance = d;
-                    index = id;
-                }
+            if (invalidNpcsInRange.ContainsKey(id)) continue;
+            
+            float d = (npcsInRange[id].transform.position - transform.position).magnitude;
+
+            if (d < distance)
+            {
+                distance = d;
+                index = id;
             }
         }
 
@@ -118,7 +119,6 @@ public class TreeController : GameBehavior
         rigidbody2D.velocity = Vector2.zero;
         legs.GetComponent<Animator>().enabled = false;
         
-        Debug.Log(npcsInRange.Count);
         state = Tree.State.Eating;
         this.velocity = Vector2.zero;
         if (transform.localScale.x < 0f) transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
@@ -141,8 +141,8 @@ public class TreeController : GameBehavior
         float leftAngle = Random.Range(-120f, -240f);
         float rightAngle = Random.Range(-60f, 60f);
 
-        ls = (GameObject)Instantiate(Prefabs.LeftThumbStick, progressBar.transform.position + (Quaternion.Euler(0f, 0f, leftAngle) * new Vector3(1.5f, 0)), Quaternion.identity);
-        rs = (GameObject)Instantiate(Prefabs.RightThumbStick, progressBar.transform.position + (Quaternion.Euler(0f, 0f, rightAngle) * new Vector3(1.5f, 0)), Quaternion.identity);
+        ls = (GameObject)Instantiate(Prefabs.LeftThumbStick, progressBar.transform.position + (Quaternion.Euler(0f, 0f, leftAngle) * new Vector3(1f, 0)), Quaternion.identity);
+        rs = (GameObject)Instantiate(Prefabs.RightThumbStick, progressBar.transform.position + (Quaternion.Euler(0f, 0f, rightAngle) * new Vector3(1f, 0)), Quaternion.identity);
 
         lsForce = (ls.transform.position - progressBar.transform.position).normalized * 0.5f;
         rsForce = (rs.transform.position - progressBar.transform.position).normalized * 0.5f;
@@ -252,9 +252,11 @@ public class TreeController : GameBehavior
 
     private void UpdateNormal()
     {
+        if (Camera.main.orthographicSize != zoomOutSize && Camera.main.orthographicSize != zoomOutSize2) return;
+        
         if (Camera.main.orthographicSize > zoomOutSize)
         {
-            if (Input.GetAxis("DY") > 0.5f)  MessageCenter.Instance.Broadcast(new CameraZoomMessage(zoomOutSize, 10f));
+            if (Input.GetAxis("DY") > 0.5f || new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY")).magnitude > 0.1f)  MessageCenter.Instance.Broadcast(new CameraZoomMessage(zoomOutSize, 10f));
 
             return;
         }
@@ -262,8 +264,8 @@ public class TreeController : GameBehavior
         if (!GetComponent<PlayerAbilityScript_v2>().abilityInUse)
         {
             // Check to see if the player is grabbing
-            if (Input.GetAxis("LT") > 0.5f && npcsInRange.Count > 0)
-            {
+            if (Input.GetAxis("LT") > 0.5f && GetClosestNPC() != int.MinValue)
+            {                
                 ChangeStateToEating();
 
                 return;
@@ -274,6 +276,7 @@ public class TreeController : GameBehavior
             if (Input.GetAxis("DY") < -0.5f)
             {
                 MessageCenter.Instance.Broadcast(new CameraZoomMessage(zoomOutSize2, 10f));
+                rigidbody2D.velocity = Vector2.zero;
 
                 return;
             }
@@ -308,7 +311,15 @@ public class TreeController : GameBehavior
 
         if(percentage >= 1f)
         {
-            invalidNpcsInRange.ContainsKey(collider.gameObject.GetInstanceID());
+            /*Debug.Log("Dum1");
+            invalidNpcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
+            Debug.Log("Dum2");
+            LeaveEatingState();
+            Debug.Log("Dum3");
+            ChangeStateToNormal();
+            Debug.Log("Dum4");*/
+
+            invalidNpcsInRange.Add(grabbedNPC.GetInstanceID(), grabbedNPC);
             LeaveEatingState();
             ChangeStateToNormal();
 

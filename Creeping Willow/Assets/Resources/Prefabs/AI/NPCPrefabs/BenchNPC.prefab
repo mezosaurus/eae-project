@@ -100,6 +100,7 @@ MonoBehaviour:
   npcTag: NPC
   lurePower: 2
   speed: .25
+  scaredCooldownSeconds: 6
   panicCooldownSeconds: 2
   detectLevel: .100000001
   visionDistance: 1
@@ -109,9 +110,11 @@ MonoBehaviour:
   alerted: 0
   grabbed: 0
   panicked: 0
+  scared: 0
   lured: 0
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
+  scaredTexture: {fileID: 0}
   sittingTime: 9
 --- !u!212 &21200000
 SpriteRenderer:

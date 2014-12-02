@@ -24,6 +24,8 @@ public class StationaryAIController : AIController
 		// if lure is deleted
 		if( nextPath == null ) return;
 
+		objectAvoidance ();
+
 		Vector3 pathPosition = nextPath == bench ? getBenchOffsetVector() : nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
@@ -58,7 +60,6 @@ public class StationaryAIController : AIController
 				sitting = false;
 				killSelf = true;
 				nextPath = getLeavingPath();
-				this.GetComponent<BoxCollider2D>().isTrigger = false;
 			}
 		}
 	}
@@ -100,6 +101,13 @@ public class StationaryAIController : AIController
 		if (!killSelf && !panicked && collision.collider.Equals (bench.collider2D)) {
 			this.GetComponent<BoxCollider2D> ().isTrigger = true;
 		}
+	}
+
+	protected override void OnTriggerExit2D (Collider2D other)
+	{
+		if (other.Equals(bench.collider2D))
+			this.GetComponent<BoxCollider2D>().isTrigger = false;
+		base.OnTriggerExit2D (other);
 	}
 	
 	/*

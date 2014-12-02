@@ -28,7 +28,7 @@ public class NotorietyMeter : MonoBehaviour
 	protected void UnregisterListeners()
 	{
 		//MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
-		MessageCenter.Instance.UnregisterListener (MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
+		MessageCenter.Instance.UnregisterListener( MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
 	}
 
 	protected void HandleNPCPanickedMessage( Message message )

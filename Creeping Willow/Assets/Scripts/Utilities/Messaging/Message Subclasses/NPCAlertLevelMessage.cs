@@ -6,7 +6,8 @@ public enum AlertLevelType
 {
 	Normal,
 	Alert,
-	Panic
+	Panic,
+	Scared
 }
 public class NPCAlertLevelMessage : Message
 {

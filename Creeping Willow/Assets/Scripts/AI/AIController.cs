@@ -23,6 +23,7 @@ public class AIController : GameBehavior {
 	//public float nourishment = 1;			// Nourishment for player goal (Not currently Implemented)
 	public float lurePower = 3;
 	public float speed = 1;					// NPC speed (when not running)
+	public float scaredCooldownSeconds = 6;	// How long the NPC will be scared for
 	public float panicCooldownSeconds = 2;	// How long the NPC will be panicked for
 	public float detectLevel = 0.2f; 		// This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
 	public float visionDistance = 3; 		// distance that player's view extends to
@@ -34,6 +35,7 @@ public class AIController : GameBehavior {
     public bool alerted;
 	public bool grabbed;
     public bool panicked;
+	public bool scared;
 	public bool lured;
 	protected bool playerInRange;
     protected bool nearWall;
@@ -48,6 +50,9 @@ public class AIController : GameBehavior {
 	protected Vector2 moveDir;
 	protected GameObject nextPath;
 	protected SubpathScript movePath;
+
+	// Scared variables
+	protected float scaredTimeLeft;
 
 	// Panic variables
     protected float panicThreshold = 10;
@@ -68,6 +73,7 @@ public class AIController : GameBehavior {
 	protected bool lastDirectionWasRight = false;
 	public GameObject alertTexture;
 	public GameObject panicTexture;
+	public GameObject scaredTexture;
 
 	// Use this for initialization
 	public void Start ()
@@ -84,7 +90,13 @@ public class AIController : GameBehavior {
 		panicTexture.renderer.enabled = false;
 		TextureScript panicTs = panicTexture.GetComponent<TextureScript> ();
 		panicTs.target = gameObject;
-        
+
+		// Scare Texture
+		scaredTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIScared"));
+		scaredTexture.renderer.enabled = false;
+		TextureScript scaredTs = scaredTexture.GetComponent<TextureScript> ();
+		scaredTs.target = gameObject;
+
 		player = GameObject.Find("Player");
         // Set initial alert/panick states
         //timePanicked = panicCooldownSeconds;
@@ -136,6 +148,11 @@ public class AIController : GameBehavior {
 		{
 			Destroy (panicTexture.gameObject);
 		}
+		if (scaredTexture != null)
+			Destroy (scaredTexture.gameObject);
+
+		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
+		MessageCenter.Instance.Broadcast (message);
 	}
 
 	//-----------------------
@@ -291,7 +308,24 @@ public class AIController : GameBehavior {
 				return true;
 			}
 		}
-		
+
+		if (scared)
+		{
+			scaredTimeLeft -= Time.deltaTime;
+			if (scaredTimeLeft <= 0)
+			{
+				scared = false;
+				scaredTexture.renderer.enabled = false;
+			}
+
+			Vector3 npcPosition = transform.position;
+			float step = speed * Time.deltaTime;
+			transform.position = new Vector3(moveDir.normalized.x * step, moveDir.normalized.y * step) + npcPosition;
+			determineDirectionChange(npcPosition, transform.position);
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -301,10 +335,7 @@ public class AIController : GameBehavior {
 
 	protected void destroyNPC()
 	{
-		Destroy (gameObject);
-		
-		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
-		MessageCenter.Instance.Broadcast (message);
+		Destroy (gameObject);		
 	}
 
 	protected void ignoreBorder(bool ignore, Collider2D other)
@@ -348,6 +379,9 @@ public class AIController : GameBehavior {
 	
 	protected virtual void alert()
 	{
+		if (scared)
+			return;
+
 		alertTexture.renderer.enabled = true;
 		alerted = true;
 		broadcastAlertLevelChanged(AlertLevelType.Alert);
@@ -362,6 +396,9 @@ public class AIController : GameBehavior {
 	{
 		alertTexture.renderer.enabled = false;
 		panicTexture.renderer.enabled = true;
+		scaredTexture.renderer.enabled = false;
+		scared = false;
+
 		speed = 1.5f;
 		alerted = false;
 		panicked = true;
@@ -372,11 +409,18 @@ public class AIController : GameBehavior {
 		broadcastAlertLevelChanged(AlertLevelType.Panic);
 	}
 
-	protected virtual void scared(Vector3 scaredPosition)
+	protected virtual void scare(Vector3 scaredPosition)
 	{
 		if (panicked)
 			return;
 
+		alertTexture.renderer.enabled = false;
+		scaredTexture.renderer.enabled = true;
+
+		scared = true;
+		scaredTimeLeft = scaredCooldownSeconds;
+		moveDir = transform.position - scaredPosition;
+		broadcastAlertLevelChanged (AlertLevelType.Scared);
 	}
 
 	protected bool checkForPlayer()
@@ -521,10 +565,15 @@ public class AIController : GameBehavior {
 	{
         if (((PlayerGrabbedNPCsMessage)message).NPCs.Contains(gameObject))
         { 
+			alerted = false;
+			scared = false;
+
 			grabbed = true; 
 			Debug.Log("Gotcha"); 
+
 			alertTexture.renderer.enabled = false;
 			panicTexture.renderer.enabled = false;
+			scaredTexture.renderer.enabled = false;
 		}
 	}
 
@@ -559,6 +608,9 @@ public class AIController : GameBehavior {
 
 	void lureEnterListener(Message message)
 	{
+//		if (true)
+//			return;
+
 		LureEnteredMessage lureMessage = message as LureEnteredMessage;
 		if (lureMessage.NPC.Equals(gameObject))
 		{
@@ -577,6 +629,8 @@ public class AIController : GameBehavior {
 
 	void lureReleaseListener(Message message)
 	{
+//		if (true)
+//			return;
 		LureReleasedMessage lureMessage = message as LureReleasedMessage;
 		if (lureMessage.NPC.Equals(gameObject))
 		{
@@ -594,7 +648,7 @@ public class AIController : GameBehavior {
 	    {
 			Vector3 possessedPosition = new Vector3(placedMessage.X, placedMessage.Y);
 			if (Vector3.Distance(transform.position, possessedPosition) <= GetComponent<CircleCollider2D>().radius)
-				scared(possessedPosition);
+				scare(possessedPosition);
 		}
 	}
 
@@ -603,8 +657,9 @@ public class AIController : GameBehavior {
 	 * ObjectAvoidance:
 	 * Checks for objects to avoid and alters their path to compensate for this
 	 **/
-	void objectAvoidance()
+	protected void objectAvoidance()
 	{
+		return; // spherecast not working
 		// spherecast
 
 		// if object is hit with rigidbody
@@ -613,8 +668,141 @@ public class AIController : GameBehavior {
 			// else
 				// change nextPath
 
+		float checkDistance = 1f;
+		Vector3 direction = npcDir;
+		float angleOffset = 10;
+
+		float maxDistance = 2;
+		float distanceIncrement = .05f;
+
+		RaycastHit hit = new RaycastHit (); // in case info is needed from hit object
+
+		// get width/height
+		float radius = (float)Mathf.Max (gameObject.GetComponent<BoxCollider2D> ().size.x, gameObject.GetComponent<BoxCollider2D> ().size.y) / 2f;
+		Debug.Log ("direction: " + direction);
+		Debug.Log (Physics.SphereCast (transform.position, radius, direction, out hit, 100));
+		Debug.DrawLine (transform.position, transform.position + direction*checkDistance,Color.black);
+		// check for object in the way
+		if( Physics.SphereCast (transform.position, radius, direction, out hit) )
+		{
+			Debug.Log ("in");
+			// look for new path
+			float rotation = angleOffset;
+			bool pathFound = false;
+			while( rotation <= 180 && !pathFound )
+			{
+				// check left and right
+				bool isHit1 = Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, checkDistance); // right?
+				bool isHit2 = Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, checkDistance); // left?
+
+				if( isHit1 && isHit2 ) // if both fail
+					continue;
+				else if( isHit1 ) // left okay
+				{
+					// check for clear path
+					bool clear = false;
+					float distanceCounter = 0;
+					while( !clear && distanceCounter < maxDistance )
+					{
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(-rotation);
+
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+
+						distanceCounter += distanceIncrement;
+					}
+				}
+				else if( isHit2 ) // right okay
+				{
+					// check for clear path
+					bool clear = false;
+					float distanceCounter = 0;
+					while( !clear && distanceCounter < maxDistance )
+					{
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(rotation);
+							
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+						
+						distanceCounter += distanceIncrement;
+					}
+				}
+				else // both ok, check best one
+				{
+					// check for clear path
+					bool clear = false;
+					float distanceCounter = 0;
+					while( !clear && distanceCounter < maxDistance )
+					{
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(rotation);
+							
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(-rotation);
+							
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+						
+						distanceCounter += distanceIncrement;
+					}
 
 
+					rotation += angleOffset;
+				}
+
+			}
+
+		}
+	}
+
+	Vector3 getOffsetVector(float angle)
+	{
+		return new Vector3 (Mathf.Sin (Mathf.Deg2Rad * angle), Mathf.Cos (Mathf.Deg2Rad * angle));
 	}
 }
 
