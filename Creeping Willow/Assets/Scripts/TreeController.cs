@@ -21,7 +21,7 @@ public class TreeController : GameBehavior
     float xScale;
     Vector2 velocity;
     Tree.Direction direction;
-    Dictionary<int, GameObject> npcsInRange;
+    Dictionary<int, GameObject> npcsInRange, invalidNpcsInRange;
     float zoomOutSize, zoomOutSize2;
 
     // Eating variables phase 1
@@ -59,6 +59,7 @@ public class TreeController : GameBehavior
         spriteRenderer = GetComponent<SpriteRenderer>();
         xScale = transform.localScale.x;
         npcsInRange = new Dictionary<int, GameObject>();
+        invalidNpcsInRange = new Dictionary<int, GameObject>();
         zoomOutSize = Camera.main.orthographicSize;
         zoomOutSize2 = zoomOutSize * 2f;
 
@@ -97,12 +98,15 @@ public class TreeController : GameBehavior
         
         foreach(int id in npcsInRange.Keys)
         {
-            float d = (npcsInRange[id].transform.position - transform.position).magnitude;
-
-            if(d < distance)
+            if (invalidNpcsInRange.ContainsKey(id))
             {
-                distance = d;
-                index = id;
+                float d = (npcsInRange[id].transform.position - transform.position).magnitude;
+
+                if (d < distance)
+                {
+                    distance = d;
+                    index = id;
+                }
             }
         }
 
@@ -229,7 +233,11 @@ public class TreeController : GameBehavior
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.tag == "NPC") npcsInRange.Remove(collider.gameObject.GetInstanceID());
+        if (collider.tag == "NPC")
+        {
+            npcsInRange.Remove(collider.gameObject.GetInstanceID());
+            invalidNpcsInRange.Remove(collider.gameObject.GetInstanceID());
+        }
     }
 
     protected override void GameUpdate()
@@ -300,6 +308,7 @@ public class TreeController : GameBehavior
 
         if(percentage >= 1f)
         {
+            invalidNpcsInRange.ContainsKey(collider.gameObject.GetInstanceID());
             LeaveEatingState();
             ChangeStateToNormal();
 
