@@ -56,7 +56,7 @@ public class IntroScript : MonoBehaviour
 
 	private void drawIntroBox ()
 	{
-		drawBox( "Feast on the Souls of the living without\n\nwithout alerting the AxeMan", "Begin", 85 );
+		drawBox( "Feast on the Souls of the living\n\nwithout alerting the AxeMan", "Begin", 85 );
 
 		// create the start button
 		buttonStyle.fontSize = 85;

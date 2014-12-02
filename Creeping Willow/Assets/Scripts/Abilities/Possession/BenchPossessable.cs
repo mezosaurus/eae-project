@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 
 public class BenchPossessable : Possessable {
 
@@ -23,7 +23,7 @@ public class BenchPossessable : Possessable {
 		}
         else
         {
-            GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+            //GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
             
             if(needToSend)
             {
@@ -41,7 +41,7 @@ public class BenchPossessable : Possessable {
         needToSend = true;
 		AbilityPlacedMessage message = new AbilityPlacedMessage (transform.position.x,transform.position.y, AbilityType.PossessionLure);
 		MessageCenter.Instance.Broadcast (message);
-        GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
+        //GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
 	}
 
 	public override void possess ()
