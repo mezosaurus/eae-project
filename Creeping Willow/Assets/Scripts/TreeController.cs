@@ -97,6 +97,10 @@ public class TreeController : GameBehavior
         
         foreach(int id in npcsInRange.Keys)
         {
+			// avoid odd nullreference exception
+			if(npcsInRange[id] == null )
+				continue;
+
             float d = (npcsInRange[id].transform.position - transform.position).magnitude;
 
             if(d < distance)

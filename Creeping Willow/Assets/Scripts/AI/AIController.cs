@@ -657,8 +657,9 @@ public class AIController : GameBehavior {
 	 * ObjectAvoidance:
 	 * Checks for objects to avoid and alters their path to compensate for this
 	 **/
-	void objectAvoidance()
+	protected void objectAvoidance()
 	{
+		return; // spherecast not working
 		// spherecast
 
 		// if object is hit with rigidbody
@@ -667,8 +668,141 @@ public class AIController : GameBehavior {
 			// else
 				// change nextPath
 
+		float checkDistance = 1f;
+		Vector3 direction = npcDir;
+		float angleOffset = 10;
+
+		float maxDistance = 2;
+		float distanceIncrement = .05f;
+
+		RaycastHit hit = new RaycastHit (); // in case info is needed from hit object
+
+		// get width/height
+		float radius = (float)Mathf.Max (gameObject.GetComponent<BoxCollider2D> ().size.x, gameObject.GetComponent<BoxCollider2D> ().size.y) / 2f;
+		Debug.Log ("direction: " + direction);
+		Debug.Log (Physics.SphereCast (transform.position, radius, direction, out hit, 100));
+		Debug.DrawLine (transform.position, transform.position + direction*checkDistance,Color.black);
+		// check for object in the way
+		if( Physics.SphereCast (transform.position, radius, direction, out hit) )
+		{
+			Debug.Log ("in");
+			// look for new path
+			float rotation = angleOffset;
+			bool pathFound = false;
+			while( rotation <= 180 && !pathFound )
+			{
+				// check left and right
+				bool isHit1 = Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, checkDistance); // right?
+				bool isHit2 = Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, checkDistance); // left?
+
+				if( isHit1 && isHit2 ) // if both fail
+					continue;
+				else if( isHit1 ) // left okay
+				{
+					// check for clear path
+					bool clear = false;
+					float distanceCounter = 0;
+					while( !clear && distanceCounter < maxDistance )
+					{
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(-rotation);
+
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+
+						distanceCounter += distanceIncrement;
+					}
+				}
+				else if( isHit2 ) // right okay
+				{
+					// check for clear path
+					bool clear = false;
+					float distanceCounter = 0;
+					while( !clear && distanceCounter < maxDistance )
+					{
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(rotation);
+							
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+						
+						distanceCounter += distanceIncrement;
+					}
+				}
+				else // both ok, check best one
+				{
+					// check for clear path
+					bool clear = false;
+					float distanceCounter = 0;
+					while( !clear && distanceCounter < maxDistance )
+					{
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(rotation);
+							
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+
+						// check if this distance can reach goal path
+						if( Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, distanceCounter) )
+						{
+							Vector3 newPos = transform.position + getOffsetVector(-rotation);
+							
+							// check if path destination is achievable from new position
+							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							{
+								Debug.Log ("new Path");
+								pathFound = true;
+								GameObject go = new GameObject();
+								go.transform.position = newPos;
+								nextPath = go;
+							}
+						}
+						
+						distanceCounter += distanceIncrement;
+					}
 
 
+					rotation += angleOffset;
+				}
+
+			}
+
+		}
+	}
+
+	Vector3 getOffsetVector(float angle)
+	{
+		return new Vector3 (Mathf.Sin (Mathf.Deg2Rad * angle), Mathf.Cos (Mathf.Deg2Rad * angle));
 	}
 }
 
