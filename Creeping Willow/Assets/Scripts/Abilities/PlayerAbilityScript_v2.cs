@@ -23,7 +23,7 @@ public class PlayerAbilityScript_v2 : GameBehavior {
 	}
 
 	void HandleInput(){
-		if (((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X"))) && GameObject.FindGameObjectWithTag("Player").GetComponent<TreeController>().state != Tree.State.Eating)
+		/*if (((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X"))) && GameObject.FindGameObjectWithTag("Player").GetComponent<TreeController>().state != Tree.State.Eating)
 		{
 			if(luresLeft > 0 && !abilityInUse){
 				AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
@@ -34,7 +34,7 @@ public class PlayerAbilityScript_v2 : GameBehavior {
 				GameObject.Instantiate(lp, transform.position, Quaternion.identity);
 				abilityInUse = true;
 			}
-		}
+		}*/
 		if (Input.GetButtonDown ("A") && !abilityInUse && GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.Eating) {
 			AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
 			MessageCenter.Instance.Broadcast(message);
