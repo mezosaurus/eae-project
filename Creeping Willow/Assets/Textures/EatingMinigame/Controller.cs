@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 
 public class Controller : MonoBehaviour
 {
@@ -61,7 +61,7 @@ public class Controller : MonoBehaviour
     private void ChangeToNotStarted()
     {
         state = State.NotStarted;
-        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+        //GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
     }
 
     private void ChangeToPhase1()
@@ -79,7 +79,7 @@ public class Controller : MonoBehaviour
             rightStickOpposition = (rightStick.transform.position - transform.position).normalized * 0.5f;
         }
 
-        GamePad.SetVibration(PlayerIndex.One, 0.5f, 0.5f);
+       // GamePad.SetVibration(PlayerIndex.One, 0.5f, 0.5f);
     }
 
     private void ChangeToPhase2()
@@ -91,14 +91,14 @@ public class Controller : MonoBehaviour
         leftStick = null;
         percentage = 0.5f;
         qteButton = Random.Range(0, 3);
-        GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
+        //GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
     }
 
     private void ChangeToWin()
     {
         state = State.Win;
         timer = 0f;
-        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+        //GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         numberOfAttempts = 0;
     }
 
@@ -108,7 +108,7 @@ public class Controller : MonoBehaviour
         GameObject.Destroy(leftStick);
         GameObject.Destroy(rightStick);
         timer = 0f;
-        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+        //GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
         numberOfAttempts = 0;
     }
 
@@ -253,6 +253,6 @@ public class Controller : MonoBehaviour
 
     private void OnDestroy()
     {
-        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+        //GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
     }
 }
