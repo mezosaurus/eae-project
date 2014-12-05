@@ -675,25 +675,30 @@ public class AIController : GameBehavior {
 		float maxDistance = 2;
 		float distanceIncrement = .05f;
 
-		RaycastHit hit = new RaycastHit (); // in case info is needed from hit object
-
 		// get width/height
 		float radius = (float)Mathf.Max (gameObject.GetComponent<BoxCollider2D> ().size.x, gameObject.GetComponent<BoxCollider2D> ().size.y) / 2f;
-		Debug.Log ("direction: " + direction);
-		Debug.Log (Physics.SphereCast (transform.position, radius, direction, out hit, 100));
-		Debug.DrawLine (transform.position, transform.position + direction*checkDistance,Color.black);
+		//Debug.Log ("direction: " + direction);
+		//Debug.Log (Physics2D.CircleCast (transform.position, radius, direction, 100));
+		Debug.DrawLine (transform.position, transform.position + direction*checkDistance,Color.black,checkDistance, false);
+
 		// check for object in the way
-		if( Physics.SphereCast (transform.position, radius, direction, out hit) )
+		if( Physics2D.CircleCast (transform.position, radius, direction) )
 		{
+			RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction);
+
+			if( hit.transform.gameObject.GetComponent<Rigidbody2D>() == null ) // hit is invalid
+				return;
+
 			Debug.Log ("in");
+			return;
 			// look for new path
 			float rotation = angleOffset;
 			bool pathFound = false;
 			while( rotation <= 180 && !pathFound )
 			{
 				// check left and right
-				bool isHit1 = Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, checkDistance); // right?
-				bool isHit2 = Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, checkDistance); // left?
+				bool isHit1 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(rotation), checkDistance); // right?
+				bool isHit2 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(-rotation), checkDistance); // left?
 
 				if( isHit1 && isHit2 ) // if both fail
 					continue;
@@ -705,12 +710,12 @@ public class AIController : GameBehavior {
 					while( !clear && distanceCounter < maxDistance )
 					{
 						// check if this distance can reach goal path
-						if( Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, distanceCounter) )
+						if( Physics2D.CircleCast (transform.position, radius, getOffsetVector(-rotation), distanceCounter) )
 						{
 							Vector3 newPos = transform.position + getOffsetVector(-rotation);
 
 							// check if path destination is achievable from new position
-							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							if( !Physics2D.CircleCast (newPos, radius, getNextPath().transform.position - newPos) )
 							{
 								Debug.Log ("new Path");
 								pathFound = true;
@@ -731,12 +736,12 @@ public class AIController : GameBehavior {
 					while( !clear && distanceCounter < maxDistance )
 					{
 						// check if this distance can reach goal path
-						if( Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, distanceCounter) )
+						if( Physics2D.CircleCast (transform.position, radius, getOffsetVector(rotation), distanceCounter) )
 						{
 							Vector3 newPos = transform.position + getOffsetVector(rotation);
 							
 							// check if path destination is achievable from new position
-							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							if( !Physics2D.CircleCast (newPos, radius, getNextPath().transform.position - newPos) )
 							{
 								Debug.Log ("new Path");
 								pathFound = true;
@@ -757,12 +762,12 @@ public class AIController : GameBehavior {
 					while( !clear && distanceCounter < maxDistance )
 					{
 						// check if this distance can reach goal path
-						if( Physics.SphereCast (transform.position, radius, getOffsetVector(rotation), out hit, distanceCounter) )
+						if( Physics2D.CircleCast (transform.position, radius, getOffsetVector(rotation), distanceCounter) )
 						{
 							Vector3 newPos = transform.position + getOffsetVector(rotation);
 							
 							// check if path destination is achievable from new position
-							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							if( !Physics2D.CircleCast (newPos, radius, getNextPath().transform.position - newPos) )
 							{
 								Debug.Log ("new Path");
 								pathFound = true;
@@ -773,12 +778,12 @@ public class AIController : GameBehavior {
 						}
 
 						// check if this distance can reach goal path
-						if( Physics.SphereCast (transform.position, radius, getOffsetVector(-rotation), out hit, distanceCounter) )
+						if( Physics2D.CircleCast (transform.position, radius, getOffsetVector(-rotation), distanceCounter) )
 						{
 							Vector3 newPos = transform.position + getOffsetVector(-rotation);
 							
 							// check if path destination is achievable from new position
-							if( !Physics.SphereCast (newPos, radius, getNextPath().transform.position - newPos, out hit) )
+							if( !Physics2D.CircleCast (newPos, radius, getNextPath().transform.position - newPos) )
 							{
 								Debug.Log ("new Path");
 								pathFound = true;
@@ -791,9 +796,9 @@ public class AIController : GameBehavior {
 						distanceCounter += distanceIncrement;
 					}
 
-
-					rotation += angleOffset;
 				}
+
+				rotation += angleOffset;
 
 			}
 
