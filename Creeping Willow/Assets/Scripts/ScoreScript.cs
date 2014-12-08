@@ -36,7 +36,7 @@ public class ScoreScript : GameBehavior {
 	 * 
 	 */
 	public readonly int NPC_EATEN = 50;
-	public readonly int AVOIDED_AXEMAN = 100;
+	public readonly int AXEMAN_EATEN = 200;
 	public readonly int LURED_NPC = 25;
 	public readonly int NPC_GRABBED = 25;
 	public readonly int BOUNTY_EATEN = 100;
@@ -56,6 +56,7 @@ public class ScoreScript : GameBehavior {
 	// output strings
 	readonly string npcEatenString = "Person Kill";
 	readonly string bountyEatenString = "Target Kill";
+	readonly string enemyEatenString = "Axeman Kill";
 	string eatenString;
 	//readonly string npcGrabbedString = "Person grabbed";
 	//readonly string npcLuredString = "Person lured";
@@ -80,11 +81,16 @@ public class ScoreScript : GameBehavior {
 	float sizeX = 150;
 	float sizeY = 50;
 
+	// popups
 	float popupX = 100;
 	float popupY = 30;
 	float popupIncrement = 0;
-	readonly float popupIncrementMax = 100;
+	readonly float popupIncrementMax = 50;
 	float popupAlpha;
+
+	// sliding animation
+	float slideIncrement = 2f;
+	readonly float slideMax = 100;
 	
 	int _score;
 	readonly int chainMax = 20;
@@ -143,6 +149,7 @@ public class ScoreScript : GameBehavior {
 		bountyLabelSizeY = 30;
 		bountyRectSizeY = (int)Screen.height * .2f;
 
+		popupIncrement = popupIncrementMax;
 
 		sideL = Screen.width / 3;
 		sideR = Screen.width * 2 / 3;
@@ -229,6 +236,18 @@ public class ScoreScript : GameBehavior {
 
 			int offset = 1;
 
+			// change alpha/transparency of score
+			if( slideIncrement <= .4f * slideMax )
+			{
+				popupAlpha = GUI.color.a * popupIncrement / (.4f * popupIncrementMax );
+				guiColor.a = popupAlpha;
+				GUI.color = guiColor;
+			}
+
+			// update sliding increment
+			if( slideIncrement < slideMax )
+				slideIncrement += 2f;
+
 			// npc type
 			if( eatenString == npcEatenString )
 			{
@@ -237,12 +256,19 @@ public class ScoreScript : GameBehavior {
 				myStyle.alignment = TextAnchor.MiddleRight;
 				GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + NPC_EATEN, myStyle);
 			}
-			else
+			else if( eatenString == bountyEatenString )
 			{
 				myStyle.alignment = TextAnchor.MiddleLeft;
 				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
 				myStyle.alignment = TextAnchor.MiddleRight;
-				GUI.Label(new Rect(Screen.width/2, startHeight, popupX, popupY), "" + BOUNTY_EATEN, myStyle);
+				GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + BOUNTY_EATEN, myStyle);
+			}
+			else // axeman
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
+				myStyle.alignment = TextAnchor.MiddleRight;
+				GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + AXEMAN_EATEN, myStyle);
 			}
 			// stealth
 			if( isStealth )
@@ -290,6 +316,9 @@ public class ScoreScript : GameBehavior {
 		}
 		else if( scoreState == (int)ScoreState.START_SCORING )
 		{
+			popupIncrement = 0;
+			slideIncrement = 0;
+			addScore(displayScore);
 			scoreTimer = 0;
 			scoreState = (int)ScoreState.SCORING;
 		}
@@ -300,7 +329,6 @@ public class ScoreScript : GameBehavior {
 			isQuick = false;
 
 			scoreTimer = 0;
-			addScore(displayScore);
 			scoreState = (int)ScoreState.NO_SCORING;
 		}
 
@@ -350,6 +378,35 @@ public class ScoreScript : GameBehavior {
 			*/
   		}
 
+		GUI.color = savedGuiColor; // revert to previous alpha
+
+		// popup added score
+		if( popupIncrement < popupIncrementMax )
+		{
+			myStyle.fontSize = 30;
+			myStyle.normal.textColor = Color.white;
+			myStyle.alignment = TextAnchor.MiddleRight;
+
+			// change alpha/transparency of score
+			if( popupIncrement <= .4f * popupIncrementMax )
+			{
+				popupAlpha = GUI.color.a * popupIncrement / (.4f * popupIncrementMax );
+				guiColor.a = popupAlpha;
+				GUI.color = guiColor;
+			}
+			else if( popupIncrement >= .6f * popupIncrementMax )
+			{
+				popupAlpha = GUI.color.a * ( popupIncrementMax - popupIncrement ) / (.4f * popupIncrementMax );
+				guiColor.a = popupAlpha;
+				GUI.color = guiColor;
+			}
+
+			GUI.Box (new Rect (Screen.width-offsetX, Screen.height-offsetY-myStyle.fontSize-10-popupIncrement, sizeX, sizeY), "" + displayScore, myStyle);
+
+			popupIncrement += 1f;
+
+			GUI.color = savedGuiColor; // revert to previous alpha
+		}
 
 		// score
 		myStyle.fontSize = 30;
@@ -575,7 +632,7 @@ public class ScoreScript : GameBehavior {
 	{
 		NPCEatenMessage mess = message as NPCEatenMessage;
 
-		if( BountyNPC == null || mess.NPC == null )
+		if( mess.NPC == null )
 			return;
 
 		// initial multiplier values
@@ -591,12 +648,17 @@ public class ScoreScript : GameBehavior {
 			quick = droppingFliesMultiplier;
 			isQuick = true;
 		}
-		if( BountyNPC.Equals(mess.NPC) )
+		if( BountyNPC != null && BountyNPC.Equals(mess.NPC) )
 		{
 			npcScore = BOUNTY_EATEN;
 			eatenString = bountyEatenString;
 			BountyNPC = null;
 			BountyNPCImage = new Texture2D(1,1);
+		}
+		if( mess.NPC.GetComponent<EnemyAIController>() != null )
+		{
+			npcScore = AXEMAN_EATEN;
+			eatenString = enemyEatenString;
 		}
 		if( luredNPCs.Contains(mess.NPC) )
 		{
@@ -617,7 +679,7 @@ public class ScoreScript : GameBehavior {
 
 		displayMultiplier = streakMultiplier; // get multiplier
 		displayScore = npcScore * stealth * quick * lure * streakMultiplier;
-		scoreState = (int)ScoreState.SCORING;
+		scoreState = (int)ScoreState.START_SCORING;
 
 		// update global variables
 		lastKillTime = Time.time;
@@ -627,12 +689,17 @@ public class ScoreScript : GameBehavior {
 
 
 
-
+	// sets up bounty
 	void HandleNPCCreated(Message message)
 	{
 		NPCCreatedMessage mess = message as NPCCreatedMessage;
 
+		// bounty filled or tree is eating
 		if( BountyNPC != null || GetComponent<TreeController>().state == Tree.State.Eating)
+			return;
+
+		// bounty can't be an axeman/enemy
+		if( mess.NPC.GetComponent<EnemyAIController>() != null )
 			return;
 
 		// bounty/target
