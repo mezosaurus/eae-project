@@ -10,7 +10,20 @@ public enum BountyState
 	BOUNTY_SHOWING
 }
 
+public enum ScoreState
+{
+	NO_SCORING,
+	START_SCORING,
+	SCORING,
+	END_SCORING
+}
+
 public class ScoreScript : GameBehavior {
+
+	/// <summary>
+	/// Probability that next npc will be the new targeted bounty.
+	/// </summary>
+	public float frequency;
 
 	/*
 	 * SCORING SYSTEM:
@@ -32,36 +45,32 @@ public class ScoreScript : GameBehavior {
 	public readonly int stealthMultiplier = 6;
 	public readonly int droppingFliesMultiplier = 3;
 	public readonly int lureMultiplier = 2;
+	int streakMultiplier = 1;
+
+	// bools relating to multipliers
+	bool isStealth = false;
+	bool isQuick = false;
+	bool isLured = false;
+
 
 	// output strings
-	readonly string npcEatenString = "You ate a person";
-	readonly string bountyEatenString = "You ate your target";
-	readonly string npcGrabbedString = "Person grabbed";
-	readonly string npcLuredString = "Person lured";
+	readonly string npcEatenString = "Person Kill";
+	readonly string bountyEatenString = "Target Kill";
+	string eatenString;
+	//readonly string npcGrabbedString = "Person grabbed";
+	//readonly string npcLuredString = "Person lured";
 
-	readonly string stealthString = " using stealth";
-	readonly string streakString = " within 15 seconds of last person eaten";
-	readonly string luredString = " that was lured";
+	readonly string stealthString = "Stealth Kill";
+	readonly string streakString = "Quick Kill";
+	readonly string luredString = "Lured Kill";
 
 	float timeSinceLastKill = -1;
 	float lastKillTime = -100;
-	readonly float lastKillBonus = 30;
+	readonly float lastKillBonus = 15;
 
-	/**
-	 * Probability that next npc will be the new targeted bounty.
-	 **/
-	public float frequency;
+	ArrayList alertedNPCs = new ArrayList(); // alerted npcs
+	ArrayList luredNPCs = new ArrayList(); // lured npcs
 
-
-	bool luresInUse = false;
-	int luresInUseCount = 0;
-	ArrayList luredNPCs = new ArrayList();
-
-	// Dictionary of all npcs
-	Dictionary<GameObject,bool> npcsAlerted = new Dictionary<GameObject,bool>();
-
-
-	//Queue scoreQueue = new Queue();
 
 
 
@@ -78,13 +87,20 @@ public class ScoreScript : GameBehavior {
 	float popupAlpha;
 	
 	int _score;
-	int chainLength;
 	readonly int chainMax = 20;
 	bool scoreDisplay;
 	
 	int displayScore;
 	int displayMultiplier;
-	string displayScoreString;
+	int scoreState;
+
+	float scoreTimer = 0;
+	readonly float scoreIncrement = 1f;
+	readonly float scoreIncrementMax = 150f;
+
+	float sideL;
+	float sideR;
+	float startHeight;
 
 
 	// Bounty GUI variables
@@ -112,12 +128,13 @@ public class ScoreScript : GameBehavior {
 
 		RegisterListeners ();
 		_score = 0;
-		chainLength = 1;
+		streakMultiplier = 1;
 
 		scoreDisplay = false;
-		displayMultiplier = chainLength;
+		displayMultiplier = streakMultiplier;
 		displayScore = 0;
 
+		scoreState = (int)ScoreState.NO_SCORING;
 		bountyState = (int)BountyState.BOUNTY_HIDDEN;
 		BountyNPCImage = new Texture2D (1, 1);
 
@@ -125,6 +142,11 @@ public class ScoreScript : GameBehavior {
 		bountySizeX = (int)Screen.width * .2f;
 		bountyLabelSizeY = 30;
 		bountyRectSizeY = (int)Screen.height * .2f;
+
+
+		sideL = Screen.width / 3;
+		sideR = Screen.width * 2 / 3;
+		startHeight = Screen.height / 4;
 	}
 	
 	// Update is called once per frame
@@ -140,6 +162,12 @@ public class ScoreScript : GameBehavior {
 			{
 				bountyRaised = false;
 				bountyRaiseTime = Time.time;
+
+				if( Input.GetButtonDown("RB") )
+				{
+					bountyState = (int)BountyState.BOUNTY_HIDING;
+					bountyRaiseSetup = false;
+				}
 			}
 			
 			if( bountyTime > bountyRaiseTime + 3 && bountyRaiseTime > 0 )
@@ -152,7 +180,11 @@ public class ScoreScript : GameBehavior {
 
 		// ignore inputs
 		if( GetComponent<TreeController>().state == Tree.State.Eating )
+		{
+			bountyState = (int)BountyState.BOUNTY_HIDDEN;
+			bountyRaiseSetup = false;
 			return;
+		}
 
 		// change state of bountyDisplay
 		if( Input.GetButtonDown("RB") )
@@ -180,13 +212,101 @@ public class ScoreScript : GameBehavior {
 		/***** Scoring GUI *****/
 		GUIStyle myStyle = new GUIStyle ();
 		myStyle.alignment = TextAnchor.MiddleCenter;
-		myStyle.fontSize = 50;
+		myStyle.fontSize = 30;
+		myStyle.normal.textColor = Color.white;
 
 		Color guiColor = GUI.color;
 		Color savedGuiColor = GUI.color;
 
+
+		if( scoreState == (int)ScoreState.NO_SCORING )
+		{
+			// nothing
+		}
+		else if( scoreState == (int)ScoreState.SCORING )
+		{
+			/*** display scores ***/
+
+			int offset = 1;
+
+			// npc type
+			if( eatenString == npcEatenString )
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
+				myStyle.alignment = TextAnchor.MiddleRight;
+				GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + NPC_EATEN, myStyle);
+			}
+			else
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
+				myStyle.alignment = TextAnchor.MiddleRight;
+				GUI.Label(new Rect(Screen.width/2, startHeight, popupX, popupY), "" + BOUNTY_EATEN, myStyle);
+			}
+			// stealth
+			if( isStealth )
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), stealthString, myStyle);
+				myStyle.alignment = TextAnchor.MiddleRight;
+				GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), stealthMultiplier + "x", myStyle);
+				offset++;
+			}
+			// lured
+			if( isLured )
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), luredString, myStyle);
+				myStyle.alignment = TextAnchor.MiddleRight;
+				GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), lureMultiplier + "x", myStyle);
+				offset++;
+			}
+			// quick
+			if( isQuick )
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), streakString, myStyle);
+				myStyle.alignment = TextAnchor.MiddleRight;
+				GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), droppingFliesMultiplier + "x", myStyle);
+				offset++;
+			}
+			// streak
+			myStyle.alignment = TextAnchor.MiddleLeft;
+			GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Current Streak", myStyle);
+			myStyle.alignment = TextAnchor.MiddleRight;
+			GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), displayMultiplier + "x", myStyle);
+			offset++;
+			// score
+			myStyle.alignment = TextAnchor.MiddleRight;
+			GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Total Score: " + displayScore, myStyle);
+			offset++;
+
+			// update time left
+			scoreTimer += scoreIncrement;
+
+			if( scoreTimer > scoreIncrementMax )
+				scoreState = (int)ScoreState.END_SCORING;
+		}
+		else if( scoreState == (int)ScoreState.START_SCORING )
+		{
+			scoreTimer = 0;
+			scoreState = (int)ScoreState.SCORING;
+		}
+		else if( scoreState == (int)ScoreState.END_SCORING )
+		{
+			isLured = false;
+			isStealth = false;
+			isQuick = false;
+
+			scoreTimer = 0;
+			addScore(displayScore);
+			scoreState = (int)ScoreState.NO_SCORING;
+		}
+
 		if( scoreDisplay )
 		{
+			/*
 			// change alpha/transparency of score
 			if( popupIncrement <= .4f * popupIncrementMax )
 			{
@@ -211,7 +331,7 @@ public class ScoreScript : GameBehavior {
 
 
 			// increment height
-			popupIncrement += 1.5f;
+			popupIncrement += 1.2f;
 
 			// check statement for pop-up statements
 			if( popupIncrement > popupIncrementMax )
@@ -227,13 +347,14 @@ public class ScoreScript : GameBehavior {
 			myStyle.fontSize = 30;
 			myStyle.normal.textColor = Color.white;
 			GUI.Label(new Rect(Screen.width/2, Screen.height/2 - popupY/2 + 150, popupX, popupY), "" + displayScoreString, myStyle);
-
+			*/
   		}
 
 
 		// score
 		myStyle.fontSize = 30;
 		myStyle.normal.textColor = Color.white;
+		myStyle.alignment = TextAnchor.MiddleRight;
 		GUI.Box (new Rect (Screen.width-offsetX, Screen.height-offsetY, sizeX, sizeY), "SCORE: " + _score, myStyle);
 
 
@@ -242,11 +363,7 @@ public class ScoreScript : GameBehavior {
 		/***** Bounty GUI *****/
 
 		// probably should use switch-case, but meh
-		/*if( BountyNPC == null )
-		{
-			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (None)");
-		}
-		else*/ if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
+		if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
 		{
 			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
 			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height,bountySizeX,bountyRectSizeY), BountyNPCImage);
@@ -295,29 +412,25 @@ public class ScoreScript : GameBehavior {
 
 	}
 
+
 	// add a score
 	void addScore(int score)
 	{
 		_score += score;
-		//chainLength++;
 		scoreDisplay = true;
-		//MessageCenter.Instance.Broadcast (new ScoreChangedMessage (score, chainLength));
 	}
 
 	// add a multiplier to the score
 	int addMultiplier(int score, int multi)
 	{
-		displayScore = score;
-		displayMultiplier = multiplier(multi);
-
-
 		return score * multiplier(multi);
 	}
 
 	// determine actual multiplier
 	int multiplier(int multi)
 	{
-		return Mathf.Min (multi, chainMax);
+		return multi;
+		//return Mathf.Min (multi, chainMax);
 	}
 
 	void invokeAudio()
@@ -378,12 +491,7 @@ public class ScoreScript : GameBehavior {
 
 		if( mess.Lure.lurePower >= NPC.GetComponent<AIController>().lurePower )
 		{
-			luresInUseCount++;
-			luresInUse = true;
-
-			// add score
-			addScore(addMultiplier(LURED_NPC,1));
-			displayScoreString = npcLuredString;
+			//luredNPCs.Add (NPC);
 		}
 
 		luredNPCs.Add (NPC);
@@ -395,12 +503,9 @@ public class ScoreScript : GameBehavior {
 
 	void HandleGrabbedNPCs(Message message)
 	{
-		PlayerGrabbedNPCsMessage mess = message as PlayerGrabbedNPCsMessage;
+		/*PlayerGrabbedNPCsMessage mess = message as PlayerGrabbedNPCsMessage;
 
-		int num = mess.NPCs.Count;
-
-		addScore (addMultiplier (NPC_GRABBED, 1));
-		displayScoreString = npcGrabbedString;
+		addScore (addMultiplier (NPC_GRABBED, 1));*/
 
 		bountyState = (int)BountyState.BOUNTY_HIDDEN;
 	}
@@ -415,26 +520,25 @@ public class ScoreScript : GameBehavior {
 
 		if(mess.alertLevelType == AlertLevelType.Alert)
 		{
-			chainLength = 1;
-			npcsAlerted.Remove(mess.NPC);
-			npcsAlerted.Add(mess.NPC,true);
-			/*if( chainLength > 2 )
+			streakMultiplier = 1;
+			if( !alertedNPCs.Contains(mess.NPC) )
+				alertedNPCs.Add(mess.NPC);
+			/*if( streakMultiplier > 2 )
 			{
-				chainLength -= 2;
+				streakMultiplier -= 2;
 			}
 			else
 			{
-				chainLength = 1;
+				streakMultiplier = 1;
 			}*/
 		}
 		else if( mess.alertLevelType == AlertLevelType.Panic )
 		{
-			chainLength = 1;
-			npcsAlerted.Remove(mess.NPC);
-			npcsAlerted.Add(mess.NPC,true);
+			streakMultiplier = 1;
+			if( !alertedNPCs.Contains(mess.NPC) )
+				alertedNPCs.Add(mess.NPC);
 		}
 	}
-
 
 
 
@@ -446,12 +550,9 @@ public class ScoreScript : GameBehavior {
 
 		GameObject NPC = mess.NPC;
 
-		luredNPCs.Remove (NPC);
+		if( luredNPCs.Contains(NPC) )
+			luredNPCs.Remove (NPC);
 
-		luresInUseCount--;
-
-		if( luresInUseCount == 0 )
-			luresInUse = false;
 	}
 
 
@@ -462,8 +563,8 @@ public class ScoreScript : GameBehavior {
 	{
 		NPCDestroyedMessage mess = message as NPCDestroyedMessage;
 
-		if( npcsAlerted.ContainsKey(mess.NPC) )
-			npcsAlerted.Remove(mess.NPC);
+		if( alertedNPCs.Contains(mess.NPC) )
+			alertedNPCs.Remove(mess.NPC);
 	}
 
 
@@ -477,55 +578,50 @@ public class ScoreScript : GameBehavior {
 		if( BountyNPC == null || mess.NPC == null )
 			return;
 
+		// initial multiplier values
+		int lure = 1;
+		int quick = 1;
+		int stealth = 1;
+		int npcScore = NPC_EATEN;
+		eatenString = npcEatenString;
+
+		// update score multipliers and base scores
+		if( timeSinceLastKill < lastKillBonus )
+		{
+			quick = droppingFliesMultiplier;
+			isQuick = true;
+		}
 		if( BountyNPC.Equals(mess.NPC) )
 		{
-			if( timeSinceLastKill < 15 )
-			{
-				addScore (addMultiplier (BOUNTY_EATEN, droppingFliesMultiplier * chainLength));
-				displayScoreString = bountyEatenString + streakString;
-			}
-			else
-			{
-				addScore (addMultiplier (BOUNTY_EATEN, chainLength));
-				displayScoreString = bountyEatenString;
-			}
-
+			npcScore = BOUNTY_EATEN;
+			eatenString = bountyEatenString;
 			BountyNPC = null;
 			BountyNPCImage = new Texture2D(1,1);
 		}
-		else
-		{
-			if( timeSinceLastKill < 15 )
-			{
-				addScore (addMultiplier (NPC_EATEN, droppingFliesMultiplier * chainLength));
-				displayScoreString = npcEatenString + streakString;
-			}
-			else
-			{
-				addScore (addMultiplier (NPC_EATEN, chainLength));
-				displayScoreString = npcEatenString;
-			}
-		}
-
 		if( luredNPCs.Contains(mess.NPC) )
 		{
 			luredNPCs.Remove(mess.NPC);
-			addScore(addMultiplier(LURED_NPC, lureMultiplier));
-			displayScoreString += luredString;
+			lure = lureMultiplier;
+			isLured = true;
+		}
+		if( alertedNPCs.Contains(mess.NPC) )
+		{
+			alertedNPCs.Remove(mess.NPC);
+			isStealth = false;
+		}
+		else
+		{
+			stealth = stealthMultiplier;
+			isStealth = true;
 		}
 
+		displayMultiplier = streakMultiplier; // get multiplier
+		displayScore = npcScore * stealth * quick * lure * streakMultiplier;
+		scoreState = (int)ScoreState.SCORING;
+
+		// update global variables
 		lastKillTime = Time.time;
-		chainLength++;
-
-		if( !npcsAlerted.ContainsValue(true) )
-		{
-			npcsAlerted.Remove(mess.NPC);
-			displayScoreString += stealthString;
-		}
-		if( npcsAlerted.ContainsKey(mess.NPC) )
-		{
-			npcsAlerted.Remove(mess.NPC);
-		}
+		streakMultiplier++;
 	}
 
 
@@ -538,8 +634,6 @@ public class ScoreScript : GameBehavior {
 
 		if( BountyNPC != null || GetComponent<TreeController>().state == Tree.State.Eating)
 			return;
-
-		npcsAlerted.Add (mess.NPC, false);
 
 		// bounty/target
 		if( Random.value > frequency )
