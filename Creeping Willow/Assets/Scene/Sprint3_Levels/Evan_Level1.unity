@@ -770,7 +770,7 @@ Transform:
   - {fileID: 2069813268}
   - {fileID: 1411849312}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
 --- !u!82 &91972640
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1653,7 +1653,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
 --- !u!114 &175926697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3037,7 +3037,7 @@ Transform:
   - {fileID: 1398299758}
   - {fileID: 1620029952}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 11
 --- !u!1 &332323289
 GameObject:
   m_ObjectHideFlags: 0
@@ -7905,6 +7905,7 @@ GameObject:
   - 212: {fileID: 871013885}
   - 68: {fileID: 871013884}
   - 114: {fileID: 871013886}
+  - 50: {fileID: 871013888}
   - 50: {fileID: 871013887}
   m_Layer: 0
   m_Name: Bench6
@@ -7991,6 +7992,22 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!50 &871013888
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1296575897}
+  m_GameObject: {fileID: 871013882}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
 --- !u!1 &875312762
 GameObject:
   m_ObjectHideFlags: 0
@@ -8002,6 +8019,7 @@ GameObject:
   - 212: {fileID: 875312764}
   - 68: {fileID: 875312763}
   - 114: {fileID: 875312766}
+  - 50: {fileID: 875312768}
   - 50: {fileID: 875312767}
   m_Layer: 0
   m_Name: Bench1
@@ -8083,6 +8101,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &875312768
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1777703465}
+  m_GameObject: {fileID: 875312762}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -9128,6 +9162,7 @@ GameObject:
   - 212: {fileID: 997798231}
   - 68: {fileID: 997798230}
   - 114: {fileID: 997798232}
+  - 50: {fileID: 997798234}
   - 50: {fileID: 997798233}
   m_Layer: 0
   m_Name: Bench8
@@ -9209,6 +9244,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &997798234
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 2104286171}
+  m_GameObject: {fileID: 997798228}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -10044,6 +10095,7 @@ GameObject:
   - 212: {fileID: 1117870962}
   - 68: {fileID: 1117870961}
   - 114: {fileID: 1117870963}
+  - 50: {fileID: 1117870965}
   - 50: {fileID: 1117870964}
   m_Layer: 0
   m_Name: Bench
@@ -10125,6 +10177,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &1117870965
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 157708704}
+  m_GameObject: {fileID: 1117870959}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -10438,6 +10506,7 @@ GameObject:
   - 212: {fileID: 1190658018}
   - 68: {fileID: 1190658017}
   - 114: {fileID: 1190658019}
+  - 50: {fileID: 1190658021}
   - 50: {fileID: 1190658020}
   m_Layer: 0
   m_Name: Bench2
@@ -10519,6 +10588,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &1190658021
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1416570487}
+  m_GameObject: {fileID: 1190658015}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -11151,6 +11236,7 @@ GameObject:
   - 212: {fileID: 1293849169}
   - 68: {fileID: 1293849168}
   - 114: {fileID: 1293849170}
+  - 50: {fileID: 1293849172}
   - 50: {fileID: 1293849171}
   m_Layer: 0
   m_Name: Bench4
@@ -11232,6 +11318,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &1293849172
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 925776664}
+  m_GameObject: {fileID: 1293849166}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -12965,7 +13067,7 @@ Transform:
   m_LocalScale: {x: .431049049, y: .43104887, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
 --- !u!1001 &1494586310
 Prefab:
   m_ObjectHideFlags: 0
@@ -14504,6 +14606,7 @@ GameObject:
   - 212: {fileID: 1696973093}
   - 68: {fileID: 1696973092}
   - 114: {fileID: 1696973094}
+  - 50: {fileID: 1696973096}
   - 50: {fileID: 1696973095}
   m_Layer: 0
   m_Name: Bench5
@@ -14585,6 +14688,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &1696973096
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 738692928}
+  m_GameObject: {fileID: 1696973090}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -14747,6 +14866,7 @@ GameObject:
   - 212: {fileID: 1702009082}
   - 68: {fileID: 1702009081}
   - 114: {fileID: 1702009083}
+  - 50: {fileID: 1702009085}
   - 50: {fileID: 1702009084}
   m_Layer: 0
   m_Name: Bench7
@@ -14828,6 +14948,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &1702009085
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 335519529}
+  m_GameObject: {fileID: 1702009079}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -16471,7 +16607,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
 --- !u!1 &1897443879
 GameObject:
   m_ObjectHideFlags: 0
@@ -17181,7 +17317,7 @@ Transform:
   m_LocalScale: {x: .396288574, y: .396288067, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
 --- !u!1001 &1976705688
 Prefab:
   m_ObjectHideFlags: 0
@@ -17327,7 +17463,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
 --- !u!1001 &1991646480
 Prefab:
   m_ObjectHideFlags: 0
@@ -18753,6 +18889,7 @@ GameObject:
   - 212: {fileID: 2089713430}
   - 68: {fileID: 2089713429}
   - 114: {fileID: 2089713431}
+  - 50: {fileID: 2089713433}
   - 50: {fileID: 2089713432}
   m_Layer: 0
   m_Name: Bench3
@@ -18834,6 +18971,22 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!50 &2089713433
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 5000000, guid: f7f1201970a342e418f8958be5bbefbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1481112579}
+  m_GameObject: {fileID: 2089713427}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
