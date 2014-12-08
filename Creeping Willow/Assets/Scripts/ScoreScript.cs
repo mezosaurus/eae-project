@@ -36,7 +36,7 @@ public class ScoreScript : GameBehavior {
 	 * 
 	 */
 	public readonly int NPC_EATEN = 50;
-	public readonly int AVOIDED_AXEMAN = 100;
+	public readonly int AXEMAN_EATEN = 200;
 	public readonly int LURED_NPC = 25;
 	public readonly int NPC_GRABBED = 25;
 	public readonly int BOUNTY_EATEN = 100;
@@ -56,6 +56,7 @@ public class ScoreScript : GameBehavior {
 	// output strings
 	readonly string npcEatenString = "Person Kill";
 	readonly string bountyEatenString = "Target Kill";
+	readonly string enemyEatenString = "Axeman Kill";
 	string eatenString;
 	//readonly string npcGrabbedString = "Person grabbed";
 	//readonly string npcLuredString = "Person lured";
@@ -255,12 +256,19 @@ public class ScoreScript : GameBehavior {
 				myStyle.alignment = TextAnchor.MiddleRight;
 				GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + NPC_EATEN, myStyle);
 			}
-			else
+			else if( eatenString == bountyEatenString )
 			{
 				myStyle.alignment = TextAnchor.MiddleLeft;
 				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
 				myStyle.alignment = TextAnchor.MiddleRight;
 				GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + BOUNTY_EATEN, myStyle);
+			}
+			else // axeman
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
+				myStyle.alignment = TextAnchor.MiddleRight;
+				GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + AXEMAN_EATEN, myStyle);
 			}
 			// stealth
 			if( isStealth )
@@ -647,6 +655,11 @@ public class ScoreScript : GameBehavior {
 			BountyNPC = null;
 			BountyNPCImage = new Texture2D(1,1);
 		}
+		if( mess.NPC.GetComponent<EnemyAIController>() != null )
+		{
+			npcScore = AXEMAN_EATEN;
+			eatenString = enemyEatenString;
+		}
 		if( luredNPCs.Contains(mess.NPC) )
 		{
 			luredNPCs.Remove(mess.NPC);
@@ -681,7 +694,12 @@ public class ScoreScript : GameBehavior {
 	{
 		NPCCreatedMessage mess = message as NPCCreatedMessage;
 
+		// bounty filled or tree is eating
 		if( BountyNPC != null || GetComponent<TreeController>().state == Tree.State.Eating)
+			return;
+
+		// bounty can't be an axeman/enemy
+		if( mess.NPC.GetComponent<EnemyAIController>() != null )
 			return;
 
 		// bounty/target
