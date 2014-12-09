@@ -63,8 +63,6 @@ public class EnemyAIController : AIController
 			investigate();
 		}
 
-		objectAvoidance ();
-
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
@@ -122,8 +120,16 @@ public class EnemyAIController : AIController
 		if (nextInvestigateTime <= Time.time)
 		{
 			nextInvestigateTime = Time.time + sittingTime/4;
-			Vector2 position = Random.insideUnitCircle;
-			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
+
+			if (Random.value > 0.5)
+			{
+				GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
+			}
+			else
+			{
+				Vector2 position = Random.insideUnitCircle * 2;
+				nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
+			}
 		}
 	}
 
