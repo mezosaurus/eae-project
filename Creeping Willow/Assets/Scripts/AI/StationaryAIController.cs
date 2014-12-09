@@ -24,8 +24,6 @@ public class StationaryAIController : AIController
 		// if lure is deleted
 		if( nextPath == null ) return;
 
-		objectAvoidance ();
-
 		Vector3 pathPosition = nextPath == bench ? getBenchOffsetVector() : nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
@@ -62,6 +60,9 @@ public class StationaryAIController : AIController
 				nextPath = getLeavingPath();
 			}
 		}
+
+		avoid ();
+		//objectAvoidance ();
 	}
 
 	public void setStationaryPoint(GameObject point)

@@ -686,13 +686,100 @@ public class AIController : GameBehavior {
 	}
 
 
+	protected void avoid()
+	{
+		if( transform.gameObject == null )
+			return;
+
+		float checkDistance = .25f;
+		Vector3 direction = npcDir.normalized;
+		float angleOffset = 10;
+		
+		float maxDistance = 1f;
+		float distanceIncrement = .05f;
+		
+		// get width/height
+		float radius = (float)Mathf.Max (gameObject.GetComponent<BoxCollider2D> ().size.x, gameObject.GetComponent<BoxCollider2D> ().size.y) / 2f;
+		Debug.DrawLine (transform.position, transform.position + direction*checkDistance,Color.black,1f, false);
+		
+		// check for object in the way
+		if( Physics2D.CircleCast (transform.position, radius, direction,checkDistance) )
+		{
+			RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction);
+			
+			if( hit.transform.gameObject.GetComponent<Rigidbody2D>() == null 
+			   && hit.transform.gameObject.GetComponent<EdgeCollider2D>() == null
+			   && hit.transform.gameObject.GetComponent<BoxCollider2D>() == null ) // hit is invalid
+				return;
+			
+			if( hit.transform.gameObject.tag == "NPC" ||
+			   hit.transform.gameObject.tag == "Border" ) // also invalid
+				return;
+
+			// valid hit
+
+			if( Vector3.Distance(hit.transform.position,nextPath.transform.position) < .25f )
+				nextPath = getNextPath();
+
+			if( panicked ) // just avoid objects
+			{
+				// raycast then lerp?
+				transform.position = Vector3.Lerp(transform.position, transform.position + getOffsetVector(90), .07f);
+				return;
+			}
+
+			Vector3 newPos;
+
+			// look for new path
+			float rotation = angleOffset;
+			bool pathFound = false;
+			while( rotation <= 180 && !pathFound )
+			{
+				// check left and right
+				bool isHit1 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(rotation), checkDistance); // right?
+				bool isHit2 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(-rotation), checkDistance); // left?
+
+				if( isHit1 && isHit2 )
+				{
+					// do nothing
+				}
+				else if( isHit1 ) // left okay
+				{
+					newPos = transform.position + getOffsetVector(-rotation)*checkDistance;
+					transform.position = Vector3.Lerp(transform.position, newPos, .07f);
+					Debug.Log ("go left");
+					pathFound = true;
+				}
+				else if( isHit2 ) // right okay
+				{
+					newPos = transform.position + getOffsetVector(rotation)*checkDistance;
+					transform.position = Vector3.Lerp(transform.position, newPos, .07f);
+					Debug.Log ("go right");
+					pathFound = true;
+				}
+				else // both okay - default left
+				{
+					newPos = transform.position + getOffsetVector(-rotation)*checkDistance;
+					transform.position = Vector3.Lerp(transform.position, newPos, .07f);
+					Debug.Log ("go somewhere");
+					pathFound = true;
+				}
+
+
+				rotation += angleOffset;
+			}
+
+			//transform.position = Vector3.Lerp(transform.position, newPos, .07f);
+		}
+	}
+
 	/**
 	 * ObjectAvoidance:
 	 * Checks for objects to avoid and alters their path to compensate for this
 	 **/
 	protected void objectAvoidance()
 	{
-		return; // spherecast not working
+		return; // not working
 		// spherecast
 
 		// if object is hit with rigidbody
@@ -701,11 +788,13 @@ public class AIController : GameBehavior {
 			// else
 				// change nextPath
 
-		float checkDistance = 1f;
+		float checkDistance = .25f;
+		//Debug.Log ("move: " + moveDir);
+		//Debug.Log ("npc: " + npcDir);
 		Vector3 direction = npcDir;
 		float angleOffset = 10;
 
-		float maxDistance = 2;
+		float maxDistance = 1f;
 		float distanceIncrement = .05f;
 
 		// get width/height
@@ -719,11 +808,17 @@ public class AIController : GameBehavior {
 		{
 			RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction);
 
-			if( hit.transform.gameObject.GetComponent<Rigidbody2D>() == null ) // hit is invalid
+			if( hit.transform.gameObject.GetComponent<Rigidbody2D>() == null 
+			   && hit.transform.gameObject.GetComponent<EdgeCollider2D>() == null
+			   && hit.transform.gameObject.GetComponent<BoxCollider2D>() == null ) // hit is invalid
 				return;
 
-			Debug.Log ("in");
-			return;
+			if( hit.transform.gameObject.tag == "NPC" ||
+			   hit.transform.gameObject.tag == "Border" ) // also invalid
+				return;
+
+			Debug.Log ("object: " + hit.transform.gameObject.name);
+			//return;
 			// look for new path
 			float rotation = angleOffset;
 			bool pathFound = false;
@@ -733,8 +828,13 @@ public class AIController : GameBehavior {
 				bool isHit1 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(rotation), checkDistance); // right?
 				bool isHit2 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(-rotation), checkDistance); // left?
 
+
+				//rotation += angleOffset;
+
 				if( isHit1 && isHit2 ) // if both fail
-					continue;
+				{
+					
+				}
 				else if( isHit1 ) // left okay
 				{
 					// check for clear path
@@ -752,6 +852,7 @@ public class AIController : GameBehavior {
 							{
 								Debug.Log ("new Path");
 								pathFound = true;
+								//transform.position = Vector3.Lerp(
 								GameObject go = new GameObject();
 								go.transform.position = newPos;
 								nextPath = go;

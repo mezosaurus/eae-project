@@ -63,8 +63,6 @@ public class EnemyAIController : AIController
 			investigate();
 		}
 
-		objectAvoidance ();
-
 		Vector3 pathPosition = nextPath.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
@@ -86,6 +84,9 @@ public class EnemyAIController : AIController
 				leaveTime = Time.time + sittingTime;
 			}			
 		}
+
+		avoid ();
+		//objectAvoidance ();
 	}
 	
 	private void animateCharacter(Vector3 movement, Vector3 moveTo)
