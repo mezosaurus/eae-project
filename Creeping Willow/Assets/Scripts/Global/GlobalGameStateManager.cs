@@ -10,8 +10,13 @@ public enum SceneEnum
 {
 	QUIT = -1,
 	MAINMENU = 0,
-	CREDITS = 1,
-	LEVEL_1 = 2,
+	LEVELSELECT = 1,
+	Evan_Level1 = 2,
+	Kevin_Level1 = 3,
+	PossessionTestScene = 4,
+	TestScene = 5,
+	TreeTestScene = 6,
+	PrototypeScene = 7,
 };
 
 public enum LevelState

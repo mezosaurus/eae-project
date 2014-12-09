@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class AIController : GameBehavior {
 
@@ -63,6 +64,9 @@ public class AIController : GameBehavior {
 	// Alert variables
     protected float alertThreshold = 5;
     protected float alertLevel;
+	public float alertDecrement;
+	public Texture2D emptyAlert;
+	public Texture2D fullAlert;
 	
 	// Cone of Vision variables
 	protected float visionAngleOffset; // max offset of angle from NPC's view
@@ -74,6 +78,37 @@ public class AIController : GameBehavior {
 	public GameObject alertTexture;
 	public GameObject panicTexture;
 	public GameObject scaredTexture;
+
+	/*void OnGUI() {
+		int sizeX = 20;
+		int sizeY = 60;
+		GameObject camera = GameObject.Find ("Main Camera");
+		Vector3 drawPos = camera.camera.WorldToScreenPoint(new Vector3 (transform.position.x, transform.position.y + (gameObject.renderer.bounds.size.y / 2), 0));
+		float top = drawPos.y;
+		Debug.Log ("top = " + top);
+		float left = drawPos.x;
+		Debug.Log ("left = " + left);
+		float alertPercent = (alertLevel / alertThreshold) * 100;
+
+		int alertGUI = EditorGUI.IntSlider(new Rect(sizeX,sizeY,left,top), "Alert:", 10, 0, 100);
+		EditorGUI.ProgressBar(new Rect(left,top,left,top+5),alertGUI, "Alert");
+		//if (alertLevel > 0)
+		{
+			
+
+			Debug.Log ("alertPercent =  " + alertPercent);
+			GUI.Box( new Rect( left, top, sizeX, sizeY ), GUIContent.none );
+			GUI.Box( new Rect( left, top + sizeY * ( 1 - alertPercent ), sizeX, sizeY * alertPercent ), GUIContent.none );
+		}*/
+		//draw the background:
+		/*GUI.BeginGroup(new Rect(transform.position.x, (transform.position.y + gameObject.renderer.bounds.size.y/2), sizeX, sizeY));
+		GUI.Box (new Rect (0, 0, 20, 60), emptyAlert);
+		GUI.BeginGroup(new Rect(0,0, sizeX * alertLevel, sizeY));
+		GUI.Box(new Rect(0,0, sizeX, sizeY), fullAlert);
+
+		GUI.EndGroup();
+		GUI.EndGroup();
+	}*/
 
 	// Use this for initialization
 	public void Start ()
@@ -363,18 +398,17 @@ public class AIController : GameBehavior {
 	
 	protected virtual void decrementAlertLevel()
 	{
-		float oldLevel = alertLevel;
-		alertLevel -= (panicThreshold * 0.05f);
-		if (oldLevel >= alertThreshold && alertLevel < alertThreshold)
+		//float oldLevel = alertLevel;
+		alertLevel -= alertDecrement;
+		
+		// Make sure alert level does not go below 0
+		if (alertLevel < 0 || alertLevel == 0)
 		{
 			broadcastAlertLevelChanged(AlertLevelType.Normal);
 			alertTexture.renderer.enabled = false;
 			alerted = false;
-		}
-		
-		// Make sure alert level does not go below 0
-		if (alertLevel < 0)
 			alertLevel = 0;
+		}
 	}
 	
 	protected virtual void alert()
@@ -569,7 +603,6 @@ public class AIController : GameBehavior {
 			scared = false;
 
 			grabbed = true; 
-			Debug.Log("Gotcha"); 
 
 			alertTexture.renderer.enabled = false;
 			panicTexture.renderer.enabled = false;

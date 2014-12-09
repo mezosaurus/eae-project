@@ -176,7 +176,7 @@ public class TreeController : GameBehavior
 
         MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(theList));
         grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
-        grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = false;
+        //grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = false;
         grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = false;
 
         theGrabbedNPC.GetComponent<Animator>().enabled = (grabbedNPC.name.Contains("BenchNPC")) ? false : true;
