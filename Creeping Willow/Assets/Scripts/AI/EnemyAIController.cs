@@ -106,6 +106,9 @@ public class EnemyAIController : AIController
 				leaveTime = Time.time + investigateTime;
 			}			
 		}
+
+		avoid ();
+		//objectAvoidance ();
 	}
 	
 	private void animateCharacter(Vector3 movement, Vector3 moveTo)
