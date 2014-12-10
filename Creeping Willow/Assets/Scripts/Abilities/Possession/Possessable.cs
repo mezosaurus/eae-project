@@ -42,4 +42,14 @@ public abstract class Possessable : GameBehavior {
 		possessed = false;
 	}
 
+	void HandlePossessorSpawned(Message message){
+		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
+		ps.Play();
+	}
+
+	void HandlePossessorDestroyed(Message message){
+		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
+		ps.Stop();
+	}
+
 }

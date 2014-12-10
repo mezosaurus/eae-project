@@ -28,5 +28,6 @@ public enum MessageType
 	PlayerKilled,
 	NPCPanickedOffMap,
 	EnemyNPCInvestigatingPlayer,
-	PossessorSpawned
+	PossessorSpawned,
+	PossessorDestroyed
 }

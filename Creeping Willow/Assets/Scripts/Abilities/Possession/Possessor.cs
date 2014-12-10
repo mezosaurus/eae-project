@@ -22,6 +22,7 @@ public class Possessor : GameBehavior {
 		possessing = false;
 		objectToPossess = null;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
+		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
 		MessageCenter.Instance.RegisterListener (MessageType.EnemyNPCInvestigatingPlayer, ExitPossession);
 	}
 	
@@ -118,6 +119,7 @@ public class Possessor : GameBehavior {
 				renderer.color = color;
 			}
 		}
+		MessageCenter.Instance.Broadcast(new PossessorDestroyredMessage(this));
 		Destroy(this.gameObject);
 	}
 
