@@ -38,7 +38,7 @@ public class Possessor : GameBehavior {
 			velocity = velocity * speed * Time.deltaTime;
 			transform.position += (Vector3) velocity;
 			
-			if (Vector3.Distance (player.transform.position, transform.position) > 6) {
+			if (Vector3.Distance (player.transform.position, transform.position) > 12) {
 				transform.position = prevPosition;
 			}
 		}

@@ -5,6 +5,9 @@ public abstract class Possessable : GameBehavior {
 	bool possessed;
 	protected float baseX;
 	protected float baseY;
+	protected bool acting = false;
+	bool needToSend = false;
+	public AudioClip actionSound;
 
 	void Start(){
 		baseX = transform.position.x;
@@ -12,12 +15,22 @@ public abstract class Possessable : GameBehavior {
 		possessed = false;
 	}
 	// Update is called once per frame
-	protected override abstract void GameUpdate ();
+	protected override void GameUpdate (){
+		if(!acting){
+			if(needToSend)
+			{
+				MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
+				needToSend = false;
+			}
+		}
+	}
 	protected abstract void act();
 
 	public void useAbility(){
 		if (possessed) {
 			act();
+			acting = true;
+			needToSend = true;
 		}
 	}
 
