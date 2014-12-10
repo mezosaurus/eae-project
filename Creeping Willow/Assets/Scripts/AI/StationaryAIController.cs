@@ -20,7 +20,7 @@ public class StationaryAIController : AIController
 	{
 		if (updateNPC ())
 			return;
-		
+
 		// if lure is deleted
 		if( nextPath == null ) return;
 
@@ -29,6 +29,7 @@ public class StationaryAIController : AIController
 		float step = speed * Time.deltaTime;
 		
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		determineDirectionChange (transform.position, movement);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
 
@@ -61,7 +62,7 @@ public class StationaryAIController : AIController
 			}
 		}
 
-		avoid ();
+		avoid (direction);
 		//objectAvoidance ();
 	}
 
