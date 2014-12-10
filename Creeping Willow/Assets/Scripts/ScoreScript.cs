@@ -792,6 +792,9 @@ public class ScoreScript : GameBehavior {
 			return;
 
 		BountyNPC = mess.NPC;
+		ParticleSystem ps = BountyNPC.GetComponent<ParticleSystem> ();
+		ps.Play ();
+
 
 		// used to convert from sprite sheet to current sprite
 		Sprite sprite = mess.NPC.GetComponent<SpriteRenderer> ().sprite;
