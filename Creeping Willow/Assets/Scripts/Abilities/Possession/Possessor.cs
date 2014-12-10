@@ -119,7 +119,7 @@ public class Possessor : GameBehavior {
 				renderer.color = color;
 			}
 		}
-		MessageCenter.Instance.Broadcast(new PossessorDestroyredMessage(this));
+		MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
 		Destroy(this.gameObject);
 	}
 

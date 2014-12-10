@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class PossessorSpawnedMessage : Message
 {
-	public readonly GameObject Possessor;
+	public readonly Possessor Possessor;
 
-	public PossessorSpawnedMessage (GameObject Possessor) : base(MessageType.PossessorSpawned)
+	public PossessorSpawnedMessage (Possessor Possessor) : base(MessageType.PossessorSpawned)
 	{
 		this.Possessor = Possessor;
 	}

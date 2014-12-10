@@ -13,6 +13,8 @@ public abstract class Possessable : GameBehavior {
 		baseX = transform.position.x;
 		baseY = transform.position.y;
 		possessed = false;
+		MessageCenter.Instance.RegisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
+		MessageCenter.Instance.RegisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
 	}
 	// Update is called once per frame
 	protected override void GameUpdate (){
@@ -45,11 +47,13 @@ public abstract class Possessable : GameBehavior {
 	void HandlePossessorSpawned(Message message){
 		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
 		ps.Play();
+//		Debug.Log ("spawned");
 	}
 
 	void HandlePossessorDestroyed(Message message){
 		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
 		ps.Stop();
+//		Debug.Log ("destroyed");
 	}
 
 }
