@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyAIController : AIController 
 {
 	public float investigateTime = 60f;
-	public float sittingTime = 1.5f;
+	public float sittingTime = 2.0f;
 	public float wanderRadius = 5f;
 	protected Vector3 panickedNPCPosition;
 	private bool sitting = false;
@@ -23,6 +23,7 @@ public class EnemyAIController : AIController
 	{
 		STILL = 0,
 		WALK = 1,
+		CHOPPING = 2,
 	}
 
 	new public void Start()
@@ -62,24 +63,6 @@ public class EnemyAIController : AIController
 				nextPath = getLeavingPath();
 			}
 
-			SpriteRenderer[] sceneObjects = FindObjectsOfType<SpriteRenderer>();
-			treeList = new ArrayList ();
-			treeList.Add (player);
-
-			foreach (SpriteRenderer sceneObject in sceneObjects)
-			{
-				if (sceneObject.sprite == null)
-					continue;
-				
-				string name = sceneObject.sprite.name;
-				if (name.Equals("cw_tree_2") || name.Equals("cw_tree_3") || name.Equals ("cw_tree_4") || name.Equals("cw_tree_5") || name.Equals("cw_tree_6"))
-				{
-					if (Vector3.Distance(panickedNPCPosition, sceneObject.gameObject.transform.position) < wanderRadius) {
-						treeList.Add (sceneObject.gameObject);
-					}
-				}
-			}
-
 			investigate();
 		}
 
@@ -101,6 +84,7 @@ public class EnemyAIController : AIController
 			}
 
 			// TODO: animate axe
+			setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.CHOPPING);
 		}
 
 		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf))
@@ -168,6 +152,7 @@ public class EnemyAIController : AIController
 			}
 			else
 			{
+				treePath = false;
 				Vector2 position = Random.insideUnitCircle * wanderRadius;
 				nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
 			}
@@ -181,6 +166,24 @@ public class EnemyAIController : AIController
 		calledToPoint = true;
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
+
+		SpriteRenderer[] sceneObjects = FindObjectsOfType<SpriteRenderer>();
+		treeList = new ArrayList ();
+		treeList.Add (player);
+		
+		foreach (SpriteRenderer sceneObject in sceneObjects)
+		{
+			if (sceneObject.sprite == null)
+				continue;
+			
+			string name = sceneObject.sprite.name;
+			if (name.Equals("cw_tree_2") || name.Equals("cw_tree_3") || name.Equals ("cw_tree_4") || name.Equals("cw_tree_5") || name.Equals("cw_tree_6"))
+			{
+				if (Vector3.Distance(panickedNPCPosition, sceneObject.gameObject.transform.position) < wanderRadius) {
+					treeList.Add (sceneObject.gameObject);
+				}
+			}
+		}
 	}
 	
 	protected override void alert()
