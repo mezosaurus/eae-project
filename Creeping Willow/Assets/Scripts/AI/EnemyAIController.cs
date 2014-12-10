@@ -74,7 +74,10 @@ public class EnemyAIController : AIController
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		animateCharacter(movement, pathPosition);
 		
-		transform.position = movement;
+		if( avoid (direction) != Vector3.zero )
+			transform.position = Vector3.MoveTowards(positionNPC,avoid (direction),step);
+		else
+			transform.position = movement;
 
 		if (treePath && movement == pathPosition) 
 		{
@@ -98,8 +101,6 @@ public class EnemyAIController : AIController
 				leaveTime = Time.time + investigateTime;
 			}			
 		}
-
-		avoid (direction);
 		//objectAvoidance ();
 	}
 	

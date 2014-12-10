@@ -30,7 +30,6 @@ public class StationaryAIController : AIController
 		
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
-		determineDirectionChange (transform.position, movement);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
 
 		if (biasPosition.x == 0)
@@ -42,7 +41,18 @@ public class StationaryAIController : AIController
 		else
 			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
 
-		transform.position = movement;
+		if( avoid (direction) != Vector3.zero )
+		{
+			Vector3 newPos = Vector3.MoveTowards(positionNPC,avoid (direction),step);
+			transform.position = newPos;
+			determineDirectionChange (transform.position, newPos);
+		}
+		else
+		{
+			determineDirectionChange (transform.position, movement);
+			transform.position = movement;
+		}
+
 		if (movement == pathPosition && (nextPath == bench || nextPath.tag.Equals (spawnTag)))
 		{
 			if (killSelf && nextPath != bench)
@@ -61,8 +71,6 @@ public class StationaryAIController : AIController
 				nextPath = getLeavingPath();
 			}
 		}
-
-		avoid (direction);
 		//objectAvoidance ();
 	}
 

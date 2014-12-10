@@ -3,12 +3,12 @@ using System.Collections;
 
 public class ScoreChangedMessage : Message
 {
-	public readonly int addedScore;
-	public readonly int multiplier;
+	public readonly int[] highScores;
+	public readonly string[] playerNames;
 	
-	public ScoreChangedMessage(int score, int multi) : base(MessageType.ScoreChanged)
+	public ScoreChangedMessage(int[] scores, string[] names) : base(MessageType.ScoreChanged)
 	{
-		addedScore = score;
-		multiplier = multi;
+		highScores = scores;
+		playerNames = names;
 	}
 }

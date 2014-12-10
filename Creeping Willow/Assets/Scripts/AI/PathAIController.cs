@@ -96,8 +96,18 @@ public class PathAIController : AIController
 		Vector3 movement = Vector3.MoveTowards (position, pathPosition, step);
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
-		determineDirectionChange(transform.position, movement);
-		transform.position = movement;
+
+		if( avoid (direction) != Vector3.zero )
+		{	
+			Vector3 newPos = Vector3.MoveTowards(transform.position,avoid (direction),step);
+			transform.position = newPos;
+			determineDirectionChange(transform.position, newPos);
+		}
+		else
+		{
+			transform.position = movement;
+			determineDirectionChange(transform.position, movement);
+		}
 
 		if (movement == pathPosition && !lured)
 		{
@@ -115,7 +125,7 @@ public class PathAIController : AIController
 			}
 		}
 
-		avoid (direction);
+		//avoid (direction);
 		//objectAvoidance ();
 	}
 	//	void OnTriggerEnter2D(Collider2D other)

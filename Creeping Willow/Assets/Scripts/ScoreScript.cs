@@ -73,6 +73,13 @@ public class ScoreScript : GameBehavior {
 	ArrayList luredNPCs = new ArrayList(); // lured npcs
 
 
+	// saved scores
+	int[] highscores = new int[10];
+	string[] names = new string[10];
+	string initials = "";
+	bool win = false;
+	bool endLevel = false;
+	bool entered = false;
 
 
 	// Score GUI variables
@@ -153,7 +160,10 @@ public class ScoreScript : GameBehavior {
 
 		sideL = Screen.width / 3;
 		sideR = Screen.width * 2 / 3;
-		startHeight = Screen.height / 4;
+		startHeight = Screen.height * 2 / 3;
+
+		highscores = GlobalGameStateManager.highscores;
+		names = GlobalGameStateManager.playerNames;
 	}
 	
 	// Update is called once per frame
@@ -217,10 +227,12 @@ public class ScoreScript : GameBehavior {
 	void OnGUI()
 	{
 		/***** Scoring GUI *****/
+
 		GUIStyle myStyle = new GUIStyle ();
 		myStyle.alignment = TextAnchor.MiddleCenter;
 		myStyle.fontSize = 30;
 		myStyle.normal.textColor = Color.white;
+
 
 		Color guiColor = GUI.color;
 		Color savedGuiColor = GUI.color;
@@ -414,7 +426,9 @@ public class ScoreScript : GameBehavior {
 		myStyle.alignment = TextAnchor.MiddleRight;
 		GUI.Box (new Rect (Screen.width-offsetX, Screen.height-offsetY, sizeX, sizeY), "SCORE: " + _score, myStyle);
 
-
+		// high score
+		myStyle.normal.textColor = Color.yellow;
+		GUI.Box (new Rect (Screen.width-offsetX, 10, sizeX, sizeY), "HIGH SCORE: " + highscores[0], myStyle);
 
 
 		/***** Bounty GUI *****/
@@ -467,6 +481,43 @@ public class ScoreScript : GameBehavior {
 			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height,bountySizeX,bountyRectSizeY), BountyNPCImage);
 		}
 
+		
+
+
+		/***** High Score GUI *****/
+
+		myStyle.alignment = TextAnchor.MiddleCenter;
+		myStyle.fontSize = 50;
+		myStyle.normal.textColor = Color.white;
+
+		if( endLevel )
+		{
+			// not a high score
+			if( _score <= highscores[9] )
+				entered = true;
+
+			if( win && !entered )
+			{
+				/*updateHighScores(_score,initials);
+				GlobalGameStateManager.highscores = highscores;
+				GlobalGameStateManager.playerNames = names;
+				entered = true;*/
+
+				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2,100,50), initials, 3, myStyle);
+				
+				// check input
+				if( initials.Length == 3 )
+				{
+					if( Input.GetKeyDown(KeyCode.Return) )
+					{
+						updateHighScores(_score,initials);
+						GlobalGameStateManager.highscores = highscores;
+						GlobalGameStateManager.playerNames = names;
+						entered = true;
+					}
+				}
+			}
+		}
 	}
 
 
@@ -490,6 +541,39 @@ public class ScoreScript : GameBehavior {
 		//return Mathf.Min (multi, chainMax);
 	}
 
+
+	// save new high score
+	void updateHighScores(int score, string playerName)
+	{
+		int spot = 0;
+		bool newScore = false;
+
+		// loop through scores
+		for( int i = 0; i < 10; i++ )
+		{
+			if( score > highscores[i] )
+			{
+				spot = i;
+				newScore = true;
+				break;
+			}
+		}
+
+		// sorts them
+		if( newScore )
+		{
+			// move down lower scores
+			for( int i = 9; i > spot; i-- )
+			{
+				highscores[i] = highscores[i-1];
+				names[i] = names[i-1];
+			}
+			highscores[spot] = score;
+			names[spot] = playerName;
+		}
+	}
+
+
 	void invokeAudio()
 	{
 
@@ -509,6 +593,7 @@ public class ScoreScript : GameBehavior {
 		MessageCenter.Instance.RegisterListener (MessageType.NPCEaten, HandleNPCEaten);
 		MessageCenter.Instance.RegisterListener (MessageType.NPCCreated, HandleNPCCreated);
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, HandleNPCDestroyed);
+		MessageCenter.Instance.RegisterListener (MessageType.LevelFinished, HandleLevelFinished);
 	}
 
 	void UnregisterListeners()
@@ -520,7 +605,7 @@ public class ScoreScript : GameBehavior {
 		MessageCenter.Instance.UnregisterListener(MessageType.NPCEaten, HandleNPCEaten);
 		MessageCenter.Instance.UnregisterListener(MessageType.NPCCreated, HandleNPCCreated);
 		MessageCenter.Instance.UnregisterListener(MessageType.NPCDestroyed, HandleNPCDestroyed);
-
+		MessageCenter.Instance.UnregisterListener (MessageType.LevelFinished, HandleLevelFinished);
 	}
 
 
@@ -726,5 +811,18 @@ public class ScoreScript : GameBehavior {
 		
 		bountyState = (int)BountyState.BOUNTY_SHOWING;
 		bountyRaised = true;
+	}
+
+
+	void HandleLevelFinished(Message message)
+	{
+		LevelFinishedMessage mess = message as LevelFinishedMessage;
+
+		endLevel = true;
+
+		if( mess.Type == (int)LevelFinishedType.Win )
+		{
+			win = true;
+		}
 	}
 }

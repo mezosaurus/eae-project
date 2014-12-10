@@ -44,6 +44,9 @@ public static class GlobalGameStateManager
 	public static PlayerState PlayerState = PlayerState.DEFAULT;
 	public static SceneEnum CurrentScene = 0;
 
+	public static int[] highscores = new int[10];
+	public static string[] playerNames = new string[10];
+
 	public static Matrix4x4 PrepareMatrix ()
 	{
 		Vector2 ratio = new Vector2 (Screen.width / originalWidth, Screen.height / originalHeight);
