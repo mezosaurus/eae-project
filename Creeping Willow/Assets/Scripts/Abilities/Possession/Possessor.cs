@@ -21,7 +21,8 @@ public class Possessor : GameBehavior {
 		colliding = false;
 		possessing = false;
 		objectToPossess = null;
-        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
+		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
+		MessageCenter.Instance.RegisterListener (MessageType.EnemyNPCInvestigatingPlayer, ExitPossession);
 	}
 	
 	// Update is called once per frame
@@ -102,7 +103,10 @@ public class Possessor : GameBehavior {
 			objectToPossess = null;
 		}
 	}
-	
+
+	void ExitPossession(Message message){
+		ExitPossession();
+	}
 
 	protected virtual void ExitPossession(){
 		GameObject player = GameObject.Find ("Player");
