@@ -686,7 +686,7 @@ public class AIController : GameBehavior {
 	}
 
 
-	protected void avoid()
+	protected void avoid(Vector3 currentNPCDirection)
 	{
 		if( transform.gameObject == null )
 			return;

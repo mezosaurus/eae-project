@@ -94,6 +94,7 @@ public class PathAIController : AIController
 		//Vector3 goal = GameObject.Find ("SpawnMoves/SpawnMove1").transform.position;
 		float step = speed * Time.deltaTime;
 		Vector3 movement = Vector3.MoveTowards (position, pathPosition, step);
+		Vector3 direction = movement = transform.position;
 		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
 		determineDirectionChange(transform.position, movement);
 		transform.position = movement;
@@ -114,7 +115,7 @@ public class PathAIController : AIController
 			}
 		}
 
-		avoid ();
+		avoid (direction);
 		//objectAvoidance ();
 	}
 	//	void OnTriggerEnter2D(Collider2D other)

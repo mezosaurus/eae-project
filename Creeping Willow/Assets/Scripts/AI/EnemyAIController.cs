@@ -12,6 +12,7 @@ public class EnemyAIController : AIController
 	private float leaveTime;
 	private bool calledToPoint = false;
 	private bool treePath = false;
+	private bool checkingPlayer = false;
 	private ArrayList treeList;
 
 	private float nextInvestigateTime = 0;
@@ -63,6 +64,8 @@ public class EnemyAIController : AIController
 
 			SpriteRenderer[] sceneObjects = FindObjectsOfType<SpriteRenderer>();
 			treeList = new ArrayList ();
+			treeList.Add (player);
+
 			foreach (SpriteRenderer sceneObject in sceneObjects)
 			{
 				if (sceneObject.sprite == null)
@@ -85,14 +88,19 @@ public class EnemyAIController : AIController
 		float step = speed * Time.deltaTime;
 
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
-
+		Vector3 direction = movement = transform.position;
 		animateCharacter(movement, pathPosition);
 		
 		transform.position = movement;
 
 		if (treePath && movement == pathPosition) 
 		{
-			Debug.Log ("Chopped tree.");
+			if (checkingPlayer)
+			{
+				MessageCenter.Instance.Broadcast(new EnemyNPCInvestigatingPlayerMessage(gameObject));
+			}
+
+			// TODO: animate axe
 		}
 
 		if (movement == pathPosition && (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf))
@@ -107,7 +115,7 @@ public class EnemyAIController : AIController
 			}			
 		}
 
-		avoid ();
+		avoid (direction);
 		//objectAvoidance ();
 	}
 	
@@ -149,10 +157,14 @@ public class EnemyAIController : AIController
 			if (Random.value > 0.5)
 			{
 				var rand = Random.Range(0, treeList.Count);
-				Vector3 nextTreePosition = ((GameObject)treeList[rand]).transform.position;
+				var tree = (GameObject)treeList[rand];
+				Vector3 nextTreePosition = tree.transform.position;
 				treeList.RemoveAt(rand);	// Remove the tree so it won't be chopped again
 				nextPath.transform.position = new Vector3(nextTreePosition.x, nextTreePosition.y - transform.renderer.bounds.size.y/5);
 				treePath = true;
+
+				if (tree.Equals(player))
+					checkingPlayer = true;
 			}
 			else
 			{
