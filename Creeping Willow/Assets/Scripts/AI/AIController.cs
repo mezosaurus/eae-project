@@ -330,18 +330,8 @@ public class AIController : GameBehavior {
 		
 		if (checkForPlayer() && player.rigidbody2D != null && player.rigidbody2D.velocity != Vector2.zero)
 		{
-			// TODO: Balance better
-			increaseAlertLevel(sightAlertMultiplier);
-			if (alertLevel >= alertThreshold)
-			{
-				alert ();
+			if (NPCHandleSeeingPlayer())
 				return true;
-			}
-			else if (alertLevel >= panicThreshold)
-			{
-				panic ();
-				return true;
-			}
 		}
 
 		if (scared)
@@ -368,6 +358,24 @@ public class AIController : GameBehavior {
 	// Helper Methods
 	//-----------------------
 
+	virtual protected bool NPCHandleSeeingPlayer() 
+	{
+		// TODO: Balance better
+		increaseAlertLevel(sightAlertMultiplier);
+		if (alertLevel >= alertThreshold)
+		{
+			alert ();
+			return true;
+		}
+		else if (alertLevel >= panicThreshold)
+		{
+			panic ();
+			return true;
+		}
+
+		return false;
+	}
+	
 	protected void destroyNPC()
 	{
 		Destroy (gameObject);		

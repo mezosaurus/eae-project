@@ -88,7 +88,7 @@ public class EnemyAIController : AIController
 		float step = speed * Time.deltaTime;
 
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
-		Vector3 direction = Vector3.Normalize(movement = transform.position);
+		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		animateCharacter(movement, pathPosition);
 		
 		transform.position = movement;
@@ -191,7 +191,13 @@ public class EnemyAIController : AIController
 			setAnimatorInteger (axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
 		}
 	}
-	
+
+	override protected bool NPCHandleSeeingPlayer()
+	{
+		panic ();
+		return true;
+	}
+
 	override protected GameObject getNextPath()
 	{
 		nextPath = new GameObject ();
