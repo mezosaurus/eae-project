@@ -31,6 +31,9 @@ public abstract class Possessable : GameBehavior {
 	public void useAbility(){
 		if (possessed) {
 			act();
+			audio.Stop();
+			audio.clip = actionSound;
+			audio.Play();
 			acting = true;
 			needToSend = true;
 		}

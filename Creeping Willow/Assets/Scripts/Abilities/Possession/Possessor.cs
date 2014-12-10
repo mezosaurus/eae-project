@@ -10,6 +10,7 @@ public class Possessor : GameBehavior {
 	bool possessing;
 	protected AbilityType type;
 	private GameObject objectToPossess;
+	public Texture2D possessionControls;
 	// Use this for initialization
 	protected virtual void Start () {
 		colors.Add("red", new Color(1f, .5f, .5f, .5f));
@@ -24,8 +25,9 @@ public class Possessor : GameBehavior {
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
 		MessageCenter.Instance.RegisterListener (MessageType.EnemyNPCInvestigatingPlayer, ExitPossession);
+
 	}
-	
+
 	// Update is called once per frame
 	protected override void GameUpdate () {
 		HandleInput();
@@ -120,7 +122,21 @@ public class Possessor : GameBehavior {
 			}
 		}
 		MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+		MessageCenter.Instance.UnregisterListener (MessageType.EnemyNPCInvestigatingPlayer, ExitPossession);
 		Destroy(this.gameObject);
+	}
+
+	void OnGUI(){
+		float width = 197/2;
+		float height = 121/2;
+
+		float top = 0;
+		float right = Screen.width - 50;
+		if (possessing) {
+			Debug.Log("here");
+			Debug.Log(possessionControls);
+			GUI.DrawTexture( new Rect(right - width,top + height, width, height), possessionControls, ScaleMode.ScaleToFit );
+		}
 	}
 
 }
