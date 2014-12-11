@@ -101,10 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 175
-  y: 160
-  width: 230
-  height: 80
+  x: 350
+  y: 500
+  width: 700
+  height: 200
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
@@ -123,7 +123,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 285016226}
-  m_RootOrder: 4
+  m_RootOrder: 0
 --- !u!1 &174802816
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,8 +204,8 @@ MonoBehaviour:
   buttons:
   - {fileID: 150631423}
   - {fileID: 1526394032}
-  - {fileID: 1775544059}
   - {fileID: 1032233577}
+  - {fileID: 1775544059}
   - {fileID: 1369997656}
   sound: {fileID: 8300000, guid: 6e380fe9fb8e7584184191e2e942a638, type: 3}
 --- !u!4 &285016226
@@ -218,11 +218,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 150631425}
   - {fileID: 1526394033}
   - {fileID: 1032233579}
   - {fileID: 1775544060}
   - {fileID: 1369997657}
-  - {fileID: 150631425}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!1 &691900864
@@ -303,10 +303,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 445
-  y: 255
-  width: 230
-  height: 80
+  x: 1560
+  y: 500
+  width: 700
+  height: 200
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
@@ -325,7 +325,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 285016226}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &1369997656
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +353,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 285016226}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!114 &1369997658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,10 +365,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 310
-  y: 350
-  width: 230
-  height: 80
+  x: 960
+  y: 720
+  width: 700
+  height: 200
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
@@ -403,7 +403,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 285016226}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!114 &1526394034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,10 +415,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 445
-  y: 160
-  width: 230
-  height: 80
+  x: 960
+  y: 500
+  width: 700
+  height: 200
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
@@ -537,7 +537,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 285016226}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!114 &1775544061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -549,10 +549,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 175
-  y: 255
-  width: 230
-  height: 80
+  x: 350
+  y: 720
+  width: 700
+  height: 200
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
