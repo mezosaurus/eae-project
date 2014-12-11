@@ -11,12 +11,13 @@ public enum SceneEnum
 	QUIT = -1,
 	MAINMENU = 0,
 	LEVELSELECT = 1,
-	Evan_Level1 = 2,
-	Kevin_Level1 = 3,
-	PossessionTestScene = 4,
-	TestScene = 5,
-	TreeTestScene = 6,
-	PrototypeScene = 7,
+	OPTIONS = 2,
+	Evan_Level1 = 10,
+	Kevin_Level1 = 11,
+	PossessionTestScene = 12,
+	TestScene = 13,
+	TreeTestScene = 14,
+	PrototypeScene = 15,
 };
 
 public enum LevelState

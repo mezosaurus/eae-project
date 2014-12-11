@@ -32,6 +32,7 @@ public class GUIButton : MonoBehaviour
 		GUI.skin.button.active.background = (Texture2D)defaultImage;
 		GUI.skin.font = font;
 		GUI.skin.GetStyle( "Button" ).fontSize = Mathf.FloorToInt( 0.6f * height );
+		GUI.skin.GetStyle( "Button" ).normal.textColor = Color.black;
 		GUI.depth = 0;
 
 		// draw the button

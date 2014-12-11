@@ -211,13 +211,13 @@ MonoBehaviour:
   x: 200
   y: 290
   width: 150
-  height: 80
-  defaultImage: {fileID: 2800000, guid: c49add451f6474c2baa32112a145bed8, type: 3}
-  hoverImage: {fileID: 2800000, guid: c49add451f6474c2baa32112a145bed8, type: 3}
-  downClickImage: {fileID: 2800000, guid: 739339fa0feca15479a7b6de03343557, type: 3}
-  text: 
+  height: 60
+  defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
+  hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
+  downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
+  text: Play
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  scene: 2
+  scene: 10
   sound: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
 --- !u!1 &1641892036
 GameObject:
@@ -229,7 +229,7 @@ GameObject:
   - 4: {fileID: 1641892037}
   - 114: {fileID: 1641892038}
   m_Layer: 0
-  m_Name: ControlsButton
+  m_Name: OptionsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,13 +261,13 @@ MonoBehaviour:
   x: 435
   y: 290
   width: 150
-  height: 80
-  defaultImage: {fileID: 2800000, guid: 80fa7e7c9bf3e42f1b71679ff85cecc6, type: 3}
-  hoverImage: {fileID: 2800000, guid: 80fa7e7c9bf3e42f1b71679ff85cecc6, type: 3}
-  downClickImage: {fileID: 2800000, guid: 739339fa0feca15479a7b6de03343557, type: 3}
-  text: 
+  height: 60
+  defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
+  hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
+  downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
+  text: Options
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  scene: 0
+  scene: 2
   sound: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
 --- !u!1 &1722041305
 GameObject:
