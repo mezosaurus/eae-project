@@ -20,6 +20,8 @@ public class MenuController : MonoBehaviour
 		
 		mapAudio = gameObject.AddComponent<AudioSource>();
 		mapAudio.clip = sound;
+
+		Select( buttons[ 0 ] );
 	}
 
 	// Update is called once per frame
@@ -96,12 +98,12 @@ public class MenuController : MonoBehaviour
 					axisBusy = false;
 			}
 
-			if (Input.GetAxisRaw ("Start") != 0 && selected >= 0) {
+		if ((Input.GetAxisRaw ("Start") != 0 || Input.GetAxisRaw( "A" ) != 0) && selected >= 0) {
 					Screen.showCursor = true;
 					Screen.lockCursor = false;
 					buttons [selected].GetComponent<GUIButton> ().changeScenes ();
 			}
-			else if (Input.GetAxisRaw ("Back") != 0) {
+		else if ((Input.GetAxisRaw ("Back") != 0 || Input.GetAxisRaw( "A" ) != 0) & selected >= 0) {
 					// this all depends on the build order in project settings
 					if (Application.loadedLevel == 0) {
 							buttons[3].GetComponent<GUIButton>().changeScenes();
