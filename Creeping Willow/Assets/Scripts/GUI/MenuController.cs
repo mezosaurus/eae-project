@@ -13,7 +13,7 @@ public class MenuController : MonoBehaviour
 
 	void Awake()
 	{
-		selected = -1;
+		selected = 0;
 		axisBusy = false;
 		
 		fullColumns = Mathf.CeilToInt( Mathf.Sqrt( buttons.Length ) );

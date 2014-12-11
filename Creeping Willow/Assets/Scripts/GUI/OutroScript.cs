@@ -144,7 +144,7 @@ public class OutroScript : MonoBehaviour
 
 	private void restartBattle()
 	{
-		Application.LoadLevel( 0 );
+		Application.LoadLevel( Application.loadedLevel );
 	}
 
 	void Update ()
