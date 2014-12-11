@@ -7,6 +7,7 @@ public class IntroScript : MonoBehaviour
 	public Texture2D boxImage;
 	public Texture2D buttonImage;
 	public AudioClip sound;
+	public Texture2D[] TutorialImages;
 	private Rect boxRect;
 	private Rect buttonRect;
 	private GUIStyle boxStyle;
@@ -18,8 +19,8 @@ public class IntroScript : MonoBehaviour
 
 	void Start ()
 	{
-		boxRect = new Rect( 100, 100, GlobalGameStateManager.originalWidth - 200, GlobalGameStateManager.originalHeight - 200 );
-		buttonRect = new Rect( GlobalGameStateManager.originalWidth / 2 - 200, 700, 400, 200 );
+		boxRect = new Rect( 150, 100, GlobalGameStateManager.originalWidth - 300, GlobalGameStateManager.originalHeight - 350 );
+		buttonRect = new Rect( GlobalGameStateManager.originalWidth / 2 - 150, 830, 300, 150 );
 		boxStyle = new GUIStyle();
 		buttonStyle = new GUIStyle();
 		boxContent = new GUIContent();
@@ -28,6 +29,7 @@ public class IntroScript : MonoBehaviour
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
 		mapAudio = gameObject.AddComponent<AudioSource>();
 		mapAudio.clip = sound;
+		currentIntro = 0;
 	}
 
 	void OnGUI ()
@@ -49,22 +51,53 @@ public class IntroScript : MonoBehaviour
 		buttonStyle.fontSize = 85;
 		buttonStyle.alignment = TextAnchor.MiddleCenter;
 
-		drawIntroBox ();
+		drawIntroBox();
 
 		GUI.matrix = Matrix4x4.identity;
 	}
 
 	private void drawIntroBox ()
 	{
-		drawBox( "Feast on the Souls of the living\n\nwithout alerting the AxeMan", "Begin", 85 );
+		switch( currentIntro )
+		{
+		case 0:
+			drawBox( "Feast on the Souls of the living\n\nwithout alerting the AxeMan", "Next", 85 );
+			break;
+			
+		case 1:
+			drawBox( "", "Next", 85 );
+			GUI.DrawTexture( boxRect, TutorialImages[ 0 ], ScaleMode.StretchToFill );
+			break;
+
+		case 2:
+			drawBox( "", "Next", 85 );
+			GUI.DrawTexture( boxRect, TutorialImages[ 1 ], ScaleMode.StretchToFill );
+			break;
+
+		case 3:
+			drawBox( "", "Next", 85 );
+			GUI.DrawTexture( boxRect, TutorialImages[ 2 ], ScaleMode.StretchToFill );
+			break;
+
+		case 4:
+			drawBox( "", "Next", 85 );
+			GUI.DrawTexture( boxRect, TutorialImages[ 3 ], ScaleMode.StretchToFill );
+			break;
+			
+		default:
+			break;
+		}
 
 		// create the start button
 		buttonStyle.fontSize = 85;
 		if( GUI.Button( buttonRect, buttonContent, buttonStyle ) )
 		{
 			mapAudio.PlayOneShot( sound );
-			startBattle();
+			currentIntro++;
 		}
+
+		if( currentIntro >= 5 )
+			startBattle();
 	}
 
 	private void startBattle()
@@ -79,7 +112,7 @@ public class IntroScript : MonoBehaviour
 		if( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "A" ) )
 		{
 			mapAudio.PlayOneShot( sound );
-			startBattle();
+			currentIntro++;
 		}
 	}
 
