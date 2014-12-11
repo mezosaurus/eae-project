@@ -9,9 +9,20 @@ public class NotorietyMeter : MonoBehaviour
 	private int axemanCount = 0;
 	public Texture2D axemanHeadTexture;
 
+	private float width;
+	private float height;
+	private float top;
+	private float left;
+
 	void Start()
 	{
 		RegisterListeners();
+
+		width = 80;
+		height = 800;
+		
+		top = GlobalGameStateManager.originalHeight / 2 - height / 2;
+		left = 80;
 	}
 
 	void OnDestroy()
@@ -71,18 +82,11 @@ public class NotorietyMeter : MonoBehaviour
 	
 	void Update()
 	{
-	
 	}
 
 	void OnGUI ()
 	{
 		GUI.matrix = GlobalGameStateManager.PrepareMatrix();
-
-		float width = 80;
-		float height = 800;
-
-		float top = GlobalGameStateManager.originalHeight / 2 - height / 2;
-		float left = 80;
 
 		float percentFull = notoriety / notorietyMax;
 
@@ -91,7 +95,7 @@ public class NotorietyMeter : MonoBehaviour
 
 		for( int i = 0; i < axemanCount; i++ )
 		{
-			GUI.DrawTexture( new Rect( left + width, top + height * i, 40, height / ( i + 1 ) ), axemanHeadTexture, ScaleMode.ScaleToFit );
+			GUI.DrawTexture( new Rect( left + width, top + height / axemanCount * i, 40, height / ( i + 1 ) ), axemanHeadTexture, ScaleMode.ScaleToFit );
 		}
 
 		GUI.matrix = Matrix4x4.identity;
