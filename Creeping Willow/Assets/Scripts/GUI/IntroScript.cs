@@ -19,8 +19,8 @@ public class IntroScript : MonoBehaviour
 
 	void Start ()
 	{
-		boxRect = new Rect( 150, 100, GlobalGameStateManager.originalWidth - 300, GlobalGameStateManager.originalHeight - 350 );
-		buttonRect = new Rect( GlobalGameStateManager.originalWidth / 2 - 150, 830, 300, 150 );
+		boxRect = new Rect( 485, 100, GlobalGameStateManager.originalWidth - 970, GlobalGameStateManager.originalHeight - 350 );
+		buttonRect = new Rect( GlobalGameStateManager.originalWidth / 2 - 150, 850, 300, 150 );
 		boxStyle = new GUIStyle();
 		buttonStyle = new GUIStyle();
 		boxContent = new GUIContent();
