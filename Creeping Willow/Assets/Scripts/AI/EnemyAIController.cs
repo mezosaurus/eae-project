@@ -143,20 +143,22 @@ public class EnemyAIController : AIController
 			{
 				var rand = Random.Range(0, treeList.Count);
 				var tree = (GameObject)treeList[rand];
-				Vector3 nextTreePosition = tree.transform.position;
-				treeList.RemoveAt(rand);	// Remove the tree so it won't be chopped again
-				nextPath.transform.position = new Vector3(nextTreePosition.x, nextTreePosition.y - transform.renderer.bounds.size.y/5);
-				treePath = true;
+				if (tree != null)
+				{
+					Vector3 nextTreePosition = tree.transform.position;
+					treeList.RemoveAt(rand);	// Remove the tree so it won't be chopped again
+					nextPath.transform.position = new Vector3(nextTreePosition.x, nextTreePosition.y - transform.renderer.bounds.size.y/5);
+					treePath = true;
 
-				if (tree.Equals(player))
-					checkingPlayer = true;
+					if (tree.Equals(player))
+						checkingPlayer = true;
+						
+					return;
+				}
 			}
-			else
-			{
-				treePath = false;
-				Vector2 position = Random.insideUnitCircle * wanderRadius;
-				nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
-			}
+			treePath = false;
+			Vector2 position = Random.insideUnitCircle * wanderRadius;
+			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
 		}
 	}
 
