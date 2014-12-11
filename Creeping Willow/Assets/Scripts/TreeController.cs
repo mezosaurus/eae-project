@@ -42,6 +42,7 @@ public class TreeController : GameBehavior
     float upperFrom, upperTo;
     float average;
     int ticks;
+    int phaseTime;
 
     private void Start()
     {
@@ -63,7 +64,14 @@ public class TreeController : GameBehavior
         zoomOutSize = Camera.main.orthographicSize;
         zoomOutSize2 = zoomOutSize * 2f;
 
+        MessageCenter.Instance.RegisterListener(MessageType.EnemyNPCInvestigatingPlayer, HandleAxeMan);
+
         ChangeStateToNormal();
+    }
+
+    private void HandleAxeMan(Message message)
+    {
+        ChangeStateToAxeManMinigame(((EnemyNPCInvestigatingPlayerMessage)message).NPC);
     }
 
     private void ChangeStateToNormal()
@@ -188,6 +196,91 @@ public class TreeController : GameBehavior
         if (grabbedNPC.name.Contains("BenchNPC")) theGrabbedNPC.GetComponent<SpriteRenderer>().sprite = Textures.GrabbedNPCs.OldMan;
     }
 
+    private void ChangeStateToAxeManMinigame(GameObject NPC, int thePhaseTime = 0)
+    {
+        rigidbody2D.velocity = Vector2.zero;
+        legs.GetComponent<Animator>().enabled = false;
+
+        state = Tree.State.AxeManMinigame;
+        this.velocity = Vector2.zero;
+        if (transform.localScale.x < 0f) transform.localScale = new Vector3(xScale, transform.localScale.y, transform.localScale.z);
+        face.GetComponent<SpriteRenderer>().sprite = Textures.Face.Crazy;
+        MessageCenter.Instance.Broadcast(new CameraZoomMessage(2f, 20f));
+        startTimer = 0f;
+        percentage = 0.8f;
+        phase1 = false;
+        started = false;
+
+        float range = Random.Range(0f, 1f);
+
+        if (range <= 0.25f) button = 1;
+        else if (range > 0.25f && range <= 0.5f) button = 2;
+        else if (range > 0.5f && range <= 0.75f) button = 0;
+        else if (range > 0.75f && range <= 1f) button = 3;
+
+        progressBar.GetComponent<SpriteRenderer>().color = Color.white;
+
+        float leftAngle = Random.Range(-120f, -240f);
+        float rightAngle = Random.Range(-60f, 60f);
+
+        ls = (GameObject)Instantiate(Prefabs.LeftThumbStick, progressBar.transform.position + (Quaternion.Euler(0f, 0f, leftAngle) * new Vector3(1f, 0)), Quaternion.identity);
+        rs = (GameObject)Instantiate(Prefabs.RightThumbStick, progressBar.transform.position + (Quaternion.Euler(0f, 0f, rightAngle) * new Vector3(1f, 0)), Quaternion.identity);
+
+        lsForce = (ls.transform.position - progressBar.transform.position).normalized * 0.5f;
+        rsForce = (rs.transform.position - progressBar.transform.position).normalized * 0.5f;
+
+        ls.GetComponent<SpriteRenderer>().enabled = false;
+        rs.GetComponent<SpriteRenderer>().enabled = false;
+
+        lsDistance = (ls.transform.position - progressBar.transform.position).magnitude;
+        rsDistance = (rs.transform.position - progressBar.transform.position).magnitude;
+
+        audio.clip = Sounds.Music;
+        audio.Play();
+
+        leftUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, 358.0023f);
+        leftLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, 172.2082f);
+
+        leftUpperArm.GetComponent<SpriteRenderer>().enabled = true;
+        leftLowerForegroundArm.GetComponent<SpriteRenderer>().enabled = true;
+        leftLowerBackgroundArm.GetComponent<SpriteRenderer>().enabled = true;
+        theGrabbedNPC.GetComponent<SpriteRenderer>().enabled = true;
+        rightLowerArm.GetComponent<SpriteRenderer>().enabled = true;
+        rightUpperArm.GetComponent<SpriteRenderer>().enabled = true;
+        rightArm.GetComponent<SpriteRenderer>().enabled = false;
+        leftArm.GetComponent<SpriteRenderer>().enabled = false;
+
+        /*grabbedNPC = npcsInRange[GetClosestNPC()];
+
+        List<GameObject> theList = new List<GameObject>();
+
+        theList.Add(grabbedNPC);
+
+        MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(theList));
+        grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
+        //grabbedNPC.GetComponent<AIController>().alertTexture.GetComponent<SpriteRenderer>().enabled = false;
+        grabbedNPC.GetComponent<AIController>().panicTexture.GetComponent<SpriteRenderer>().enabled = false;
+
+        theGrabbedNPC.GetComponent<Animator>().enabled = (grabbedNPC.name.Contains("BenchNPC")) ? false : true;
+        float angle = (grabbedNPC.name.Contains("BenchNPC")) ? 53f : 0f;
+
+        //theGrabbedNPC.transform.eulerAngles = new Vector3(0f, 0f, angle);
+        theGrabbedNPC.transform.localEulerAngles = new Vector3(0f, 0f, angle);
+
+        if (grabbedNPC.name.Contains("BenchNPC")) theGrabbedNPC.GetComponent<SpriteRenderer>().sprite = Textures.GrabbedNPCs.OldMan;*/
+
+        grabbedNPC = NPC;
+        theGrabbedNPC.GetComponent<SpriteRenderer>().sprite = Textures.GrabbedNPCs.OldMan;
+        List<GameObject> theList = new List<GameObject>();
+
+        theList.Add(grabbedNPC);
+
+        MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(theList));
+        grabbedNPC.GetComponent<SpriteRenderer>().enabled = false;
+
+        phaseTime = thePhaseTime;
+    }
+
     private void ChangeStateToEatingCinematic()
     {
         state = Tree.State.EatingCinematic;
@@ -227,7 +320,8 @@ public class TreeController : GameBehavior
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-		if (collider.tag == "NPC" && !npcsInRange.ContainsKey(collider.gameObject.GetInstanceID())) npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
+        if (collider.gameObject.name.Contains("EnemyNPC")) { ChangeStateToAxeManMinigame(collider.gameObject); return; }
+        if (collider.tag == "NPC" && !npcsInRange.ContainsKey(collider.gameObject.GetInstanceID())) npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
 		//if (collider.tag == "NPC") npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
     }
 
@@ -247,6 +341,7 @@ public class TreeController : GameBehavior
             case Tree.State.Normal: UpdateNormal(); break;
             case Tree.State.Eating: UpdateEating(); break;
             case Tree.State.EatingCinematic: UpdateEatingCinematic(); break;
+            case Tree.State.AxeManMinigame: UpdateAxeManMinigame(); break;
         }
     }
 
@@ -299,6 +394,14 @@ public class TreeController : GameBehavior
 
         if (phase1) UpdateEatingPhase1();
         else UpdateEatingPhase2();
+    }
+
+    private void UpdateAxeManMinigame()
+    {
+        if (Camera.main.orthographicSize != Camera.main.GetComponent<CameraScript>().TargetSize) return;
+
+        if (phase1) UpdateAMMPhase1();
+        else UpdateAMMPhase2();
     }
 
     private void UpdateEatingPhase1()
@@ -367,6 +470,144 @@ public class TreeController : GameBehavior
         {
             LeaveEatingState();
             ChangeStateToEatingCinematic();
+
+            return;
+        }
+
+        //if (percentage <= 0f) UnityEditor.EditorApplication.ExecuteMenuItem("Edit/Pause");
+
+        progressBar.GetComponent<SpriteRenderer>().sprite = progressBar.Sprites[Mathf.RoundToInt(percentage * 100f)];
+
+        /*if(sampleIndex == 0)
+        {
+            sample = 0f;
+
+            for (int i = 0; i < sampleRate; i++) sample += samples[i];
+
+            sample /= (float)sampleRate;
+        }
+
+        samples[sampleIndex++] = percentage;
+
+        if (sampleIndex == sampleRate) sampleIndex = 0;
+
+        sample = 1f - percentage;*/
+
+        timer += sampleRate * Time.deltaTime;
+
+        leftUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, Mathf.SmoothStep(upperFrom, upperTo, timer));
+
+        if (timer >= 1f)
+        {
+            timer = 0f;
+            average /= (float)(ticks + 1);
+            ticks = 0;
+
+            upperFrom = upperTo;
+            upperTo = Mathf.Lerp(upperArmInitialRotation, 53.97528f, 1f - average);
+        }
+
+        average += percentage;
+        ticks++;
+
+        //leftLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, Mathf.SmoothStep(lowerArmInitialRotation, 204.8439f, sample));
+
+        /*if (InsideProgressBar(ls.transform.position) && InsideProgressBar(rs.transform.position))
+
+            
+
+        Vector3 lsInput = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * 1.25f * Time.deltaTime;
+        Vector3 rsInput = new Vector3(Input.GetAxis("RSX"), Input.GetAxis("RSY")) * 1.25f * Time.deltaTime;
+
+        ls.transform.position += lsInput + (lsForce * Time.deltaTime);
+        rs.transform.position += rsInput + (rsForce * Time.deltaTime);*/
+    }
+
+    private void UpdateAMMPhase1()
+    {
+        progressBar.GetComponent<SpriteRenderer>().color = Color.white;
+        ls.GetComponent<SpriteRenderer>().enabled = true;
+        rs.GetComponent<SpriteRenderer>().enabled = true;
+
+        percentage += 0.32f * Time.deltaTime;
+
+        if (percentage >= 1f)
+        {
+            /*Debug.Log("Dum1");
+            invalidNpcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
+            Debug.Log("Dum2");
+            LeaveEatingState();
+            Debug.Log("Dum3");
+            ChangeStateToNormal();
+            Debug.Log("Dum4");*/
+
+            MessageCenter.Instance.Broadcast(new PlayerKilledMessage(grabbedNPC));
+
+            //invalidNpcsInRange.Add(grabbedNPC.GetInstanceID(), grabbedNPC);
+            LeaveEatingState();
+            ChangeStateToNormal();
+
+            return;
+        }
+
+        if (InsideProgressBar(ls.transform.position) && InsideProgressBar(rs.transform.position)) { ChangeToEatingPhase2(); return; }
+
+        progressBar.GetComponent<SpriteRenderer>().sprite = progressBar.Sprites[Mathf.RoundToInt(percentage * 100f)];
+
+        Vector3 lsInput = new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * 1.35f * Time.deltaTime;
+        Vector3 rsInput = new Vector3(Input.GetAxis("RSX"), Input.GetAxis("RSY")) * 1.35f * Time.deltaTime;
+
+        ls.transform.position += lsInput + (lsForce * Time.deltaTime);
+        rs.transform.position += rsInput + (rsForce * Time.deltaTime);
+
+        float lsPercentage = (ls.transform.position - progressBar.transform.position).magnitude / lsDistance;
+        float rsPercentage = (rs.transform.position - progressBar.transform.position).magnitude / rsDistance;
+        float average = (lsPercentage + rsPercentage) / 2f;
+
+        leftUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, Mathf.Lerp(391.59891f, 358.0023f, average));
+        leftLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, Mathf.Lerp(199.8239f, 172.2082f, average));
+    }
+
+    private void UpdateAMMPhase2()
+    {
+        float decrease = (percentage > 0.9f) ? 0.08f * Time.deltaTime : 0.48f * Time.deltaTime;
+        float increase = 0f;
+
+        if (Input.GetButtonDown(buttons[button])) increase = 8f * Time.deltaTime;
+
+        progressBar.GetComponent<SpriteRenderer>().color = colors[button];
+
+        percentage += (decrease - increase);
+
+        if (percentage >= 1f)
+        {
+            MessageCenter.Instance.Broadcast(new PlayerKilledMessage(grabbedNPC));
+            LeaveEatingState();
+            ChangeStateToNormal();
+
+            return;
+        }
+
+        if (percentage <= 0f)
+        {
+            if (phaseTime == 0)
+            {
+                phase1 = true;
+                phaseTime = 1;
+                float range = Random.Range(0f, 1f);
+
+                if (range <= 0.25f) button = 1;
+                else if (range > 0.25f && range <= 0.5f) button = 2;
+                else if (range > 0.5f && range <= 0.75f) button = 0;
+                else if (range > 0.75f && range <= 1f) button = 3;
+
+                return;
+            }
+            else
+            {
+                LeaveEatingState();
+                ChangeStateToEatingCinematic();
+            }
 
             return;
         }
@@ -567,7 +808,7 @@ public class TreeController : GameBehavior
 
     public void OnGUI()
     {
-        if(state == Tree.State.Eating && !phase1)
+        if((state == Tree.State.Eating || state == Tree.State.AxeManMinigame) && !phase1)
         {
             int width = Textures.Buttons[0].width;
             int height = Textures.Buttons[0].height;
@@ -629,6 +870,7 @@ namespace Tree
     {
         Normal,
         Eating,
-        EatingCinematic
+        EatingCinematic,
+        AxeManMinigame
     }
 }
