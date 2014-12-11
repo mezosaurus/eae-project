@@ -3,7 +3,7 @@ using System.Collections;
 
 public class NotorietyMeter : MonoBehaviour
 {
-	public float notorietyMax = 100.0f;
+	public float notorietyMax = 75.0f;
 	private float notoriety = 0.0f;
 
 	private int axemanCount = 0;
@@ -76,11 +76,13 @@ public class NotorietyMeter : MonoBehaviour
 
 	void OnGUI ()
 	{
-		float width = 20;
-		float height = 200;
+		GUI.matrix = GlobalGameStateManager.PrepareMatrix();
 
-		float top = Screen.height / 2 - height / 2;
-		float left = 20;
+		float width = 80;
+		float height = 800;
+
+		float top = GlobalGameStateManager.originalHeight / 2 - height / 2;
+		float left = 80;
 
 		float percentFull = notoriety / notorietyMax;
 
@@ -91,5 +93,7 @@ public class NotorietyMeter : MonoBehaviour
 		{
 			GUI.DrawTexture( new Rect( left + width, top + height * i, 40, height / ( i + 1 ) ), axemanHeadTexture, ScaleMode.ScaleToFit );
 		}
+
+		GUI.matrix = Matrix4x4.identity;
 	}
 }
