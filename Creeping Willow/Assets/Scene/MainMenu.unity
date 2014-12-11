@@ -119,40 +119,28 @@ Transform:
   - {fileID: 1641892037}
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!1 &500504845
+--- !u!1 &639822137
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 500504846}
-  - 212: {fileID: 500504847}
+  - 4: {fileID: 639822139}
+  - 212: {fileID: 639822138}
   m_Layer: 0
-  m_Name: GrassField
+  m_Name: main_menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &500504846
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 500504845}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
---- !u!212 &500504847
+--- !u!212 &639822138
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 500504845}
+  m_GameObject: {fileID: 639822137}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -167,8 +155,20 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3708c3b88b3a040be98da83397eebb1b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8bdf178fcbf544626b551a4618bfb1c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!4 &639822139
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 639822137}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
 --- !u!1 &1505944937
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,16 +208,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 380
-  y: 100
-  width: 430
-  height: 200
-  defaultImage: {fileID: 2800000, guid: 87afa330a5521504da52bac5ee3562f7, type: 3}
-  hoverImage: {fileID: 2800000, guid: a4d6fe5ef1ace2f4eb56c3e2897a5638, type: 3}
-  downClickImage: {fileID: 2800000, guid: 8f62bc2b18db7d0478399736a060ef07, type: 3}
-  text: Play
+  x: 200
+  y: 290
+  width: 150
+  height: 80
+  defaultImage: {fileID: 2800000, guid: c49add451f6474c2baa32112a145bed8, type: 3}
+  hoverImage: {fileID: 2800000, guid: c49add451f6474c2baa32112a145bed8, type: 3}
+  downClickImage: {fileID: 2800000, guid: 739339fa0feca15479a7b6de03343557, type: 3}
+  text: 
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  scene: 1
+  scene: 2
   sound: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
 --- !u!1 &1641892036
 GameObject:
@@ -258,14 +258,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 380
-  y: 300
-  width: 430
-  height: 200
-  defaultImage: {fileID: 2800000, guid: 87afa330a5521504da52bac5ee3562f7, type: 3}
-  hoverImage: {fileID: 2800000, guid: a4d6fe5ef1ace2f4eb56c3e2897a5638, type: 3}
-  downClickImage: {fileID: 2800000, guid: 8f62bc2b18db7d0478399736a060ef07, type: 3}
-  text: Controls
+  x: 435
+  y: 290
+  width: 150
+  height: 80
+  defaultImage: {fileID: 2800000, guid: 80fa7e7c9bf3e42f1b71679ff85cecc6, type: 3}
+  hoverImage: {fileID: 2800000, guid: 80fa7e7c9bf3e42f1b71679ff85cecc6, type: 3}
+  downClickImage: {fileID: 2800000, guid: 739339fa0feca15479a7b6de03343557, type: 3}
+  text: 
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
   scene: 0
   sound: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
