@@ -713,7 +713,7 @@ public class TreeController : GameBehavior
             legs.GetComponent<SpriteRenderer>().sortingOrder = spriteRenderer.sortingOrder - 3;
             //progressBar.GetComponent<SpriteRenderer>().sortingOrder = spriteRenderer.sortingOrder + 4;
         }
-        else if(state == Tree.State.Eating || state == Tree.State.EatingCinematic)
+        else if(state == Tree.State.Eating || state == Tree.State.EatingCinematic || state == Tree.State.AxeManMinigame)
         {
             face.GetComponent<SpriteRenderer>().sortingOrder = spriteRenderer.sortingOrder + 1;
             leftUpperArm.GetComponent<SpriteRenderer>().sortingOrder = spriteRenderer.sortingOrder + 2;
