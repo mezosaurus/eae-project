@@ -69,6 +69,11 @@ public class TreeController : GameBehavior
         ChangeStateToNormal();
     }
 
+	void OnDestroy()
+	{
+		MessageCenter.Instance.UnregisterListener(MessageType.EnemyNPCInvestigatingPlayer, HandleAxeMan);
+	}
+
     private void HandleAxeMan(Message message)
     {
         ChangeStateToAxeManMinigame(((EnemyNPCInvestigatingPlayerMessage)message).NPC);
@@ -320,7 +325,7 @@ public class TreeController : GameBehavior
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.name.Contains("EnemyNPC")) { ChangeStateToAxeManMinigame(collider.gameObject); return; }
+        //if (collider.gameObject.name.Contains("EnemyNPC")) { ChangeStateToAxeManMinigame(collider.gameObject); return; }
         if (collider.tag == "NPC" && !npcsInRange.ContainsKey(collider.gameObject.GetInstanceID())) npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
 		//if (collider.tag == "NPC") npcsInRange.Add(collider.gameObject.GetInstanceID(), collider.gameObject);
     }
