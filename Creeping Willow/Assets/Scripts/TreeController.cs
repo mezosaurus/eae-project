@@ -362,13 +362,17 @@ public class TreeController : GameBehavior
         }
         
         if (!GetComponent<PlayerAbilityScript_v2>().abilityInUse)
-        {
+		{
             // Check to see if the player is grabbing
             if (Input.GetAxis("LT") > 0.5f && GetClosestNPC() != int.MinValue)
-            {                
-                ChangeStateToEating();
+            {
+				// minimize grabbing distance
+				if( Vector3.Distance(npcsInRange[GetClosestNPC()].transform.position,transform.position) <= 1.6f)
+				{
+	                ChangeStateToEating();
 
-                return;
+	                return;
+				}
             }
 
             velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
