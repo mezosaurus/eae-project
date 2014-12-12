@@ -490,6 +490,7 @@ public class ScoreScript : GameBehavior {
 		myStyle.fontSize = 50;
 		myStyle.normal.textColor = Color.white;
 
+		// end of level
 		if( endLevel )
 		{
 			// not a high score
@@ -502,18 +503,19 @@ public class ScoreScript : GameBehavior {
 				GlobalGameStateManager.highscores = highscores;
 				GlobalGameStateManager.playerNames = names;
 				entered = true;*/
+				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2,50,20), initials, 3);
 
-				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2,100,50), initials, 3, myStyle);
-				
 				// check input
 				if( initials.Length == 3 )
 				{
+					Debug.Log("33333");
 					if( Input.GetKeyDown(KeyCode.Return) )
 					{
 						updateHighScores(_score,initials);
 						GlobalGameStateManager.highscores = highscores;
 						GlobalGameStateManager.playerNames = names;
 						entered = true;
+						Debug.Log ("returned");
 					}
 				}
 			}
