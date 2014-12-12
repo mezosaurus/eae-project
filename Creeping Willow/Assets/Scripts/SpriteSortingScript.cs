@@ -1,11 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+using UnityEngine;
 using System.Linq;
 
 public class SpriteSortingScript : MonoBehaviour
 {
-
-	private void SortBackgroundSprites()
+    private void SortBackgroundSprites()
     {
         SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
 
@@ -44,31 +42,38 @@ public class SpriteSortingScript : MonoBehaviour
             if (sprites[i].gameObject.tag == "Player") j += 8;
         }
 
-#if UNITY_EDITOR
         if (Application.isPlaying)
-#endif
-
-        if (player >= 0) sprites[player].GetComponent<TreeController>().UpdateSorting();
+        {
+        	if (player >= 0) sprites[player].GetComponent<TreeController>().UpdateSorting();
+        }
     }
-    
+#if UNITY_EDITOR
     // Use this for initialization
-	void Start ()
+    void Start ()
     {
-#if UNITY_EDITOR
         if(Application.isPlaying) SortBackgroundSprites();
-#endif
-	}
+    }
 	
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
-#if UNITY_EDITOR
         if (!Application.isPlaying) SortBackgroundSprites();
-#endif
-	}
+    }
 
     void LateUpdate()
     {
         SortForegroundSprites();
     }
+#else
+    // Use this for initialization
+    void Start ()
+    {
+        SortBackgroundSprites();
+    }
+
+    void LateUpdate()
+    {
+        SortForegroundSprites();
+    }
+#endif
 }
