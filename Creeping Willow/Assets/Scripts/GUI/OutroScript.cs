@@ -5,29 +5,20 @@ public class OutroScript : MonoBehaviour
 {
 	public Font guiFont;
 	public Texture2D boxImage;
-	public Texture2D buttonImage;
-	public AudioClip sound;
+	public GameObject menu;
 	private Rect boxRect;
-	private Rect buttonRect;
 	private GUIStyle boxStyle;
-	private GUIStyle buttonStyle;
 	private GUIContent boxContent;
-	private GUIContent buttonContent;
 	private int currentIntro;
 	private AudioSource mapAudio;
 	private string message;
 
 	void Start ()
 	{
-		boxRect = new Rect( 100, 100, GlobalGameStateManager.originalWidth - 200, GlobalGameStateManager.originalHeight - 200 );
-		buttonRect = new Rect( GlobalGameStateManager.originalWidth / 2 - 200, 700, 400, 200 );
+		boxRect = new Rect( 485, 100, GlobalGameStateManager.originalWidth - 970, GlobalGameStateManager.originalHeight - 350 );
 		boxStyle = new GUIStyle();
-		buttonStyle = new GUIStyle();
 		boxContent = new GUIContent();
-		buttonContent = new GUIContent();
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
-		mapAudio = gameObject.AddComponent<AudioSource>();
-		mapAudio.clip = sound;
 		this.enabled = false;
 		RegisterListeners();
 	}
@@ -39,16 +30,24 @@ public class OutroScript : MonoBehaviour
 
 	protected void RegisterListeners()
 	{
-		MessageCenter.Instance.RegisterListener( MessageType.LevelFinished, HandleNPCAlertMessage );
+		MessageCenter.Instance.RegisterListener( MessageType.LevelFinished, HandleLevelFinishedMessage );
 	}
 	
 	protected void UnregisterListeners()
 	{
-		MessageCenter.Instance.UnregisterListener( MessageType.LevelFinished, HandleNPCAlertMessage );
+		MessageCenter.Instance.UnregisterListener( MessageType.LevelFinished, HandleLevelFinishedMessage );
 	}
 
-	protected void HandleNPCAlertMessage( Message message )
+	protected void HandleLevelFinishedMessage( Message message )
 	{
+		menu.GetComponent<MenuController>().enabled = true;
+		for( int i = 0; i < menu.GetComponent<MenuController>().buttons.Length; i++ )
+		{
+			menu.GetComponent<MenuController>().buttons[ i ].GetComponent<GUIButton>().enabled = true;
+		}
+
+		menu.GetComponent<MenuController>().buttons[ 1 ].GetComponent<GUIButton>().scene = GlobalGameStateManager.CurrentScene;
+
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
 
 		if( mess.Type == LevelFinishedType.Loss )
@@ -103,6 +102,8 @@ public class OutroScript : MonoBehaviour
 				break;
 			}
 		}
+
+
 	}
 
 	void OnGUI ()
@@ -115,15 +116,6 @@ public class OutroScript : MonoBehaviour
 		boxStyle.wordWrap = true;
 		boxStyle.alignment = TextAnchor.UpperCenter;
 
-		// prepare the style for buttons
-		GUI.skin.button.normal.background = buttonImage;
-		GUI.skin.button.hover.background = buttonImage;
-		GUI.skin.button.active.background = buttonImage;
-		buttonStyle = new GUIStyle( GUI.skin.button );
-		buttonStyle.font = guiFont;
-		buttonStyle.fontSize = 85;
-		buttonStyle.alignment = TextAnchor.MiddleCenter;
-
 		drawIntroBox ();
 
 		GUI.matrix = Matrix4x4.identity;
@@ -132,28 +124,11 @@ public class OutroScript : MonoBehaviour
 	private void drawIntroBox ()
 	{
 		drawBox( message, "Try Again", 85 );
-
-		// create the start button
-		buttonStyle.fontSize = 85;
-		if( GUI.Button( buttonRect, buttonContent, buttonStyle ) )
-		{
-			mapAudio.PlayOneShot( sound );
-			restartBattle();
-		}
 	}
 
 	private void restartBattle()
 	{
 		Application.LoadLevel( Application.loadedLevel );
-	}
-
-	void Update ()
-	{
-		if( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "A" ) )
-		{
-			mapAudio.PlayOneShot( sound );
-			restartBattle();
-		}
 	}
 
 	private void drawBox( string boxText, string buttonText, int fontSize )
@@ -163,8 +138,5 @@ public class OutroScript : MonoBehaviour
 		boxStyle.fontSize = fontSize;
 		GUI.DrawTexture( boxRect, boxImage, ScaleMode.StretchToFill );
 		GUI.Label( new Rect ( boxRect.x + 100, boxRect.y + 100, boxRect.width - 200, boxRect.height - 200 ), boxContent, boxStyle );
-
-		// change the button text
-		buttonContent.text = buttonText;
 	}
 }
