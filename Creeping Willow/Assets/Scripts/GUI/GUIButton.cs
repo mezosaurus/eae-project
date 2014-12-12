@@ -15,6 +15,7 @@ public class GUIButton : MonoBehaviour
 	public Font font;
 	public SceneEnum scene;
 	public AudioClip sound;
+	public bool changeScene = true;
 
 	private AudioSource audio;
 
@@ -46,8 +47,11 @@ public class GUIButton : MonoBehaviour
 
 	public void changeScenes()
 	{
-		audio.Play();
-		Invoke( "switchScenes", 0.5f );
+		if( changeScene )
+		{
+			audio.Play();
+			Invoke( "switchScenes", 0.5f );
+		}
 	}
 
 	void switchScenes ()

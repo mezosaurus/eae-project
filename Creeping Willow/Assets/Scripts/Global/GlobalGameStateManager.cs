@@ -12,6 +12,7 @@ public enum SceneEnum
 	MAINMENU = 0,
 	LEVELSELECT = 1,
 	OPTIONS = 2,
+	HIGHSCORES = 3,
 	Evan_Level1 = 10,
 	Kevin_Level1 = 11,
 	PossessionTestScene = 12,
