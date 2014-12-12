@@ -173,7 +173,7 @@ public class ScoreScript : MonoBehaviour {
 						if (win && !entered) {
 								// check input
 								if (initials.Length == 3) {
-										if (Input.GetButtonDown ("A")) {
+										if (Input.GetButtonDown ("Y")) {
 												updateHighScores (_score, initials);
 												GlobalGameStateManager.highscores = highscores;
 												GlobalGameStateManager.playerNames = names;
@@ -536,7 +536,7 @@ public class ScoreScript : MonoBehaviour {
 
 				if( initials.Length == 3 )
 				{
-					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
+					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press Y To Save", myStyle);
 				}
 			}
 		}
