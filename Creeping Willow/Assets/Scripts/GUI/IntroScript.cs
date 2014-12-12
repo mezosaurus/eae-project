@@ -105,6 +105,7 @@ public class IntroScript : MonoBehaviour
 		GlobalGameStateManager.LevelState = LevelState.INLEVEL;
 		this.enabled = false;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
+		//MessageCenter.Instance.Broadcast( new LevelFinishedMessage( LevelFinishedType.Win, LevelFinishedReason.NumNPCsEaten ) );
 	}
 
 	void Update ()

@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum MenuConfigurations
+{
+	Square = 0,
+	Horizontal = 1,
+	Vertical = 2,
+}
+
 public class MenuController : MonoBehaviour
 {
 	public GameObject[] buttons;
 	public AudioClip sound;
+	public MenuConfigurations configuration;
 
 	private bool axisBusy;
 	private int selected;
@@ -22,8 +30,13 @@ public class MenuController : MonoBehaviour
 		MessageCenter.Instance.RegisterListener (MessageType.ScoreAdding, HandleScoreAdding);
 		selected = 0;
 		axisBusy = false;
-		
-		fullColumns = Mathf.CeilToInt( Mathf.Sqrt( buttons.Length ) );
+
+		if( configuration == MenuConfigurations.Square )
+			fullColumns = Mathf.CeilToInt( Mathf.Sqrt( buttons.Length ) );
+		else if( configuration == MenuConfigurations.Horizontal )
+			fullColumns = buttons.Length;
+		else if( configuration == MenuConfigurations.Vertical )
+			fullColumns = 1;
 		
 		mapAudio = gameObject.AddComponent<AudioSource>();
 		mapAudio.clip = sound;
@@ -66,91 +79,99 @@ public class MenuController : MonoBehaviour
 			return;
 		}
 
-			if (Input.GetMouseButtonDown (0)) {
-					axisBusy = false;
-			} else if (Input.GetAxis ("LSX") != 0) {
-					if (!axisBusy) {
-							if (selected >= 0) {
-									if (Input.GetAxisRaw ("LSX") < 0) {
-											if (selected % fullColumns == 0) {
-													selected += (fullColumns - 1);
-											} else {
-													selected--;
-											}
+		if (Input.GetMouseButtonDown (0))
+			axisBusy = false;
 
-											while (selected >= buttons.Length) {
-													selected--;
-											}
-									} else {
-											selected++;
+		else if (Input.GetAxis ("LSX") != 0)
+		{
+			if (!axisBusy)
+			{
+				if (selected >= 0)
+				{
+					if (Input.GetAxisRaw ("LSX") < 0)
+					{
+						if (selected % fullColumns == 0)
+							selected += (fullColumns - 1);
+						else
+							selected--;
 
-											if (selected % fullColumns == 0) {
-													selected -= fullColumns;
-											}
-
-											if (selected > buttons.Length - 1) {
-													while (selected % fullColumns != 0) {
-															selected++;
-													}
-													selected -= fullColumns;
-											}
-									}
-							} else {
-									selected = 0;
-							}
-
-							Screen.showCursor = false;
-							Screen.lockCursor = true;
-							axisBusy = true;
-							Select (buttons [selected]);
+						while (selected >= buttons.Length)
+							selected--;
 					}
-			} else if (Input.GetAxis ("LSY") != 0) {
-					if (!axisBusy) {
-							if (selected >= 0) {
-									if (Input.GetAxisRaw ("LSY") < 0) {
-											selected -= fullColumns;
+					else
+					{
+						selected++;
 
-											if (selected < 0) {
-													selected += fullColumns * fullColumns;
-											}
+						if (selected % fullColumns == 0)
+							selected -= fullColumns;
 
-											if (selected >= buttons.Length) {
-													selected -= fullColumns;
-											}
-									} else {
-											selected += fullColumns;
+						if (selected > buttons.Length - 1)
+						{
+							while (selected % fullColumns != 0)
+								selected++;
 
-											if (selected >= buttons.Length) {
-													selected = selected % fullColumns;
-											}
-									}
-							} else {
-									selected = 0;
-							}
-
-							Screen.showCursor = false;
-							Screen.lockCursor = true;
-							axisBusy = true;
-							Select (buttons [selected]);
+							selected -= fullColumns;
+						}
 					}
-			} else {
-					axisBusy = false;
+				}
+				else
+					selected = 0;
+
+				Screen.showCursor = false;
+				Screen.lockCursor = true;
+				axisBusy = true;
+				Select (buttons [selected]);
 			}
+		}
+		else if (Input.GetAxis ("LSY") != 0)
+		{
+			if (!axisBusy)
+			{
+				if (selected >= 0) {
+					if (Input.GetAxisRaw ("LSY") < 0) {
+						selected -= fullColumns;
 
-		if ((Input.GetAxisRaw ("Start") != 0 || Input.GetAxisRaw( "A" ) != 0) && selected >= 0) {
-					Screen.showCursor = true;
-					Screen.lockCursor = false;
-					buttons [selected].GetComponent<GUIButton> ().changeScenes ();
-			}
-		else if ((Input.GetAxisRaw ("Back") != 0 || Input.GetAxisRaw( "A" ) != 0) & selected >= 0) {
-					// this all depends on the build order in project settings
-					if (Application.loadedLevel == 0) {
-							buttons[3].GetComponent<GUIButton>().changeScenes();
+						if (selected < 0)
+							selected += fullColumns * fullColumns;
+
+						if (selected >= buttons.Length)
+							selected -= fullColumns;
 					}
-					else if (Application.loadedLevel == 1) {
-							buttons[0].GetComponent<GUIButton>().changeScenes();
+					else
+					{
+						selected += fullColumns;
+
+						if (selected >= buttons.Length)
+								selected = selected % fullColumns;
 					}
+				}
+				else
+					selected = 0;
+
+				Screen.showCursor = false;
+				Screen.lockCursor = true;
+				axisBusy = true;
+				Select (buttons [selected]);
 			}
+		}
+		else
+			axisBusy = false;
+
+		if ((Input.GetAxisRaw ("Start") != 0 || Input.GetAxisRaw( "A" ) != 0) && selected >= 0)
+		{
+			Screen.showCursor = true;
+			Screen.lockCursor = false;
+			buttons [selected].GetComponent<GUIButton> ().changeScenes ();
+		}
+		else if ((Input.GetAxisRaw ("Back") != 0 || Input.GetAxisRaw( "B" ) != 0) & selected >= 0)
+		{
+			// this all depends on the build order in project settings
+			if (Application.loadedLevel == 0)
+				buttons[3].GetComponent<GUIButton>().changeScenes();
+
+			else if (Application.loadedLevel == 1)
+				buttons[0].GetComponent<GUIButton>().changeScenes();
+		}
 	}
 
 	private void Select (GameObject button)
