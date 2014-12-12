@@ -49,6 +49,7 @@ public class Possessor : GameBehavior {
 
 		if(Input.GetButtonDown("B")){
 			if(possessing){
+				MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
 				Possessable possessable = objectToPossess.GetComponent<Possessable>();
 				possessable.exorcise();
 				possessing = false;

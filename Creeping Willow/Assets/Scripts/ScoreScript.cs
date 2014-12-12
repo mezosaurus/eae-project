@@ -18,7 +18,7 @@ public enum ScoreState
 	END_SCORING
 }
 
-public class ScoreScript : GameBehavior {
+public class ScoreScript : MonoBehaviour {
 
 	/// <summary>
 	/// Probability that next npc will be the new targeted bounty.
@@ -167,61 +167,84 @@ public class ScoreScript : GameBehavior {
 	}
 	
 	// Update is called once per frame
-	protected override void GameUpdate () {
-		timeSinceLastKill = Time.time - lastKillTime;
-
-		// used for uncalled showing of target for player
-		if( bountyRaiseSetup )
-		{
-			float bountyTime = Time.time;
-
-			if( bountyRaised && bountyState == (int)BountyState.BOUNTY_SHOWN )
-			{
-				bountyRaised = false;
-				bountyRaiseTime = Time.time;
-
-				if( Input.GetButtonDown("RB") )
-				{
-					bountyState = (int)BountyState.BOUNTY_HIDING;
-					bountyRaiseSetup = false;
+	void Update() {
+				// end of level
+				if (endLevel) {	
+						if (win && !entered) {
+								// check input
+								if (initials.Length == 3) {
+										if (Input.GetButtonDown ("A")) {
+												updateHighScores (_score, initials);
+												GlobalGameStateManager.highscores = highscores;
+												GlobalGameStateManager.playerNames = names;
+												entered = true;						
+												MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
+										}
+								}
+						}
+						return;
 				}
-			}
+
+				timeSinceLastKill = Time.time - lastKillTime;
+
+				// used for uncalled showing of target for player
+				if (bountyRaiseSetup) {
+						float bountyTime = Time.time;
+
+						if (bountyRaised && bountyState == (int)BountyState.BOUNTY_SHOWN) {
+								bountyRaised = false;
+								bountyRaiseTime = Time.time;
+
+								if (Input.GetButtonDown ("RB")) {
+										bountyState = (int)BountyState.BOUNTY_HIDING;
+										bountyRaiseSetup = false;
+								}
+						}
 			
-			if( bountyTime > bountyRaiseTime + 3 && bountyRaiseTime > 0 )
-			{
-				bountyState = (int)BountyState.BOUNTY_HIDING;
-				bountyRaiseSetup = false;
-			}
-		}
-
-
-		// ignore inputs
-		if( GetComponent<TreeController>().state == Tree.State.Eating )
-		{
-			bountyState = (int)BountyState.BOUNTY_HIDDEN;
-			bountyRaiseSetup = false;
-			return;
-		}
-
-		// change state of bountyDisplay
-		if( Input.GetButtonDown("RB") )
-		{
-			if( bountyState == (int)BountyState.BOUNTY_SHOWING || bountyState == (int)BountyState.BOUNTY_HIDING )
-			{
-				// Do nothing
-			}
-			else
-			{
-				if( bountyState == (int)BountyState.BOUNTY_SHOWN )
-				{
-					bountyState = (int)BountyState.BOUNTY_HIDING;
+						if (bountyTime > bountyRaiseTime + 3 && bountyRaiseTime > 0) {
+								bountyState = (int)BountyState.BOUNTY_HIDING;
+								bountyRaiseSetup = false;
+						}
 				}
-				else if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
-				{
-					bountyState = (int)BountyState.BOUNTY_SHOWING;
+
+
+				// ignore inputs
+				if (GetComponent<TreeController> ().state == Tree.State.Eating) {
+						bountyState = (int)BountyState.BOUNTY_HIDDEN;
+						bountyRaiseSetup = false;
+						return;
 				}
-			}
-		}
+
+				// change state of bountyDisplay
+				if (Input.GetButtonDown ("RB")) {
+						if (bountyState == (int)BountyState.BOUNTY_SHOWING || bountyState == (int)BountyState.BOUNTY_HIDING) {
+								// Do nothing
+						} else {
+								if (bountyState == (int)BountyState.BOUNTY_SHOWN) {
+										bountyState = (int)BountyState.BOUNTY_HIDING;
+								} else if (bountyState == (int)BountyState.BOUNTY_HIDDEN) {
+										bountyState = (int)BountyState.BOUNTY_SHOWING;
+								}
+						}
+				}
+
+				// update bounty texture; NOTE: Framerate issues
+		/*if(		 BountyNPC != null && bountyState != (int)BountyState.BOUNTY_HIDDEN )
+		{
+			// used to convert from sprite sheet to current sprite
+			Sprite sprite = BountyNPC.GetComponent<SpriteRenderer> ().sprite;
+			Color[] pixels = sprite.texture.GetPixels (
+				(int)sprite.textureRect.x, 
+				(int)sprite.textureRect.y, 
+				(int)sprite.textureRect.width, 
+				(int)sprite.textureRect.height
+				);
+			
+			BountyNPCImage = new Texture2D ((int)sprite.rect.width, (int)sprite.rect.height);
+			
+			BountyNPCImage.SetPixels (pixels);
+			BountyNPCImage.Apply ();
+		}*/
 	}
 
 	void OnGUI()
@@ -342,6 +365,8 @@ public class ScoreScript : GameBehavior {
 
 			scoreTimer = 0;
 			scoreState = (int)ScoreState.NO_SCORING;
+			displayScore = 0;
+			displayMultiplier = 0;
 		}
 
 		if( scoreDisplay )
@@ -499,24 +524,19 @@ public class ScoreScript : GameBehavior {
 
 			if( win && !entered )
 			{
-				/*updateHighScores(_score,initials);
-				GlobalGameStateManager.highscores = highscores;
-				GlobalGameStateManager.playerNames = names;
-				entered = true;*/
-				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2,50,20), initials, 3);
+				GUI.skin.textField.alignment = TextAnchor.UpperCenter;
+				GUI.skin.textField.fontSize = 30;
+				GUI.skin.textField.normal.textColor = Color.white;
+				myStyle.fontSize = 30;
+				GUI.Label(new Rect(Screen.width/2,Screen.height/2+5,100,100), "Top 10 High Score", myStyle);
+				GUI.Label(new Rect(Screen.width/2-200,Screen.height/2+50,100,100), "Enter Your Initials ", myStyle);
+				GUI.SetNextControlName("MyTextField");
+				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2+70,100,50), initials, 3);
+				GUI.FocusControl("MyTextField");
 
-				// check input
 				if( initials.Length == 3 )
 				{
-					Debug.Log("33333");
-					if( Input.GetKeyDown(KeyCode.Return) )
-					{
-						updateHighScores(_score,initials);
-						GlobalGameStateManager.highscores = highscores;
-						GlobalGameStateManager.playerNames = names;
-						entered = true;
-						Debug.Log ("returned");
-					}
+					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
 				}
 			}
 		}
@@ -828,6 +848,10 @@ public class ScoreScript : GameBehavior {
 		if( mess.Type == (int)LevelFinishedType.Win )
 		{
 			win = true;
+			if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore
+			{
+				MessageCenter.Instance.Broadcast(new ScoreAddingMessage(true));
+			}
 		}
 	}
 }

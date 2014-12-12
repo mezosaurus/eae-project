@@ -16,6 +16,13 @@ public abstract class Possessable : GameBehavior {
 		MessageCenter.Instance.RegisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
 		MessageCenter.Instance.RegisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
 	}
+
+	void OnDestroy()
+	{
+		MessageCenter.Instance.UnregisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
+		MessageCenter.Instance.UnregisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
+	}
+
 	// Update is called once per frame
 	protected override void GameUpdate (){
 		if(!acting){

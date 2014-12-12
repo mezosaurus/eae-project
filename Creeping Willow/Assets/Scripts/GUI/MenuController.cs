@@ -11,8 +11,15 @@ public class MenuController : MonoBehaviour
 	private int fullColumns;
 	private AudioSource mapAudio;
 
+	bool resting;
+	bool canUse;
+	float curTime;
+	float endTime;
+
 	void Awake()
 	{
+		canUse = true;
+		MessageCenter.Instance.RegisterListener (MessageType.ScoreAdding, HandleScoreAdding);
 		selected = 0;
 		axisBusy = false;
 		
@@ -24,9 +31,41 @@ public class MenuController : MonoBehaviour
 		Select( buttons[ 0 ] );
 	}
 
+	void Start()
+	{
+		resting = true;
+		curTime = 0;
+		endTime = 1;
+	}
+
+	void OnDestroy()
+	{
+		MessageCenter.Instance.UnregisterListener (MessageType.ScoreAdding, HandleScoreAdding);
+	}
+
+	void HandleScoreAdding(Message message)
+	{
+		ScoreAddingMessage mess = message as ScoreAddingMessage;
+		canUse = !mess.adding;
+	}
+
 	// Update is called once per frame
 	void Update()
 	{
+		// wait for player to save high score
+		if( !canUse )
+			return;
+
+		// ignore quick inputs at start of menu
+		if( resting )
+		{
+			if( curTime < endTime )
+				curTime += .04f;
+			else
+				resting = false;
+			return;
+		}
+
 			if (Input.GetMouseButtonDown (0)) {
 					axisBusy = false;
 			} else if (Input.GetAxis ("LSX") != 0) {

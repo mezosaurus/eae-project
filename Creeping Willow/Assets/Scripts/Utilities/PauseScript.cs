@@ -53,6 +53,7 @@ public class PauseScript : MonoBehaviour {
 					state = (int)PauseState.SETTINGS;
 					pauseScreenSettingsIn.enabled = false;
 					pauseScreenSettings.enabled = true;
+					gameObject.GetComponent<HighScoreScript>().enabled = false;
 				}
 			}
 			else
@@ -97,6 +98,7 @@ public class PauseScript : MonoBehaviour {
 					{
 						state = (int)PauseState.SETTINGS_IN;
 						pauseScreenSettings.enabled = false;
+						gameObject.GetComponent<HighScoreScript>().enabled = true;
 						pauseScreenSettingsIn.enabled = true;
 					}
 				}

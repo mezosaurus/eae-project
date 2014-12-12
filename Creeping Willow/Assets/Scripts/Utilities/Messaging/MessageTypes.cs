@@ -31,4 +31,5 @@ public enum MessageType
 	PossessorSpawned,
 	PossessorDestroyed,
 	EnemyNPCDestroyed,
+	ScoreAdding,
 }
