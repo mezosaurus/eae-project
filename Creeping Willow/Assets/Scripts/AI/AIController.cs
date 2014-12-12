@@ -188,8 +188,14 @@ public class AIController : GameBehavior {
 
 		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
 		MessageCenter.Instance.Broadcast (message);
+
+		NPCOnDestroy();
 	}
 
+	protected virtual void NPCOnDestroy()
+	{
+
+	}
 	//-----------------------
 	// Trigger Methods
 	//-----------------------

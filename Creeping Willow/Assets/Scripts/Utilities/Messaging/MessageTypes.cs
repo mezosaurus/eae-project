@@ -29,5 +29,6 @@ public enum MessageType
 	NPCPanickedOffMap,
 	EnemyNPCInvestigatingPlayer,
 	PossessorSpawned,
-	PossessorDestroyed
+	PossessorDestroyed,
+	EnemyNPCDestroyed,
 }

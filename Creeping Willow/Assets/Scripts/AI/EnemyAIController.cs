@@ -33,6 +33,12 @@ public class EnemyAIController : AIController
 		xScale = -xScale;
 	}
 
+	protected override void NPCOnDestroy()
+	{
+		Debug.Log ("Called");
+		MessageCenter.Instance.Broadcast (new EnemyNPCDestroyedMessage (gameObject));
+	}
+
 	protected override void GameUpdate () 
 	{
 		if (grabbed)
