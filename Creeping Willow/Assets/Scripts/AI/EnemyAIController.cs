@@ -80,9 +80,11 @@ public class EnemyAIController : AIController
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		animateCharacter(movement, pathPosition);
-		
-		if( avoid (direction) != Vector3.zero )
-			transform.position = Vector3.MoveTowards(positionNPC,avoid (direction),step);
+
+		Vector3 changeMovement = avoid (direction);
+
+		if( changeMovement != Vector3.zero )
+			transform.position = Vector3.MoveTowards(positionNPC,changeMovement,step);
 		else
 			transform.position = movement;
 
@@ -90,7 +92,6 @@ public class EnemyAIController : AIController
 		{
 			handleSitting();
 		}
-		//objectAvoidance ();
 	}
 
 	private void handleSitting()
@@ -164,7 +165,12 @@ public class EnemyAIController : AIController
 		
 		animateCharacter(movement, pathPosition);
 		
-		transform.position = movement;
+		Vector3 changeMovement = avoid (Vector3.Normalize(movement - transform.position));
+		
+		if( changeMovement != Vector3.zero )
+			transform.position = Vector3.MoveTowards(positionNPC,changeMovement,step);
+		else
+			transform.position = movement;
 	}
 
 	private void investigate()

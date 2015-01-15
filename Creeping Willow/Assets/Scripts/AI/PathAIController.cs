@@ -97,9 +97,11 @@ public class PathAIController : AIController
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		//Vector3 movement = Vector3.MoveTowards (position, spawnMove, step);
 
-		if( avoid (direction) != Vector3.zero )
+		Vector3 changeMovement = avoid (direction);
+
+		if( changeMovement != Vector3.zero )
 		{	
-			Vector3 newPos = Vector3.MoveTowards(transform.position,avoid (direction),step);
+			Vector3 newPos = Vector3.MoveTowards(transform.position,changeMovement,step);
 			transform.position = newPos;
 			determineDirectionChange(transform.position, newPos);
 		}

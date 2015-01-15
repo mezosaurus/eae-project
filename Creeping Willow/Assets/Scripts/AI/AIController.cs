@@ -702,33 +702,22 @@ public class AIController : GameBehavior {
 
 	protected Vector3 avoid(Vector3 currentNPCDirection)
 	{
-		return Vector3.zero;
-
-		if( transform.gameObject == null )
-			return Vector3.zero;
-
 		float checkDistance = 1f;
 		Vector3 direction = currentNPCDirection;
-		float angleOffset = 10;
-		
-		float maxDistance = 1f;
-		float distanceIncrement = .05f;
-		
 		// get width/height
 		float radius = (float)Mathf.Max (gameObject.GetComponent<BoxCollider2D> ().size.x, gameObject.GetComponent<BoxCollider2D> ().size.y) / 2f;
-		//Debug.DrawLine (transform.position, transform.position + direction*checkDistance,Color.black,1f, false);
-		
+
 		// check for object in the way
 		if( Physics2D.CircleCast (transform.position, radius, direction,checkDistance) )
 		{
 			RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction);
-
+			
 			if( hit == null )
 				return Vector3.zero;
-
+			
 			if( hit.transform.gameObject == nextPath )
 				return Vector3.zero;
-
+			
 			if( hit.transform.gameObject.GetComponent<Rigidbody2D>() == null 
 			   && hit.transform.gameObject.GetComponent<EdgeCollider2D>() == null
 			   && hit.transform.gameObject.GetComponent<BoxCollider2D>() == null ) // hit is invalid
@@ -737,11 +726,13 @@ public class AIController : GameBehavior {
 			if( hit.transform.gameObject.tag == "NPC" ||
 			   hit.transform.gameObject.tag == "Border" ) // also invalid
 				return Vector3.zero;
+			
+			// VALID HIT!!!
 
-			// valid hit
+			//Debug.Log ("in cast");
 
 			// if object is on top of next path location
-			if( Vector3.Distance(hit.transform.position,nextPath.transform.position) < .1f && hit.transform.gameObject != nextPath.transform.gameObject )
+			/*if( Vector3.Distance(hit.transform.position,nextPath.transform.position) < .1f && hit.transform.gameObject != nextPath.transform.gameObject )
 			{
 				if( transform.gameObject.GetComponent<PathAIController>() != null )
 				{
@@ -752,90 +743,23 @@ public class AIController : GameBehavior {
 				{
 					nextPath = getLeavingPath();
 				}
-			}
+				return Vector3.zero;
+			}*/
 
-
+			// avoid object
 			Vector3 newPos;
 
-			// look for new path
-			float rotation = angleOffset;
-			bool pathFound = false;
-			while( rotation <= 180 && !pathFound )
-			{
-				if( Vector3.Distance(nextPath.transform.position, transform.position) < 1.25f )
-					break;
+			// go left for now
+			Vector3 rightDir = Quaternion.AngleAxis(-45, new Vector3(0,0,1)) * direction;
+			Vector3 leftDir = Quaternion.AngleAxis(45, new Vector3(0,0,1)) * direction;
 
-				// check left and right
-				bool isHit1 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(rotation), checkDistance); // right?
-				bool isHit2 = Physics2D.CircleCast (transform.position, radius, getOffsetVector(-rotation), checkDistance); // left?
+			newPos = transform.position + 5*leftDir;
 
-				if( panicked ) // just avoid objects
-				{
-					Vector3 leftPos = transform.position + getOffsetVector(-rotation)*checkDistance;
-					Vector3 rightPos = transform.position + getOffsetVector(-rotation)*checkDistance;
-					
-					if( Physics2D.CircleCast (leftPos, radius, nextPath.transform.position - leftPos, checkDistance) )
-						newPos = leftPos;
-					else if( Physics2D.CircleCast (rightPos, radius, nextPath.transform.position - rightPos, checkDistance) )
-						newPos = rightPos;
-					else
-					{
-						rotation += angleOffset;
-						continue;
-					}
-					pathFound = true;
-					return newPos;
-				}
-
-				if( isHit1 && isHit2 )
-				{
-					// do nothing
-				}
-				else if( isHit1 ) // left okay
-				{
-					newPos = transform.position + getOffsetVector(-rotation)*checkDistance;
-					//transform.position = Vector3.Lerp(transform.position, newPos, .07f);
-					pathFound = true;
-					return newPos;
-				}
-				else if( isHit2 ) // right okay
-				{
-					newPos = transform.position + getOffsetVector(rotation)*checkDistance;
-					//transform.position = Vector3.Lerp(transform.position, newPos, .07f);
-					pathFound = true;
-					return newPos;
-				}
-				else // both okay - default left
-				{
-					Vector3 leftPos = transform.position + getOffsetVector(-rotation)*checkDistance;
-					Vector3 rightPos = transform.position + getOffsetVector(-rotation)*checkDistance;
-
-					if( Physics2D.CircleCast (leftPos, radius, nextPath.transform.position - leftPos, checkDistance) )
-					   newPos = leftPos;
-					else if( Physics2D.CircleCast (rightPos, radius, nextPath.transform.position - rightPos, checkDistance) )
-						newPos = rightPos;
-					else
-					{
-						rotation += angleOffset;
-						continue;
-					}
-					//transform.position = Vector3.Lerp(transform.position, newPos, .07f);
-					pathFound = true;
-					return newPos;
-				}
-
-
-				rotation += angleOffset;
-			}
-
-			//transform.position = Vector3.Lerp(transform.position, newPos, .07f);
+			return newPos;
 		}
-		return Vector3.zero;
-	}
 
-	Vector3 getOffsetVector(float angle)
-	{
-		return new Vector3 (Mathf.Sin (Mathf.Deg2Rad * angle), Mathf.Cos (Mathf.Deg2Rad * angle));
+		return Vector3.zero;
+
 	}
 }
 

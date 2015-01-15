@@ -41,9 +41,11 @@ public class StationaryAIController : AIController
 		else
 			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
 
-		if( avoid (direction) != Vector3.zero )
+		Vector3 changeMovement = avoid (direction);
+
+		if( changeMovement != Vector3.zero )
 		{
-			Vector3 newPos = Vector3.MoveTowards(positionNPC,avoid (direction),step);
+			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
 			transform.position = newPos;
 			determineDirectionChange (transform.position, newPos);
 		}
