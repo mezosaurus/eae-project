@@ -3,6 +3,14 @@ using System.Collections;
 
 public class InteractiveMenuController : MonoBehaviour
 {
+	private enum MenuPosition
+	{
+		MainGate,
+		Options,
+		Scores,
+		LevelSelect,
+	}
+
 	public GameObject[] buttonObjects;
 	public Vector3[] buttonPositions;
 	public AudioClip clickSound;
@@ -16,6 +24,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private Vector3 cameraPosition;
 	private float totalZoomTime;
 	private float elapsedZoomTime;
+	private MenuPosition currentPosition;
 
 	void Awake()
 	{
@@ -41,6 +50,8 @@ public class InteractiveMenuController : MonoBehaviour
 
 		totalZoomTime = 3.0f;
 		cameraPosition = new Vector3( 0, 0, -10 );
+
+		currentPosition = MenuPosition.MainGate;
 	}
 
 	void OnDestroy() {}
@@ -54,6 +65,19 @@ public class InteractiveMenuController : MonoBehaviour
 
 		// Set the next camera position
 		cameraPosition = new Vector3( 0, 0, 0 );
+		currentPosition = MenuPosition.LevelSelect;
+	}
+
+	public void ZoomCameraToMainMenu()
+	{
+		// Get rid of all the front buttons
+		buttonObjects[ 0 ].GetComponent<GUIButton>().Reveal();
+		buttonObjects[ 1 ].GetComponent<GUIButton>().Reveal();
+		buttonObjects[ 2 ].GetComponent<GUIButton>().Reveal();
+		
+		// Set the next camera position
+		cameraPosition = new Vector3( 0, 0, -10 );
+		currentPosition = MenuPosition.MainGate;
 	}
 
 	// Update is called once per frame
@@ -103,6 +127,10 @@ public class InteractiveMenuController : MonoBehaviour
 		else if( Input.GetAxisRaw( "Back" ) != 0 || Input.GetAxisRaw( "B" ) != 0 )
 		{
 			//TODO exit the program or ask to quit or something
+			if( currentPosition == MenuPosition.MainGate )
+				Application.Quit();
+			if( currentPosition == MenuPosition.LevelSelect )
+				ZoomCameraToMainMenu();
 		}
 
 		// Move the camera to the correct position

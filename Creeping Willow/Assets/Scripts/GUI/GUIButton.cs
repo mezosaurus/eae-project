@@ -80,6 +80,11 @@ public class GUIButton : MonoBehaviour
 		enabled = false;
 	}
 
+	public void Reveal()
+	{
+		enabled = true;
+	}
+
 	void switchScenes ()
 	{
 		GlobalGameStateManager.CurrentScene = scene;
