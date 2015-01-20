@@ -44,6 +44,8 @@ public class InteractiveMenuController : MonoBehaviour
 			throw new UnassignedReferenceException( "No button was given to the menu" );
 
 		buttonObjects[ 0 ].GetComponent<GUIButton>().SetClickAction( ZoomCameraToLevelSelect );
+		buttonObjects[ 1 ].GetComponent<GUIButton>().SetClickAction( ZoomCameraToHighScores );
+		buttonObjects[ 2 ].GetComponent<GUIButton>().SetClickAction( ZoomCameraToOptions );
 
 		if( cursorImage )
 			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
@@ -66,11 +68,13 @@ public class InteractiveMenuController : MonoBehaviour
 		// Set the next camera position
 		cameraPosition = new Vector3( 0, 0, 0 );
 		currentPosition = MenuPosition.LevelSelect;
+
+		elapsedZoomTime = 0.0f;
 	}
 
 	public void ZoomCameraToMainMenu()
 	{
-		// Get rid of all the front buttons
+		// Show all the front buttons
 		buttonObjects[ 0 ].GetComponent<GUIButton>().Reveal();
 		buttonObjects[ 1 ].GetComponent<GUIButton>().Reveal();
 		buttonObjects[ 2 ].GetComponent<GUIButton>().Reveal();
@@ -78,6 +82,36 @@ public class InteractiveMenuController : MonoBehaviour
 		// Set the next camera position
 		cameraPosition = new Vector3( 0, 0, -10 );
 		currentPosition = MenuPosition.MainGate;
+
+		elapsedZoomTime = 0.0f;
+	}
+
+	public void ZoomCameraToHighScores()
+	{
+		// Get rid of all the front buttons
+		buttonObjects[ 0 ].GetComponent<GUIButton>().Fade();
+		buttonObjects[ 1 ].GetComponent<GUIButton>().Fade();
+		buttonObjects[ 2 ].GetComponent<GUIButton>().Fade();
+		
+		// Set the next camera position
+		cameraPosition = new Vector3( 8, -2, -5 );
+		currentPosition = MenuPosition.Scores;
+
+		elapsedZoomTime = 0.0f;
+	}
+
+	public void ZoomCameraToOptions()
+	{
+		// Get rid of all the front buttons
+		buttonObjects[ 0 ].GetComponent<GUIButton>().Fade();
+		buttonObjects[ 1 ].GetComponent<GUIButton>().Fade();
+		buttonObjects[ 2 ].GetComponent<GUIButton>().Fade();
+		
+		// Set the next camera position
+		cameraPosition = new Vector3( -8, -2, -5 );
+		currentPosition = MenuPosition.Options;
+
+		elapsedZoomTime = 0.0f;
 	}
 
 	// Update is called once per frame
@@ -129,7 +163,7 @@ public class InteractiveMenuController : MonoBehaviour
 			//TODO exit the program or ask to quit or something
 			if( currentPosition == MenuPosition.MainGate )
 				Application.Quit();
-			if( currentPosition == MenuPosition.LevelSelect )
+			else if( currentPosition == MenuPosition.LevelSelect || currentPosition == MenuPosition.Scores || currentPosition == MenuPosition.Options )
 				ZoomCameraToMainMenu();
 		}
 
