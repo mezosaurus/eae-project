@@ -702,6 +702,10 @@ public class ScoreScript : MonoBehaviour {
 			if( !alertedNPCs.Contains(mess.NPC) )
 				alertedNPCs.Add(mess.NPC);
 		}
+		else if( mess.alertLevelType == AlertLevelType.Scared )
+		{
+			// add lured/scared multiplier
+		}
 	}
 
 

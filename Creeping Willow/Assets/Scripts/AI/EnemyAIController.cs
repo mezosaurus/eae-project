@@ -84,9 +84,16 @@ public class EnemyAIController : AIController
 		Vector3 changeMovement = avoid (direction);
 
 		if( changeMovement != Vector3.zero )
-			transform.position = Vector3.MoveTowards(positionNPC,changeMovement,step);
+		{
+			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
+			transform.position = newPos;
+			determineDirectionChange(transform.position, newPos);
+		}
 		else
+		{
 			transform.position = movement;
+			determineDirectionChange(transform.position, movement);
+		}
 
 		if (movement == pathPosition)
 		{
@@ -168,9 +175,16 @@ public class EnemyAIController : AIController
 		Vector3 changeMovement = avoid (Vector3.Normalize(movement - transform.position));
 		
 		if( changeMovement != Vector3.zero )
-			transform.position = Vector3.MoveTowards(positionNPC,changeMovement,step);
+		{
+			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
+			transform.position = newPos;
+			determineDirectionChange(transform.position, newPos);
+		}
 		else
+		{
 			transform.position = movement;
+			determineDirectionChange(transform.position, movement);
+		}
 	}
 
 	private void investigate()

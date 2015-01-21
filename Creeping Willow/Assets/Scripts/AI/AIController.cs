@@ -323,8 +323,24 @@ public class AIController : GameBehavior {
 
 			Vector3 npcPosition = transform.position;
 			float step = speed * Time.deltaTime;
-			transform.position = new Vector3(moveDir.normalized.x * step, moveDir.normalized.y * step) + npcPosition;
+			Vector3 movement = Vector3.MoveTowards (npcPosition, new Vector3(moveDir.normalized.x * step, moveDir.normalized.y * step) + npcPosition, step);
+			//transform.position = new Vector3(moveDir.normalized.x * step, moveDir.normalized.y * step) + npcPosition;
 			determineDirectionChange(npcPosition, transform.position);
+
+			Vector3 direction = Vector3.Normalize(movement - transform.position);
+			Vector3 changeMovement = avoid (direction);
+			
+			if( changeMovement != Vector3.zero )
+			{
+				Vector3 newPos = Vector3.MoveTowards(npcPosition,changeMovement,step);
+				transform.position = newPos;
+				determineDirectionChange (transform.position, newPos);
+			}
+			else
+			{
+				determineDirectionChange (transform.position, movement);
+				transform.position = movement;
+			}
 
 			// OLD
 			//Vector3 oldVelocity = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y);
@@ -732,19 +748,22 @@ public class AIController : GameBehavior {
 			//Debug.Log ("in cast");
 
 			// if object is on top of next path location
-			/*if( Vector3.Distance(hit.transform.position,nextPath.transform.position) < .1f && hit.transform.gameObject != nextPath.transform.gameObject )
+			if( Vector3.Distance(hit.transform.position,nextPath.transform.position) < .3f && hit.transform.gameObject != nextPath.transform.gameObject )
 			{
 				if( transform.gameObject.GetComponent<PathAIController>() != null )
 				{
 					PathAIController script = transform.gameObject.GetComponent<PathAIController>();
 					nextPath = script.movePath.getNextPath(nextPath,gameObject); // go to next 
+					
+					return Vector3.zero;
 				}
 				else if( transform.gameObject.GetComponent<StationaryAIController>() != null )
 				{
 					nextPath = getLeavingPath();
+					
+					return Vector3.zero;
 				}
-				return Vector3.zero;
-			}*/
+			}
 
 			// avoid object
 			Vector3 newPos;
@@ -753,7 +772,19 @@ public class AIController : GameBehavior {
 			Vector3 rightDir = Quaternion.AngleAxis(-45, new Vector3(0,0,1)) * direction;
 			Vector3 leftDir = Quaternion.AngleAxis(45, new Vector3(0,0,1)) * direction;
 
-			newPos = transform.position + 5*leftDir;
+			if( Physics2D.CircleCast (transform.position, radius, leftDir,.2f) )
+			{
+				leftDir = Quaternion.AngleAxis(90, new Vector3(0,0,1)) * direction;
+			}
+
+			if( Physics2D.CircleCast (transform.position, radius, leftDir,.2f) )
+			{
+				newPos = transform.position + 5*rightDir;
+			}
+			else
+			{
+				newPos = transform.position + 5*leftDir;
+			}
 
 			return newPos;
 		}
