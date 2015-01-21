@@ -155,7 +155,10 @@ MonoBehaviour:
   - {fileID: 1505944937}
   - {fileID: 1173128471}
   - {fileID: 1641892036}
-  buttonPositions: []
+  buttonObjects2:
+  - {fileID: 1505944940}
+  - {fileID: 1173128474}
+  - {fileID: 1641892039}
   clickSound: {fileID: 8300000, guid: 38b126bd9d330dd45b3085c550870f61, type: 3}
   cursorImage: {fileID: 2800000, guid: d3bd4e02f89199744b74ce62e9b07161, type: 3}
   camera: {fileID: 1722041305}
@@ -446,7 +449,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 186416291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.20657015, y: -1.17601705, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1893,7 +1896,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1173128472}
-  - 114: {fileID: 1173128473}
+  - 114: {fileID: 1173128474}
   m_Layer: 0
   m_Name: ScoresButton
   m_TagString: Untagged
@@ -1908,12 +1911,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1173128471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 10, y: 1.5, z: 0}
+  m_LocalScale: {x: 200, y: 70, z: 1}
   m_Children: []
   m_Father: {fileID: 48899974}
   m_RootOrder: 2
---- !u!114 &1173128473
+--- !u!114 &1173128474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1921,23 +1924,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1173128471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 343311bcc0b0f3043a7050a1e770f0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 770
-  y: 270
-  width: 200
-  height: 70
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
   text: High Scores
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  scene: 2
   sound: {fileID: 8300000, guid: 6e380fe9fb8e7584184191e2e942a638, type: 3}
-  changeScene: 1
   selected: 0
-  fadeTime: 0
+  fadeTime: 1
 --- !u!1 &1196277778
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,7 +2243,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1505944938}
-  - 114: {fileID: 1505944939}
+  - 114: {fileID: 1505944940}
   m_Layer: 0
   m_Name: PlayButton
   m_TagString: Untagged
@@ -2262,11 +2259,11 @@ Transform:
   m_GameObject: {fileID: 1505944937}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 250, y: 130, z: 0}
   m_Children: []
   m_Father: {fileID: 48899974}
   m_RootOrder: 0
---- !u!114 &1505944939
+--- !u!114 &1505944940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -2274,23 +2271,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1505944937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 343311bcc0b0f3043a7050a1e770f0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 450
-  y: 270
-  width: 250
-  height: 130
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
   text: Play
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  scene: 10
   sound: {fileID: 8300000, guid: 6e380fe9fb8e7584184191e2e942a638, type: 3}
-  changeScene: 1
-  selected: 0
-  fadeTime: 3
+  selected: 1
+  fadeTime: 1
 --- !u!1 &1529638227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,7 +2368,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1641892037}
-  - 114: {fileID: 1641892038}
+  - 114: {fileID: 1641892039}
   m_Layer: 0
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -2392,12 +2383,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1641892036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -10, y: 1.5, z: 0}
+  m_LocalScale: {x: 200, y: 70, z: 1}
   m_Children: []
   m_Father: {fileID: 48899974}
   m_RootOrder: 1
---- !u!114 &1641892038
+--- !u!114 &1641892039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -2405,23 +2396,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1641892036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 343311bcc0b0f3043a7050a1e770f0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 100
-  y: 270
-  width: 200
-  height: 70
   defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
   downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
   text: Options
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  scene: 2
   sound: {fileID: 8300000, guid: 6e380fe9fb8e7584184191e2e942a638, type: 3}
-  changeScene: 1
   selected: 0
-  fadeTime: 0
+  fadeTime: 1
 --- !u!1 &1678204948
 GameObject:
   m_ObjectHideFlags: 0

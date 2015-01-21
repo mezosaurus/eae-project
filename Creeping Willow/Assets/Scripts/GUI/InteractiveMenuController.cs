@@ -11,8 +11,7 @@ public class InteractiveMenuController : MonoBehaviour
 		LevelSelect,
 	}
 
-	public GameObject[] buttonObjects;
-	public Vector3[] buttonPositions;
+	public InteractiveButton[] mainButtons;
 	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
@@ -40,12 +39,12 @@ public class InteractiveMenuController : MonoBehaviour
 
 		selected = -1;
 
-		if( buttonObjects.Length <= 0 )
+		if( mainButtons.Length <= 0 )
 			throw new UnassignedReferenceException( "No button was given to the menu" );
 
-		buttonObjects[ 0 ].GetComponent<GUIButton>().SetClickAction( ZoomCameraToLevelSelect );
-		buttonObjects[ 1 ].GetComponent<GUIButton>().SetClickAction( ZoomCameraToHighScores );
-		buttonObjects[ 2 ].GetComponent<GUIButton>().SetClickAction( ZoomCameraToOptions );
+		mainButtons[ 0 ].SetClickAction( ZoomCameraToLevelSelect );
+		mainButtons[ 1 ].SetClickAction( ZoomCameraToHighScores );
+		mainButtons[ 2 ].SetClickAction( ZoomCameraToOptions );
 
 		if( cursorImage )
 			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
@@ -61,9 +60,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public void ZoomCameraToLevelSelect()
 	{
 		// Get rid of all the front buttons
-		buttonObjects[ 0 ].GetComponent<GUIButton>().Fade();
-		buttonObjects[ 1 ].GetComponent<GUIButton>().Fade();
-		buttonObjects[ 2 ].GetComponent<GUIButton>().Fade();
+		mainButtons[ 0 ].Fade();
+		mainButtons[ 1 ].Fade();
+		mainButtons[ 2 ].Fade();
 
 		// Set the next camera position
 		cameraPosition = new Vector3( 0, 0, 0 );
@@ -75,9 +74,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public void ZoomCameraToMainMenu()
 	{
 		// Show all the front buttons
-		buttonObjects[ 0 ].GetComponent<GUIButton>().Reveal();
-		buttonObjects[ 1 ].GetComponent<GUIButton>().Reveal();
-		buttonObjects[ 2 ].GetComponent<GUIButton>().Reveal();
+		mainButtons[ 0 ].Reveal();
+		mainButtons[ 1 ].Reveal();
+		mainButtons[ 2 ].Reveal();
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( 0, 0, -10 );
@@ -89,9 +88,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public void ZoomCameraToHighScores()
 	{
 		// Get rid of all the front buttons
-		buttonObjects[ 0 ].GetComponent<GUIButton>().Fade();
-		buttonObjects[ 1 ].GetComponent<GUIButton>().Fade();
-		buttonObjects[ 2 ].GetComponent<GUIButton>().Fade();
+		mainButtons[ 0 ].Fade();
+		mainButtons[ 1 ].Fade();
+		mainButtons[ 2 ].Fade();
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( 8, -2, -5 );
@@ -103,9 +102,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public void ZoomCameraToOptions()
 	{
 		// Get rid of all the front buttons
-		buttonObjects[ 0 ].GetComponent<GUIButton>().Fade();
-		buttonObjects[ 1 ].GetComponent<GUIButton>().Fade();
-		buttonObjects[ 2 ].GetComponent<GUIButton>().Fade();
+		mainButtons[ 0 ].Fade();
+		mainButtons[ 1 ].Fade();
+		mainButtons[ 2 ].Fade();
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( -8, -2, -5 );
@@ -138,14 +137,14 @@ public class InteractiveMenuController : MonoBehaviour
 					selected++;
 
 				if( selected < 0 )
-					selected = buttonObjects.Length - 1;
-				else if( selected > buttonObjects.Length - 1 )
+					selected = mainButtons.Length - 1;
+				else if( selected > mainButtons.Length - 1 )
 					selected = 0;
 
 				Screen.showCursor = false;
 				Screen.lockCursor = true;
 				axisBusy = true;
-				Select( buttonObjects[ selected ] );
+				Select( mainButtons[ selected ] );
 			}
 		}
 		else
@@ -155,7 +154,7 @@ public class InteractiveMenuController : MonoBehaviour
 		if( Input.GetAxisRaw( "Start" ) != 0 || Input.GetAxisRaw( "A" ) != 0 )
 		{
 			if( selected >= 0 )
-				buttonObjects[ selected ].GetComponent<GUIButton>().ClickButton();
+				mainButtons[ selected ].ClickButton();
 		}
 		// The user wants to go back
 		else if( Input.GetAxisRaw( "Back" ) != 0 || Input.GetAxisRaw( "B" ) != 0 )
@@ -177,18 +176,18 @@ public class InteractiveMenuController : MonoBehaviour
 			elapsedZoomTime = 0.0f;
 	}
 
-	private void Select( GameObject button )
+	private void Select( InteractiveButton button )
 	{
-		UnselectAll ();
+		UnselectAll();
 
-		button.GetComponent<GUIButton>().defaultImage = button.GetComponent<GUIButton>().hoverImage;
+		button.defaultImage = button.hoverImage;
 		if( usesSound )
 			clickAudio.PlayOneShot( clickSound );
 	}
 
 	private void UnselectAll()
 	{
-		foreach( GameObject button in buttonObjects )
-			button.GetComponent<GUIButton>().defaultImage = button.GetComponent<GUIButton>().downClickImage;
+		foreach( InteractiveButton button in mainButtons )
+			button.defaultImage = button.downClickImage;
 	}
 }
