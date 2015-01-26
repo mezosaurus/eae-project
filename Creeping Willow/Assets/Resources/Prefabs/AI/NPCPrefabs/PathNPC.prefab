@@ -15,6 +15,7 @@ GameObject:
   - 61: {fileID: 6100000}
   - 199: {fileID: 19900000}
   - 198: {fileID: 19800000}
+  - 95: {fileID: 9500000}
   m_Layer: 8
   m_Name: PathNPC
   m_TagString: NPC
@@ -71,6 +72,21 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .5, y: .349999994}
   m_Center: {x: 0, y: -.100000001}
+--- !u!95 &9500000
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1

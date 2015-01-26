@@ -411,7 +411,13 @@ public class AIController : GameBehavior {
 
 	protected void setAnimatorInteger(string key, int animation)
 	{
-		gameObject.GetComponent<Animator>().SetInteger(key, animation);
+		Animator anim = gameObject.GetComponent<Animator> ();
+		if (anim != null)
+		{
+#pragma warning disable
+			gameObject.GetComponent<Animator>().SetInteger(key, animation);
+#pragma warning restore
+		}
 	}
 
 	protected void broadcastAlertLevelChanged(AlertLevelType type)

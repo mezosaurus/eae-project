@@ -67,8 +67,9 @@ public class AIGenerator : GameBehavior
 			GameObject path = paths[i];
 			SubpathScript movePath = path.GetComponent<SubpathScript>();
 			Vector2 pathPos = movePath.transform.position;
-			GameObject newPathNPC = createNPC(this.pathNPC, pathAIList, pathPos);
-			newPathNPC.GetComponent<PathAIController>().setMovingPath(movePath);
+			createPathNPC(pathPos);
+			//GameObject newPathNPC = createNPC(this.pathNPC, pathAIList, pathPos);
+			//newPathNPC.GetComponent<PathAIController>().setMovingPath(movePath);
 		}
 		//3 bench npcs
 		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
@@ -153,12 +154,33 @@ public class AIGenerator : GameBehavior
 	
 	void createPathNPC()
 	{
-		GameObject newNPC = createNPC (this.pathNPC, pathAIList);
+		createPathNPC (getRandomSpawnPoint ());
+	}
+
+	void createPathNPC(Vector2 spawnPoint)
+	{
+		GameObject newNPC = createNPC (this.pathNPC, pathAIList, spawnPoint);
 		
 		SubpathScript movePath = GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
 		newNPC.GetComponent<PathAIController>().setMovingPath(movePath);
+
+		GameObject skin;
+		if (Random.Range(0,2) == 0)
+		{
+			skin = (GameObject)Instantiate (Resources.Load ("prefabs/AI/NPCSkinPrefabs/bopper_skin"));
+			newNPC.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
+			newNPC.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+		}
+		else
+		{
+			skin = (GameObject)Instantiate (Resources.Load ("prefabs/AI/NPCSkinPrefabs/mower_skin"));
+			newNPC.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
+			// NOT functional yet
+			//newNPC.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+		}
+		Destroy (skin);
 	}
-	
+
 	void createStationaryNPC()
 	{
 		GameObject newNPC = createNPC (this.stationaryNPC, stationaryAIList);
