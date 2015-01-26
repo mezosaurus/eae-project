@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class InteractiveMenuController : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class InteractiveMenuController : MonoBehaviour
 		LevelSelect,
 	}
 
-	public InteractiveButton[] mainButtons;
+	public Button[] mainButtons;
 	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
@@ -42,9 +44,7 @@ public class InteractiveMenuController : MonoBehaviour
 		if( mainButtons.Length <= 0 )
 			throw new UnassignedReferenceException( "No button was given to the menu" );
 
-		mainButtons[ 0 ].SetClickAction( ZoomCameraToLevelSelect );
-		mainButtons[ 1 ].SetClickAction( ZoomCameraToHighScores );
-		mainButtons[ 2 ].SetClickAction( ZoomCameraToOptions );
+		GoToMainMenu();
 
 		if( cursorImage )
 			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
@@ -57,12 +57,30 @@ public class InteractiveMenuController : MonoBehaviour
 
 	void OnDestroy() {}
 
-	public void ZoomCameraToLevelSelect()
+	public void GoToMainMenu()
+	{
+		// Show all the front buttons
+		foreach( Button button in mainButtons )
+		{
+			button.enabled = true;
+			button.image.enabled = true;
+		}
+		
+		// Set the next camera position
+		cameraPosition = new Vector3( 0, 0, -10 );
+		currentPosition = MenuPosition.MainGate;
+		
+		elapsedZoomTime = 0.0f;
+	}
+
+	public void GoToLevelSelect()
 	{
 		// Get rid of all the front buttons
-		mainButtons[ 0 ].Fade();
-		mainButtons[ 1 ].Fade();
-		mainButtons[ 2 ].Fade();
+		foreach( Button button in mainButtons )
+		{
+			button.enabled = false;
+			button.image.enabled = false;
+		}
 
 		// Set the next camera position
 		cameraPosition = new Vector3( 0, 0, 0 );
@@ -71,26 +89,14 @@ public class InteractiveMenuController : MonoBehaviour
 		elapsedZoomTime = 0.0f;
 	}
 
-	public void ZoomCameraToMainMenu()
-	{
-		// Show all the front buttons
-		mainButtons[ 0 ].Reveal();
-		mainButtons[ 1 ].Reveal();
-		mainButtons[ 2 ].Reveal();
-		
-		// Set the next camera position
-		cameraPosition = new Vector3( 0, 0, -10 );
-		currentPosition = MenuPosition.MainGate;
-
-		elapsedZoomTime = 0.0f;
-	}
-
-	public void ZoomCameraToHighScores()
+	public void GoToHighScores()
 	{
 		// Get rid of all the front buttons
-		mainButtons[ 0 ].Fade();
-		mainButtons[ 1 ].Fade();
-		mainButtons[ 2 ].Fade();
+		foreach( Button button in mainButtons )
+		{
+			button.enabled = false;
+			button.image.enabled = false;
+		}
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( 8, -2, -5 );
@@ -99,12 +105,14 @@ public class InteractiveMenuController : MonoBehaviour
 		elapsedZoomTime = 0.0f;
 	}
 
-	public void ZoomCameraToOptions()
+	public void GoToOptions()
 	{
 		// Get rid of all the front buttons
-		mainButtons[ 0 ].Fade();
-		mainButtons[ 1 ].Fade();
-		mainButtons[ 2 ].Fade();
+		foreach( Button button in mainButtons )
+		{
+			button.enabled = false;
+			button.image.enabled = false;
+		}
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( -8, -2, -5 );
@@ -127,13 +135,13 @@ public class InteractiveMenuController : MonoBehaviour
 		}
 
 		// Check for controller movement
-		else if( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "DX" ) != 0 )
+		else if( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "DX" ) != 0 || Input.GetAxis( "RSX" ) != 0 )
 		{
 			if( !axisBusy )
 			{
-				if( Input.GetAxisRaw( "LSX" ) < 0 || Input.GetAxisRaw( "DX" ) < 0 )
+				if( Input.GetAxisRaw( "LSX" ) < 0 || Input.GetAxisRaw( "DX" ) < 0 || Input.GetAxisRaw( "RSX" ) < 0 )
 					selected--;
-				else if( Input.GetAxisRaw( "LSX" ) > 0 || Input.GetAxisRaw( "DX" ) > 0 )
+				else if( Input.GetAxisRaw( "LSX" ) > 0 || Input.GetAxisRaw( "DX" ) > 0 || Input.GetAxisRaw( "RSX" ) > 0 )
 					selected++;
 
 				if( selected < 0 )
@@ -154,7 +162,7 @@ public class InteractiveMenuController : MonoBehaviour
 		if( Input.GetAxisRaw( "Start" ) != 0 || Input.GetAxisRaw( "A" ) != 0 )
 		{
 			if( selected >= 0 )
-				mainButtons[ selected ].ClickButton();
+				mainButtons[ selected ].OnPointerClick( new PointerEventData( EventSystem.current ) );
 		}
 		// The user wants to go back
 		else if( Input.GetAxisRaw( "Back" ) != 0 || Input.GetAxisRaw( "B" ) != 0 )
@@ -163,7 +171,7 @@ public class InteractiveMenuController : MonoBehaviour
 			if( currentPosition == MenuPosition.MainGate )
 				Application.Quit();
 			else if( currentPosition == MenuPosition.LevelSelect || currentPosition == MenuPosition.Scores || currentPosition == MenuPosition.Options )
-				ZoomCameraToMainMenu();
+				GoToMainMenu();
 		}
 
 		// Move the camera to the correct position
@@ -176,18 +184,18 @@ public class InteractiveMenuController : MonoBehaviour
 			elapsedZoomTime = 0.0f;
 	}
 
-	private void Select( InteractiveButton button )
+	private void Select( Button button )
 	{
 		UnselectAll();
 
-		button.defaultImage = button.hoverImage;
+		button.OnSelect( new BaseEventData( EventSystem.current ) );
 		if( usesSound )
 			clickAudio.PlayOneShot( clickSound );
 	}
 
 	private void UnselectAll()
 	{
-		foreach( InteractiveButton button in mainButtons )
-			button.defaultImage = button.downClickImage;
+		foreach( Button button in mainButtons )
+			button.OnDeselect( new BaseEventData( EventSystem.current ) );
 	}
 }
