@@ -176,7 +176,7 @@ public class AIGenerator : GameBehavior
 			skin = (GameObject)Instantiate (Resources.Load ("prefabs/AI/NPCSkinPrefabs/mower_skin"));
 			newNPC.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
 			// NOT functional yet
-			//newNPC.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+			newNPC.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
 		}
 		Destroy (skin);
 	}

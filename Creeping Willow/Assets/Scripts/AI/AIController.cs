@@ -414,9 +414,7 @@ public class AIController : GameBehavior {
 		Animator anim = gameObject.GetComponent<Animator> ();
 		if (anim != null)
 		{
-#pragma warning disable
 			gameObject.GetComponent<Animator>().SetInteger(key, animation);
-#pragma warning restore
 		}
 	}
 
