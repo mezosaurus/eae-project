@@ -14,12 +14,12 @@ public class InteractiveMenuController : MonoBehaviour
 	}
 
 	public Button[] mainButtons;
+	public Button[] levelButtons;
 	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
 
 	private bool axisBusy;
-	private int selected;
 	private bool usesSound;
 	private AudioSource clickAudio;
 	private Vector3 cameraPosition;
@@ -29,7 +29,6 @@ public class InteractiveMenuController : MonoBehaviour
 
 	void Awake()
 	{
-		selected = 0;
 		axisBusy = false;
 
 		if( clickSound )
@@ -39,8 +38,6 @@ public class InteractiveMenuController : MonoBehaviour
 			clickAudio.clip = clickSound;
 		}
 
-		selected = -1;
-
 		if( mainButtons.Length <= 0 )
 			throw new UnassignedReferenceException( "No button was given to the menu" );
 
@@ -49,23 +46,22 @@ public class InteractiveMenuController : MonoBehaviour
 		if( cursorImage )
 			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
 
-		totalZoomTime = 3.0f;
-		cameraPosition = new Vector3( 0, 0, -10 );
-
-		currentPosition = MenuPosition.MainGate;
+		totalZoomTime = 4.0f;
 	}
 
 	void OnDestroy() {}
 
 	public void GoToMainMenu()
 	{
-		// Show all the front buttons
+		// Get rid of all other buttons
+		HideLevelMenu();
+
+		// Show all the buttons
 		foreach( Button button in mainButtons )
-		{
-			button.enabled = true;
-			button.image.enabled = true;
-		}
-		
+			button.interactable = true;
+
+		EventSystem.current.SetSelectedGameObject( mainButtons[ 0 ].gameObject );
+
 		// Set the next camera position
 		cameraPosition = new Vector3( 0, 0, -10 );
 		currentPosition = MenuPosition.MainGate;
@@ -73,30 +69,40 @@ public class InteractiveMenuController : MonoBehaviour
 		elapsedZoomTime = 0.0f;
 	}
 
+	private void HideMainMenu()
+	{
+		foreach( Button button in mainButtons )
+			button.interactable = false;
+	}
+
 	public void GoToLevelSelect()
 	{
-		// Get rid of all the front buttons
-		foreach( Button button in mainButtons )
-		{
-			button.enabled = false;
-			button.image.enabled = false;
-		}
+		// Get rid of all other buttons
+		HideMainMenu();
+
+		// Show all the buttons
+		foreach( Button button in levelButtons )
+			button.interactable = true;
+
+		EventSystem.current.SetSelectedGameObject( levelButtons[ 0 ].gameObject );
 
 		// Set the next camera position
-		cameraPosition = new Vector3( 0, 0, 0 );
+		cameraPosition = new Vector3( 0, 0, 10 );
 		currentPosition = MenuPosition.LevelSelect;
 
 		elapsedZoomTime = 0.0f;
 	}
 
+	private void HideLevelMenu()
+	{
+		foreach( Button button in levelButtons )
+			button.interactable = false;
+	}
+
 	public void GoToHighScores()
 	{
-		// Get rid of all the front buttons
-		foreach( Button button in mainButtons )
-		{
-			button.enabled = false;
-			button.image.enabled = false;
-		}
+		// Get rid of all other buttons
+		HideMainMenu();
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( 8, -2, -5 );
@@ -107,12 +113,8 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void GoToOptions()
 	{
-		// Get rid of all the front buttons
-		foreach( Button button in mainButtons )
-		{
-			button.enabled = false;
-			button.image.enabled = false;
-		}
+		// Get rid of all other buttons
+		HideMainMenu();
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( -8, -2, -5 );
@@ -130,49 +132,45 @@ public class InteractiveMenuController : MonoBehaviour
 			Screen.showCursor = true;
 			Screen.lockCursor = false;
 			axisBusy = true;
-			selected = -1;
 			UnselectAll();
+			EventSystem.current.SetSelectedGameObject( null );
 		}
-
 		// Check for controller movement
-		else if( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "DX" ) != 0 || Input.GetAxis( "RSX" ) != 0 )
+		else if( !axisBusy && Input.GetAxis( "LSX" ) != 0 )
 		{
-			if( !axisBusy )
+			Screen.showCursor = false;
+			Screen.lockCursor = true;
+			axisBusy = true;
+
+			if( EventSystem.current.currentSelectedGameObject == null )
 			{
-				if( Input.GetAxisRaw( "LSX" ) < 0 || Input.GetAxisRaw( "DX" ) < 0 || Input.GetAxisRaw( "RSX" ) < 0 )
-					selected--;
-				else if( Input.GetAxisRaw( "LSX" ) > 0 || Input.GetAxisRaw( "DX" ) > 0 || Input.GetAxisRaw( "RSX" ) > 0 )
-					selected++;
+				switch( currentPosition )
+				{
+				case MenuPosition.MainGate:
+					EventSystem.current.SetSelectedGameObject( mainButtons[ 0 ].gameObject );
+					break;
 
-				if( selected < 0 )
-					selected = mainButtons.Length - 1;
-				else if( selected > mainButtons.Length - 1 )
-					selected = 0;
+				case MenuPosition.LevelSelect:
+					EventSystem.current.SetSelectedGameObject( levelButtons[ 0 ].gameObject );
+					break;
 
-				Screen.showCursor = false;
-				Screen.lockCursor = true;
-				axisBusy = true;
-				Select( mainButtons[ selected ] );
+				default:
+					break;
+				}
 			}
 		}
-		else
-			axisBusy = false;
-
-		// The user wants to go forward
-		if( Input.GetAxisRaw( "Start" ) != 0 || Input.GetAxisRaw( "A" ) != 0 )
-		{
-			if( selected >= 0 )
-				mainButtons[ selected ].OnPointerClick( new PointerEventData( EventSystem.current ) );
-		}
 		// The user wants to go back
-		else if( Input.GetAxisRaw( "Back" ) != 0 || Input.GetAxisRaw( "B" ) != 0 )
+		else if( !axisBusy && ( Input.GetAxisRaw( "Back" ) != 0 || Input.GetAxisRaw( "B" ) != 0 ) )
 		{
-			//TODO exit the program or ask to quit or something
 			if( currentPosition == MenuPosition.MainGate )
 				Application.Quit();
 			else if( currentPosition == MenuPosition.LevelSelect || currentPosition == MenuPosition.Scores || currentPosition == MenuPosition.Options )
 				GoToMainMenu();
+
+			axisBusy = true;
 		}
+		else
+			axisBusy = false;
 
 		// Move the camera to the correct position
 		if( camera.transform.position != cameraPosition )
@@ -184,18 +182,17 @@ public class InteractiveMenuController : MonoBehaviour
 			elapsedZoomTime = 0.0f;
 	}
 
-	private void Select( Button button )
-	{
-		UnselectAll();
-
-		button.OnSelect( new BaseEventData( EventSystem.current ) );
-		if( usesSound )
-			clickAudio.PlayOneShot( clickSound );
-	}
-
 	private void UnselectAll()
 	{
 		foreach( Button button in mainButtons )
 			button.OnDeselect( new BaseEventData( EventSystem.current ) );
+
+		foreach( Button button in levelButtons )
+			button.OnDeselect( new BaseEventData( EventSystem.current ) );
+	}
+
+	public void LoadLevel( string i_levelName )
+	{
+		Application.LoadLevel( i_levelName );
 	}
 }
