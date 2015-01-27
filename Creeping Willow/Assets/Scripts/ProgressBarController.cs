@@ -9,7 +9,7 @@ public class ProgressBarController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Sprites = new Sprite[102];
+        Sprites = new Sprite[101];
 
         Sprites[0] = Resources.Load<Sprite>("Textures/CircularProgressBar/CircleProgressEmpty");
 
