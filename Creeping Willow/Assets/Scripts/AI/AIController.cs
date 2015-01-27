@@ -132,7 +132,7 @@ public class AIController : GameBehavior {
 		TextureScript scaredTs = scaredTexture.GetComponent<TextureScript> ();
 		scaredTs.target = gameObject;
 
-		player = GameObject.Find("Player");
+		player = GameObject.FindGameObjectWithTag("Player");
         // Set initial alert/panick states
         //timePanicked = panicCooldownSeconds;
         alerted = false;
