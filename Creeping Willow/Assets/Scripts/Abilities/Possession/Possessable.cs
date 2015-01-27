@@ -28,7 +28,7 @@ public abstract class Possessable : GameBehavior {
 		if(!acting){
 			if(needToSend)
 			{
-				MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
+				//MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
 				needToSend = false;
 			}
 		}
