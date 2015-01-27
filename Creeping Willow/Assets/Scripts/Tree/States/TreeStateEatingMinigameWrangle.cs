@@ -21,6 +21,7 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         Tree.BodyParts.LeftArm.SetActive(false);
         Tree.BodyParts.RightArm.SetActive(false);
         Tree.BodyParts.RightUpperArm.SetActive(true);
+        Tree.BodyParts.MinigameCircle.SetActive(true);
 
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().color = Color.white;
@@ -66,24 +67,29 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         bool lsIn = (lsDistance <= InRadius);
         bool rsIn = (rsDistance <= InRadius);
 
-        // To-do
+        // If both sticks are in, change to next phase of minigame
         if (lsIn && rsIn)
         {
-            // Change state
+            Tree.ChangeState("EatingMinigameMash");
+
+            return;
         }
 
         Vector3 lsDifference = circle.position - LS.transform.position;
         Vector3 rsDifference = circle.position - RS.transform.position;
 
         // Apply forces if necessary
-        if (lsDistance < MaxThumbStickRadius)
+        if(!lsIn || !rsIn)
         {
-            LS.transform.position -= (lsDifference.normalized * OpposingForceValue * Time.deltaTime);
-        }
+            if (lsDistance < MaxThumbStickRadius)
+            {
+                LS.transform.position -= (lsDifference.normalized * OpposingForceValue * Time.deltaTime);
+            }
 
-        if (rsDistance < MaxThumbStickRadius)
-        {
-            RS.transform.position -= (rsDifference.normalized * OpposingForceValue * Time.deltaTime);
+            if (rsDistance < MaxThumbStickRadius)
+            {
+                RS.transform.position -= (rsDifference.normalized * OpposingForceValue * Time.deltaTime);
+            }
         }
 
         // Move the user toward their goal
@@ -112,25 +118,26 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         RSArrow.transform.eulerAngles = new Vector3(0f, 0f, rsAngle);
 
         // Update arms based on user progress
-        float lsProgress = (Vector3.Distance(circle.position, LS.transform.position) - InRadius) / (MaxThumbStickRadius - InRadius);
-        float rsProgress = (Vector3.Distance(circle.position, RS.transform.position) - InRadius) / (MaxThumbStickRadius - InRadius);
+        float lsProgress = Mathf.Clamp(1f - ((Vector3.Distance(circle.position, LS.transform.position) - InRadius) / (MaxThumbStickRadius - InRadius)), 0f, 1f);
+        float rsProgress = Mathf.Clamp(1f - ((Vector3.Distance(circle.position, RS.transform.position) - InRadius) / (MaxThumbStickRadius - InRadius)), 0f, 1f);
+        float progress = (lsProgress + rsProgress) / 2f;
 
-        Debug.Log((1f - (lsProgress * 100f)) + "%");
+        UpdateArms(progress);
 
         // Update timer
-        //timeElapsed += Time.deltaTime;
+        timeElapsed += Time.deltaTime;
 
         float timePercentage = Mathf.Clamp(timeElapsed / MaxTime, 0f, 1f);
-        int tpInt = Mathf.RoundToInt(timePercentage * 100f);
+        Percentage = Mathf.RoundToInt(timePercentage * 100f);
 
-        Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[tpInt];
+        Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[Percentage];
 
         // To-do
         if (timePercentage >= 1f)
         {
-            MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 20f));
+            Lose();
 
-            Tree.ChangeState("Active");
+            return;
         }
     }
 
@@ -145,6 +152,7 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 4;
         Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sortingOrder = i + 7;
+        Tree.BodyParts.GrabbedNPC.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
     }
 
     public override void Leave()

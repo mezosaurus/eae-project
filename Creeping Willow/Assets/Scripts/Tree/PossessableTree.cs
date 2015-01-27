@@ -14,6 +14,7 @@ public class PossessableTree : Possessable
     public float Speed;
     public Tree.Private.BodyParts BodyParts;
     public Tree.Private.Sprites Sprites;
+    public Tree.Private.Sounds Sounds;
     public Tree.Private.Prefabs Prefabs;
 
 
@@ -28,10 +29,14 @@ public class PossessableTree : Possessable
         TreeState inactive = new TreeStateInactive();
         TreeState active = new TreeStateActive();
         TreeState eatingMinigameWrangle = new TreeStateEatingMinigameWrangle();
+        TreeState eatingMinigameMash = new TreeStateEatingMinigameMash();
+        TreeState eating = new TreeStateEating();
 
         states.Add("Inactive", inactive);
         states.Add("Active", active);
         states.Add("EatingMinigameWrangle", eatingMinigameWrangle);
+        states.Add("EatingMinigameMash", eatingMinigameMash);
+        states.Add("Eating", eating);
 
         foreach (TreeState state in states.Values) state.Tree = this;
 
@@ -69,6 +74,11 @@ public class PossessableTree : Possessable
         currentState.Update();
     }
 
+    protected void OnGUI()
+    {
+        currentState.OnGUI();
+    }
+
     public void UpdateSorting()
     {
         currentState.UpdateSorting();
@@ -89,7 +99,7 @@ namespace Tree.Private
     [Serializable]
     public class BodyParts
     {
-        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, MinigameCircle;
+        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, GrabbedNPC, EatenNPC, MinigameCircle, Eyes;
     }
     
     [Serializable]
@@ -118,6 +128,7 @@ namespace Tree.Private
         {
             public Sprite[] Circle;
             public Sprite LS, RS;
+            public Texture[] Buttons;
         }
 
 
@@ -125,6 +136,12 @@ namespace Tree.Private
         public _Face Face;
         public Sprite LegsStill;
         public _EatingMinigame EatingMinigame;
+    }
+
+    [Serializable]
+    public class Sounds
+    {
+        public AudioClip Chew;
     }
 
     [Serializable]

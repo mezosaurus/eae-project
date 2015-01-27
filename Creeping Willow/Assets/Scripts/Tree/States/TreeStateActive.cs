@@ -10,6 +10,13 @@ public class TreeStateActive : TreeState
     {
         Tree.Active = true;
         npcsInRange = new List<GameObject>();
+
+        Tree.BodyParts.RightUpperArm.SetActive(false);
+        Tree.BodyParts.GrabbedNPC.SetActive(false);
+        Tree.BodyParts.MinigameCircle.SetActive(false);
+        Tree.BodyParts.LeftArm.SetActive(true);
+        Tree.BodyParts.RightArm.SetActive(true);
+        Tree.BodyParts.EatenNPC.SetActive(false);
         
         ChangeSpritesToDirection(Vector2.zero);
     }
