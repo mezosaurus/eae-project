@@ -1528,6 +1528,7 @@ GameObject:
   - 114: {fileID: 175926698}
   - 114: {fileID: 175926699}
   - 82: {fileID: 175926700}
+  - 114: {fileID: 175926701}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1698,6 +1699,18 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &175926701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 175926691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5b947123433ac45a6fe9e7daea21a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: .300000012
 --- !u!1001 &178723333
 Prefab:
   m_ObjectHideFlags: 0
@@ -9416,6 +9429,8 @@ MonoBehaviour:
   scene: 0
   sound: {fileID: 8300000, guid: 6e380fe9fb8e7584184191e2e942a638, type: 3}
   changeScene: 1
+  selected: 0
+  fadeTime: 0
 --- !u!4 &768096825
 Transform:
   m_ObjectHideFlags: 0
@@ -18658,6 +18673,8 @@ MonoBehaviour:
   scene: 0
   sound: {fileID: 8300000, guid: 6e380fe9fb8e7584184191e2e942a638, type: 3}
   changeScene: 1
+  selected: 0
+  fadeTime: 0
 --- !u!1 &1002917923
 GameObject:
   m_ObjectHideFlags: 0
@@ -35554,7 +35571,12 @@ MonoBehaviour:
       MoveRight: {fileID: 21300000, guid: 2ce32937994109a4c945b9a377fb6d04, type: 3}
       Crazy: {fileID: 21300000, guid: 6522873dd1dc7df4f8b873ebce208c89, type: 3}
     LegsStill: {fileID: 21300000, guid: 1865e4d27e8411346aa3a051ef12e76b, type: 3}
-    MinigameCircle: []
+    EatingMinigame:
+      Circle: []
+      LS: {fileID: 0}
+      RS: {fileID: 0}
+  Prefabs:
+    ThumbStick: {fileID: 0}
 --- !u!1 &1594208703
 GameObject:
   m_ObjectHideFlags: 0
@@ -40706,6 +40728,8 @@ MonoBehaviour:
   scene: 3
   sound: {fileID: 8300000, guid: 6e380fe9fb8e7584184191e2e942a638, type: 3}
   changeScene: 1
+  selected: 0
+  fadeTime: 0
 --- !u!4 &1919926969
 Transform:
   m_ObjectHideFlags: 0
