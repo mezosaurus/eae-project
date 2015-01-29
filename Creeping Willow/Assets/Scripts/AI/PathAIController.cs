@@ -3,14 +3,6 @@ using System.Collections;
 
 public class PathAIController : AIController 
 {
-	private string walkingKey = "direction";
-
-	private enum WalkingDirection
-	{
-		STILL = 0,
-		MOVING = 1,
-	}
-
 	new void Start()
 	{
 		base.Start ();
@@ -85,4 +77,17 @@ public class PathAIController : AIController
 			}
 		}
 	}
+
+	protected override void alert()
+	{
+		base.alert ();
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
+	}
+
+	override protected void panic()
+	{
+		base.panic ();
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING);
+	}
 }
+

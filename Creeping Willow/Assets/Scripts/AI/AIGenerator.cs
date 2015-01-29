@@ -12,7 +12,7 @@ public class AIGenerator : GameBehavior
 	public string benchTag = "Bench";
 	public float spawnTime;
 	
-	private int numberOfNPCs = 2;	// Decremented to 2 for no wander AI
+	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
 	private GameObject[] spawnPoints;
 	
@@ -21,7 +21,8 @@ public class AIGenerator : GameBehavior
 	private ArrayList pathAIList;
 	private ArrayList wanderAIList;
 	private ArrayList enemyAIList;
-	
+	private ArrayList critterAIList;
+		
 	void Start()
 	{
 		spawnPoints = GameObject.FindGameObjectsWithTag(spawnTag);
@@ -30,7 +31,8 @@ public class AIGenerator : GameBehavior
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
 		enemyAIList = new ArrayList ();
-		
+		critterAIList = new ArrayList ();
+
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
 		MessageCenter.Instance.RegisterListener (MessageType.NotorietyMaxed, NotorietyMeterListener);
 		initMap ();
@@ -68,8 +70,6 @@ public class AIGenerator : GameBehavior
 			SubpathScript movePath = path.GetComponent<SubpathScript>();
 			Vector2 pathPos = movePath.transform.position;
 			createPathNPC(pathPos);
-			//GameObject newPathNPC = createNPC(this.pathNPC, pathAIList, pathPos);
-			//newPathNPC.GetComponent<PathAIController>().setMovingPath(movePath);
 		}
 		//3 bench npcs
 		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
@@ -93,10 +93,15 @@ public class AIGenerator : GameBehavior
 			Debug.Log ("STATIONARY ERROR");
 			return false;
 		}
-		
+
+		if (wanderAIList == null) {
+			Debug.Log ("WANDER ERROR");
+			return false;
+		}
+
 		if (pathAIList.Count >= maxNumberOfEachNPC
 		    && stationaryAIList.Count >= maxNumberOfEachNPC
-		    //		    && wanderAIList.Count >= maxNumberOfEachNPC	// Taken out for basic build
+		    && wanderAIList.Count >= maxNumberOfEachNPC
 		    )
 			return false;
 		
@@ -164,21 +169,14 @@ public class AIGenerator : GameBehavior
 		SubpathScript movePath = GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
 		newNPC.GetComponent<PathAIController>().setMovingPath(movePath);
 
-		GameObject skin;
 		if (Random.Range(0,2) == 0)
 		{
-			skin = (GameObject)Instantiate (Resources.Load ("prefabs/AI/NPCSkinPrefabs/bopper_skin"));
-			newNPC.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
-			newNPC.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+			loadNPCWithSkin(newNPC, "bopper_skin");
 		}
 		else
 		{
-			skin = (GameObject)Instantiate (Resources.Load ("prefabs/AI/NPCSkinPrefabs/mower_skin"));
-			newNPC.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
-			// NOT functional yet
-			newNPC.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+			loadNPCWithSkin(newNPC, "mower_skin");
 		}
-		Destroy (skin);
 	}
 
 	void createStationaryNPC()
@@ -192,9 +190,20 @@ public class AIGenerator : GameBehavior
 	
 	void createWanderNPC()
 	{
-		GameObject wanderNPC = createNPC(this.wanderNPC, wanderAIList);
+		Debug.Log ("Created Hippie");
+		GameObject newNPC = createNPC(this.wanderNPC, wanderAIList);
+		loadNPCWithSkin(newNPC, "hippie_skin");
 	}
-	
+
+	void loadNPCWithSkin(GameObject npc, string skinName)
+	{
+		string skinLoc = "prefabs/AI/NPCSkinPrefabs/" + skinName;
+		GameObject skin = (GameObject)Instantiate (Resources.Load (skinLoc));
+		npc.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
+		npc.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+		Destroy (skin);
+	}
+
 	void createEnemyNPC(Vector3 panickedPosition)
 	{
 		if (enemyAIList.Count > 15)
@@ -205,7 +214,12 @@ public class AIGenerator : GameBehavior
 		panickedPoint.transform.position = panickedPosition;
 		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedPoint);
 	}
-	
+
+	void createCritterNPC()
+	{
+		//
+	}
+
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
 	{
 		GameObject npc = (GameObject)Instantiate (NPC, getRandomSpawnPoint (), Quaternion.identity);

@@ -20,6 +20,14 @@ public class AIController : GameBehavior {
 	public string spawnTag = "Respawn";
 	public string npcTag = "NPC";
 
+	// Global Keys
+	protected string walkingKey = "direction";
+	protected enum WalkingDirection
+	{
+		STILL = 0,
+		MOVING = 1,
+	}
+
 	// NPC variables
 	//public float nourishment = 1;			// Nourishment for player goal (Not currently Implemented)
 	public float lurePower = 3;
