@@ -3,20 +3,26 @@ using System.Collections;
 
 public class AIGenerator : GameBehavior 
 {
+	// AI Prefabs
 	public GameObject pathNPC;
 	public GameObject stationaryNPC;
 	public GameObject wanderNPC;
 	public GameObject enemyNPC;
+	public GameObject critterNPC;
+	public int maxNumberOfEachNPC = 1;
+
 	public string spawnTag = "Respawn";
 	public string pathTag = "Paths";
 	public string benchTag = "Bench";
+	public string critterSpawnTag = "CritterSpawn";
 	public float spawnTime;
-	
+	public float critterSpawnTime;
+
 	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
 	private GameObject[] spawnPoints;
-	
-	public int maxNumberOfEachNPC = 1;
+
+	private float lastCritterTime; 
 	private ArrayList stationaryAIList;
 	private ArrayList pathAIList;
 	private ArrayList wanderAIList;
@@ -57,6 +63,12 @@ public class AIGenerator : GameBehavior
 		{
 			lastSpawnTime = Time.time;
 			createNewNPC();
+		}
+
+		if (false && lastCritterTime <= Time.time - critterSpawnTime)
+		{
+			lastCritterTime = Time.time;
+			createCritterNPC();
 		}
 	}
 	
@@ -217,7 +229,14 @@ public class AIGenerator : GameBehavior
 
 	void createCritterNPC()
 	{
-		//
+		GameObject newNPC = createNPC (this.critterNPC, critterAIList);
+		GameObject profile = getRandomCritterProfile ();
+	}
+
+	GameObject getRandomCritterProfile()
+	{
+		GameObject profile = (GameObject)Instantiate (Resources.Load ("prefabs/AI/Critters/Profiles/test"));
+		return profile;
 	}
 
 	GameObject createNPC(GameObject NPC, ArrayList aiList)

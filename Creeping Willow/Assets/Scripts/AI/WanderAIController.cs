@@ -10,15 +10,18 @@ public class WanderAIController : AIController {
 	private float nextMoveTime;
     private Vector2 pathPosition;
 	private bool isOnPath;
+	private GameObject[] wanderPoints;
 		
 	new void Start()
 	{
 		base.Start ();
 		float time = Time.time;
 		nextMoveTime = time + waitTime;
-		pathPosition = getRandomWanderPoint();
+		wanderPoints = GameObject.FindGameObjectsWithTag(spawnTag);
+
 		isOnPath = true;
 		nextPath = new GameObject();
+		pathPosition = getRandomWanderPoint();
 	}
 	
 	protected override void GameUpdate () 
@@ -116,8 +119,8 @@ public class WanderAIController : AIController {
 
 	Vector2 getRandomWanderPoint()
 	{
-		// TODO: find all 'wander' points.
-		return Vector2.zero;
+		int rand = Random.Range (0, wanderPoints.Length);
+		return wanderPoints [rand].transform.position;
 	}
 
 	protected override void alert()
