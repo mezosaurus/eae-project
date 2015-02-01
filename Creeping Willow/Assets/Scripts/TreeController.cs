@@ -819,11 +819,7 @@ public class TreeController : GameBehavior
     {
         if((state == Tree.State.Eating || state == Tree.State.AxeManMinigame) && !phase1)
         {
-            int width = Textures.Buttons[0].width;
-            int height = Textures.Buttons[0].height;
-            Vector3 position = Camera.main.WorldToScreenPoint(progressBar.transform.position);
-
-            GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (256f * transform.localScale.y), width, height), Textures.Buttons[button]);
+            
         }
     }
 }

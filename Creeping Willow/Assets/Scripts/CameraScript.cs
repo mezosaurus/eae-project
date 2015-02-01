@@ -2,10 +2,6 @@
 using System.Collections;
 using System.Linq;
 
-#if UNITY_EDITOR
-using UnityEngine;
-#endif
-
 [ExecuteInEditMode]
 public class CameraScript : MonoBehaviour
 {

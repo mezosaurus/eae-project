@@ -4,6 +4,7 @@ using System.Collections;
 public class WanderAIController : AIController {
 
 	public float waitTime;
+	public string wanderTag = "Wander";
 
 	private float previousMovement;
 	private int moveCounter;
@@ -17,7 +18,7 @@ public class WanderAIController : AIController {
 		base.Start ();
 		float time = Time.time;
 		nextMoveTime = time + waitTime;
-		wanderPoints = GameObject.FindGameObjectsWithTag(spawnTag);
+		wanderPoints = GameObject.FindGameObjectsWithTag(wanderTag);
 
 		isOnPath = true;
 		nextPath = new GameObject();
@@ -31,14 +32,14 @@ public class WanderAIController : AIController {
 			return;
 		}
 
-		if (Time.time >= nextMoveTime)
-		{
-			nextMoveTime = Time.time + waitTime;
-			move ();
-		}
-		else if (isOnPath)
+		if (isOnPath)
 		{
 			move();
+		}
+		else if (Time.time >= nextMoveTime)
+		{
+			nextMoveTime = Time.time + waitTime * 15;
+			move ();
 		}
 	}
 
@@ -47,7 +48,7 @@ public class WanderAIController : AIController {
 		if (!isOnPath)
 		{
 			isOnPath = true;
-			pathPosition = Random.insideUnitCircle * 2;
+			pathPosition = pathPosition + Random.insideUnitCircle * 2;
 			nextPath.transform.position = pathPosition;
 		}
 
@@ -85,11 +86,13 @@ public class WanderAIController : AIController {
 			if (killSelf)
 				destroyNPC();
 			
-			int max = 10;
+			int max = 5;
 			int rand = Random.Range (0, max);
 			if (rand < max - 1)
 			{
+				nextMoveTime = Time.time + waitTime;
 				isOnPath = false;
+				setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
 			}
 			else
 			{

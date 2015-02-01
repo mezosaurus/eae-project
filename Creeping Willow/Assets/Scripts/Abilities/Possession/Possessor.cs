@@ -35,51 +35,48 @@ public class Possessor : GameBehavior {
 
 	protected virtual void HandleInput(){
 		if(!possessing){
-
-			GameObject player = GameObject.Find ("Player");
 			Vector3 prevPosition = transform.position;
 			Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
 			velocity = velocity * speed * Time.deltaTime;
 			transform.position += (Vector3) velocity;
-			
-			if (Vector3.Distance (player.transform.position, transform.position) > 12) {
-				transform.position = prevPosition;
-			}
 		}
 
 		if(Input.GetButtonDown("B")){
 			if(possessing){
-				MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
+				//MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
 				Possessable possessable = objectToPossess.GetComponent<Possessable>();
 				possessable.exorcise();
 				possessing = false;
-				ExitPossession();
+				MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
+				SpriteRenderer face = this.gameObject.GetComponent<SpriteRenderer>();
+				face.color = new Color(1f, 1f, 1f, 1f);
+				//ExitPossession();
 			}
 		}
 
-		if (Input.GetButtonUp("A")) {
+		if (Input.GetButtonDown("A")) {
 			if(!possessing){
 				if(objectToPossess != null){
 					Possessable possessable = objectToPossess.GetComponent<Possessable>();
 					possessable.possess();
 					possessing = true;
+					MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
 					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+					SpriteRenderer face = this.gameObject.GetComponent<SpriteRenderer>();
+					face.color = new Color(1f, 1f, 1f, 0f);
+
 					Color color = Color.white;
 					if(colors.TryGetValue("opaque", out color)){
 						renderer.color = color;
 					}
-				}else{
-                    MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
-					ExitPossession();
 				}
 			}
 		}
 		
-		if (Input.GetButtonDown("A")) {
+		if (Input.GetAxis("LT") > 0.2f) {
 			if(possessing){
 				Possessable possessable = objectToPossess.GetComponent<Possessable>();
 				possessable.useAbility();
-				ExitPossession();
 			}
 		}
 	}

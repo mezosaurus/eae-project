@@ -231,6 +231,7 @@ public class AIGenerator : GameBehavior
 	{
 		GameObject newNPC = createNPC (this.critterNPC, critterAIList);
 		GameObject profile = getRandomCritterProfile ();
+		//TODO: profile stuff
 	}
 
 	GameObject getRandomCritterProfile()

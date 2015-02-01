@@ -35,16 +35,16 @@ public class SpriteSortingScript : MonoBehaviour
 
         for (int i = 0; i < sprites.Length; i++)
         {            
-            if (sprites[i].gameObject.tag == "Player") { j += 8; player = i; }
+            if (sprites[i].gameObject.tag == "PlayerBody") { j += 8; player = i; }
 
             sprites[i].sortingOrder = j++;
 
-            if (sprites[i].gameObject.tag == "Player") j += 8;
+            if (sprites[i].gameObject.tag == "PlayerBody") j += 8;
         }
 
         if (Application.isPlaying)
         {
-        	if (player >= 0) sprites[player].GetComponent<TreeController>().UpdateSorting();
+        	if (player >= 0) sprites[player].transform.parent.GetComponent<PossessableTree>().UpdateSorting();
         }
     }
 #if UNITY_EDITOR

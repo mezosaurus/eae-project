@@ -9,7 +9,7 @@ public abstract class Possessable : GameBehavior {
 	bool needToSend = false;
 	public AudioClip actionSound;
 
-	void Start(){
+	protected virtual void Start(){
 		baseX = transform.position.x;
 		baseY = transform.position.y;
 		possessed = false;
@@ -17,7 +17,7 @@ public abstract class Possessable : GameBehavior {
 		MessageCenter.Instance.RegisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
 	}
 
-	void OnDestroy()
+	protected virtual void OnDestroy()
 	{
 		MessageCenter.Instance.UnregisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
 		MessageCenter.Instance.UnregisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
@@ -28,7 +28,7 @@ public abstract class Possessable : GameBehavior {
 		if(!acting){
 			if(needToSend)
 			{
-				MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
+				//MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
 				needToSend = false;
 			}
 		}
