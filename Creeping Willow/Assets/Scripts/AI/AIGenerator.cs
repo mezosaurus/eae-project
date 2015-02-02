@@ -67,7 +67,7 @@ public class AIGenerator : GameBehavior
 			createNewNPC();
 		}
 
-		if (lastCritterTime <= Time.time - critterSpawnTime)
+		if (lastCritterTime <= Time.time - critterSpawnTime && (critterAIList.Count < maxNumberOfEachNPC))
 		{
 			lastCritterTime = Time.time;
 			createCritterNPC();
@@ -267,6 +267,8 @@ public class AIGenerator : GameBehavior
 			wanderAIList.Remove(NPC);
 		else if (enemyAIList.Contains(NPC)) 
 			enemyAIList.Remove(NPC);
+		else if (critterAIList.Contains(NPC))
+			critterAIList.Remove(NPC);
 	}
 	
 	// For use when updating spawn points to 'gates'

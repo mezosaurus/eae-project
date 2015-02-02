@@ -14,6 +14,7 @@ public class CritterController : AIController {
 
 	new void Start()
 	{
+		Debug.Log ("start");
 		base.Start ();
 		float time = Time.time;
 		nextMoveTime = time + waitTime;
@@ -31,12 +32,11 @@ public class CritterController : AIController {
 		
 		if (isOnPath)
 		{
-			Debug.Log ("continue");
 			move();
 		}
-		else if (Time.time >= nextMoveTime)
+		else if (!killSelf && Time.time >= nextMoveTime)
 		{
-			Debug.Log ("start");
+			Debug.Log ("new path");
 			nextMoveTime = Time.time + waitTime * 15;
 			move ();
 		}
@@ -95,8 +95,10 @@ public class CritterController : AIController {
 			}
 			else
 			{
+				Debug.Log("kill");
 				killSelf = true;
-				pathPosition = getLeavingPath().transform.position;
+				isOnPath = true;
+				pathPosition = spawnPosition;
 				nextPath.transform.position = pathPosition;
 			}
 		}
