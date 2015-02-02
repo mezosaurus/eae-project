@@ -21,6 +21,7 @@ public class AIGenerator : GameBehavior
 	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
 	private GameObject[] spawnPoints;
+	private GameObject[] critterSpawnPoints;
 
 	private float lastCritterTime; 
 	private ArrayList stationaryAIList;
@@ -32,7 +33,8 @@ public class AIGenerator : GameBehavior
 	void Start()
 	{
 		spawnPoints = GameObject.FindGameObjectsWithTag(spawnTag);
-		
+		critterSpawnPoints = GameObject.FindGameObjectsWithTag (critterSpawnTag);
+
 		stationaryAIList = new ArrayList ();
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
@@ -65,7 +67,7 @@ public class AIGenerator : GameBehavior
 			createNewNPC();
 		}
 
-		if (false && lastCritterTime <= Time.time - critterSpawnTime)
+		if (lastCritterTime <= Time.time - critterSpawnTime)
 		{
 			lastCritterTime = Time.time;
 			createCritterNPC();
@@ -202,18 +204,8 @@ public class AIGenerator : GameBehavior
 	
 	void createWanderNPC()
 	{
-		Debug.Log ("Created Hippie");
 		GameObject newNPC = createNPC(this.wanderNPC, wanderAIList);
 		loadNPCWithSkin(newNPC, "hippie_skin");
-	}
-
-	void loadNPCWithSkin(GameObject npc, string skinName)
-	{
-		string skinLoc = "prefabs/AI/NPCSkinPrefabs/" + skinName;
-		GameObject skin = (GameObject)Instantiate (Resources.Load (skinLoc));
-		npc.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
-		npc.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
-		Destroy (skin);
 	}
 
 	void createEnemyNPC(Vector3 panickedPosition)
@@ -229,15 +221,11 @@ public class AIGenerator : GameBehavior
 
 	void createCritterNPC()
 	{
-		GameObject newNPC = createNPC (this.critterNPC, critterAIList);
-		GameObject profile = getRandomCritterProfile ();
-		//TODO: profile stuff
-	}
-
-	GameObject getRandomCritterProfile()
-	{
-		GameObject profile = (GameObject)Instantiate (Resources.Load ("prefabs/AI/Critters/Profiles/test"));
-		return profile;
+		int rand = Random.Range (0, critterSpawnPoints.Length);
+		Vector2 pos = critterSpawnPoints [rand].transform.position;
+		GameObject newNPC = createNPC (this.critterNPC, critterAIList, pos);
+		newNPC.GetComponent<CritterController> ().setSpawnPosition (pos);
+		loadNPCWithSkin (newNPC, "Critters/testSkin");
 	}
 
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
@@ -253,8 +241,16 @@ public class AIGenerator : GameBehavior
 		aiList.Add (npc);
 		return npc;
 	}
-	
-	
+		
+	void loadNPCWithSkin(GameObject npc, string skinName)
+	{
+		string skinLoc = "prefabs/AI/NPCSkinPrefabs/" + skinName;
+		GameObject skin = (GameObject)Instantiate (Resources.Load (skinLoc));
+		npc.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
+		npc.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+		Destroy (skin);
+	}
+
 	void NPCDestroyListener(Message message)
 	{
 		NPCDestroyedMessage npcMessage = message as NPCDestroyedMessage;
