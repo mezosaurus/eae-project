@@ -96,14 +96,17 @@ public class IntroScript : MonoBehaviour
 			currentIntro++;
 		}
 
-		if( currentIntro >= 5 )
+		if( currentIntro >= 5 ) 
+		{
 			startBattle();
+		}
 	}
 
 	private void startBattle()
 	{
 		GlobalGameStateManager.LevelState = LevelState.INLEVEL;
 		this.enabled = false;
+		MessageCenter.Instance.Broadcast (new LevelStartMessage (LevelStartType.Start));
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
 		//MessageCenter.Instance.Broadcast( new LevelFinishedMessage( LevelFinishedType.Win, LevelFinishedReason.NumNPCsEaten ) );
 	}

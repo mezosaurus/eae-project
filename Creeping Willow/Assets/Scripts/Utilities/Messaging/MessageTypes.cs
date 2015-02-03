@@ -24,6 +24,7 @@ public enum MessageType
 	NotorietyMaxed,
 	ScoreChanged,
 	LevelFinished,
+	LevelStart,
     CameraChangedObjectFollowed,
 	PlayerKilled,
 	NPCPanickedOffMap,

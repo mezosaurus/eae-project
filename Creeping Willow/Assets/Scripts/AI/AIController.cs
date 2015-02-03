@@ -54,6 +54,10 @@ public class AIController : GameBehavior {
 	public bool killSelf = false;
 	protected bool enteredMap;
 
+	// Pre-population variables
+	public int numPathStart;
+	public int numStationaryStart;
+
 	// Scene variables
 	protected Lure lastLure;
 	protected GameObject player;

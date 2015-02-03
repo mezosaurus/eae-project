@@ -931,6 +931,7 @@ public class ScoreScript : MonoBehaviour {
 		MessageCenter.Instance.RegisterListener (MessageType.NPCCreated, HandleNPCCreated);
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, HandleNPCDestroyed);
 		MessageCenter.Instance.RegisterListener (MessageType.LevelFinished, HandleLevelFinished);
+		MessageCenter.Instance.RegisterListener (MessageType.LevelStart, HandleLevelStart);
 	}
 	
 	void UnregisterListeners()
@@ -1161,28 +1162,6 @@ public class ScoreScript : MonoBehaviour {
 			return;
 		
 		BountyNPC = mess.NPC;
-		ParticleSystem ps = BountyNPC.GetComponent<ParticleSystem> ();
-		ps.Play ();
-		
-		
-		// used to convert from sprite sheet to current sprite
-		Sprite sprite = mess.NPC.GetComponent<SpriteRenderer> ().sprite;
-		Color[] pixels = sprite.texture.GetPixels (
-			(int)sprite.textureRect.x, 
-			(int)sprite.textureRect.y, 
-			(int)sprite.textureRect.width, 
-			(int)sprite.textureRect.height
-			);
-		
-		BountyNPCImage = new Texture2D ((int)sprite.rect.width, (int)sprite.rect.height);
-		
-		BountyNPCImage.SetPixels (pixels);
-		BountyNPCImage.Apply ();
-		
-		//BountyNPCImage = mess.NPC.GetComponent<SpriteRenderer> ().sprite.texture;
-		
-		bountyState = (int)BountyState.BOUNTY_SHOWING;
-		bountyRaised = true;
 	}
 	
 	
@@ -1201,4 +1180,32 @@ public class ScoreScript : MonoBehaviour {
 			}
 		}
 	}
+
+	void HandleLevelStart(Message message)
+	{
+		LevelStartMessage msg = message as LevelStartMessage;
+		ParticleSystem ps = BountyNPC.GetComponent<ParticleSystem> ();
+		ps.Play ();
+		
+		
+		// used to convert from sprite sheet to current sprite
+		Sprite sprite = BountyNPC.GetComponent<SpriteRenderer> ().sprite;
+		Color[] pixels = sprite.texture.GetPixels (
+			(int)sprite.textureRect.x, 
+			(int)sprite.textureRect.y, 
+			(int)sprite.textureRect.width, 
+			(int)sprite.textureRect.height
+			);
+		
+		BountyNPCImage = new Texture2D ((int)sprite.rect.width, (int)sprite.rect.height);
+		
+		BountyNPCImage.SetPixels (pixels);
+		BountyNPCImage.Apply ();
+		
+		//BountyNPCImage = mess.NPC.GetComponent<SpriteRenderer> ().sprite.texture;
+		
+		bountyState = (int)BountyState.BOUNTY_SHOWING;
+		bountyRaised = true;
+	}
+
 }
