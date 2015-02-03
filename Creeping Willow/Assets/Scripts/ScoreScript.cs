@@ -168,8 +168,17 @@ public class ScoreScript : MonoBehaviour {
 	int currentMultiplier = 1;
 	int multiplierPoints = 0;
 	int popupMultiplier = 0;
-	
-	
+
+	// multiplier timers
+	float lastMultiplierTime;
+	float currentMultiplierTime;
+	readonly float multiplierTimeLength = 5;
+
+	// multiplier sliders
+	bool multiplierIsChanging = false;
+	int prevValue;
+	int newValue;
+	float multiplierSliderTime = 1;
 	
 	
 	// Use this for initialization
@@ -209,6 +218,8 @@ public class ScoreScript : MonoBehaviour {
 		
 		// mult variabes
 		multLength = Screen.width / 5;
+		lastMultiplierTime = Time.time;
+		currentMultiplierTime = Time.time;
 	}
 	
 	
@@ -286,6 +297,7 @@ public class ScoreScript : MonoBehaviour {
 		
 		// multiplier updates
 		currentMultiplier = 1 + multiplierPoints / multIncre;
+		updateMultiplier ();
 		
 		// update bounty texture; NOTE: Framerate issues
 		/*if(		 BountyNPC != null && bountyState != (int)BountyState.BOUNTY_HIDDEN )
@@ -762,11 +774,25 @@ public class ScoreScript : MonoBehaviour {
 		/***** Score Multiplier GUI *****/
 		
 		myStyle.fontSize = 50;
-		
-		GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
-		GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
-		if( multiplierPoints % multIncre != 0 )
-			GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+
+		if( multiplierIsChanging )
+		{
+			GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
+			GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
+			if( multiplierPoints % multIncre != 0 )
+				GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+
+			// change(slide) data
+
+
+		}
+		else
+		{
+			GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
+			GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
+			if( multiplierPoints % multIncre != 0 )
+				GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+		}
 		
 		
 	}
@@ -780,15 +806,27 @@ public class ScoreScript : MonoBehaviour {
 	// update multiplier
 	void addMultiplier(int num)
 	{
+		prevValue = multiplierPoints;
+		newValue = multiplierPoints + num;
+
 		multiplierPoints += num;
 		scoreDisplay = true;
 		popupMultiplier = num;
 		multiplierQueue.Enqueue (num);
+
+		lastMultiplierTime = Time.time;
+		multiplierIsChanging = true;
 	}
-	
+
+	// subtract a portion of multiplier
 	void subMultiplier(int num)
 	{
+		prevValue = multiplierPoints;
+		newValue = multiplierPoints - num;
 		multiplierPoints -= num;
+
+		lastMultiplierTime = Time.time;
+		multiplierIsChanging = true;
 	}
 	
 	// reset multiplier
@@ -796,13 +834,29 @@ public class ScoreScript : MonoBehaviour {
 	{
 		multiplierPoints = 0;
 	}
-	
-	
+
+	// decrement multiplierPoints
+	void updateMultiplier()
+	{
+		if( multiplierPoints <= 0 )
+			return;
+
+		currentMultiplierTime = Time.time;
+
+		if( currentMultiplierTime - lastMultiplierTime > multiplierTimeLength )
+		{
+			subMultiplier(1);
+			lastMultiplierTime = Time.time;
+		}
+	}
+
 	// add a score
 	void addScore(int score)
 	{
 		_score += score;
 	}
+
+
 	
 	
 	// save new high score
