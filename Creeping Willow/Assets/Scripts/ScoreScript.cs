@@ -166,7 +166,7 @@ public class ScoreScript : MonoBehaviour {
 	float multLength;
 	float multHeight = 30;
 	int currentMultiplier = 1;
-	int multiplierPoints = 0;
+	int multiplierPoints = 15;
 	int popupMultiplier = 0;
 
 	// multiplier timers
@@ -176,8 +176,8 @@ public class ScoreScript : MonoBehaviour {
 
 	// multiplier sliders
 	bool multiplierIsChanging = false;
-	int prevValue;
-	int newValue;
+	float prevValue;
+	float newValue;
 	float multiplierSliderTime = 1;
 	
 	
@@ -236,7 +236,7 @@ public class ScoreScript : MonoBehaviour {
 				// check input
 				if (initials.Length == 3) 
 				{
-					if (Input.GetButtonDown ("A")) 
+					if (Input.GetButtonDown ("A"))
 					{
 						updateHighScores (_score, initials);
 						GlobalGameStateManager.highscores = highscores;
@@ -775,26 +775,32 @@ public class ScoreScript : MonoBehaviour {
 		
 		myStyle.fontSize = 50;
 
+		GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
+		GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
+
 		if( multiplierIsChanging )
 		{
-			GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
-			GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
-			if( multiplierPoints % multIncre != 0 )
-				GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
-
 			// change(slide) data
+			if( Time.time - lastMultiplierTime <= multiplierSliderTime )
+			{
+				float timeRatio = (Time.time - lastMultiplierTime) / multiplierSliderTime;
+				float tempRatio = (newValue - prevValue) * timeRatio;
 
+				GUI.Box (new Rect (multXOffset, multYOffset+2, ((prevValue + tempRatio) % (float)multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+			}
+			else
+			{
+				multiplierIsChanging = false;
 
+				if( multiplierPoints % multIncre != 0 )
+					GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+			}
 		}
 		else
 		{
-			GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
-			GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
 			if( multiplierPoints % multIncre != 0 )
 				GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
 		}
-		
-		
 	}
 	
 	
@@ -806,7 +812,10 @@ public class ScoreScript : MonoBehaviour {
 	// update multiplier
 	void addMultiplier(int num)
 	{
-		prevValue = multiplierPoints;
+		if( multiplierIsChanging )
+			prevValue = prevValue + (newValue - prevValue) * ( (Time.time - lastMultiplierTime) / multiplierSliderTime );
+		else
+			prevValue = multiplierPoints;
 		newValue = multiplierPoints + num;
 
 		multiplierPoints += num;
@@ -821,7 +830,10 @@ public class ScoreScript : MonoBehaviour {
 	// subtract a portion of multiplier
 	void subMultiplier(int num)
 	{
-		prevValue = multiplierPoints;
+		if( multiplierIsChanging )
+			prevValue = prevValue + (newValue - prevValue) * ( (Time.time - lastMultiplierTime) / multiplierSliderTime );
+		else
+			prevValue = multiplierPoints;
 		newValue = multiplierPoints - num;
 		multiplierPoints -= num;
 
@@ -843,6 +855,7 @@ public class ScoreScript : MonoBehaviour {
 
 		currentMultiplierTime = Time.time;
 
+		// subtract from multiplier if no recent updates to the multiplier
 		if( currentMultiplierTime - lastMultiplierTime > multiplierTimeLength )
 		{
 			subMultiplier(1);
