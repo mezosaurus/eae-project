@@ -8,13 +8,15 @@ public class InteractiveMenuController : MonoBehaviour
 	private enum MenuPosition
 	{
 		MainGate,
+		LevelSelect,
 		Options,
 		Scores,
-		LevelSelect,
 	}
 
 	public Button[] mainButtons;
 	public Button[] levelButtons;
+	public Button[] scoresButtons;
+	public Button[] optionsButtons;
 	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
@@ -51,10 +53,25 @@ public class InteractiveMenuController : MonoBehaviour
 
 	void OnDestroy() {}
 
+	private void DisableAllButtons()
+	{
+		foreach( Button button in mainButtons )
+			button.interactable = false;
+		
+		foreach( Button button in levelButtons )
+			button.interactable = false;
+		
+		foreach( Button button in scoresButtons )
+			button.interactable = false;
+
+		foreach( Button button in optionsButtons )
+			button.interactable = false;
+	}
+
 	public void GoToMainMenu()
 	{
 		// Get rid of all other buttons
-		HideLevelMenu();
+		DisableAllButtons();
 
 		// Show all the buttons
 		foreach( Button button in mainButtons )
@@ -69,16 +86,10 @@ public class InteractiveMenuController : MonoBehaviour
 		elapsedZoomTime = 0.0f;
 	}
 
-	private void HideMainMenu()
-	{
-		foreach( Button button in mainButtons )
-			button.interactable = false;
-	}
-
 	public void GoToLevelSelect()
 	{
 		// Get rid of all other buttons
-		HideMainMenu();
+		DisableAllButtons();
 
 		// Show all the buttons
 		foreach( Button button in levelButtons )
@@ -93,16 +104,16 @@ public class InteractiveMenuController : MonoBehaviour
 		elapsedZoomTime = 0.0f;
 	}
 
-	private void HideLevelMenu()
-	{
-		foreach( Button button in levelButtons )
-			button.interactable = false;
-	}
-
 	public void GoToHighScores()
 	{
 		// Get rid of all other buttons
-		HideMainMenu();
+		DisableAllButtons();
+
+		// Show all the buttons
+		foreach( Button button in scoresButtons )
+			button.interactable = true;
+		
+		EventSystem.current.SetSelectedGameObject( scoresButtons[ 0 ].gameObject );
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( 8, -2, -5 );
@@ -114,7 +125,13 @@ public class InteractiveMenuController : MonoBehaviour
 	public void GoToOptions()
 	{
 		// Get rid of all other buttons
-		HideMainMenu();
+		DisableAllButtons();
+
+		// Show all the buttons
+		foreach( Button button in optionsButtons )
+			button.interactable = true;
+		
+		EventSystem.current.SetSelectedGameObject( optionsButtons[ 0 ].gameObject );
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( -8, -2, -5 );
@@ -154,6 +171,14 @@ public class InteractiveMenuController : MonoBehaviour
 					EventSystem.current.SetSelectedGameObject( levelButtons[ 0 ].gameObject );
 					break;
 
+				case MenuPosition.Scores:
+					EventSystem.current.SetSelectedGameObject( scoresButtons[ 0 ].gameObject );
+					break;
+
+				case MenuPosition.Options:
+					EventSystem.current.SetSelectedGameObject( optionsButtons[ 0 ].gameObject );
+					break;
+
 				default:
 					break;
 				}
@@ -188,6 +213,12 @@ public class InteractiveMenuController : MonoBehaviour
 			button.OnDeselect( new BaseEventData( EventSystem.current ) );
 
 		foreach( Button button in levelButtons )
+			button.OnDeselect( new BaseEventData( EventSystem.current ) );
+
+		foreach( Button button in scoresButtons )
+			button.OnDeselect( new BaseEventData( EventSystem.current ) );
+
+		foreach( Button button in optionsButtons )
 			button.OnDeselect( new BaseEventData( EventSystem.current ) );
 	}
 

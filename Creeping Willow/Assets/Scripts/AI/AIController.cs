@@ -20,6 +20,14 @@ public class AIController : GameBehavior {
 	public string spawnTag = "Respawn";
 	public string npcTag = "NPC";
 
+	// Global Keys
+	protected string walkingKey = "direction";
+	protected enum WalkingDirection
+	{
+		STILL = 0,
+		MOVING = 1,
+	}
+
 	// NPC variables
 	//public float nourishment = 1;			// Nourishment for player goal (Not currently Implemented)
 	public float lurePower = 3;
@@ -40,7 +48,7 @@ public class AIController : GameBehavior {
 	public bool lured;
 	protected bool playerInRange;
     protected bool nearWall;
-	protected bool killSelf = false;
+	public bool killSelf = false;
 	protected bool enteredMap;
 
 	// Scene variables
@@ -224,7 +232,7 @@ public class AIController : GameBehavior {
 		if (other.tag == "Player") 
 		{
 			playerInRange = true;
-			TreeController script = player.GetComponent<TreeController>();
+			TreeController script = other.gameObject.GetComponent<TreeController>();
 			if (script != null && script.state != Tree.State.Normal)
 			{
 				panic ();
@@ -287,7 +295,7 @@ public class AIController : GameBehavior {
 		
 		if (playerInRange)
 		{
-			Vector2 playerSpeed = player.rigidbody2D.velocity;
+			Vector2 playerSpeed = getPlayer().rigidbody2D.velocity;
 			if (playerSpeed == Vector2.zero && alertLevel > 0)
 			{
 				decrementAlertLevel();
@@ -349,7 +357,8 @@ public class AIController : GameBehavior {
 
 			return true;
 		}
-		
+
+		player = getPlayer ();
 		if (checkForPlayer() && player.rigidbody2D != null && player.rigidbody2D.velocity != Vector2.zero)
 		{
 			if (NPCHandleSeeingPlayer())
@@ -426,7 +435,7 @@ public class AIController : GameBehavior {
 	
 	private void increaseAlertLevel(float sensitivity)
 	{
-		var playerSpeed = player.rigidbody2D.velocity;
+		var playerSpeed = getPlayer().rigidbody2D.velocity;
 		alertLevel += playerSpeed.magnitude * detectLevel * sensitivity;
 	}
 	
@@ -453,7 +462,7 @@ public class AIController : GameBehavior {
 		alertTexture.renderer.enabled = true;
 		alerted = true;
 		broadcastAlertLevelChanged(AlertLevelType.Alert);
-		Vector3 direction = player.transform.position - gameObject.transform.position;
+		Vector3 direction = getPlayer ().transform.position - gameObject.transform.position;
 		if (direction.x > 0)
 			flipXScale (true);
 		else
@@ -473,7 +482,7 @@ public class AIController : GameBehavior {
 		panickedPos = gameObject.transform.position;
 		//panicTime = Time.time;
 		//timePanicked = panicCooldownSeconds;
-		moveDir = transform.position - player.transform.position;
+		moveDir = transform.position - getPlayer().transform.position;
 		broadcastAlertLevelChanged(AlertLevelType.Panic);
 	}
 
@@ -493,7 +502,7 @@ public class AIController : GameBehavior {
 
 	protected bool checkForPlayer()
 	{
-		Vector3 playerPos = player.transform.position;
+		Vector3 playerPos = getPlayer().transform.position;
 		
 		// check if NPC can see that far
 		if( Vector3.Distance(transform.position, playerPos) <= visionDistance )
@@ -613,6 +622,27 @@ public class AIController : GameBehavior {
 	{
 		GameObject path = new GameObject ();
 		return path;
+	}
+
+	protected GameObject getPlayer()
+	{
+		GameObject[] trees = GameObject.FindGameObjectsWithTag("Player");
+		foreach (GameObject player in trees)
+		{
+			if (player.GetComponent<PossessableTree>().Active)
+			{
+				return player;
+			}
+		}
+
+		if (trees.Length > 0)
+		{
+			return trees[0];
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	//-----------------------
