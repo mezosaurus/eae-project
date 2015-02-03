@@ -150,7 +150,7 @@ namespace Tree.Private
     [Serializable]
     public class Sounds
     {
-        public AudioClip Chew;
+        public AudioClip Music, Chew;
     }
 
     [Serializable]

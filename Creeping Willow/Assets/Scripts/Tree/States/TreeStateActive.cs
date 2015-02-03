@@ -68,7 +68,12 @@ public class TreeStateActive : TreeState
         // See if we are going to grab
         if(Input.GetAxis("LT") > 0.5f && closestNPCs.Length > 0)
         {
-            TreeStateEatingMinigameWrangle.Data data = new TreeStateEatingMinigameWrangle.Data(closestNPCs);
+            // Send messages for grabbed NPCs
+            MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(new List<GameObject>() { closestNPCs[0] }));
+
+            closestNPCs[0].SetActive(false);
+            
+            TreeStateEatingMinigameWrangle.Data data = new TreeStateEatingMinigameWrangle.Data(closestNPCs, true);
             
             Tree.ChangeState("EatingMinigameWrangle", data);
 
