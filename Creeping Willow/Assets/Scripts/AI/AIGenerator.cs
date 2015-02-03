@@ -185,11 +185,11 @@ public class AIGenerator : GameBehavior
 
 		if (Random.Range(0,2) == 0)
 		{
-			loadNPCWithSkin(newNPC, "bopper_skin");
+			loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);
 		}
 		else
 		{
-			loadNPCWithSkin(newNPC, "mower_skin");
+			loadNPCWithSkin(newNPC, "mower_skin", NPCSkinType.MowerMan);
 		}
 	}
 
@@ -205,7 +205,7 @@ public class AIGenerator : GameBehavior
 	void createWanderNPC()
 	{
 		GameObject newNPC = createNPC(this.wanderNPC, wanderAIList);
-		loadNPCWithSkin(newNPC, "hippie_skin");
+		loadNPCWithSkin(newNPC, "hippie_skin", NPCSkinType.Hippie);
 	}
 
 	void createEnemyNPC(Vector3 panickedPosition)
@@ -225,7 +225,7 @@ public class AIGenerator : GameBehavior
 		Vector2 pos = critterSpawnPoints [rand].transform.position;
 		GameObject newNPC = createNPC (this.critterNPC, critterAIList, pos);
 		newNPC.GetComponent<CritterController> ().setSpawnPosition (pos);
-		loadNPCWithSkin (newNPC, "Critters/testSkin");
+		loadNPCWithSkin (newNPC, "Critters/testSkin", NPCSkinType.CritterTest);
 	}
 
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
@@ -242,12 +242,13 @@ public class AIGenerator : GameBehavior
 		return npc;
 	}
 		
-	void loadNPCWithSkin(GameObject npc, string skinName)
+	void loadNPCWithSkin(GameObject npc, string skinName, NPCSkinType skinType)
 	{
 		string skinLoc = "prefabs/AI/NPCSkinPrefabs/" + skinName;
 		GameObject skin = (GameObject)Instantiate (Resources.Load (skinLoc));
 		npc.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
 		npc.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
+        npc.GetComponent<AIController>().SkinType = skinType;
 		Destroy (skin);
 	}
 
@@ -287,6 +288,16 @@ public class AIGenerator : GameBehavior
 		
 		return (slope * xPosition) + intercept;
 	}
+}
+
+public enum NPCSkinType
+{
+    OldMan,
+    MowerMan,
+    Bopper,
+    Hippie,
+    AxeMan,
+    CritterTest
 }
 
 

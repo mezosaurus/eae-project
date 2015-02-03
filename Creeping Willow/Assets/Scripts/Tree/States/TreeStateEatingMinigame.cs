@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TreeStateEatingMinigame : TreeState
+/*public class TreeStateEatingMinigame : TreeState
 {
     protected const float UpperArmStartAngle = -12.80748f;
     protected const float UpperArmEndAngle = 20.5433f;
@@ -33,4 +33,4 @@ public class TreeStateEatingMinigame : TreeState
 
         Tree.ChangeState("Active");
     }
-}
+}*/

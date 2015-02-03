@@ -11,11 +11,11 @@ public class TreeStateEating : TreeState
     private float timeElapsed;
 
 
-    public override void Enter()
+    public override void Enter(object data)
     {
         Tree.BodyParts.Eyes.SetActive(true);
         Tree.BodyParts.Face.SetActive(false);
-        Tree.BodyParts.GrabbedNPC.SetActive(false);
+        //Tree.BodyParts.GrabbedNPC.SetActive(false);
         Tree.BodyParts.MinigameCircle.SetActive(false);
         Tree.BodyParts.EatenNPC.GetComponent<Animator>().SetTrigger("MowerMan");
 
@@ -71,6 +71,6 @@ public class TreeStateEating : TreeState
     {
         Tree.BodyParts.Eyes.SetActive(false);
         Tree.BodyParts.Face.SetActive(true);
-        Tree.BodyParts.GrabbedNPC.SetActive(true);
+        //Tree.BodyParts.GrabbedNPC.SetActive(true);
     }
 }

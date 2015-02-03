@@ -4,21 +4,26 @@ using UnityEngine;
 public class TreeStateActive : TreeState
 {
     private List<GameObject> npcsInRange;
+    private GameObject lt1, lt2;
 
     
-    public override void Enter()
+    public override void Enter(object data)
     {
         Tree.Active = true;
         npcsInRange = new List<GameObject>();
 
         Tree.BodyParts.RightUpperArm.SetActive(false);
-		if (Tree.BodyParts.GrabbedNPC != null)
-	        Tree.BodyParts.GrabbedNPC.SetActive(false);
+		/*if (Tree.BodyParts.GrabbedNPC != null)
+	        Tree.BodyParts.GrabbedNPC.SetActive(false);*/
         Tree.BodyParts.MinigameCircle.SetActive(false);
         Tree.BodyParts.LeftArm.SetActive(true);
         Tree.BodyParts.RightArm.SetActive(true);
 		if (Tree.BodyParts.EatenNPC != null)
 	        Tree.BodyParts.EatenNPC.SetActive(false);
+
+        // Create LT icons
+        lt1 = (GameObject)GameObject.Instantiate(Tree.Prefabs.LT);
+        lt2 = (GameObject)GameObject.Instantiate(Tree.Prefabs.LT);
         
         ChangeSpritesToDirection(Vector2.zero);
     }
@@ -35,31 +40,78 @@ public class TreeStateActive : TreeState
         foreach(GameObject npc in GameObject.FindGameObjectsWithTag("NPC"))
         {
             int listIndex = npcsInRange.IndexOf(npc);
-            bool inRange = Vector3.Distance(Tree.transform.position, npc.transform.position) <= 1.2f;
+            bool inRange = Vector3.Distance(Tree.transform.position, npc.transform.position) <= 1.5f;
 
-            if(inRange && (listIndex == -1))
-            {
-                npcsInRange.Add(npc);
+            if(inRange && (listIndex == -1)) npcsInRange.Add(npc);
+            else if(!inRange && (listIndex != -1)) npcsInRange.RemoveAt(listIndex);
+        }
 
-                npc.GetComponent<SpriteRenderer>().color = Color.red;
-            }
-            else if(!inRange && (listIndex != -1))
-            {
-                npcsInRange.RemoveAt(listIndex);
+        // Show LT icons if NPCs are in range
+        GameObject[] closestNPCs = GetTwoClosestNPCs();
 
-                npc.GetComponent<SpriteRenderer>().color = Color.white;
-            }
+        if (closestNPCs.Length == 1)
+        {
+            lt1.GetComponent<LTScript>().Initialize(closestNPCs[0]);
+            lt2.GetComponent<LTScript>().Initialize(null);
+        }
+        else if (closestNPCs.Length == 2)
+        {
+            lt1.GetComponent<LTScript>().Initialize(closestNPCs[0]);
+            lt2.GetComponent<LTScript>().Initialize(closestNPCs[1]);
+        }
+        else
+        {
+            lt1.GetComponent<LTScript>().Initialize(null);
+            lt2.GetComponent<LTScript>().Initialize(null);
         }
 
         // See if we are going to grab
-        if(Input.GetAxis("LT") > 0.5f /*&& npcsInRange.Count > 0*/)
+        if(Input.GetAxis("LT") > 0.5f && closestNPCs.Length > 0)
         {
-            Tree.ChangeState("EatingMinigameWrangle");
+            TreeStateEatingMinigameWrangle.Data data = new TreeStateEatingMinigameWrangle.Data(closestNPCs);
+            
+            Tree.ChangeState("EatingMinigameWrangle", data);
 
             return;
         }
 
         ChangeSpritesToDirection(velocity);
+    }
+
+    private GameObject[] GetTwoClosestNPCs()
+    {
+        // Trivial cases
+        if (npcsInRange.Count == 0) return new GameObject[0];
+        else if (npcsInRange.Count == 1) return new GameObject[1] { npcsInRange[0] };
+        else if (npcsInRange.Count == 2) return new GameObject[2] { npcsInRange[0], npcsInRange[1] };
+        else
+        {
+            GameObject[] closestNPCs = new GameObject[2];
+
+            // closest 1 is closer than closest 2
+            float closest1 = float.MaxValue, closest2 = float.MaxValue;
+
+            foreach (GameObject npc in npcsInRange)
+            {
+                float distance = Vector3.Distance(Tree.transform.position, npc.transform.position);
+
+                if (distance < closest1)
+                {
+                    closest2 = closest1;
+                    closestNPCs[1] = closestNPCs[0];
+
+                    closest1 = distance;
+                    closestNPCs[0] = npc;
+                }
+                else if (distance < closest2)
+                {
+                    closest2 = distance;
+                    closestNPCs[1] = npc;
+                }
+            }
+
+            return closestNPCs;
+        }
     }
 
     public override void UpdateSorting()
@@ -94,9 +146,7 @@ public class TreeStateActive : TreeState
         float maxVelocity = Tree.Speed * Time.deltaTime;
 
         legsAnimator.enabled = true;
-        legsAnimator.speed = velocity.magnitude / maxVelocity;
-
-        legsAnimator.speed = 1f;
+        legsAnimator.speed = (velocity.magnitude / maxVelocity) * (2f / 3f);
         
         if(x == 0f && y < 0f) // Front
         {
@@ -152,6 +202,9 @@ public class TreeStateActive : TreeState
     {
         Tree.rigidbody2D.velocity = Vector2.zero;
 
-        //ChangeSpritesToDirection(Vector2.zero);
+        GameObject.Destroy(lt1);
+        GameObject.Destroy(lt2);
+
+        ChangeSpritesToDirection(Vector2.zero);
     }
 }

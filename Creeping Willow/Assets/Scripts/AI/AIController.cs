@@ -20,6 +20,9 @@ public class AIController : GameBehavior {
 	public string spawnTag = "Respawn";
 	public string npcTag = "NPC";
 
+    // Skin Type
+    public NPCSkinType SkinType;
+
 	// Global Keys
 	protected string walkingKey = "direction";
 	protected enum WalkingDirection

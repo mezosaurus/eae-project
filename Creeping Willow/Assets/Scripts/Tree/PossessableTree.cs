@@ -42,7 +42,7 @@ public class PossessableTree : Possessable
 
         currentState = (Active) ? active : inactive;
 
-        currentState.Enter();
+        currentState.Enter(null);
     }
 
     private void LoadCircle()
@@ -90,7 +90,16 @@ public class PossessableTree : Possessable
         
         currentState = states[newState];
 
-        currentState.Enter();
+        currentState.Enter(null);
+    }
+
+    public void ChangeState(string newState, object data)
+    {
+        currentState.Leave();
+
+        currentState = states[newState];
+
+        currentState.Enter(data);
     }
 }
 
@@ -99,7 +108,7 @@ namespace Tree.Private
     [Serializable]
     public class BodyParts
     {
-        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, GrabbedNPC, EatenNPC, MinigameCircle, Eyes;
+        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, RightGrabbedNPC, EatenNPC, MinigameCircle, Eyes;
     }
     
     [Serializable]
@@ -147,6 +156,6 @@ namespace Tree.Private
     [Serializable]
     public class Prefabs
     {
-        public GameObject ThumbStick;
+        public GameObject LT, ThumbStick;
     }
 }

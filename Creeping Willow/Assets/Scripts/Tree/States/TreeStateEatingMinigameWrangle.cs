@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
+public class TreeStateEatingMinigameWrangle : TreeState
 {
     private const float InRadius = 0.4f;
     private const float MaxThumbStickRadius = 1.5f;
@@ -11,13 +11,14 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
 
     private bool initialized;
     private GameObject LS, RS, LSArrow, RSArrow;
+    private MinigameState state;
+    private bool grabbedTwo;
     private float timeElapsed;
+    private int percentage;
 
 
-    public override void Enter()
+    public override void Enter(object data)
     {
-        base.Enter();
-
         Tree.BodyParts.LeftArm.SetActive(false);
         Tree.BodyParts.RightArm.SetActive(false);
         Tree.BodyParts.RightUpperArm.SetActive(true);
@@ -25,6 +26,22 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
 
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().color = Color.white;
+
+        // Parse data
+        Data parameters = data as Data;
+
+        if(parameters.GrabbedNPCs.Length == 1)
+        {
+            grabbedTwo = false;
+        }
+        else
+        {
+            grabbedTwo = true;
+        }
+
+        // Temp
+        state = new MinigameStateBopper(Tree);
+        Tree.BodyParts.RightGrabbedNPC.GetComponent<Animator>().SetTrigger("Bopper");
 
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(1.8f, 20f));
 
@@ -70,7 +87,9 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         // If both sticks are in, change to next phase of minigame
         if (lsIn && rsIn)
         {
-            Tree.ChangeState("EatingMinigameMash");
+            TreeStateEatingMinigameMash.Data data = new TreeStateEatingMinigameMash.Data(percentage);
+            
+            Tree.ChangeState("EatingMinigameMash", data);
 
             return;
         }
@@ -125,12 +144,12 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         UpdateArms(progress);
 
         // Update timer
-        timeElapsed += Time.deltaTime;
+        //timeElapsed += Time.deltaTime;
 
         float timePercentage = Mathf.Clamp(timeElapsed / MaxTime, 0f, 1f);
-        Percentage = Mathf.RoundToInt(timePercentage * 100f);
+        percentage = Mathf.RoundToInt(timePercentage * 100f);
 
-        Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[Percentage];
+        Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[percentage];
 
         // To-do
         if (timePercentage >= 1f)
@@ -141,18 +160,36 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         }
     }
 
+    protected void UpdateArms(float percentage)
+    {
+        float upperAngle = state.UpperRightArmStartAngle + ((state.UpperRightArmMidpointAngle - state.UpperRightArmStartAngle) * percentage);
+        float lowerAngle = state.LowerRightArmStartAngle + ((state.LowerRightArmMidpointAngle - state.LowerRightArmStartAngle) * percentage);
+
+        Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
+        Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);
+    }
+
+    protected void Lose()
+    {
+        MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 20f));
+
+        Tree.ChangeState("Active");
+    }
+
     public override void UpdateSorting()
     {
+        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+        
         int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
 
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
         //Tree.BodyParts.LeftArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
         Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
-        Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
-        Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 4;
+        Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 4;
+        Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sortingOrder = i + 7;
-        Tree.BodyParts.GrabbedNPC.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
+        Tree.BodyParts.RightGrabbedNPC.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
     }
 
     public override void Leave()
@@ -161,5 +198,16 @@ public class TreeStateEatingMinigameWrangle : TreeStateEatingMinigame
         GameObject.Destroy(RS);
 
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[100];
+    }
+
+    
+    public class Data
+    {
+        public GameObject[] GrabbedNPCs;
+
+        public Data(GameObject[] grabbedNPCs)
+        {
+            GrabbedNPCs = grabbedNPCs;
+        }
     }
 }
