@@ -33,16 +33,26 @@ public abstract class Possessable : GameBehavior {
 			}
 		}
 	}
-	protected abstract void act();
+	protected abstract void scare();
+	protected abstract void lure();
 
-	public void useAbility(){
+	public void useAbility(bool leftTrigger){
 		if (possessed) {
-			act();
-			audio.Stop();
-			audio.clip = actionSound;
-			audio.Play();
-			acting = true;
-			needToSend = true;
+			if(leftTrigger){
+				scare();
+				audio.Stop();
+				audio.clip = actionSound;
+				audio.Play();
+				acting = true;
+				needToSend = true;
+			}else{
+				lure();
+				audio.Stop();
+				audio.clip = actionSound;
+				audio.Play();
+				acting = true;
+				needToSend = true;
+			}
 		}
 	}
 

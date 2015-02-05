@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,8 +59,11 @@ public class PossessableTree : Possessable
 
         BodyParts.Legs.GetComponent<Animator>().speed = 0f;
 	}
+	
+	protected override void lure(){
+	}
 
-    protected override void act()
+    protected override void scare()
     {
         
     }

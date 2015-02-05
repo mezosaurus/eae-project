@@ -29,13 +29,10 @@ public enum LevelState
 	ENDOFLEVEL_DEFEAT,
 };
 
-public enum PlayerState
+public enum PosessionState
 {
-	DEFAULT,
-	EATING_MINIGAME,
-	EATING_CINEMATIC,
-	POSSESION_CASTING,
-	POSSESION_POSSESED,
+	EXORCISABLE,
+	NON_EXORCISABLE,
 }
 
 public static class GlobalGameStateManager
@@ -43,7 +40,7 @@ public static class GlobalGameStateManager
 	public static readonly float originalWidth = 1920;
 	public static readonly float originalHeight = 1080;
 	public static LevelState LevelState = LevelState.BEGINLEVEL;
-	public static PlayerState PlayerState = PlayerState.DEFAULT;
+	public static PosessionState PosessionState = PosessionState.EXORCISABLE;
 	public static SceneEnum CurrentScene = 0;
 
 	public static int[] highscores = new int[10];

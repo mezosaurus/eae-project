@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 //using XInputDotNetPure;
 
@@ -23,12 +23,16 @@ public class LampPossessable: Possessable {
 		}
 		base.GameUpdate ();
 	}
+	
+	protected override void lure(){
+		Debug.Log ("Luring");
+	}
 
-	protected override void act ()
+	protected override void scare ()
 	{
 		shaking = true;
 		shakeAmount = 1.0f;
-		AbilityPlacedMessage message = new AbilityPlacedMessage (transform.position.x,transform.position.y, AbilityType.PossessionLure);
+		AbilityPlacedMessage message = new AbilityPlacedMessage (transform.position.x,transform.position.y, AbilityType.PossessionScare);
 		MessageCenter.Instance.Broadcast (message);
         //GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
 	}
