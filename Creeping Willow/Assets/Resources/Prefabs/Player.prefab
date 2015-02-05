@@ -560,7 +560,7 @@ MonoBehaviour:
   abilityInUse: 0
 --- !u!114 &11400006
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
@@ -570,6 +570,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: .5
+  plusSign: {fileID: 0}
+  minusSign: {fileID: 0}
+  numZero: {fileID: 0}
+  numOne: {fileID: 0}
+  numTwo: {fileID: 0}
+  numThree: {fileID: 0}
+  numFour: {fileID: 0}
+  numFive: {fileID: 0}
+  numSix: {fileID: 0}
+  numSeven: {fileID: 0}
+  numEight: {fileID: 0}
+  numNine: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

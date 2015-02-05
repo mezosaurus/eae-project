@@ -15,6 +15,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11441012}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -104,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectToFollow: {fileID: 0}
   ObjectToFollowOffset: {x: 0, y: .150000006, z: 0}
+  TargetSize: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,6 +121,30 @@ MonoBehaviour:
   pauseScreenQuit: {fileID: 0}
   pauseScreenSettings: {fileID: 0}
   pauseScreenSettingsIn: {fileID: 0}
+--- !u!114 &11441012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de5b947123433ac45a6fe9e7daea21a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: .300000012
+  plusSign: {fileID: 2800000, guid: c62559dca584feb4a86b3daccecf92de, type: 3}
+  minusSign: {fileID: 2800000, guid: a0df84f434c01cd47a9a6d65da8050fe, type: 3}
+  numZero: {fileID: 2800000, guid: b44450a2e471aa440b6f4ee3471c9733, type: 3}
+  numOne: {fileID: 2800000, guid: 73d36266c1e88b840bfcf5fcceeeebbb, type: 3}
+  numTwo: {fileID: 2800000, guid: a65807fa4c4584d43912889e12bc4766, type: 3}
+  numThree: {fileID: 2800000, guid: 739a74e5eb7c6a442aa2f6e9084011e8, type: 3}
+  numFour: {fileID: 2800000, guid: 6d79af3400fe19c498ffc008ef6c95d9, type: 3}
+  numFive: {fileID: 2800000, guid: 598a81c3a92a7504690ce3e4757aa51c, type: 3}
+  numSix: {fileID: 2800000, guid: 76e89d3b70d424941a5cb4ad01742c15, type: 3}
+  numSeven: {fileID: 2800000, guid: 276095c9baf4c4341b053526da8eb12f, type: 3}
+  numEight: {fileID: 2800000, guid: 8927f06a52861c846b2700b578e0aea6, type: 3}
+  numNine: {fileID: 2800000, guid: 7f72d54bddc0db74ba97cd1546e5832e, type: 3}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
