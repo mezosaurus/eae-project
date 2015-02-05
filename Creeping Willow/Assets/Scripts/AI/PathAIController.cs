@@ -37,14 +37,20 @@ public class PathAIController : AIController
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		
+		bool flipX = false;
+
 		if (biasPosition.x == 0)
 		{
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
 		}
+		else if (biasPosition.y >= 0)
+		{
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
+		}
 		else
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING);
+			flipX = true;
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
 		}
 
 		Vector3 changeMovement = avoid (direction);
@@ -61,6 +67,10 @@ public class PathAIController : AIController
 			transform.position = movement;
 		}
 
+		if (flipX)
+		{
+			flipXScale(biasPosition.x > 0);
+		}
 		if (movement == pathPosition && !lured)
 		{
 			if (killSelf && nextPath.gameObject.tag.Equals("Respawn"))
@@ -87,7 +97,7 @@ public class PathAIController : AIController
 	override protected void panic()
 	{
 		base.panic ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
 	}
 }
 

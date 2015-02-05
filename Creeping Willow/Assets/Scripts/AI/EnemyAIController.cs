@@ -46,6 +46,7 @@ public class EnemyAIController : AIController
 
 		if (angry)
 		{
+			player = getPlayer();
 			chasePlayer();
 			return;
 		}

@@ -14,7 +14,7 @@ public class CritterController : AIController {
 
 	new void Start()
 	{
-		Debug.Log ("start");
+		//Debug.Log ("start");
 		base.Start ();
 		float time = Time.time;
 		nextMoveTime = time + waitTime;
@@ -36,7 +36,7 @@ public class CritterController : AIController {
 		}
 		else if (!killSelf && Time.time >= nextMoveTime)
 		{
-			Debug.Log ("new path");
+			//Debug.Log ("new path");
 			nextMoveTime = Time.time + waitTime * 15;
 			move ();
 		}
@@ -64,7 +64,7 @@ public class CritterController : AIController {
 		}
 		else
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
 		}
 		
 		Vector3 changeMovement = avoid (direction);
@@ -95,7 +95,7 @@ public class CritterController : AIController {
 			}
 			else
 			{
-				Debug.Log("kill");
+				//Debug.Log("kill");
 				killSelf = true;
 				isOnPath = true;
 				pathPosition = spawnPosition;

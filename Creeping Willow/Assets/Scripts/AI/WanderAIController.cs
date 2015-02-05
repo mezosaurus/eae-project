@@ -59,13 +59,17 @@ public class WanderAIController : AIController {
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
 		
-		if (biasPosition.x == 0)
+		if (biasPosition.x == 0 && biasPosition.y == 0)
 		{
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
 		}
+		else if (biasPosition.y >= 0)
+		{
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
+		}
 		else
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
 		}
 
 		Vector3 changeMovement = avoid (direction);
@@ -135,7 +139,7 @@ public class WanderAIController : AIController {
 	override protected void panic()
 	{
 		base.panic ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
 	}
 }
 
