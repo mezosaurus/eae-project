@@ -37,13 +37,31 @@ public class TreeStateEatingMinigameWrangle : TreeState
         else
         {
             grabbedTwo = true;
+
+            GameObject.Destroy(parameters.GrabbedNPCs[1]);
         }
 
-        // Temp
-        state = new MinigameStateBopper(Tree);
-        Tree.BodyParts.RightGrabbedNPC.GetComponent<Animator>().SetTrigger("Bopper");
+        // Get NPC skins
+        switch(parameters.GrabbedNPCs[0].GetComponent<AIController>().SkinType)
+        {
+            case NPCSkinType.MowerMan:
+                break;
+
+            case NPCSkinType.Bopper:
+            default:
+                state = new MinigameStateBopper(Tree);
+                break;
+        }
+        
 
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(1.8f, 20f));
+
+        // Play music if necessary
+        if (parameters.PlayMusic)
+        {
+            Tree.audio.clip = Tree.Sounds.Music;
+            Tree.audio.Play();
+        }
 
         initialized = false;
     }
@@ -144,7 +162,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
         UpdateArms(progress);
 
         // Update timer
-        //timeElapsed += Time.deltaTime;
+        timeElapsed += Time.deltaTime;
 
         float timePercentage = Mathf.Clamp(timeElapsed / MaxTime, 0f, 1f);
         percentage = Mathf.RoundToInt(timePercentage * 100f);
@@ -204,10 +222,12 @@ public class TreeStateEatingMinigameWrangle : TreeState
     public class Data
     {
         public GameObject[] GrabbedNPCs;
+        public bool PlayMusic;
 
-        public Data(GameObject[] grabbedNPCs)
+        public Data(GameObject[] grabbedNPCs, bool playMusic)
         {
             GrabbedNPCs = grabbedNPCs;
+            PlayMusic = playMusic;
         }
     }
 }

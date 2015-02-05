@@ -11,5 +11,7 @@ public class MinigameStateBopper : MinigameState
         LowerRightArmStartAngle = 256.9366f;
         LowerRightArmMidpointAngle = 282.6235f;
         LowerRightArmEndAngle = 308.3104f;
+
+        tree.BodyParts.RightGrabbedNPC.GetComponent<Animator>().SetTrigger("Bopper");
     }
 }

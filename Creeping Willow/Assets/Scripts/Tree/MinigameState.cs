@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MinigameState : MonoBehaviour
+public class MinigameState
 {
     public PossessableTree Tree;
     

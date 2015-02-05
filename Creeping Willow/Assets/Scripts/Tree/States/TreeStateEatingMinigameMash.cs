@@ -131,7 +131,7 @@ public class TreeStateEatingMinigameMash : TreeState
     {
         int width = Tree.Sprites.EatingMinigame.Buttons[0].width;
         int height = Tree.Sprites.EatingMinigame.Buttons[0].height;
-        Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.MinigameCircle.transform.position);
+        Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.MinigameCircle.transform.position + new Vector3(0f, 0.3f));
 
         GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (height / 2f), width, height), Tree.Sprites.EatingMinigame.Buttons[button]);
     }
