@@ -14,10 +14,10 @@ public class TreeStateEating : TreeState
     public override void Enter(object data)
     {
         Tree.BodyParts.Eyes.SetActive(true);
-        Tree.BodyParts.Face.SetActive(false);
-        //Tree.BodyParts.GrabbedNPC.SetActive(false);
+        Tree.BodyParts.RightGrabbedNPC.SetActive(false);
         Tree.BodyParts.MinigameCircle.SetActive(false);
-        Tree.BodyParts.EatenNPC.GetComponent<Animator>().SetTrigger("MowerMan");
+        Tree.BodyParts.Face.GetComponent<Animator>().enabled = true;
+        Tree.BodyParts.Face.GetComponent<Animator>().SetTrigger("Bopper");
 
         // Set arm angles
         Tree.BodyParts.RightUpperArm.transform.eulerAngles = new Vector3(0f, 0f, UpperArmStartAngle);
@@ -56,10 +56,12 @@ public class TreeStateEating : TreeState
 
     public override void UpdateSorting()
     {
+        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+        
         int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
 
         Tree.BodyParts.Eyes.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
-        Tree.BodyParts.EatenNPC.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
         //Tree.BodyParts.LeftArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
         Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
         Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
@@ -70,7 +72,8 @@ public class TreeStateEating : TreeState
     public override void Leave()
     {
         Tree.BodyParts.Eyes.SetActive(false);
-        Tree.BodyParts.Face.SetActive(true);
+        Tree.BodyParts.Face.GetComponent<Animator>().enabled = false;
+        //Tree.BodyParts.Face.SetActive(true);
         //Tree.BodyParts.GrabbedNPC.SetActive(true);
     }
 }

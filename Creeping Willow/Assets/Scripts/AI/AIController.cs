@@ -28,7 +28,8 @@ public class AIController : GameBehavior {
 	protected enum WalkingDirection
 	{
 		STILL = 0,
-		MOVING = 1,
+		MOVING_DOWN = 1,
+		MOVING_UP = 2,
 	}
 
 	// NPC variables

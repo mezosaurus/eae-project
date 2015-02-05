@@ -26,6 +26,22 @@ public class ScoreScript : MonoBehaviour {
 	/// Probability that next npc will be the new targeted bounty.
 	/// </summary>
 	public float frequency;
+
+	// scoring texts
+	public Texture2D plusSign;
+	public Texture2D minusSign;
+	public Texture2D numZero;
+	public Texture2D numOne;
+	public Texture2D numTwo;
+	public Texture2D numThree;
+	public Texture2D numFour;
+	public Texture2D numFive;
+	public Texture2D numSix;
+	public Texture2D numSeven;
+	public Texture2D numEight;
+	public Texture2D numNine;
+
+	bool gameStarted = false;
 	
 	/*
 	 * SCORING SYSTEM:
@@ -165,6 +181,7 @@ public class ScoreScript : MonoBehaviour {
 	float multXOffset = 20;
 	float multLength;
 	float multHeight = 30;
+
 	int currentMultiplier = 1;
 	int multiplierPoints = 15;
 	int popupMultiplier = 0;
@@ -179,6 +196,11 @@ public class ScoreScript : MonoBehaviour {
 	float prevValue;
 	float newValue;
 	float multiplierSliderTime = 1;
+
+	bool multiplierIsPositive = true;
+	Texture2D currentMultiplierImage;
+	Texture2D multiplierSign;
+	Texture2D multiplierPointImage;
 	
 	
 	// Use this for initialization
@@ -220,6 +242,10 @@ public class ScoreScript : MonoBehaviour {
 		multLength = Screen.width / 5;
 		lastMultiplierTime = Time.time;
 		currentMultiplierTime = Time.time;
+
+		currentMultiplierImage = getNumberImage (currentMultiplier);
+		multiplierSign = plusSign;
+		multiplierPointImage = numZero;
 	}
 	
 	
@@ -228,6 +254,9 @@ public class ScoreScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update() 
 	{
+		if( !gameStarted )
+			return;
+
 		// end of level
 		if (endLevel) 
 		{	
@@ -297,6 +326,7 @@ public class ScoreScript : MonoBehaviour {
 		
 		// multiplier updates
 		currentMultiplier = 1 + multiplierPoints / multIncre;
+		currentMultiplierImage = getNumberImage (currentMultiplier);
 		updateMultiplier ();
 		
 		// update bounty texture; NOTE: Framerate issues
@@ -619,8 +649,9 @@ public class ScoreScript : MonoBehaviour {
 			// multiplier pop-up text
 			myStyle.normal.textColor = Color.red;
 			myStyle.fontSize = 100;
-			GUI.Label(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), "" + popupMultiplier, myStyle);	
-			
+			//GUI.Label(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), "" + popupMultiplier, myStyle);	
+			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX * 2, popupY * 2), multiplierSign, ScaleMode.ScaleToFit);
+			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX * 2, popupY * 2), multiplierPointImage, ScaleMode.ScaleToFit);
 			
 			// increment height
 			popupIncrement2 += 1.5f;
@@ -776,7 +807,8 @@ public class ScoreScript : MonoBehaviour {
 		myStyle.fontSize = 50;
 
 		GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
-		GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
+		//GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
+		GUI.DrawTexture (new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplierImage, ScaleMode.ScaleToFit);
 
 		if( multiplierIsChanging )
 		{
@@ -825,6 +857,9 @@ public class ScoreScript : MonoBehaviour {
 
 		lastMultiplierTime = Time.time;
 		multiplierIsChanging = true;
+		multiplierIsPositive = true;
+		multiplierSign = plusSign;
+		multiplierPointImage = getNumberImage (num);
 	}
 
 	// subtract a portion of multiplier
@@ -835,21 +870,32 @@ public class ScoreScript : MonoBehaviour {
 		else
 			prevValue = multiplierPoints;
 		newValue = multiplierPoints - num;
+
 		multiplierPoints -= num;
+		scoreDisplay = true;
+		popupMultiplier = -num;
+		multiplierQueue.Enqueue (num);
 
 		lastMultiplierTime = Time.time;
 		multiplierIsChanging = true;
+		multiplierIsPositive = false;
+		multiplierSign = minusSign;
+		multiplierPointImage = getNumberImage (num);
 	}
 	
 	// reset multiplier
 	void resetMultiplier()
 	{
+		//subMultiplier (multiplierPoints);
 		multiplierPoints = 0;
 	}
 
 	// decrement multiplierPoints
 	void updateMultiplier()
 	{
+		if( multiplierPoints < 0 )
+			multiplierPoints = 0;
+
 		if( multiplierPoints <= 0 )
 			return;
 
@@ -862,6 +908,41 @@ public class ScoreScript : MonoBehaviour {
 			lastMultiplierTime = Time.time;
 		}
 	}
+
+	// get corresponding image from number
+	Texture2D getNumberImage(int num)
+	{
+		//Debug.Log ("num image: " + num);
+
+		switch(num)
+		{
+		case 0:
+			return numZero;
+		case 1:
+			return numOne;
+		case 2:
+			return numTwo;
+		case 3:
+			return numThree;
+		case 4:
+			return numFour;
+		case 5:
+			return numFive;
+		case 6:
+			return numSix;
+		case 7:
+			return numSeven;
+		case 8:
+			return numEight;
+		case 9:
+			return numNine;
+		default:
+			return numZero;
+		}
+
+	}
+
+
 
 	// add a score
 	void addScore(int score)
@@ -1065,6 +1146,12 @@ public class ScoreScript : MonoBehaviour {
 		
 		if( alertedNPCs.Contains(mess.NPC) )
 			alertedNPCs.Remove(mess.NPC);
+
+		if( BountyNPC != null && BountyNPC.Equals(mess.NPC) )
+		{
+			BountyNPC = null;
+			BountyNPCImage = new Texture2D(1,1);
+		}
 	}
 	
 	
@@ -1156,12 +1243,41 @@ public class ScoreScript : MonoBehaviour {
 		// bounty can't be an axeman/enemy
 		if( mess.NPC.GetComponent<EnemyAIController>() != null )
 			return;
+
+		// bounty can't be a critter
+		if( mess.NPC.GetComponent<CritterController>() != null )
+			return;
 		
 		// bounty/target
 		if( Random.value > frequency )
 			return;
+
+		// if player hasn't started
+		if( !gameStarted )
+			return;
 		
 		BountyNPC = mess.NPC;
+
+		ParticleSystem ps = BountyNPC.GetComponent<ParticleSystem> ();
+		ps.Play ();
+		
+		
+		// used to convert from sprite sheet to current sprite
+		Sprite sprite = BountyNPC.GetComponent<SpriteRenderer> ().sprite;
+		Color[] pixels = sprite.texture.GetPixels (
+			(int)sprite.textureRect.x, 
+			(int)sprite.textureRect.y, 
+			(int)sprite.textureRect.width, 
+			(int)sprite.textureRect.height
+			);
+		
+		BountyNPCImage = new Texture2D ((int)sprite.rect.width, (int)sprite.rect.height);
+		
+		BountyNPCImage.SetPixels (pixels);
+		BountyNPCImage.Apply ();
+
+		bountyState = (int)BountyState.BOUNTY_SHOWING;
+		bountyRaised = true;
 	}
 	
 	
@@ -1184,6 +1300,13 @@ public class ScoreScript : MonoBehaviour {
 	void HandleLevelStart(Message message)
 	{
 		LevelStartMessage msg = message as LevelStartMessage;
+		
+		gameStarted = true;
+		lastMultiplierTime = Time.time;
+		/*
+		if( BountyNPC == null )
+			return;
+
 		ParticleSystem ps = BountyNPC.GetComponent<ParticleSystem> ();
 		ps.Play ();
 		
@@ -1205,7 +1328,7 @@ public class ScoreScript : MonoBehaviour {
 		//BountyNPCImage = mess.NPC.GetComponent<SpriteRenderer> ().sprite.texture;
 		
 		bountyState = (int)BountyState.BOUNTY_SHOWING;
-		bountyRaised = true;
+		bountyRaised = true;*/
 	}
 
 }
