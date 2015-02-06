@@ -2423,11 +2423,11 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 901486602}
-  lengthInSec: .5
+  lengthInSec: .100000001
   startDelay: 0
   speed: 1
   randomSeed: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   moveWithTransform: 1
@@ -3488,6 +3488,7 @@ GameObject:
   - 92: {fileID: 990833150}
   - 124: {fileID: 990833149}
   - 81: {fileID: 990833148}
+  - 114: {fileID: 990833153}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3560,6 +3561,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &990833153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 990833147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e44bc9e11e0594b8295751810c581c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Particles:
+  - {fileID: 1403749410}
+  - {fileID: 901486602}
 --- !u!1 &1403749410
 GameObject:
   m_ObjectHideFlags: 0
