@@ -32,6 +32,20 @@ public class TreeStateActive : TreeState
     {        
         // Update velocity
         Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * Tree.Speed * Time.deltaTime;
+
+        // Handle keyboard
+        if(Input.anyKey)
+        {
+            velocity = Vector2.zero;
+
+            if (Input.GetKey(KeyCode.LeftArrow)) velocity.x = -1f;
+            if (Input.GetKey(KeyCode.RightArrow)) velocity.x = 1f;
+            if (Input.GetKey(KeyCode.UpArrow)) velocity.y = 1f;
+            if (Input.GetKey(KeyCode.DownArrow)) velocity.y = -1f;
+
+            velocity *= Tree.Speed * Time.deltaTime;
+        }
+
         Tree.rigidbody2D.velocity = velocity;
 
         Vector3 grabOffset = Tree.transform.position + new Vector3(0f, 0.25f);
