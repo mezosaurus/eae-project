@@ -13,6 +13,8 @@ public class TreeStateEating : TreeState
 
     public override void Enter(object data)
     {
+        GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
+        
         Tree.BodyParts.Eyes.SetActive(true);
         Tree.BodyParts.RightGrabbedNPC.SetActive(false);
         Tree.BodyParts.MinigameCircle.SetActive(false);

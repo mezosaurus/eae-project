@@ -58,15 +58,28 @@ public class PossessableTree : Possessable
         BodyParts.Legs.GetComponent<Animator>().speed = 0f;
 	}
 	
-	public override void possess(){
+	public override void possess()
+    {
 		ChangeState ("Active");
+
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 
     public override void exorcise()
     {
 		base.exorcise ();
+
 		ChangeState ("Inactive");
+    }
+
+    protected void OnTriggerEnter2D(Collider2D collider)
+    {
+        currentState.OnTriggerEnter(collider);
+    }
+
+    protected void OnTriggerExit2D(Collider2D collider)
+    {
+        currentState.OnTriggerExit(collider);
     }
 
     protected override void GameUpdate()
@@ -85,6 +98,8 @@ public class PossessableTree : Possessable
 
     public void UpdateSorting()
     {
+        Debug.Log("Sort: " + gameObject.GetInstanceID());
+        
         currentState.UpdateSorting();
     }
 

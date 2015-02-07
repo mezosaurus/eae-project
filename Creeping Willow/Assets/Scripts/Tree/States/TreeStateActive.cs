@@ -10,6 +10,7 @@ public class TreeStateActive : TreeState
     public override void Enter(object data)
     {
         Tree.Active = true;
+        GlobalGameStateManager.PosessionState = PosessionState.EXORCISABLE;
         npcsInRange = new List<GameObject>();
 
         Tree.BodyParts.RightUpperArm.SetActive(false);

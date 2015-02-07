@@ -16,6 +16,8 @@ public class TreeStateEatingMinigameMash : TreeState
 
     public override void Enter(object data)
     {
+        GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
+
         // Choose a random button
         float range = Random.Range(0f, 1f);
 
