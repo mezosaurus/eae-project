@@ -40,6 +40,8 @@ public class PossessableTree : Possessable
 
         currentState = (Active) ? active : inactive;
 
+        if (Active) MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
+
         currentState.Enter(null);
     }
 
@@ -60,14 +62,15 @@ public class PossessableTree : Possessable
 	
 	public override void possess()
     {
-		ChangeState ("Active");
+		ChangeState("Active");
+        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 
     public override void exorcise()
     {
 		base.exorcise ();
 
-		ChangeState ("Inactive");
+		ChangeState("Inactive");
     }
 
     protected void OnTriggerEnter2D(Collider2D collider)
