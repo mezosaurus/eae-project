@@ -749,7 +749,7 @@ public class AIController : GameBehavior {
 	void abilityPlacedListener(Message message)
 	{
 		AbilityPlacedMessage placedMessage = message as AbilityPlacedMessage;
-		if (placedMessage.AType.Equals(AbilityType.PossessionLure))
+		if (placedMessage.AType.Equals(AbilityType.PossessionScare))
 	    {
 			Vector3 possessedPosition = new Vector3(placedMessage.X, placedMessage.Y);
 			if (Vector3.Distance(transform.position, possessedPosition) <= GetComponent<CircleCollider2D>().radius)

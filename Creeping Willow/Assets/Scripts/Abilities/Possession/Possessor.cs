@@ -13,9 +13,6 @@ public class Possessor : GameBehavior {
 	public Texture2D possessionControls;
 	// Use this for initialization
 	protected virtual void Start () {
-		colors.Add("red", new Color(1f, .5f, .5f, .5f));
-		colors.Add("green", new Color(.5f, 1f, .5f, .5f));
-		colors.Add("blue", new Color(.5f, .5f, 1f, .5f));
 		colors.Add("transparent", new Color(1f, 1f, 1f, .5f));
 		colors.Add("opaque", new Color(1f, 1f, 1f, 1f));
 		canPlace = true;
@@ -39,12 +36,11 @@ public class Possessor : GameBehavior {
 			transform.position += (Vector3) velocity;
 
 		if (Input.GetButtonDown("A")) {
-			if(!possessing){
-				if(objectToPossess != null){
-					Possessable possessable = objectToPossess.GetComponent<Possessable>();
-					possessable.possess();
-					possessing = true;
-					MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+			if(objectToPossess != null){
+				Possessable possessable = objectToPossess.GetComponent<Possessable>();
+				possessable.possess();
+				MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+				if(possessable is PossessableItem){
 					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
 					SpriteRenderer face = this.gameObject.GetComponent<SpriteRenderer>();
 					face.color = new Color(1f, 1f, 1f, 0f);
@@ -53,8 +49,8 @@ public class Possessor : GameBehavior {
 					if(colors.TryGetValue("opaque", out color)){
 						renderer.color = color;
 					}
-					Destroy(this.gameObject);
 				}
+				Destroy(this.gameObject);
 			}
 		}
 	}
@@ -63,10 +59,13 @@ public class Possessor : GameBehavior {
 		if(collider.gameObject.GetComponent<Possessable>() != null){
 			if(objectToPossess == null){
 				objectToPossess = collider.gameObject;
-				SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
-				Color color = Color.white;
-				if(colors.TryGetValue("transparent", out color)){
-					renderer.color = color;
+				Possessable possessable = objectToPossess.GetComponent<Possessable>();
+				if(possessable is PossessableItem){
+					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+					Color color = Color.white;
+					if(colors.TryGetValue("transparent", out color)){
+						renderer.color = color;
+					}
 				}
 			}
 		}
@@ -74,10 +73,13 @@ public class Possessor : GameBehavior {
 	
 	void OnTriggerExit2D(Collider2D collider){
 		if(collider.gameObject.Equals(objectToPossess)){
-			SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
-			Color color = Color.white;
-			if(colors.TryGetValue("opaque", out color)){
-				renderer.color = color;
+			Possessable possessable = objectToPossess.GetComponent<Possessable>();
+			if(possessable is PossessableItem){
+				SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+				Color color = Color.white;
+				if(colors.TryGetValue("opaque", out color)){
+					renderer.color = color;
+				}
 			}
 			objectToPossess = null;
 		}

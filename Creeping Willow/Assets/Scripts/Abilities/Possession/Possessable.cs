@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class Possessable : GameBehavior {
 	
@@ -7,8 +8,9 @@ public abstract class Possessable : GameBehavior {
 	protected float baseX;
 	protected float baseY;
 	protected bool acting = false;
-	bool needToSend = false;
+	protected bool needToSend = false;
 	public AudioClip actionSound;
+	protected Dictionary<string, Color> colors = new Dictionary<string, Color>();
 
 	protected virtual void Start(){
 		baseX = transform.position.x;
@@ -29,13 +31,13 @@ public abstract class Possessable : GameBehavior {
 		HandleInput ();
 	}
 	
-	void HandleInput(){
+	protected virtual void HandleInput(){
 		/*if (((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X"))) && GameObject.FindGameObjectWithTag("Player").GetComponent<TreeController>().state != Tree.State.Eating)
 		{
 			if(luresLeft > 0 && !abilityInUse){
 				AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
 				MessageCenter.Instance.Broadcast(message);
-				GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/LurePlacer");
+				GameObjec obj = (GameObject)Resources.Load("Prefabs/Abilities/LurePlacer");
 				LurePlacer lp = obj.GetComponent<LurePlacer>();
 				lp.luresAllowed = luresLeft;
 				GameObject.Instantiate(lp, transform.position, Quaternion.identity);

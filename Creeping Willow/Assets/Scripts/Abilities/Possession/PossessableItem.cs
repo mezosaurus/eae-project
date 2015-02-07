@@ -2,14 +2,16 @@
 using System.Collections;
 
 public abstract class PossessableItem : Possessable {
-
-	protected float baseX;
-	protected float baseY;
-	protected bool acting = false;
-	bool needToSend = false;
-	public AudioClip actionSound;
+	
+	protected bool shaking = false;
+	protected bool blinking = false;
+	float blinkingColor = 0.0f;
+	float shakeAmount = 1.0f;
 
 	protected virtual void Start(){
+		colors.Add("red", new Color(1.0f, 0.0f, 0.0f, 1.0f));
+		colors.Add("green", new Color(0.0f, 1.0f, 0.0f, 1.0f));
+		colors.Add("blue", new Color(0.0f, 0.0f, 1.0f, 1.0f));
 		baseX = transform.position.x;
 		baseY = transform.position.y;
 		Active = false;
@@ -26,9 +28,48 @@ public abstract class PossessableItem : Possessable {
 	// Update is called once per frame
 	protected override void GameUpdate (){
 		HandleInput ();
+		if(shaking){
+			float newX = Random.Range(baseX-.05f, baseX+.05f);
+			float newY = Random.Range(baseY-.05f, baseY+.05f);
+			shakeAmount -= .1f;
+			if(shakeAmount <= 0f){
+				shaking = false;
+				acting = false;
+				newX = baseX;
+				newY = baseY;
+			}
+			transform.position = new Vector3(newX, newY);
+		}
+		if(blinking){
+			SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
+			Color color = Color.white;
+			string key = "";
+			if(blinkingColor < 1.0f){
+				key = "red";
+			}
+			else if(blinkingColor < 2.0f){
+				key = "green";
+			}else{
+				key = "blue";
+			}
+			if(colors.TryGetValue(key, out color)){
+				Debug.Log("Changing Color");
+				renderer.color = color;
+			}
+			blinkingColor += .5f;
+			if(blinkingColor > 3.0f){
+				blinking = false;
+				renderer.color = Color.white;
+				blinkingColor = 0.0f;
+			}
+		}
 	}
-	protected abstract void scare();
-	protected abstract void lure();
+	protected virtual void scare(){
+		shakeAmount = 1.0f;
+	}
+	protected virtual void lure(){
+		//blinkingColor = 0.0f;
+	}
 
 	public void useAbility(bool leftTrigger){
 		if (Active) {
@@ -41,16 +82,13 @@ public abstract class PossessableItem : Possessable {
 				needToSend = true;
 			}else{
 				lure();
-				audio.Stop();
-				audio.clip = actionSound;
-				audio.Play();
 				acting = true;
 				needToSend = true;
 			}
 		}
 	}
 	
-	void HandleInput(){
+	protected override void  HandleInput(){
 		/*if (((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X"))) && GameObject.FindGameObjectWithTag("Player").GetComponent<TreeController>().state != Tree.State.Eating)
 		{
 			if(luresLeft > 0 && !abilityInUse){
@@ -63,7 +101,7 @@ public abstract class PossessableItem : Possessable {
 				abilityInUse = true;
 			}
 		}*/
-		
+		base.HandleInput();
 		if (Input.GetAxis("LT") > 0.2f) {
 			if(Active){
 				useAbility(true);
@@ -75,12 +113,12 @@ public abstract class PossessableItem : Possessable {
 		}
 	}
 
-	public virtual void possess(){
+	public override void possess(){
 		base.possess ();
 		Active = true;
 	}
 
-	public virtual void exorcise(){
+	public override void exorcise(){
 		base.exorcise ();
 		Active = false;
 	}

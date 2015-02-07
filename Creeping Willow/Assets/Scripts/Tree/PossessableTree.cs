@@ -59,6 +59,8 @@ public class PossessableTree : Possessable
 	}
 	
 	public override void possess(){
+		ChangeState ("Active");
+		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 
     public override void exorcise()
