@@ -2,7 +2,8 @@
 using System.Collections;
 
 public abstract class Possessable : GameBehavior {
-	bool possessed;
+	
+	public bool Active;
 	protected float baseX;
 	protected float baseY;
 	protected bool acting = false;
@@ -12,7 +13,7 @@ public abstract class Possessable : GameBehavior {
 	protected virtual void Start(){
 		baseX = transform.position.x;
 		baseY = transform.position.y;
-		possessed = false;
+		Active = false;
 		MessageCenter.Instance.RegisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
 		MessageCenter.Instance.RegisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
 	}
@@ -25,43 +26,37 @@ public abstract class Possessable : GameBehavior {
 
 	// Update is called once per frame
 	protected override void GameUpdate (){
-		if(!acting){
-			if(needToSend)
-			{
-				//MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(GameObject.FindGameObjectWithTag("Player").transform, Vector3.zero));
-				needToSend = false;
-			}
-		}
+		HandleInput ();
 	}
-	protected abstract void scare();
-	protected abstract void lure();
-
-	public void useAbility(bool leftTrigger){
-		if (possessed) {
-			if(leftTrigger){
-				scare();
-				audio.Stop();
-				audio.clip = actionSound;
-				audio.Play();
-				acting = true;
-				needToSend = true;
-			}else{
-				lure();
-				audio.Stop();
-				audio.clip = actionSound;
-				audio.Play();
-				acting = true;
-				needToSend = true;
+	
+	void HandleInput(){
+		/*if (((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X"))) && GameObject.FindGameObjectWithTag("Player").GetComponent<TreeController>().state != Tree.State.Eating)
+		{
+			if(luresLeft > 0 && !abilityInUse){
+				AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
+				MessageCenter.Instance.Broadcast(message);
+				GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/LurePlacer");
+				LurePlacer lp = obj.GetComponent<LurePlacer>();
+				lp.luresAllowed = luresLeft;
+				GameObject.Instantiate(lp, transform.position, Quaternion.identity);
+				abilityInUse = true;
 			}
+		}*/
+		if (Input.GetButtonDown ("B") && Active){// && (GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.Eating && GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.AxeManMinigame)) {
+			AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
+			MessageCenter.Instance.Broadcast(message);
+			exorcise();
 		}
 	}
 
 	public virtual void possess(){
-		possessed = true;
 	}
 
 	public virtual void exorcise(){
-		possessed = false;
+		if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE){
+			Active = false;
+			Instantiate(Resources.Load("Particles/soulsmoke"), transform.position, Quaternion.identity);
+		}
 	}
 
 	void HandlePossessorSpawned(Message message){

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 //using XInputDotNetPure;
 
-public class LampPossessable: Possessable {
+public class LampPossessable: PossessableItem {
 
 	bool shaking = false;
 	float shakeAmount = 1.0f;

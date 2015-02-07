@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 //using XInputDotNetPure;
 
-public class BenchPossessable : Possessable {
+public class BenchPossessable : PossessableItem {
 
 	bool shaking = false;
 	float shakeAmount = 1.0f;

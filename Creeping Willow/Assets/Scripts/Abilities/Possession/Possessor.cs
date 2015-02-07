@@ -57,18 +57,6 @@ public class Possessor : GameBehavior {
 				}
 			}
 		}
-		
-		if (Input.GetAxis("LT") > 0.2f) {
-			if(possessing){
-				Possessable possessable = objectToPossess.GetComponent<Possessable>();
-				possessable.useAbility(true);
-			}
-		}else if (Input.GetAxis("RT") > 0.2f) {
-			if(possessing){
-				Possessable possessable = objectToPossess.GetComponent<Possessable>();
-				possessable.useAbility(false);
-			}
-		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){

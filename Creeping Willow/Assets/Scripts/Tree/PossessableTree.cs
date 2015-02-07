@@ -9,8 +9,6 @@ public class PossessableTree : Possessable
         Front, FrontRight, Right, BackRight, Back, BackLeft, Left, FrontLeft
     }
     
-
-    public bool Active;
     public float Speed;
     public Tree.Private.BodyParts BodyParts;
     public Tree.Private.Sprites Sprites;
@@ -60,12 +58,13 @@ public class PossessableTree : Possessable
         BodyParts.Legs.GetComponent<Animator>().speed = 0f;
 	}
 	
-	protected override void lure(){
+	public override void possess(){
 	}
 
-    protected override void scare()
+    public override void exorcise()
     {
-        
+		base.exorcise ();
+		ChangeState ("Inactive");
     }
 
     protected override void GameUpdate()
