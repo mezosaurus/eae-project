@@ -61,8 +61,6 @@ public class PossessableTree : Possessable
 	public override void possess()
     {
 		ChangeState ("Active");
-
-		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 
     public override void exorcise()
@@ -97,9 +95,7 @@ public class PossessableTree : Possessable
     }
 
     public void UpdateSorting()
-    {
-        Debug.Log("Sort: " + gameObject.GetInstanceID());
-        
+    {        
         currentState.UpdateSorting();
     }
 

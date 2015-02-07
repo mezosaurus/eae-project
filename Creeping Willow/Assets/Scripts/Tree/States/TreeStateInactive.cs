@@ -34,5 +34,7 @@ public class TreeStateInactive : TreeState
     public override void Leave()
     {
         SetAlpha(Tree.transform, 1f);
+
+        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, Vector3.zero));
     }
 }
