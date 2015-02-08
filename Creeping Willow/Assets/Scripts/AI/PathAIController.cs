@@ -53,7 +53,7 @@ public class PathAIController : AIController
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
 		}
 
-		Vector3 changeMovement = avoid (direction);
+		Vector3 changeMovement = lured ? Vector3.zero : avoid (direction);
 
 		if( changeMovement != Vector3.zero )
 		{	

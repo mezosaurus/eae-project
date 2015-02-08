@@ -236,7 +236,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 43525168}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!1001 &25166928
 Prefab:
   m_ObjectHideFlags: 0
@@ -466,8 +466,8 @@ Transform:
   m_LocalPosition: {x: -.417999953, y: -.278999746, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 589427087}
   - {fileID: 23817525}
+  - {fileID: 589427087}
   m_Father: {fileID: 1357380680}
   m_RootOrder: 0
 --- !u!212 &43525169
@@ -1855,6 +1855,7 @@ MonoBehaviour:
   numSeven: {fileID: 2800000, guid: 200257881f431ea45b37e02447e83309, type: 3}
   numEight: {fileID: 2800000, guid: 40d438594a163aa4d804656139b3da96, type: 3}
   numNine: {fileID: 2800000, guid: 46fa3f2067c007f409de8459d4df3afd, type: 3}
+  myFont: {fileID: 0}
 --- !u!1001 &178723333
 Prefab:
   m_ObjectHideFlags: 0
@@ -8167,7 +8168,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 43525168}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &597590092
 GameObject:
   m_ObjectHideFlags: 0
@@ -36574,6 +36575,7 @@ MonoBehaviour:
   Active: 1
   actionSound: {fileID: 0}
   Speed: 40
+  Eating: 0
   BodyParts:
     Trunk: {fileID: 1175198086}
     Face: {fileID: 1670448905}
