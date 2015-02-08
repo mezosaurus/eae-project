@@ -28,7 +28,7 @@ public class WanderAIController : AIController {
 
 	override protected void NPCOnDestroy()
 	{
-		if (nextPath != null && nextPath.tag.Equals(wanderTag))
+		if (nextPath.tag.Equals(wanderTag))
 		{
 			Destroy (nextPath);
 		}

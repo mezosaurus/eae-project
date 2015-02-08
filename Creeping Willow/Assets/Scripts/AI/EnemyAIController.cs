@@ -110,7 +110,7 @@ public class EnemyAIController : AIController
 			investigating = true;
 			treePath = false;
 
-			var playerPosition = player.transform.position;
+			//var playerPosition = player.transform.position;
 			if (checkingPlayer)
 				//&& 
 			    //(Vector3.Distance(playerPosition, panickedNPCPosition) > wanderRadius || 
@@ -147,6 +147,7 @@ public class EnemyAIController : AIController
 			}			
 		}
 	}
+
 	private void animateCharacter(Vector3 movement, Vector3 moveTo)
 	{
 		determineDirectionChange (transform.position, movement);

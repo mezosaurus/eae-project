@@ -10,7 +10,6 @@ public class AIGenerator : GameBehavior
 	public GameObject enemyNPC;
 	public GameObject critterNPC;
 	public int maxNumberOfEachNPC = 1;
-	public bool isMaze = false;
 
 	public string spawnTag = "Respawn";
 	public string pathTag = "Paths";
@@ -84,9 +83,10 @@ public class AIGenerator : GameBehavior
 		{
 			GameObject path = paths[i];
 			SubpathScript movePath = path.GetComponent<SubpathScript>();
-			Vector2 pathPos = movePath.transform.position;
-			createPathNPC(pathPos);
+			Vector2 pathPos = movePath.getNextPath(null, null).transform.position;
+			createPathNPC(pathPos, movePath);
 		}
+
 		//3 bench npcs
 		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
 		for (int i = 0; i < 3; i++)
@@ -175,20 +175,14 @@ public class AIGenerator : GameBehavior
 	
 	void createPathNPC()
 	{
-		createPathNPC (getRandomSpawnPoint ());
+		SubpathScript movePath = GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+		createPathNPC (getRandomSpawnPoint (), movePath);
 	}
 
-	void createPathNPC(Vector2 spawnPoint)
+	void createPathNPC(Vector2 spawnPoint, SubpathScript movePath)
 	{
-		if (isMaze)
-		{
-			createMazeNPC(spawnPoint);
-			return;
-		}
-
 		GameObject newNPC = createNPC (this.pathNPC, pathAIList, spawnPoint);
-		
-		SubpathScript movePath = GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+
 		newNPC.GetComponent<PathAIController>().setMovingPath(movePath);
 		
 		if (Random.Range(0,2) == 0)
@@ -199,11 +193,6 @@ public class AIGenerator : GameBehavior
 		{
 			loadNPCWithSkin(newNPC, "mower_skin", NPCSkinType.MowerMan);
 		}
-	}
-
-	void createMazeNPC (Vector2 spawnPoint)
-	{
-
 	}
 
 	void createStationaryNPC()
