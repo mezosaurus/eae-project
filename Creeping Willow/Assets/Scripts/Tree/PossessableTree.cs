@@ -10,6 +10,7 @@ public class PossessableTree : Possessable
     }
     
     public float Speed;
+    public bool Eating;
     public Tree.Private.BodyParts BodyParts;
     public Tree.Private.Sprites Sprites;
     public Tree.Private.Sounds Sounds;
