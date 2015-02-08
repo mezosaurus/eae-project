@@ -44,7 +44,8 @@ public abstract class Possessable : GameBehavior {
 				abilityInUse = true;
 			}
 		}*/
-		if (Input.GetButtonDown ("B") && Active){// && (GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.Eating && GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.AxeManMinigame)) {
+        if (Input.GetButtonDown("B") && Active && GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE)
+        {// && (GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.Eating && GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.AxeManMinigame)) {
 			AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
 			MessageCenter.Instance.Broadcast(message);
 			exorcise();
@@ -55,10 +56,8 @@ public abstract class Possessable : GameBehavior {
 	}
 
 	public virtual void exorcise(){
-		if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE){
 			Active = false;
 			Instantiate(Resources.Load("Particles/soulsmoke"), transform.position, Quaternion.identity);
-		}
 	}
 
 	void HandlePossessorSpawned(Message message){

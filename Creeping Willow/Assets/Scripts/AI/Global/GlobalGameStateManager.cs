@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// SceneEnum represents a level for each name.
@@ -43,8 +43,12 @@ public static class GlobalGameStateManager
 	public static PosessionState PosessionState = PosessionState.EXORCISABLE;
 	public static SceneEnum CurrentScene = 0;
 
+    public bool TreeEating = false;
+
 	public static int[] highscores = new int[10];
 	public static string[] playerNames = new string[10];
+
+    public static IDictionary<NPCSkinType, NPCData> NPCData = PopulateNPCData();
 
 	public static Matrix4x4 PrepareMatrix ()
 	{
@@ -53,4 +57,23 @@ public static class GlobalGameStateManager
 		guiMatrix.SetTRS (new Vector3 (1, 1, 1), Quaternion.identity, new Vector3 (ratio.x, ratio.y, 1));
 		return guiMatrix;
 	}
+
+    private static IDictionary<NPCSkinType, NPCData> PopulateNPCData()
+    {
+        Dictionary<NPCSkinType, NPCData> data = new Dictionary<NPCSkinType, NPCData>();
+
+        AddNPCType(data, NPCSkinType.Bopper, new NPCDataBopper());
+        AddNPCType(data, NPCSkinType.Hippie, new NPCDataHippie());
+        AddNPCType(data, NPCSkinType.MowerMan, new NPCDataMowerMan());
+        AddNPCType(data, NPCSkinType.OldMan, new NPCDataOldMan());
+
+        return data;
+    }
+
+    private static void AddNPCType(IDictionary<NPCSkinType, NPCData> data, NPCSkinType skinType, NPCData npcData)
+    {
+        data[skinType] = npcData;
+
+        npcData.SkinType = skinType;
+    }
 }

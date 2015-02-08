@@ -4,15 +4,15 @@ using System.Collections;
 public class LTScript : MonoBehaviour
 {
     private GameObject target;
-    private float offset;
+    private Vector3 offset;
 
 	
     public void Initialize(GameObject target)
     {
         this.target = target;
 
-        if(target != null)
-            offset = target.GetComponent<SpriteRenderer>().bounds.extents.y + GetComponent<SpriteRenderer>().bounds.extents.y;
+        if (target != null)
+            offset = GlobalGameStateManager.NPCData[target.GetComponent<AIController>().SkinType].LTOffset;
     }
 
 	void Update ()
@@ -20,7 +20,7 @@ public class LTScript : MonoBehaviour
         if (target != null)
         {
             GetComponent<SpriteRenderer>().enabled = true;
-            transform.position = target.transform.position + new Vector3(0f, -offset);
+            transform.position = target.transform.position + offset;
         }
         else GetComponent<SpriteRenderer>().enabled = false;
 	}

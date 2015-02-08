@@ -11,7 +11,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
 
     private bool initialized;
     private GameObject LS, RS, LSArrow, RSArrow;
-    private MinigameState state;
+    private NPCData npcData;
     private bool grabbedTwo;
     private float timeElapsed;
     private int percentage;
@@ -24,6 +24,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
         Tree.BodyParts.LeftArm.SetActive(false);
         Tree.BodyParts.RightArm.SetActive(false);
         Tree.BodyParts.RightUpperArm.SetActive(true);
+        Tree.BodyParts.LeftUpperArm.SetActive(true);
         Tree.BodyParts.MinigameCircle.SetActive(true);
 
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
@@ -43,29 +44,23 @@ public class TreeStateEatingMinigameWrangle : TreeState
             GameObject.Destroy(parameters.GrabbedNPCs[1]);
         }
 
-        // Get NPC skins
-        switch(parameters.GrabbedNPCs[0].GetComponent<AIController>().SkinType)
-        {
-            case NPCSkinType.MowerMan:
-                break;
+        npcData = GlobalGameStateManager.NPCData[parameters.GrabbedNPCs[0].GetComponent<AIController>().SkinType];
 
-            case NPCSkinType.Bopper:
-            default:
-                state = new MinigameStateBopper(Tree);
-                break;
-        }
-        
+        Tree.BodyParts.RightGrabbedNPC.GetComponent<Animator>().SetTrigger(npcData.AnimationTrigger);
 
+        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.BodyParts.MinigameCircle.transform, Vector3.zero));
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(1.8f, 20f));
 
         // Play music if necessary
-        if (parameters.PlayMusic)
+        /*if (parameters.PlayMusic)
         {
             Tree.audio.clip = Tree.Sounds.Music;
             Tree.audio.Play();
-        }
+        }*/
 
         initialized = false;
+
+        Initialize();
     }
 
     private void Initialize()
@@ -93,7 +88,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
     public override void Update()
     {
         if (Camera.main.orthographicSize != Camera.main.GetComponent<CameraScript>().TargetSize) return;
-        if (!initialized) Initialize();
+        //if (!initialized) Initialize();
 
         Transform circle = Tree.BodyParts.MinigameCircle.transform;
 
@@ -107,7 +102,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
         // If both sticks are in, change to next phase of minigame
         if (lsIn && rsIn)
         {
-            TreeStateEatingMinigameMash.Data data = new TreeStateEatingMinigameMash.Data(percentage);
+            TreeStateEatingMinigameMash.Data data = new TreeStateEatingMinigameMash.Data(npcData.SkinType, percentage);
             
             Tree.ChangeState("EatingMinigameMash", data);
 
@@ -164,7 +159,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
         UpdateArms(progress);
 
         // Update timer
-        timeElapsed += Time.deltaTime;
+        //timeElapsed += Time.deltaTime;
 
         float timePercentage = Mathf.Clamp(timeElapsed / MaxTime, 0f, 1f);
         percentage = Mathf.RoundToInt(timePercentage * 100f);
@@ -182,8 +177,8 @@ public class TreeStateEatingMinigameWrangle : TreeState
 
     protected void UpdateArms(float percentage)
     {
-        float upperAngle = state.UpperRightArmStartAngle + ((state.UpperRightArmMidpointAngle - state.UpperRightArmStartAngle) * percentage);
-        float lowerAngle = state.LowerRightArmStartAngle + ((state.LowerRightArmMidpointAngle - state.LowerRightArmStartAngle) * percentage);
+        float upperAngle = npcData.RightUpperArmStartAngle + ((npcData.RightUpperArmMidpointAngle - npcData.RightUpperArmStartAngle) * percentage);
+        float lowerAngle = npcData.RightLowerArmStartAngle + ((npcData.RightLowerArmMidpointAngle - npcData.RightLowerArmStartAngle) * percentage);
 
         Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
         Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);

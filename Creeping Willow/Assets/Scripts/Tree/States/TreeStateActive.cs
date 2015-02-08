@@ -14,6 +14,7 @@ public class TreeStateActive : TreeState
         npcsInRange = new List<GameObject>();
 
         Tree.BodyParts.RightUpperArm.SetActive(false);
+        Tree.BodyParts.LeftUpperArm.SetActive(false);
 		/*if (Tree.BodyParts.GrabbedNPC != null)
 	        Tree.BodyParts.GrabbedNPC.SetActive(false);*/
         Tree.BodyParts.MinigameCircle.SetActive(false);

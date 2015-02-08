@@ -7,7 +7,7 @@ public class TreeStateEatingMinigameMash : TreeState
     private const float SampleRate = 3f;
 
 
-    private MinigameState state;
+    private NPCData npcData;
     private int button;
     private float percentage, timeElapsed, sampledTime, averagePercentage;
     private int intPercentage, ticks;
@@ -29,11 +29,12 @@ public class TreeStateEatingMinigameMash : TreeState
         //Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[Percentage];
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().color = Colors[button];
 
-        // Temp
-        state = new MinigameStateBopper(Tree);
+        MessageCenter.Instance.Broadcast(new CameraZoomMessage(1.2f, 20f));
 
         // Get data
         Data parameters = data as Data;
+
+        npcData = GlobalGameStateManager.NPCData[parameters.SkinType];
 
         percentage = (float)parameters.Percentage / 100f;
         timeElapsed = 0f;
@@ -49,9 +50,13 @@ public class TreeStateEatingMinigameMash : TreeState
 
     public override void Update()
     {
+        if (Camera.main.orthographicSize != Camera.main.GetComponent<CameraScript>().TargetSize) return;
+
         if(won)
         {
-            Tree.ChangeState("Eating");
+            TreeStateEating.Data data = new TreeStateEating.Data(npcData.SkinType);
+
+            Tree.ChangeState("Eating", data);
 
             return;
         }
@@ -99,8 +104,8 @@ public class TreeStateEatingMinigameMash : TreeState
     }
     protected void UpdateArms(float percentage)
     {
-        float upperAngle = state.UpperRightArmMidpointAngle + ((state.UpperRightArmEndAngle - state.UpperRightArmMidpointAngle) * percentage);
-        float lowerAngle = state.LowerRightArmMidpointAngle + ((state.LowerRightArmEndAngle - state.LowerRightArmMidpointAngle) * percentage);
+        float upperAngle = npcData.RightUpperArmMidpointAngle + ((npcData.RightUpperArmEndAngle - npcData.RightUpperArmMidpointAngle) * percentage);
+        float lowerAngle = npcData.RightLowerArmMidpointAngle + ((npcData.RightLowerArmEndAngle - npcData.RightLowerArmMidpointAngle) * percentage);
 
         Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
         Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);
@@ -146,11 +151,13 @@ public class TreeStateEatingMinigameMash : TreeState
 
     public class Data
     {
+        public NPCSkinType SkinType;
         public int Percentage;
 
 
-        public Data(int percentage)
+        public Data(NPCSkinType skinType, int percentage)
         {
+            SkinType = skinType;
             Percentage = percentage;
         }
     }
