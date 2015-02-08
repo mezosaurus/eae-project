@@ -11,7 +11,7 @@ public class TreeStateActive : TreeState
     {
         Tree.Active = true;
         GlobalGameStateManager.PosessionState = PosessionState.EXORCISABLE;
-        Eating = false;
+        Tree.Eating = false;
         npcsInRange = new List<GameObject>();
 
         Tree.BodyParts.RightUpperArm.SetActive(false);
