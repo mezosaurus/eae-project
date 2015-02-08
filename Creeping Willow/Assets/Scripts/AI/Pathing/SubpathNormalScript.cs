@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SubpathNormalScript : SubpathScript
 {
+	public GameObject[] paths;
+
 	public override GameObject getNextPath(GameObject currentPath, GameObject npc)
 	{
 		if (currentPath == null)

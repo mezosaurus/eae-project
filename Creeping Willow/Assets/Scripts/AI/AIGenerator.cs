@@ -78,7 +78,7 @@ public class AIGenerator : GameBehavior
 	private void initMap()
 	{
 		// 3 pathing npcs
-		GameObject[] paths = GameObject.FindGameObjectsWithTag ("Path");
+		GameObject[] paths = GameObject.FindGameObjectsWithTag ("Path");		
 		for (int i = 0; i < paths.Length; i++)
 		{
 			GameObject path = paths[i];
