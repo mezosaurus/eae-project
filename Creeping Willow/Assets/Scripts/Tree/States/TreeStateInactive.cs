@@ -6,6 +6,7 @@ public class TreeStateInactive : TreeState
     {
         Tree.Active = false;
         GlobalGameStateManager.PosessionState = PosessionState.EXORCISABLE;
+        Tree.Eating = false;
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.None;
     }
 
