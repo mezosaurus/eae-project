@@ -40,6 +40,7 @@ public class ScoreScript : MonoBehaviour {
 	public Texture2D numSeven;
 	public Texture2D numEight;
 	public Texture2D numNine;
+	public Font myFont;
 
 	bool gameStarted = false;
 	
@@ -358,6 +359,7 @@ public class ScoreScript : MonoBehaviour {
 		/***** Scoring GUI *****/
 		
 		GUIStyle myStyle = new GUIStyle ();
+		//myStyle.font = myFont;
 		myStyle.alignment = TextAnchor.MiddleCenter;
 		myStyle.fontSize = 30;
 		myStyle.normal.textColor = Color.white;
@@ -471,6 +473,8 @@ public class ScoreScript : MonoBehaviour {
 		}
 		else if( scoreState == (int)ScoreState.MOVE_SCORING )
 		{
+			float currentFontSize;
+
 			scoreTimer = 0;
 			
 			float fracTime = (Time.time - moveStartTime) / 2f;
@@ -650,8 +654,8 @@ public class ScoreScript : MonoBehaviour {
 			myStyle.normal.textColor = Color.red;
 			myStyle.fontSize = 100;
 			//GUI.Label(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), "" + popupMultiplier, myStyle);	
-			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX * 2, popupY * 2), multiplierSign, ScaleMode.ScaleToFit);
-			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX * 2, popupY * 2), multiplierPointImage, ScaleMode.ScaleToFit);
+			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), multiplierSign, ScaleMode.ScaleToFit);
+			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), multiplierPointImage, ScaleMode.ScaleToFit);
 			
 			// increment height
 			popupIncrement2 += 1.5f;
