@@ -2933,37 +2933,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed355751929f87043a0053ce86b92e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &103949394
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 103949395}
-  m_Layer: 0
-  m_Name: CritterSpawnPoints
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &103949395
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 103949394}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1370140278}
-  - {fileID: 1264359059}
-  - {fileID: 1279487878}
-  - {fileID: 1364874940}
-  m_Father: {fileID: 2022143694}
-  m_RootOrder: 7
 --- !u!1 &104146426
 GameObject:
   m_ObjectHideFlags: 0
@@ -22047,36 +22016,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0a7d47174b6b3864f8dbea9ae14a6554, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &703973888
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 703973889}
-  m_Layer: 0
-  m_Name: WanderPoints
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &703973889
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 703973888}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1178524567}
-  - {fileID: 1113787562}
-  - {fileID: 1161919436}
-  m_Father: {fileID: 2022143694}
-  m_RootOrder: 8
 --- !u!1001 &704805294
 Prefab:
   m_ObjectHideFlags: 0
@@ -38302,33 +38241,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed355751929f87043a0053ce86b92e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1113787561
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1113787562}
-  m_Layer: 0
-  m_Name: wander02
-  m_TagString: Wander
-  m_Icon: {fileID: -1794265156, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1113787562
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1113787561}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.23999977, y: 1.87, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 703973889}
-  m_RootOrder: 1
 --- !u!1 &1114746041
 GameObject:
   m_ObjectHideFlags: 0
@@ -39612,33 +39524,6 @@ Prefab:
   m_RootGameObject: {fileID: 894224983}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &1161919435
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1161919436}
-  m_Layer: 0
-  m_Name: wander03
-  m_TagString: Wander
-  m_Icon: {fileID: -1794265156, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1161919436
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1161919435}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.73000002, y: -7.86999989, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 703973889}
-  m_RootOrder: 2
 --- !u!1001 &1167823276
 Prefab:
   m_ObjectHideFlags: 0
@@ -40195,33 +40080,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed355751929f87043a0053ce86b92e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1178524566
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1178524567}
-  m_Layer: 0
-  m_Name: wander01
-  m_TagString: Wander
-  m_Icon: {fileID: -1794265156, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1178524567
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1178524566}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.48999977, y: 7.75, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 703973889}
-  m_RootOrder: 0
 --- !u!1 &1179999675
 GameObject:
   m_ObjectHideFlags: 0
@@ -44430,33 +44288,6 @@ Prefab:
   m_RootGameObject: {fileID: 316211760}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &1264359058
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1264359059}
-  m_Layer: 0
-  m_Name: spawn02
-  m_TagString: CritterSpawn
-  m_Icon: {fileID: 664873902, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1264359059
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1264359058}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.8599997, y: -1.65999997, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 103949395}
-  m_RootOrder: 1
 --- !u!1 &1264468729
 GameObject:
   m_ObjectHideFlags: 0
@@ -45001,33 +44832,6 @@ SpriteRenderer:
   m_SortingOrder: 52
   m_Sprite: {fileID: 21300000, guid: 95ed9651f29879841800dc07f27e3757, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1279487877
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1279487878}
-  m_Layer: 0
-  m_Name: spawn03
-  m_TagString: CritterSpawn
-  m_Icon: {fileID: 664873902, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1279487878
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1279487877}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.28000021, y: 6.07999992, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 103949395}
-  m_RootOrder: 2
 --- !u!1 &1280930594
 GameObject:
   m_ObjectHideFlags: 0
@@ -48652,60 +48456,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed355751929f87043a0053ce86b92e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1364874939
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1364874940}
-  m_Layer: 0
-  m_Name: spawn04
-  m_TagString: CritterSpawn
-  m_Icon: {fileID: 664873902, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1364874940
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1364874939}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.85000038, y: -6.69000006, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 103949395}
-  m_RootOrder: 3
---- !u!1 &1370140277
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1370140278}
-  m_Layer: 0
-  m_Name: spawn01
-  m_TagString: CritterSpawn
-  m_Icon: {fileID: 664873902, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1370140278
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1370140277}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.5299997, y: .289999992, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 103949395}
-  m_RootOrder: 0
 --- !u!1 &1370692995
 GameObject:
   m_ObjectHideFlags: 0
@@ -49202,46 +48952,6 @@ Prefab:
   m_RootGameObject: {fileID: 1206492967}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &1388762485
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1388762486}
-  - 114: {fileID: 1388762487}
-  m_Layer: 0
-  m_Name: Path1
-  m_TagString: Path
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1388762486
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1388762485}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.44430161, y: -2.32695079, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1708371598}
-  m_RootOrder: 0
---- !u!114 &1388762487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1388762485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94620c95026137d4ab17876aa8de884f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  paths: []
 --- !u!1 &1393876249
 GameObject:
   m_ObjectHideFlags: 0
@@ -63525,46 +63235,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed355751929f87043a0053ce86b92e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1708371597
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1708371598}
-  - 114: {fileID: 1708371599}
-  m_Layer: 0
-  m_Name: Paths
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1708371598
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1708371597}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1388762486}
-  m_Father: {fileID: 2022143694}
-  m_RootOrder: 6
---- !u!114 &1708371599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1708371597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab95f3c0817f5fb45b4bd33899057f7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1712737197
 Prefab:
   m_ObjectHideFlags: 0
@@ -64662,7 +64332,6 @@ MonoBehaviour:
   enemyNPC: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
   critterNPC: {fileID: 107086, guid: 7d0da34a69c2f5f499c6c32d1d0ed0eb, type: 2}
   maxNumberOfEachNPC: 5
-  isMaze: 0
   spawnTag: Respawn
   pathTag: Paths
   benchTag: Bench
@@ -74392,9 +74061,6 @@ Transform:
   - {fileID: 1480846738}
   - {fileID: 1201089875}
   - {fileID: 1182320581}
-  - {fileID: 1708371598}
-  - {fileID: 103949395}
-  - {fileID: 703973889}
   m_Father: {fileID: 0}
   m_RootOrder: 4
 --- !u!1 &2024776447

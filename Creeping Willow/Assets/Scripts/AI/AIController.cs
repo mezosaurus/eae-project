@@ -23,6 +23,7 @@ public class AIController : GameBehavior {
 
     // Skin Type
     public NPCSkinType SkinType;
+	public bool isCritterType = false;
 
 	// Global Keys
 	protected string walkingKey = "direction";

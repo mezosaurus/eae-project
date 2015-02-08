@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum CritterType
+{
+	fast,
+	poisonous,
+	stealthy,
+}
+
 public class CritterController : AIController {
 	public float waitTime;
 	public string wanderTag = "Wander";
-	
+	public CritterType critterUpgradeType;
+
 	private float previousMovement;
 	private int moveCounter;
 	private float nextMoveTime;
@@ -21,6 +29,9 @@ public class CritterController : AIController {
 
 		nextPath = new GameObject();
 		pathPosition = spawnPosition;
+
+		isCritterType = true;
+		critterUpgradeType = CritterType.fast;
 	}
 	
 	protected override void GameUpdate () 
