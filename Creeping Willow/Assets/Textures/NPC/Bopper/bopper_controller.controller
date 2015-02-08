@@ -120,7 +120,7 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: direction
-    m_EventTreshold: 1
+    m_EventTreshold: 0
     m_ExitTime: 1
   m_Atomic: 1
   m_Solo: 0
@@ -138,9 +138,9 @@ Transition:
   m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_Conditions:
-  - m_ConditionMode: 5
-    m_ConditionEvent: 
-    m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: direction
+    m_EventTreshold: 1
     m_ExitTime: 1
   m_Atomic: 1
   m_Solo: 0
@@ -187,7 +187,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: bopper_walking_backwards_anim
-  m_Speed: 1
+  m_Speed: .5
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: 9ee58fe924513e94582c81fdb5a97578, type: 2}
@@ -227,11 +227,6 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110267888}
-      second:
-      - {fileID: 110193264}
-      - {fileID: 110196584}
-    data:
       first: {fileID: 110275175}
       second:
       - {fileID: 110100000}
@@ -241,6 +236,11 @@ StateMachine:
       second:
       - {fileID: 110115200}
       - {fileID: 110179510}
+    data:
+      first: {fileID: 110267888}
+      second:
+      - {fileID: 110193264}
+      - {fileID: 110196584}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 48, y: -48, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
