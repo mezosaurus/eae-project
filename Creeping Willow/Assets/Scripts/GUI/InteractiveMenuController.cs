@@ -23,6 +23,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public LevelLoader levelLoader;
 	public GameObject gateLeft;
 	public GameObject gateRight;
+	public Image logo;
 
 	private bool axisBusy;
 	private bool usesSound;
@@ -92,6 +93,8 @@ public class InteractiveMenuController : MonoBehaviour
 		gateRotationRight = Quaternion.Euler( 0, 0, 0 );
 
 		currentPosition = MenuPosition.MainGate;
+
+		logo.enabled = true;
 		
 		elapsedZoomTime = 0.0f;
 	}
@@ -100,6 +103,7 @@ public class InteractiveMenuController : MonoBehaviour
 	{
 		// Get rid of all other buttons
 		DisableAllButtons();
+		logo.enabled = false;
 
 		// Show all the buttons
 		foreach( Button button in levelButtons )
