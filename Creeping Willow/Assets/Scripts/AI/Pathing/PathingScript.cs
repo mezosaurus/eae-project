@@ -3,16 +3,16 @@ using System.Collections;
 
 public class PathingScript : MonoBehaviour 
 {
-	private GameObject[] paths;
+	private GameObject[] subPaths;
 
 	void Start()
 	{
-		paths = GameObject.FindGameObjectsWithTag ("Path");
+		subPaths = GameObject.FindGameObjectsWithTag ("Path");
 	}
 
 	public GameObject getRandomPath()
 	{
-		int rand = Random.Range (0, paths.Length);
-		return paths [rand];
+		int rand = Random.Range (0, subPaths.Length);
+		return subPaths [rand];
 	}
 }
