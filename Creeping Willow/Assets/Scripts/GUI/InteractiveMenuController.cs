@@ -20,6 +20,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
+	public LevelLoader levelLoader;
 
 	private bool axisBusy;
 	private bool usesSound;
@@ -224,6 +225,11 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void LoadLevel( string i_levelName )
 	{
-		Application.LoadLevel( i_levelName );
+		// Persist the level loader
+		levelLoader.levelName = i_levelName;
+		Object.DontDestroyOnLoad( levelLoader );
+
+		// Load the new level
+		Application.LoadLevel( "LoadingScreen" );
 	}
 }
