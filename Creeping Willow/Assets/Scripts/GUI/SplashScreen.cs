@@ -14,6 +14,7 @@ public class SplashScreen : MonoBehaviour
 	}
 
 	public Image unityImage;
+	public Image eaeImage;
 	public Image utahImage;
 	public Image creepingWillowImage;
 	public Image coverImage;
@@ -25,7 +26,7 @@ public class SplashScreen : MonoBehaviour
 	private SplashNumber splash;
 
 	private float timer;
-	private const float st = 1.0f;
+	private const float st = 3.0f;
 	private const float ft = 1.0f;
 	private const float bt = 1.0f;
 
@@ -40,6 +41,7 @@ public class SplashScreen : MonoBehaviour
 		coverImage2.enabled = false;
 
 		unityImage.enabled = true;
+		eaeImage.enabled = false;
 		utahImage.enabled = false;
 		creepingWillowImage.enabled = false;
 	}
@@ -85,6 +87,7 @@ public class SplashScreen : MonoBehaviour
 		// Blank
 		else if( timer > ( 2*bt + 4*ft + 2*st ) && timer < ( 3*bt + 4*ft + 2*st ) && splash == SplashNumber.Utah )
 		{
+			eaeImage.enabled = false;
 			utahImage.enabled = false;
 			coverImage2.enabled = true;
 			splash = SplashNumber.None;
@@ -93,6 +96,7 @@ public class SplashScreen : MonoBehaviour
 		// Fade out Utah
 		else if( timer > ( 2*bt + 3*ft + 2*st ) && timer < ( 2*bt + 4*ft + 2*st ) && !fadeStarted )
 		{
+			eaeImage.CrossFadeAlpha( 0, ft, true );
 			utahImage.CrossFadeAlpha( 0, ft, true );
 			fadeStarted = true;
 		}
@@ -106,6 +110,7 @@ public class SplashScreen : MonoBehaviour
 		// Fade in Utah
 		else if( timer > ( 2*bt + 2*ft + st ) && timer < ( 2*bt + 3*ft + st ) && !fadeStarted )
 		{
+			eaeImage.enabled = true;
 			utahImage.enabled = true;
 			coverImage1.CrossFadeAlpha( 0, ft, true );
 			fadeStarted = true;
