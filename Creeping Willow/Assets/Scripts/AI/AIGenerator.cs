@@ -15,8 +15,9 @@ public class AIGenerator : GameBehavior
 	public string pathTag = "Paths";
 	public string benchTag = "Bench";
 	public string critterSpawnTag = "CritterSpawn";
-	public float spawnTime;
-	public float critterSpawnTime;
+	public float spawnTime = 5;
+	public float critterSpawnTime = 15;
+	public bool isMaze = false;
 
 	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
@@ -68,7 +69,7 @@ public class AIGenerator : GameBehavior
 			createNewNPC();
 		}
 
-		if (critterAIList != null && lastCritterTime <= Time.time - critterSpawnTime && (critterAIList.Count < maxNumberOfEachNPC))
+		if (!isMaze && critterAIList != null && lastCritterTime <= Time.time - critterSpawnTime && (critterAIList.Count < maxNumberOfEachNPC))
 		{
 			lastCritterTime = Time.time;
 			createCritterNPC();
@@ -88,14 +89,17 @@ public class AIGenerator : GameBehavior
 		}
 
 		//3 bench npcs
-		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
-		for (int i = 0; i < 3; i++)
+		if (!isMaze)
 		{
-			int rand = Random.Range (0, benches.Length);
-			GameObject bench = benches[rand];
-			Vector2 spawnPos = bench.transform.position;
-			GameObject newStationary = createNPC (this.stationaryNPC, stationaryAIList, spawnPos);
-			newStationary.GetComponent<StationaryAIController> ().setStationaryPoint (bench);
+			GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
+			for (int i = 0; i < 3; i++)
+			{
+				int rand = Random.Range (0, benches.Length);
+				GameObject bench = benches[rand];
+				Vector2 spawnPos = bench.transform.position;
+				GameObject newStationary = createNPC (this.stationaryNPC, stationaryAIList, spawnPos);
+				newStationary.GetComponent<StationaryAIController> ().setStationaryPoint (bench);
+			}
 		}
 	}
 	
@@ -151,7 +155,10 @@ public class AIGenerator : GameBehavior
 		case 1:
 			if (stationaryAIList.Count < maxNumberOfEachNPC)
 			{
-				createStationaryNPC();
+				if (!isMaze)
+				{
+					createStationaryNPC();
+				}
 			}
 			else
 			{
@@ -162,7 +169,10 @@ public class AIGenerator : GameBehavior
 		case 2:
 			if (wanderAIList.Count < maxNumberOfEachNPC)
 			{
-				createWanderNPC();
+				if (!isMaze)
+				{
+					createWanderNPC();
+				}
 			}
 			else
 			{
@@ -183,8 +193,10 @@ public class AIGenerator : GameBehavior
 	{
 		GameObject newNPC = createNPC (this.pathNPC, pathAIList, spawnPoint);
 
-		newNPC.GetComponent<PathAIController>().setMovingPath(movePath);
-		
+		PathAIController controller = newNPC.GetComponent<PathAIController> ();
+		controller.setMovingPath(movePath);
+		controller.setInMaze (isMaze);
+
 		if (Random.Range(0,2) == 0)
 		{
 			loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);

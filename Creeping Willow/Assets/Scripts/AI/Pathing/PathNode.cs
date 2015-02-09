@@ -3,27 +3,36 @@ using System.Collections;
 
 public class PathNode : MonoBehaviour
 {
-	public PathNode[] connectedPaths;
+	public GameObject[] connectedPaths;
 
 	void OnDrawGizmos()
 	{
 		Vector3 pos = gameObject.transform.position;
 
-		foreach (PathNode path in connectedPaths)
+		foreach (GameObject path in connectedPaths)
 		{
-			if (path != null && path.hasConnectingPath(this))
+			if (path != null && path.GetComponent<PathNode>().hasConnectingPath(gameObject))
+			{
 				Gizmos.DrawLine(pos, path.transform.position);
+			}
 		}
 	}
 
-	public PathNode getRandomConnectedPath()
+	public GameObject getRandomConnectedPath()
 	{
-		return connectedPaths[Random.Range(0, connectedPaths.Length)];
+		if (connectedPaths.Length == 1)
+		{
+			return connectedPaths[0];
+		}
+
+		int pos = Random.Range (0, connectedPaths.Length);
+
+		return connectedPaths[pos];
 	}
 
-	public bool hasConnectingPath(PathNode node)
+	public bool hasConnectingPath(GameObject node)
 	{
-		foreach (PathNode path in connectedPaths)
+		foreach (GameObject path in connectedPaths)
 		{
 			if (node.Equals(path))
 			{
