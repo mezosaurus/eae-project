@@ -381,7 +381,6 @@ public class ScoreScript : MonoBehaviour {
 		else if( scoreState == (int)ScoreState.SCORING )
 		{
 			/*** display scores ***/
-			
 			int offset = 1;
 			
 			// change alpha/transparency of score
@@ -999,7 +998,9 @@ public class ScoreScript : MonoBehaviour {
 	{
 		foreach( GameObject go in scaredNPCs )
 		{
-			if( go.GetComponent<AIController>() != null )
+			if( go == null )
+				continue;
+			else if( go.GetComponent<AIController>() != null )
 			{
 				AIController ai = go.GetComponent<AIController>();
 
@@ -1200,7 +1201,7 @@ public class ScoreScript : MonoBehaviour {
 	void HandleNPCEaten(Message message)
 	{
 		NPCEatenMessage mess = message as NPCEatenMessage;
-		
+
 		if( mess.NPC == null )
 			return;
 		
