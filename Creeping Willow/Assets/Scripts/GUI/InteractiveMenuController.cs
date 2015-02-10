@@ -20,7 +20,6 @@ public class InteractiveMenuController : MonoBehaviour
 	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
-	public LevelLoader levelLoader;
 	public GameObject gateLeft;
 	public GameObject gateRight;
 	public Image logo;
@@ -34,6 +33,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private float totalZoomTime;
 	private float elapsedZoomTime;
 	private MenuPosition currentPosition;
+	private LevelLoader levelLoader;
 
 	void Awake()
 	{
@@ -55,6 +55,8 @@ public class InteractiveMenuController : MonoBehaviour
 			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
 
 		totalZoomTime = 10.0f;
+
+		levelLoader = GameObject.Find( "PersistentObject" ).GetComponent<LevelLoader>();
 	}
 
 	void OnDestroy() {}
@@ -247,7 +249,6 @@ public class InteractiveMenuController : MonoBehaviour
 	{
 		// Persist the level loader
 		levelLoader.levelName = i_levelName;
-		Object.DontDestroyOnLoad( levelLoader );
 
 		// Load the new level
 		Application.LoadLevel( "LoadingScreen" );

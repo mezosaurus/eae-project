@@ -8,7 +8,7 @@ public class LoadingScreen : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		levelLoader = GameObject.Find( "LevelLoader" ).GetComponent<LevelLoader>();
+		levelLoader = GameObject.Find( "PersistentObject" ).GetComponent<LevelLoader>();
 		Application.LoadLevel( levelLoader.levelName );
 	}
 	
