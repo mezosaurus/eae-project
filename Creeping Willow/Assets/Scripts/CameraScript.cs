@@ -74,13 +74,13 @@ public class CameraScript : MonoBehaviour
             Vector3 distance = targetPosition - transform.position;
             float speed = 10f;
 
-            if(locked) transform.position = targetPosition;
-            else
+            /*if(locked)*/ transform.position = targetPosition;
+            /*else
             {
                 transform.position += (distance.normalized * speed * Time.deltaTime);
 
                 if ((targetPosition - transform.position).magnitude < 0.1f) locked = true;
-            }
+            }*/
         }
 
         /*if(zoomedIn && camera.orthographicSize != 1.5f)
