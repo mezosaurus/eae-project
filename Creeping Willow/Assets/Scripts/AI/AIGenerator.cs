@@ -79,10 +79,11 @@ public class AIGenerator : GameBehavior
 	private void initMap()
 	{
 		// 3 pathing npcs
-		GameObject[] paths = GameObject.FindGameObjectsWithTag ("Path");		
-		for (int i = 0; i < paths.Length; i++)
+		GameObject[] paths = GameObject.FindGameObjectsWithTag ("Path");
+		int count = isMaze ? maxNumberOfEachNPC / 2 : paths.Length;
+		for (int i = 0; i < count; i++)
 		{
-			GameObject path = paths[i];
+			GameObject path = isMaze ? paths[0] : paths[i];
 			SubpathScript movePath = path.GetComponent<SubpathScript>();
 			Vector2 pathPos = movePath.getNextPath(null, null).transform.position;
 			createPathNPC(pathPos, movePath);
