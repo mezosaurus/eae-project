@@ -32,9 +32,11 @@ public class TreeStateActive : TreeState
     }
 
     public override void Update()
-    {        
+    {
+        float bonusSpeed = (Tree.BonusSpeedTimer > 0f) ? 1.2f : 1f;
+        
         // Update velocity
-        Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * Tree.Speed * Time.deltaTime;
+        Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY")) * Tree.Speed * bonusSpeed * Time.deltaTime;
 
         // Handle keyboard
         if(Input.anyKey)
@@ -46,7 +48,7 @@ public class TreeStateActive : TreeState
             if (Input.GetKey(KeyCode.UpArrow)) velocity.y = 1f;
             if (Input.GetKey(KeyCode.DownArrow)) velocity.y = -1f;
 
-            velocity *= Tree.Speed * Time.deltaTime;
+            velocity *= Tree.Speed * bonusSpeed * Time.deltaTime;
         }
 
         Tree.rigidbody2D.velocity = velocity;
@@ -60,7 +62,13 @@ public class TreeStateActive : TreeState
             bool inRange = Vector3.Distance(Tree.transform.position, npc.transform.position) <= 1.5f;
 
             if(inRange && (listIndex == -1)) npcsInRange.Add(npc);
-            else if(!inRange && (listIndex != -1)) npcsInRange.RemoveAt(listIndex);
+            else if (!inRange && (listIndex != -1))
+            {
+                npcsInRange.RemoveAt(listIndex);
+
+                // Untag NPC if necessary
+                npc.GetComponent<AIController>().IsTaggedByTree = false;
+            }
         }
 
         // Show LT icons if NPCs are in range
@@ -89,10 +97,19 @@ public class TreeStateActive : TreeState
             MessageCenter.Instance.Broadcast(new PlayerGrabbedNPCsMessage(new List<GameObject>() { closestNPCs[0] }));
 
             closestNPCs[0].SetActive(false);
-            
-            TreeStateEatingMinigameWrangle.Data data = new TreeStateEatingMinigameWrangle.Data(closestNPCs, true);
-            
-            Tree.ChangeState("EatingMinigameWrangle", data);
+
+            if (closestNPCs[0].GetComponent<AIController>().isCritterType)
+            {
+                TreeStateEatingMinigameMashInstant.Data data = new TreeStateEatingMinigameMashInstant.Data(closestNPCs[0]);
+
+                Tree.ChangeState("EatingMinigameMashInstant", data);
+            }
+            else
+            {
+                TreeStateEatingMinigameWrangle.Data data = new TreeStateEatingMinigameWrangle.Data(closestNPCs, true);
+
+                Tree.ChangeState("EatingMinigameWrangle", data);
+            }
 
             return;
         }
@@ -105,7 +122,7 @@ public class TreeStateActive : TreeState
         // Trivial cases
         if (npcsInRange.Count == 0) return new GameObject[0];
         else if (npcsInRange.Count == 1) return new GameObject[1] { npcsInRange[0] };
-        else if (npcsInRange.Count == 2) return new GameObject[2] { npcsInRange[0], npcsInRange[1] };
+        //else if (npcsInRange.Count == 2) return new GameObject[2] { npcsInRange[0], npcsInRange[1] };
         else
         {
             GameObject[] closestNPCs = new GameObject[2];
@@ -115,24 +132,27 @@ public class TreeStateActive : TreeState
 
             foreach (GameObject npc in npcsInRange)
             {
-                float distance = Vector3.Distance(Tree.transform.position, npc.transform.position);
-
-                if (distance < closest1)
+                if (!npc.GetComponent<AIController>().IsTaggedByTree)
                 {
-                    closest2 = closest1;
-                    closestNPCs[1] = closestNPCs[0];
+                    float distance = Vector3.Distance(Tree.transform.position, npc.transform.position);
 
-                    closest1 = distance;
-                    closestNPCs[0] = npc;
-                }
-                else if (distance < closest2)
-                {
-                    closest2 = distance;
-                    closestNPCs[1] = npc;
+                    if (distance < closest1)
+                    {
+                        closest2 = closest1;
+                        closestNPCs[1] = closestNPCs[0];
+
+                        closest1 = distance;
+                        closestNPCs[0] = npc;
+                    }
+                    else if (distance < closest2)
+                    {
+                        closest2 = distance;
+                        closestNPCs[1] = npc;
+                    }
                 }
             }
 
-            return closestNPCs;
+            return new GameObject[1] { closestNPCs[0] };
         }
     }
 

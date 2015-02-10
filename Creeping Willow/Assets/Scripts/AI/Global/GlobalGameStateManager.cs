@@ -48,6 +48,8 @@ public static class GlobalGameStateManager
 
     public static IDictionary<NPCSkinType, NPCData> NPCData = PopulateNPCData();
 
+    public static float SoulConsumedTimer = 0f;
+
 	public static Matrix4x4 PrepareMatrix ()
 	{
 		Vector2 ratio = new Vector2 (Screen.width / originalWidth, Screen.height / originalHeight);
@@ -64,6 +66,7 @@ public static class GlobalGameStateManager
         AddNPCType(data, NPCSkinType.Hippie, new NPCDataHippie());
         AddNPCType(data, NPCSkinType.MowerMan, new NPCDataMowerMan());
         AddNPCType(data, NPCSkinType.OldMan, new NPCDataOldMan());
+        AddNPCType(data, NPCSkinType.Critter, new NPCDataSquirrel());
 
         return data;
     }

@@ -93,9 +93,14 @@ public class NotorietyMeter : MonoBehaviour
 		GUI.Box( new Rect( left, top, width, height ), GUIContent.none );
 		GUI.Box( new Rect( left, top + height * ( 1 - percentFull ), width, height * percentFull ), GUIContent.none );
 
+        // Matt changed this, feel free to change back
+        float w = 80f;
+        float h = w;
+        float t = top + (height / 2f) - ((axemanCount * h) / 2f);
+
 		for( int i = 0; i < axemanCount; i++ )
 		{
-			GUI.DrawTexture( new Rect( left + width, top + height / axemanCount * i, 40, height / ( i + 1 ) ), axemanHeadTexture, ScaleMode.ScaleToFit );
+			GUI.DrawTexture( new Rect( left + width, t + (i * h), w, h), axemanHeadTexture, ScaleMode.ScaleToFit );
 		}
 
 		GUI.matrix = Matrix4x4.identity;

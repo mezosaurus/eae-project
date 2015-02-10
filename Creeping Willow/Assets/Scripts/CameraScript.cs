@@ -13,6 +13,12 @@ public class CameraScript : MonoBehaviour
     private float zoomSpeed;
     private bool locked;
 
+    // TEMP?
+    private const int SoulConsumedSize = 14;
+    private int soulConsumed;
+    private float scTimer;
+    Texture2D[] SoulConsumed;
+
     // Use this for initialization
     void Start()
     {
@@ -21,6 +27,20 @@ public class CameraScript : MonoBehaviour
         //MessageCenter.Instance.RegisterListener(MessageType.CameraZoomOut, HandleCameraZoomOutMessage);
         TargetSize = camera.orthographicSize;
         locked = true;
+
+        LoadSoulConsumedImages();
+    }
+
+    private void LoadSoulConsumedImages()
+    {
+        soulConsumed = 0;
+        scTimer = 0f;
+        SoulConsumed = new Texture2D[SoulConsumedSize];
+        
+        for(int i = 0; i < SoulConsumedSize; i++)
+        {
+            SoulConsumed[i] = Resources.Load<Texture2D>("Textures/SoulConsumed/SoulConsumed" + (i + 1));
+        }
     }
 
     void HandleCameraZoomMessage(Message message)
@@ -91,6 +111,36 @@ public class CameraScript : MonoBehaviour
 
                 if (camera.orthographicSize > TargetSize) camera.orthographicSize = TargetSize;
             }
+        }
+
+        // TEMP?
+        if (GlobalGameStateManager.SoulConsumedTimer > 0f)
+        {
+            GlobalGameStateManager.SoulConsumedTimer -= Time.deltaTime;
+            
+            scTimer += Time.deltaTime;
+
+            if (scTimer > 0.075f)
+            {
+                scTimer = 0;
+
+                ++soulConsumed;
+
+                if (soulConsumed == SoulConsumedSize)
+                {
+                    soulConsumed = 0;
+                }
+            }
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (GlobalGameStateManager.SoulConsumedTimer > 0f)
+        {
+            GUI.matrix = GlobalGameStateManager.PrepareMatrix();
+            GUI.DrawTexture(new Rect(448f, 24f, 1024f, 194f), SoulConsumed[soulConsumed]);
+            GUI.matrix = Matrix4x4.identity;
         }
     }
 }

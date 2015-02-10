@@ -32,6 +32,7 @@ public class CritterController : AIController {
 
 		isCritterType = true;
 		critterUpgradeType = CritterType.fast;
+        SkinType = NPCSkinType.Critter;
 	}
 	
 	protected override void GameUpdate () 

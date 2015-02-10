@@ -239,7 +239,7 @@ public class AIGenerator : GameBehavior
 		Vector2 pos = critterSpawnPoints [rand].transform.position;
 		GameObject newNPC = createNPC (this.critterNPC, critterAIList, pos);
 		newNPC.GetComponent<CritterController> ().setSpawnPosition (pos);
-		loadNPCWithSkin (newNPC, "Critters/testSkin", NPCSkinType.CritterTest);
+		loadNPCWithSkin (newNPC, "Critters/testSkin", NPCSkinType.Critter);
 	}
 
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
@@ -311,7 +311,7 @@ public enum NPCSkinType
     Bopper,
     Hippie,
     AxeMan,
-    CritterTest
+    Critter
 }
 
 

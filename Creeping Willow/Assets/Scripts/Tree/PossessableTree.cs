@@ -21,6 +21,10 @@ public class PossessableTree : Possessable
     private TreeState currentState;
 
 
+    public float BonusSpeedTimer = 0f;
+    public float BonusPoisonTimer = 0f;
+
+
 	private void CreateStates()
     {
         states = new Dictionary<string, TreeState>();
@@ -29,12 +33,14 @@ public class PossessableTree : Possessable
         TreeState active = new TreeStateActive();
         TreeState eatingMinigameWrangle = new TreeStateEatingMinigameWrangle();
         TreeState eatingMinigameMash = new TreeStateEatingMinigameMash();
+        TreeState eatingMinigameMashInstant = new TreeStateEatingMinigameMashInstant();
         TreeState eating = new TreeStateEating();
 
         states.Add("Inactive", inactive);
         states.Add("Active", active);
         states.Add("EatingMinigameWrangle", eatingMinigameWrangle);
         states.Add("EatingMinigameMash", eatingMinigameMash);
+        states.Add("EatingMinigameMashInstant", eatingMinigameMashInstant);
         states.Add("Eating", eating);
 
         foreach (TreeState state in states.Values) state.Tree = this;
@@ -88,6 +94,10 @@ public class PossessableTree : Possessable
     {
         base.GameUpdate();
 
+        // Update bonus timers
+        if (BonusSpeedTimer > 0f) BonusSpeedTimer -= Time.deltaTime;
+        if (BonusPoisonTimer > 0f) BonusPoisonTimer -= Time.deltaTime;
+
         if (transform.localRotation.z != 0f) transform.rotation = Quaternion.identity;
 
         currentState.Update();
@@ -127,7 +137,7 @@ namespace Tree.Private
     [Serializable]
     public class BodyParts
     {
-        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, RightGrabbedNPC, EatenNPC, MinigameCircle, Eyes;
+        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, RightGrabbedNPC, EatenNPC, MinigameCircle, Eyes, FlameEyes;
     }
     
     [Serializable]
@@ -169,7 +179,7 @@ namespace Tree.Private
     [Serializable]
     public class Sounds
     {
-        public AudioClip Music, Chew;
+        public AudioClip Music, Chew, SoulConsumed;
     }
 
     [Serializable]

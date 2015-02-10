@@ -21,6 +21,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
     public override void Enter(object data)
     {
         GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
+        GlobalGameStateManager.SoulConsumedTimer = 0f;
         Tree.Eating = true;
 
         Tree.BodyParts.LeftArm.SetActive(false);
@@ -189,7 +190,13 @@ public class TreeStateEatingMinigameWrangle : TreeState
 
     protected void Lose()
     {
+        npc.SetActive(true);
+        npc.GetComponent<AIController>().IsTaggedByTree = true;
+
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 20f));
+        MessageCenter.Instance.Broadcast(new PlayerReleasedNPCsMessage(new System.Collections.Generic.List<GameObject>() { npc }));
+
+        npc.transform.position = Tree.transform.position + new Vector3(-1f, -0.25f);
 
         Tree.ChangeState("Active");
     }

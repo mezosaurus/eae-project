@@ -32,6 +32,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: Squirrel
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
@@ -58,6 +64,26 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: MowerMan
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
+  m_CanTransitionToSelf: 0
+--- !u!1101 &110167614
+Transition:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 0}
+  m_DstState: {fileID: 110234352}
+  m_TransitionDuration: .100000001
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Squirrel
     m_EventTreshold: 0
     m_ExitTime: .899999976
   m_Atomic: 1
@@ -139,6 +165,21 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110234352
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Tree-Eating-Squirrel
+  m_Speed: 1.51999998
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: b63156629df1a2f43a4727436424b830, type: 2}
+  m_ParentStateMachine: {fileID: 110722568}
+  m_Position: {x: 55, y: -235, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110250380
 State:
   m_ObjectHideFlags: 3
@@ -213,11 +254,12 @@ StateMachine:
   - {fileID: 110250380}
   - {fileID: 110266622}
   - {fileID: 110270980}
+  - {fileID: 110234352}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110222568}
+      first: {fileID: 110234352}
       second: []
     data:
       first: {fileID: 0}
@@ -226,6 +268,22 @@ StateMachine:
       - {fileID: 110100020}
       - {fileID: 110168570}
       - {fileID: 110185228}
+      - {fileID: 110167614}
+    data:
+      first: {fileID: 110222568}
+      second: []
+    data:
+      first: {fileID: 110287090}
+      second: []
+    data:
+      first: {fileID: 110250380}
+      second: []
+    data:
+      first: {fileID: 110266622}
+      second: []
+    data:
+      first: {fileID: 110270980}
+      second: []
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

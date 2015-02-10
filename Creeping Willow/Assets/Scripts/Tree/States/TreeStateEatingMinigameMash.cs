@@ -116,7 +116,13 @@ public class TreeStateEatingMinigameMash : TreeState
 
     protected void Lose()
     {
+        npc.SetActive(true);
+        npc.GetComponent<AIController>().IsTaggedByTree = true;
+
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 20f));
+        MessageCenter.Instance.Broadcast(new PlayerReleasedNPCsMessage(new System.Collections.Generic.List<GameObject>() { npc }));
+
+        npc.transform.position = Tree.transform.position + new Vector3(-1f, -0.25f);
 
         Tree.ChangeState("Active");
     }
@@ -141,7 +147,7 @@ public class TreeStateEatingMinigameMash : TreeState
     {
         int width = Tree.Sprites.EatingMinigame.Buttons[0].width;
         int height = Tree.Sprites.EatingMinigame.Buttons[0].height;
-        Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.MinigameCircle.transform.position + new Vector3(0f, 0.3f));
+        Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.MinigameCircle.transform.position + new Vector3(0f, 0.6f));
 
         GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (height / 2f), width, height), Tree.Sprites.EatingMinigame.Buttons[button]);
     }
