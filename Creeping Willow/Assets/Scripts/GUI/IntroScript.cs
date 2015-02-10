@@ -58,6 +58,12 @@ public class IntroScript : MonoBehaviour
 
 	private void drawIntroBox ()
 	{
+		if( currentIntro > TutorialImages.Length ) 
+		{
+			startBattle();
+			return;
+		}
+
 		switch( currentIntro )
 		{
 		case 0:
@@ -95,11 +101,6 @@ public class IntroScript : MonoBehaviour
 			mapAudio.PlayOneShot( sound );
 			currentIntro++;
 		}
-
-		if( currentIntro >= 5 ) 
-		{
-			startBattle();
-		}
 	}
 
 	private void startBattle()
@@ -108,7 +109,6 @@ public class IntroScript : MonoBehaviour
 		this.enabled = false;
 		MessageCenter.Instance.Broadcast (new LevelStartMessage (LevelStartType.Start));
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
-		//MessageCenter.Instance.Broadcast( new LevelFinishedMessage( LevelFinishedType.Win, LevelFinishedReason.NumNPCsEaten ) );
 	}
 
 	void Update ()

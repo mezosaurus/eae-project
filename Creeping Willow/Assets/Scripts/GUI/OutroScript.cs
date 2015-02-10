@@ -46,8 +46,6 @@ public class OutroScript : MonoBehaviour
 			menu.GetComponent<MenuController>().buttons[ i ].GetComponent<GUIButton>().enabled = true;
 		}
 
-		menu.GetComponent<MenuController>().buttons[ 1 ].GetComponent<GUIButton>().scene = GlobalGameStateManager.CurrentScene;
-
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
 
 		if( mess.Type == LevelFinishedType.Loss )
