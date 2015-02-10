@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 472016}
   - 212: {fileID: 21272016}
+  - 68: {fileID: 6804650}
   m_Layer: 0
   m_Name: Boulder1
   m_TagString: Untagged
@@ -23,11 +24,33 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.2000008, y: 10.7200003, z: 0}
+  m_LocalPosition: {x: -15.5668058, y: 4.32302475, z: 0}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!68 &6804650
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172016}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Points:
+  - {x: -.88674736, y: .145043373}
+  - {x: -.529842377, y: .422735214}
+  - {x: .00560951233, y: .518661499}
+  - {x: .574171066, y: .457066536}
+  - {x: .956495285, y: .331303596}
+  - {x: .868532181, y: .199841499}
+  - {x: .519906998, y: .109130859}
+  - {x: .0584373474, y: .0279960632}
+  - {x: -.187469482, y: -.0621595383}
+  - {x: -.603752136, y: -.0305976868}
+  - {x: -.832645416, y: .0358219147}
+  - {x: -.90929985, y: .145044327}
 --- !u!212 &21272016
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -46,7 +69,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 4081728647
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6f5693069739d47aabc978b0894b8026, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -21,10 +21,19 @@ public class WanderAIController : AIController {
 		wanderPoints = GameObject.FindGameObjectsWithTag(wanderTag);
 
 		isOnPath = true;
-		nextPath = new GameObject();
 		pathPosition = getRandomWanderPoint();
+
+		nextPath = createNextPath (pathPosition);
 	}
-	
+
+	override protected void NPCOnDestroy()
+	{
+		if (nextPath != null && nextPath.tag.Equals(wanderTag))
+		{
+			Destroy (nextPath);
+		}
+	}
+
 	protected override void GameUpdate () 
 	{
 		if (updateNPC())
@@ -53,9 +62,10 @@ public class WanderAIController : AIController {
 		}
 
 		Vector3 positionNPC = transform.position;
+		Vector3 positionNextPath = nextPath.transform.position;
 		float step = speed * Time.deltaTime;
 		
-		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+		Vector3 movement = Vector3.MoveTowards (positionNPC, positionNextPath, step);
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
 		
@@ -72,7 +82,7 @@ public class WanderAIController : AIController {
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
 		}
 
-		Vector3 changeMovement = avoid (direction);
+		Vector3 changeMovement = lured ? Vector3.zero : avoid (direction);
 		if( changeMovement != Vector3.zero )
 		{	
 			Vector3 newPos = Vector3.MoveTowards(transform.position,changeMovement,step);
@@ -85,7 +95,7 @@ public class WanderAIController : AIController {
 			transform.position = movement;
 		}
 
-		if (movement == new Vector3(pathPosition.x, pathPosition.y) && !lured)
+		if (movement == new Vector3(positionNextPath.x, positionNextPath.y) && !lured)
 		{
 			if (killSelf)
 				destroyNPC();
@@ -130,6 +140,12 @@ public class WanderAIController : AIController {
 		return wanderPoints [rand].transform.position;
 	}
 
+	override protected GameObject getNextPath()
+	{
+		nextPath = createNextPath (pathPosition);
+		return nextPath;
+	}
+
 	protected override void alert()
 	{
 		base.alert ();
@@ -140,6 +156,21 @@ public class WanderAIController : AIController {
 	{
 		base.panic ();
 		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
+	}
+
+	override protected void lure(Vector3 lurePosition)
+	{
+		if (nextPath.tag.Equals(wanderTag))
+			Destroy (nextPath);
+		base.lure (lurePosition);
+	}
+
+	private GameObject createNextPath(Vector3 position)
+	{
+		GameObject path = new GameObject();
+		path.tag = wanderTag;
+		path.transform.position = position;
+		return path;
 	}
 }
 

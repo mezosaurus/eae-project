@@ -96,9 +96,10 @@ public class ScoreScript : MonoBehaviour {
 	
 	ArrayList alertedNPCs = new ArrayList(); // alerted npcs
 	ArrayList luredNPCs = new ArrayList(); // lured npcs
+	ArrayList scaredNPCs = new ArrayList(); // scared npcs
 	Queue multiplierQueue = new Queue(); // queue of multipliers
 	
-	
+	ArrayList deleteScaredNPCS = new ArrayList();
 	
 	
 	
@@ -113,7 +114,8 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 	
-	
+
+	//s GUI Variables
 	
 	
 	// Score GUI variables
@@ -329,6 +331,9 @@ public class ScoreScript : MonoBehaviour {
 		currentMultiplier = 1 + multiplierPoints / multIncre;
 		currentMultiplierImage = getNumberImage (currentMultiplier);
 		updateMultiplier ();
+
+		// data structure updates
+		updateDataStructures ();
 		
 		// update bounty texture; NOTE: Framerate issues
 		/*if(		 BountyNPC != null && bountyState != (int)BountyState.BOUNTY_HIDDEN )
@@ -376,7 +381,6 @@ public class ScoreScript : MonoBehaviour {
 		else if( scoreState == (int)ScoreState.SCORING )
 		{
 			/*** display scores ***/
-			
 			int offset = 1;
 			
 			// change alpha/transparency of score
@@ -987,6 +991,34 @@ public class ScoreScript : MonoBehaviour {
 			names[spot] = playerName;
 		}
 	}
+
+
+	// update arraylists and other data strutures
+	void updateDataStructures()
+	{
+		foreach( GameObject go in scaredNPCs )
+		{
+			if( go == null )
+				continue;
+			else if( go.GetComponent<AIController>() != null )
+			{
+				AIController ai = go.GetComponent<AIController>();
+
+				if( ai.scared == false )
+					deleteScaredNPCS.Add(go);
+			}
+		}
+
+		foreach( GameObject go in deleteScaredNPCS )
+		{
+			if( scaredNPCs.Contains(go) )
+			{
+				scaredNPCs.Remove(go);
+			}
+		}
+
+		deleteScaredNPCS = new ArrayList ();
+	}
 	
 	
 	void invokeAudio()
@@ -1121,7 +1153,11 @@ public class ScoreScript : MonoBehaviour {
 		else if( mess.alertLevelType == AlertLevelType.Scared )
 		{
 			// add lured/scared multiplier
-			addMultiplier(scaredNPCMultiplier);
+			if( !scaredNPCs.Contains(mess.NPC) )
+			{
+				scaredNPCs.Add(mess.NPC);
+				addMultiplier(scaredNPCMultiplier);
+			}
 		}
 	}
 	
@@ -1165,7 +1201,7 @@ public class ScoreScript : MonoBehaviour {
 	void HandleNPCEaten(Message message)
 	{
 		NPCEatenMessage mess = message as NPCEatenMessage;
-		
+
 		if( mess.NPC == null )
 			return;
 		

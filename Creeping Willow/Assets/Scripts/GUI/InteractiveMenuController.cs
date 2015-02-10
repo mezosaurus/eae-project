@@ -20,11 +20,17 @@ public class InteractiveMenuController : MonoBehaviour
 	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
+	public LevelLoader levelLoader;
+	public GameObject gateLeft;
+	public GameObject gateRight;
+	public Image logo;
 
 	private bool axisBusy;
 	private bool usesSound;
 	private AudioSource clickAudio;
 	private Vector3 cameraPosition;
+	private Quaternion gateRotationLeft;
+	private Quaternion gateRotationRight;
 	private float totalZoomTime;
 	private float elapsedZoomTime;
 	private MenuPosition currentPosition;
@@ -48,7 +54,7 @@ public class InteractiveMenuController : MonoBehaviour
 		if( cursorImage )
 			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
 
-		totalZoomTime = 4.0f;
+		totalZoomTime = 10.0f;
 	}
 
 	void OnDestroy() {}
@@ -80,8 +86,15 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( mainButtons[ 0 ].gameObject );
 
 		// Set the next camera position
-		cameraPosition = new Vector3( 0, 0, -10 );
+		cameraPosition = new Vector3( 0, 0, -200 );
+
+		// set the gate rotation
+		gateRotationLeft = Quaternion.Euler( 0, 0, 0 );
+		gateRotationRight = Quaternion.Euler( 0, 0, 0 );
+
 		currentPosition = MenuPosition.MainGate;
+
+		logo.enabled = true;
 		
 		elapsedZoomTime = 0.0f;
 	}
@@ -90,6 +103,7 @@ public class InteractiveMenuController : MonoBehaviour
 	{
 		// Get rid of all other buttons
 		DisableAllButtons();
+		logo.enabled = false;
 
 		// Show all the buttons
 		foreach( Button button in levelButtons )
@@ -98,7 +112,12 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( levelButtons[ 0 ].gameObject );
 
 		// Set the next camera position
-		cameraPosition = new Vector3( 0, 0, 10 );
+		cameraPosition = new Vector3( 0, 0, 270 );
+
+		// set the gate rotation
+		gateRotationLeft = Quaternion.Euler( 0, -45, 0 );
+		gateRotationRight = Quaternion.Euler( 0, 45, 0 );
+
 		currentPosition = MenuPosition.LevelSelect;
 
 		elapsedZoomTime = 0.0f;
@@ -116,7 +135,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( scoresButtons[ 0 ].gameObject );
 		
 		// Set the next camera position
-		cameraPosition = new Vector3( 8, -2, -5 );
+		cameraPosition = new Vector3( 320, 0, -120 );
 		currentPosition = MenuPosition.Scores;
 
 		elapsedZoomTime = 0.0f;
@@ -134,7 +153,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( optionsButtons[ 0 ].gameObject );
 		
 		// Set the next camera position
-		cameraPosition = new Vector3( -8, -2, -5 );
+		cameraPosition = new Vector3( -320, 0, -120 );
 		currentPosition = MenuPosition.Options;
 
 		elapsedZoomTime = 0.0f;
@@ -198,10 +217,12 @@ public class InteractiveMenuController : MonoBehaviour
 			axisBusy = false;
 
 		// Move the camera to the correct position
-		if( camera.transform.position != cameraPosition )
+		if( camera.transform.position != cameraPosition)// || gateLeft.transform.rotation != gateRotation )
 		{
 			elapsedZoomTime += Time.deltaTime;
 			camera.transform.position = Vector3.Lerp( camera.transform.position, cameraPosition, elapsedZoomTime / totalZoomTime );
+			gateLeft.transform.rotation = Quaternion.Lerp( gateLeft.transform.rotation, gateRotationLeft, elapsedZoomTime / totalZoomTime * 4 );
+			gateRight.transform.rotation = Quaternion.Lerp( gateRight.transform.rotation, gateRotationRight, elapsedZoomTime / totalZoomTime * 4 );
 		}
 		else
 			elapsedZoomTime = 0.0f;
@@ -224,6 +245,15 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void LoadLevel( string i_levelName )
 	{
-		Application.LoadLevel( i_levelName );
+		// Persist the level loader
+		levelLoader.levelName = i_levelName;
+		Object.DontDestroyOnLoad( levelLoader );
+
+		// Load the new level
+		Application.LoadLevel( "LoadingScreen" );
+
+		// Hide the mouse
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
 	}
 }

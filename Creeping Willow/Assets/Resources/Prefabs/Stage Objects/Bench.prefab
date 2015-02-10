@@ -15,6 +15,7 @@ GameObject:
   - 199: {fileID: 19900000}
   - 198: {fileID: 19800000}
   - 82: {fileID: 8200000}
+  - 50: {fileID: 5086736}
   m_Layer: 0
   m_Name: Bench
   m_TagString: Bench
@@ -29,7 +30,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.12041879, y: -4.73501921, z: 0}
+  m_LocalPosition: {x: -1.99000001, y: -8.01000023, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,6 +50,21 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!50 &5086736
+Rigidbody2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
 --- !u!68 &6800000
 EdgeCollider2D:
   m_ObjectHideFlags: 1
@@ -59,11 +75,11 @@ EdgeCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Points:
-  - {x: -.270473242, y: -.371986151}
-  - {x: .0448803902, y: -.233421445}
-  - {x: .467629194, y: -.487930655}
-  - {x: .197116852, y: -.671764612}
-  - {x: -.284256935, y: -.368543386}
+  - {x: -.289278507, y: .0581860542}
+  - {x: -.0373928547, y: .217905998}
+  - {x: .411213279, y: -.0366029739}
+  - {x: .164207458, y: -.203982353}
+  - {x: -.286652565, y: .060945034}
 --- !u!82 &8200000
 AudioSource:
   m_ObjectHideFlags: 1
@@ -133,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab725c12cec79e54e969f5e05b9b79fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Active: 0
   actionSound: {fileID: 0}
 --- !u!198 &19800000
 ParticleSystem:
@@ -1236,7 +1253,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 4081728647
   m_SortingOrder: 98
   m_Sprite: {fileID: 21300000, guid: 9748b0f39959ddd489e3dbdb3907732e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

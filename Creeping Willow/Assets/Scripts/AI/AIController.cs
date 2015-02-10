@@ -19,9 +19,11 @@ public class AIController : GameBehavior {
 	// Tags
 	public string spawnTag = "Respawn";
 	public string npcTag = "NPC";
+	public string lureTag = "Lure";
 
     // Skin Type
     public NPCSkinType SkinType;
+	public bool isCritterType = false;
 
 	// Global Keys
 	protected string walkingKey = "direction";
@@ -38,6 +40,7 @@ public class AIController : GameBehavior {
 	public float speed = 1;					// NPC speed (when not running)
 	public float scaredCooldownSeconds = 6;	// How long the NPC will be scared for
 	public float panicCooldownSeconds = 2;	// How long the NPC will be panicked for
+	public float lureCooldownSeconds = 2;
 	public float detectLevel = 0.2f; 		// This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
 	public float visionDistance = 3; 		// distance that player's view extends to
 	public float visionAngleSize = 120; 	// The total angle size that the player can see
@@ -70,6 +73,9 @@ public class AIController : GameBehavior {
 
 	// Scared variables
 	protected float scaredTimeLeft;
+
+	// lure variables
+	protected float luredTimeLeft;
 
 	// Panic variables
     protected float panicThreshold = 10;
@@ -240,8 +246,8 @@ public class AIController : GameBehavior {
 		if (other.tag == "Player") 
 		{
 			playerInRange = true;
-			TreeController script = other.gameObject.GetComponent<TreeController>();
-			if (script != null && script.state != Tree.State.Normal)
+			PossessableTree script = getPlayer().GetComponent<PossessableTree>();
+			if (script != null && script.Eating)
 			{
 				panic ();
 			}
@@ -290,6 +296,12 @@ public class AIController : GameBehavior {
                 //Debug.Log("PANICKED");
 				panic();
             }
+
+			PossessableTree script = getPlayer().GetComponent<PossessableTree>();
+			if (script != null && script.Eating)
+			{
+				panic ();
+			}
 
             // Increment alertLevel
 			increaseAlertLevel(hearingAlertMultiplier);
@@ -388,6 +400,11 @@ public class AIController : GameBehavior {
 			determineDirectionChange(npcPosition, transform.position);
 
 			return true;
+		}
+
+		if (lured)
+		{
+			return handleLured();
 		}
 
 		return false;
@@ -508,6 +525,21 @@ public class AIController : GameBehavior {
 		broadcastAlertLevelChanged (AlertLevelType.Scared);
 	}
 
+	protected virtual void lure(Vector3 lurePosition)
+	{
+		if (panicked || alerted)
+			return;
+
+		Debug.Log ("Becoming Lured: " + lurePosition);
+
+		lured = true;
+		nextPath = new GameObject ();
+		nextPath.transform.position = lurePosition;
+		nextPath.tag = lureTag;
+
+		luredTimeLeft = lureCooldownSeconds;
+	}
+
 	protected bool checkForPlayer()
 	{
 		Vector3 playerPos = getPlayer().transform.position;
@@ -524,6 +556,39 @@ public class AIController : GameBehavior {
 			if( angle <= visionAngleOffset )
 				return true;
 		}
+		return false;
+	}
+
+	protected bool handleLured() 
+	{
+		if (Vector3.Distance(transform.position, nextPath.transform.position) <= 0.35)  // compute offset distance to avoid collisions
+		{
+			if (luredTimeLeft == lureCooldownSeconds)
+			{
+				Debug.Log ("Sitting");
+				setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			}
+
+			nextPath.transform.position = transform.position; // Set the nextpath to current path to stop moving
+			luredTimeLeft -= Time.deltaTime;
+			if (luredTimeLeft <= 0)
+			{
+				lured = false;
+				if (nextPath.tag.Equals(lureTag))
+				{
+					Destroy(nextPath);
+					Debug.Log("Destroyed nextpath");
+				}
+				else
+				{
+					Debug.Log ("Didn't destroy: " + nextPath.tag);
+				}
+				nextPath = getNextPath(); // resume normal behaviour
+			}
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -749,14 +814,19 @@ public class AIController : GameBehavior {
 	void abilityPlacedListener(Message message)
 	{
 		AbilityPlacedMessage placedMessage = message as AbilityPlacedMessage;
+		Vector3 possessedPosition = new Vector3(placedMessage.X, placedMessage.Y);
+		float radius = GetComponent<CircleCollider2D> ().radius;
 		if (placedMessage.AType.Equals(AbilityType.PossessionScare))
 	    {
-			Vector3 possessedPosition = new Vector3(placedMessage.X, placedMessage.Y);
-			if (Vector3.Distance(transform.position, possessedPosition) <= GetComponent<CircleCollider2D>().radius)
+			if (Vector3.Distance(transform.position, possessedPosition) <= radius)
 				scare(possessedPosition);
 		}
+		else if (placedMessage.AType.Equals(AbilityType.PossessionLure))
+		{
+			if (Vector3.Distance(transform.position, possessedPosition) <= radius)
+				lure(possessedPosition);
+		}
 	}
-
 
 	protected Vector3 avoid(Vector3 currentNPCDirection)
 	{

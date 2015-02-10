@@ -8,13 +8,13 @@ public class StationaryAIController : AIController
 	private bool sitting = false;
 	private float leaveTime;
 
-	private static string oldManWalkingKey = "direction";
+	//private static string oldManWalkingKey = "direction";
 
-	private enum OldManWalkingDirection
-	{
-		STILL = 0,
-		LEFT = 1,
-	}
+	//private enum OldManWalkingDirection
+	//{
+		//STILL = 0,
+		//LEFT = 1,
+	//}
 
 	protected override void GameUpdate () 
 	{
@@ -36,12 +36,12 @@ public class StationaryAIController : AIController
 		{
 			//To the right
 			flipXScale(false);
-			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.STILL);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
 		}
 		else
-			setAnimatorInteger(oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
 
-		Vector3 changeMovement = avoid (direction);
+		Vector3 changeMovement = lured ? Vector3.zero : avoid (direction);
 
 		if( changeMovement != Vector3.zero )
 		{
@@ -91,7 +91,7 @@ public class StationaryAIController : AIController
 	protected override void alert()
 	{
 		base.alert ();
-		setAnimatorInteger (oldManWalkingKey, (int)OldManWalkingDirection.STILL);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
 	}
 
 	override protected GameObject getNextPath()
@@ -105,7 +105,7 @@ public class StationaryAIController : AIController
 		base.panic ();
 		sitting = false;
 		this.GetComponent<BoxCollider2D>().isTrigger = false;
-		setAnimatorInteger (oldManWalkingKey, (int)OldManWalkingDirection.LEFT);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)

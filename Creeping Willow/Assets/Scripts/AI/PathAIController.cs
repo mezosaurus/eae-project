@@ -3,12 +3,14 @@ using System.Collections;
 
 public class PathAIController : AIController 
 {
+	protected bool inMaze = false;
+
 	new void Start()
 	{
 		base.Start ();
 
 		// Get path for AI
-		nextPath = movePath.getNextPath (null, gameObject);
+		nextPath = movePath.getNextPath (inMaze ? gameObject : null, gameObject);
 	}
 
 	public void setMovingPath(SubpathScript movePath)
@@ -53,7 +55,7 @@ public class PathAIController : AIController
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
 		}
 
-		Vector3 changeMovement = avoid (direction);
+		Vector3 changeMovement = lured ? Vector3.zero : avoid (direction);
 
 		if( changeMovement != Vector3.zero )
 		{	
@@ -73,19 +75,45 @@ public class PathAIController : AIController
 		}
 		if (movement == pathPosition && !lured)
 		{
-			if (killSelf && nextPath.gameObject.tag.Equals("Respawn"))
-				destroyNPC();
-			
+			if (killSelf)
+			{
+				string tag = nextPath.gameObject.tag;
+				if (tag.Equals("MazePathEnter"))
+				{
+					nextPath = getLeavingPath();
+				}
+				else if (tag.Equals("Respawn"))
+				{
+					destroyNPC();
+				}
+				return;
+			}
+
 			int max = 10;
 			int rand = Random.Range (0, max);
-			if (rand < max - 1)
-				nextPath = movePath.getNextPath(nextPath, gameObject);
-			else
+			if (rand == max - 1)
 			{
-				killSelf = true;
-				nextPath = getLeavingPath();
+				if (inMaze && nextPath.tag.Equals("MazePath1Away"))
+				{
+					nextPath = GameObject.FindGameObjectWithTag("MazePathEnter");
+					killSelf = true;
+					return;
+				}
+
+				if (!inMaze || nextPath.gameObject.tag.Equals("MazePathEnter"))
+				{
+					killSelf = true;
+					nextPath = getLeavingPath();
+					return;
+				}
 			}
+			nextPath = movePath.getNextPath(nextPath, gameObject);
 		}
+	}
+
+	public void setInMaze(bool maze)
+	{
+		inMaze = maze;
 	}
 
 	protected override void alert()

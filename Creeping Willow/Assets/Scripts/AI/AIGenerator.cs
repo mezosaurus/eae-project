@@ -15,8 +15,9 @@ public class AIGenerator : GameBehavior
 	public string pathTag = "Paths";
 	public string benchTag = "Bench";
 	public string critterSpawnTag = "CritterSpawn";
-	public float spawnTime;
-	public float critterSpawnTime;
+	public float spawnTime = 5;
+	public float critterSpawnTime = 15;
+	public bool isMaze = false;
 
 	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
@@ -39,7 +40,8 @@ public class AIGenerator : GameBehavior
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
 		enemyAIList = new ArrayList ();
-		critterAIList = new ArrayList ();
+		if (critterSpawnPoints.Length != 0)
+			critterAIList = new ArrayList ();
 
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
 		MessageCenter.Instance.RegisterListener (MessageType.NotorietyMaxed, NotorietyMeterListener);
@@ -67,7 +69,7 @@ public class AIGenerator : GameBehavior
 			createNewNPC();
 		}
 
-		if (lastCritterTime <= Time.time - critterSpawnTime && (critterAIList.Count < maxNumberOfEachNPC))
+		if (!isMaze && critterAIList != null && lastCritterTime <= Time.time - critterSpawnTime && (critterAIList.Count < maxNumberOfEachNPC))
 		{
 			lastCritterTime = Time.time;
 			createCritterNPC();
@@ -77,23 +79,27 @@ public class AIGenerator : GameBehavior
 	private void initMap()
 	{
 		// 3 pathing npcs
-		GameObject[] paths = GameObject.FindGameObjectsWithTag ("Path");
+		GameObject[] paths = GameObject.FindGameObjectsWithTag ("Path");		
 		for (int i = 0; i < paths.Length; i++)
 		{
 			GameObject path = paths[i];
 			SubpathScript movePath = path.GetComponent<SubpathScript>();
-			Vector2 pathPos = movePath.transform.position;
-			createPathNPC(pathPos);
+			Vector2 pathPos = movePath.getNextPath(null, null).transform.position;
+			createPathNPC(pathPos, movePath);
 		}
+
 		//3 bench npcs
-		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
-		for (int i = 0; i < 3; i++)
+		if (!isMaze)
 		{
-			int rand = Random.Range (0, benches.Length);
-			GameObject bench = benches[rand];
-			Vector2 spawnPos = bench.transform.position;
-			GameObject newStationary = createNPC (this.stationaryNPC, stationaryAIList, spawnPos);
-			newStationary.GetComponent<StationaryAIController> ().setStationaryPoint (bench);
+			GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
+			for (int i = 0; i < 3; i++)
+			{
+				int rand = Random.Range (0, benches.Length);
+				GameObject bench = benches[rand];
+				Vector2 spawnPos = bench.transform.position;
+				GameObject newStationary = createNPC (this.stationaryNPC, stationaryAIList, spawnPos);
+				newStationary.GetComponent<StationaryAIController> ().setStationaryPoint (bench);
+			}
 		}
 	}
 	
@@ -149,7 +155,10 @@ public class AIGenerator : GameBehavior
 		case 1:
 			if (stationaryAIList.Count < maxNumberOfEachNPC)
 			{
-				createStationaryNPC();
+				if (!isMaze)
+				{
+					createStationaryNPC();
+				}
 			}
 			else
 			{
@@ -160,7 +169,10 @@ public class AIGenerator : GameBehavior
 		case 2:
 			if (wanderAIList.Count < maxNumberOfEachNPC)
 			{
-				createWanderNPC();
+				if (!isMaze)
+				{
+					createWanderNPC();
+				}
 			}
 			else
 			{
@@ -173,15 +185,17 @@ public class AIGenerator : GameBehavior
 	
 	void createPathNPC()
 	{
-		createPathNPC (getRandomSpawnPoint ());
+		SubpathScript movePath = GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+		createPathNPC (getRandomSpawnPoint (), movePath);
 	}
 
-	void createPathNPC(Vector2 spawnPoint)
+	void createPathNPC(Vector2 spawnPoint, SubpathScript movePath)
 	{
 		GameObject newNPC = createNPC (this.pathNPC, pathAIList, spawnPoint);
-		
-		SubpathScript movePath = GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
-		newNPC.GetComponent<PathAIController>().setMovingPath(movePath);
+
+		PathAIController controller = newNPC.GetComponent<PathAIController> ();
+		controller.setMovingPath(movePath);
+		controller.setInMaze (isMaze);
 
 		if (Random.Range(0,2) == 0)
 		{
