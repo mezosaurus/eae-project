@@ -260,7 +260,6 @@ public class ScoreScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update() 
 	{
-		Debug.Log ("curr: " + multiplierPoints);
 		if( !gameStarted )
 			return;
 
@@ -1214,6 +1213,9 @@ public class ScoreScript : MonoBehaviour {
 
 		if( mess.NPC == null )
 			return;
+
+		if( mess.NPC.GetComponent<CritterController>() != null )
+			return;
 		
 		// initial multiplier values
 		int lure = 1;
@@ -1268,10 +1270,6 @@ public class ScoreScript : MonoBehaviour {
 
 		currentMultiplier = 1 + multiplierPoints / multIncre;
 		addScore(displayScore*currentMultiplier);
-
-		Debug.Log("mult: " + tmpMultiplier);
-		//if( tmpMultiplier != 0 )
-		//	addMultiplier (tmpMultiplier);
 		
 		scoreState = (int)ScoreState.START_SCORING;
 		
