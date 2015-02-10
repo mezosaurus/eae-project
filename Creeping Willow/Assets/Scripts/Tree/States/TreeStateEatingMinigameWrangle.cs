@@ -53,11 +53,11 @@ public class TreeStateEatingMinigameWrangle : TreeState
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(1.8f, 20f));
 
         // Play music if necessary
-        /*if (parameters.PlayMusic)
+        if (parameters.PlayMusic)
         {
             Tree.audio.clip = Tree.Sounds.Music;
             Tree.audio.Play();
-        }*/
+        }
 
         initialized = false;
 
@@ -160,7 +160,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
         UpdateArms(progress);
 
         // Update timer
-        //timeElapsed += Time.deltaTime;
+        timeElapsed += Time.deltaTime;
 
         float timePercentage = Mathf.Clamp(timeElapsed / MaxTime, 0f, 1f);
         percentage = Mathf.RoundToInt(timePercentage * 100f);
