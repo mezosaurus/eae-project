@@ -251,5 +251,9 @@ public class InteractiveMenuController : MonoBehaviour
 
 		// Load the new level
 		Application.LoadLevel( "LoadingScreen" );
+
+		// Hide the mouse
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
 	}
 }
