@@ -9,14 +9,11 @@ using System.Collections;
 /// </summary>
 public class GUIButton : MonoBehaviour
 {
-	public delegate void ButtonClickFunction();
-
-	private ButtonClickFunction clickFunction;
 	public float x, y, width, height;
 	public Texture2D defaultImage, hoverImage, downClickImage;
 	public string text;
 	public Font font;
-	public SceneEnum scene;
+	public string scene;
 	public AudioClip sound;
 	public bool changeScene = true;
 	public bool selected = false;
@@ -28,8 +25,6 @@ public class GUIButton : MonoBehaviour
 	{
 		audio = gameObject.AddComponent<AudioSource> ();
 		audio.clip = sound;
-
-		//clickFunction = changeScenes;
 	}
 
 	void OnGUI()
@@ -49,20 +44,10 @@ public class GUIButton : MonoBehaviour
 
 			// draw the button
 			if( GUI.Button( new Rect( x - width / 2, y - height / 2, width, height ), text ) )
-					ClickButton();
+					changeScenes();
 
 			//GUI.matrix = Matrix4x4.identity;
 		}
-	}
-
-	public void SetClickAction( ButtonClickFunction i_function )
-	{
-		this.clickFunction = i_function;
-	}
-
-	public void ClickButton()
-	{
-		clickFunction();
 	}
 
 	public void changeScenes()
@@ -74,20 +59,8 @@ public class GUIButton : MonoBehaviour
 		}
 	}
 
-	public void Fade()
-	{
-		//TODO play some animation
-		enabled = false;
-	}
-
-	public void Reveal()
-	{
-		enabled = true;
-	}
-
 	void switchScenes ()
 	{
-		GlobalGameStateManager.CurrentScene = scene;
-		Application.LoadLevel (scene.ToString ());
+		Application.LoadLevel (scene);
 	}
 }
