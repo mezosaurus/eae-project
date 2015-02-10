@@ -56,8 +56,12 @@ public class TreeStateEating : TreeState
         {
             switch(npc.GetComponent<CritterController>().critterUpgradeType)
             {
+                case CritterType.poisonous:
+                    Tree.BonusPoisonTimer = Tree.MaxBonusTime;
+                    break;
+
                 default:
-                    Tree.BonusSpeedTimer = 10f;
+                    Tree.BonusSpeedTimer = Tree.MaxBonusTime;
                     break;
             }
         }

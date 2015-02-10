@@ -21,8 +21,11 @@ public class PossessableTree : Possessable
     private TreeState currentState;
 
 
+    public readonly float MaxBonusTime = 30f;
     public float BonusSpeedTimer = 0f;
     public float BonusPoisonTimer = 0f;
+
+    public GUISkin BonusSkin;
 
 
 	private void CreateStates()
@@ -105,6 +108,33 @@ public class PossessableTree : Possessable
 
     protected void OnGUI()
     {
+
+        if (Active)
+        {
+            // Draw bonuses if applicable
+            GUI.matrix = GlobalGameStateManager.PrepareMatrix();
+            GUI.skin = BonusSkin;
+
+            if (BonusPoisonTimer > 0f)
+            {
+                string content = "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s";
+                Vector2 size = BonusSkin.GetStyle("Label").CalcSize(new GUIContent(content));
+                Vector2 size2 = BonusSkin.GetStyle("Label").CalcSize(new GUIContent("Bonus Speed"));
+
+                GUI.Label(new Rect(20f, 1080f - size2.y - size.y - 20f, size.x, size.y), content);
+            }
+
+            if(BonusSpeedTimer > 0f)
+            {
+                string content = "Bonus Speed: " + Mathf.RoundToInt(BonusSpeedTimer) + " s";
+                Vector2 size = BonusSkin.GetStyle("Label").CalcSize(new GUIContent(content));
+
+                GUI.Label(new Rect(20f, 1080f - size.y - 20f, size.x, size.y), content);
+            }
+
+            GUI.matrix = Matrix4x4.identity;
+        }
+        
         currentState.OnGUI();
     }
 

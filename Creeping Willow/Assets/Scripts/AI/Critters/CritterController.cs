@@ -31,7 +31,10 @@ public class CritterController : AIController {
 		pathPosition = spawnPosition;
 
 		isCritterType = true;
-		critterUpgradeType = CritterType.fast;
+
+        if (Random.Range(0f, 1f) > 0.5f) critterUpgradeType = CritterType.fast;
+        else critterUpgradeType = CritterType.poisonous;
+
         SkinType = NPCSkinType.Critter;
 	}
 	

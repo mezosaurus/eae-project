@@ -98,7 +98,7 @@ public class TreeStateActive : TreeState
 
             closestNPCs[0].SetActive(false);
 
-            if (closestNPCs[0].GetComponent<AIController>().isCritterType)
+            if (closestNPCs[0].GetComponent<AIController>().isCritterType || Tree.BonusPoisonTimer > 0f)
             {
                 TreeStateEatingMinigameMashInstant.Data data = new TreeStateEatingMinigameMashInstant.Data(closestNPCs[0]);
 
