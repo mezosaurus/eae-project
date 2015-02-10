@@ -21,7 +21,6 @@ public class Possessor : GameBehavior {
 		objectToPossess = null;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
-
 	}
 
 	// Update is called once per frame
