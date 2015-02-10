@@ -71,7 +71,8 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 	
-	
+	int tmpMultiplier = 0;
+
 	// bools relating to multipliers
 	bool isStealth = false;
 	bool isQuick = false;
@@ -141,6 +142,8 @@ public class ScoreScript : MonoBehaviour {
 	float slideIncrement = 2f;
 	readonly float slideMax = 100;
 	
+	float endFont = 20;
+	
 	int _score;
 	readonly int chainMax = 20;
 	bool scoreDisplay;
@@ -151,7 +154,7 @@ public class ScoreScript : MonoBehaviour {
 	
 	float scoreTimer = 0;
 	readonly float scoreIncrement = 1f;
-	readonly float scoreIncrementMax = 150f;
+	readonly float scoreIncrementMax = 100f;
 	float moveStartTime;
 	
 	float sideL;
@@ -186,13 +189,13 @@ public class ScoreScript : MonoBehaviour {
 	float multHeight = 30;
 
 	int currentMultiplier = 1;
-	int multiplierPoints = 15;
+	int multiplierPoints = 10;
 	int popupMultiplier = 0;
 
 	// multiplier timers
 	float lastMultiplierTime;
 	float currentMultiplierTime;
-	readonly float multiplierTimeLength = 5;
+	readonly float multiplierTimeLength = 10;
 
 	// multiplier sliders
 	bool multiplierIsChanging = false;
@@ -257,6 +260,7 @@ public class ScoreScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update() 
 	{
+		Debug.Log ("curr: " + multiplierPoints);
 		if( !gameStarted )
 			return;
 
@@ -477,13 +481,14 @@ public class ScoreScript : MonoBehaviour {
 		}
 		else if( scoreState == (int)ScoreState.MOVE_SCORING )
 		{
-			float currentFontSize;
+			float startFont = myStyle.fontSize;
 
 			scoreTimer = 0;
 			
 			float fracTime = (Time.time - moveStartTime) / 2f;
 			float xPos = Mathf.Lerp(sideL, endX, fracTime);
 			float yPos = Mathf.Lerp(startHeight, endHeight, fracTime);
+			myStyle.fontSize = (int)Mathf.Lerp(startFont, endFont, fracTime);
 			
 			int offset = 1;
 			
@@ -550,6 +555,7 @@ public class ScoreScript : MonoBehaviour {
 		else if( scoreState == (int)ScoreState.STOP_SCORING )
 		{
 			int offset = 1;
+			myStyle.fontSize = (int)endFont;
 			
 			// npc type
 			if( eatenString == npcEatenString )
@@ -623,6 +629,9 @@ public class ScoreScript : MonoBehaviour {
 		}
 		else if( scoreState == (int)ScoreState.END_SCORING )
 		{
+			addMultiplier(tmpMultiplier);
+			tmpMultiplier = 0;
+
 			isLured = false;
 			isStealth = false;
 			isQuick = false;
@@ -1119,6 +1128,7 @@ public class ScoreScript : MonoBehaviour {
 	void HandleGrabbedNPCs(Message message)
 	{
 		bountyState = (int)BountyState.BOUNTY_HIDDEN;
+		lastMultiplierTime = Time.time;
 	}
 	
 	
@@ -1212,7 +1222,8 @@ public class ScoreScript : MonoBehaviour {
 		int npcScore = NPC_EATEN;
 		eatenString = npcEatenString;
 		
-		int tmpMultiplier = 0;
+		tmpMultiplier = 0;
+		lastMultiplierTime = Time.time;
 		
 		// update score multipliers and base scores
 		if( timeSinceLastKill < lastKillBonus )
@@ -1254,12 +1265,13 @@ public class ScoreScript : MonoBehaviour {
 		
 		displayMultiplier = streakMultiplier; // get multiplier
 		displayScore = npcScore * stealth * quick * lure * streakMultiplier;
-		
-		
-		if( tmpMultiplier != 0 )
-			addMultiplier (tmpMultiplier);
+
 		currentMultiplier = 1 + multiplierPoints / multIncre;
 		addScore(displayScore*currentMultiplier);
+
+		Debug.Log("mult: " + tmpMultiplier);
+		//if( tmpMultiplier != 0 )
+		//	addMultiplier (tmpMultiplier);
 		
 		scoreState = (int)ScoreState.START_SCORING;
 		
