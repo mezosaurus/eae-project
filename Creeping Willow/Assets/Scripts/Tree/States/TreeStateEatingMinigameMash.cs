@@ -7,6 +7,7 @@ public class TreeStateEatingMinigameMash : TreeState
     private const float SampleRate = 3f;
 
 
+    private GameObject npc;
     private NPCData npcData;
     private int button;
     private float percentage, timeElapsed, sampledTime, averagePercentage;
@@ -35,7 +36,8 @@ public class TreeStateEatingMinigameMash : TreeState
         // Get data
         Data parameters = data as Data;
 
-        npcData = GlobalGameStateManager.NPCData[parameters.SkinType];
+        npc = parameters.NPC;
+        npcData = GlobalGameStateManager.NPCData[npc.GetComponent<AIController>().SkinType];
 
         percentage = (float)parameters.Percentage / 100f;
         timeElapsed = 0f;
@@ -55,7 +57,7 @@ public class TreeStateEatingMinigameMash : TreeState
 
         if(won)
         {
-            TreeStateEating.Data data = new TreeStateEating.Data(npcData.SkinType);
+            TreeStateEating.Data data = new TreeStateEating.Data(npc);
 
             Tree.ChangeState("Eating", data);
 
@@ -152,13 +154,13 @@ public class TreeStateEatingMinigameMash : TreeState
 
     public class Data
     {
-        public NPCSkinType SkinType;
+        public GameObject NPC;
         public int Percentage;
 
 
-        public Data(NPCSkinType skinType, int percentage)
+        public Data(GameObject npc, int percentage)
         {
-            SkinType = skinType;
+            NPC = npc;
             Percentage = percentage;
         }
     }

@@ -2,6 +2,7 @@
 
 public class TreeStateEating : TreeState
 {
+    private GameObject npc;
     private NPCData npcData;
     private float timeElapsed;
 
@@ -18,7 +19,8 @@ public class TreeStateEating : TreeState
         // Get parameters
         Data parameters = data as Data;
 
-        npcData = GlobalGameStateManager.NPCData[parameters.SkinType];
+        npc = parameters.NPC;
+        npcData = GlobalGameStateManager.NPCData[npc.GetComponent<AIController>().SkinType];
 
         Tree.BodyParts.Face.GetComponent<Animator>().enabled = true;
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
@@ -40,6 +42,7 @@ public class TreeStateEating : TreeState
     {
         if(!Tree.audio.isPlaying)
         {
+            MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
             MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.15f)));
             MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
 
@@ -87,12 +90,12 @@ public class TreeStateEating : TreeState
 
     public class Data
     {
-        public NPCSkinType SkinType;
+        public GameObject NPC;
 
 
-        public Data(NPCSkinType skinType)
+        public Data(GameObject npc)
         {
-            SkinType = skinType;
+            NPC = npc;
         }
     }
 }

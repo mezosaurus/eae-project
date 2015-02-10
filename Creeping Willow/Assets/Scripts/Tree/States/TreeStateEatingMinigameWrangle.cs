@@ -11,6 +11,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
 
     private bool initialized;
     private GameObject LS, RS, LSArrow, RSArrow;
+    private GameObject npc;
     private NPCData npcData;
     private bool grabbedTwo;
     private float timeElapsed;
@@ -45,6 +46,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
             GameObject.Destroy(parameters.GrabbedNPCs[1]);
         }
 
+        npc = parameters.GrabbedNPCs[0];
         npcData = GlobalGameStateManager.NPCData[parameters.GrabbedNPCs[0].GetComponent<AIController>().SkinType];
 
         Tree.BodyParts.RightGrabbedNPC.GetComponent<Animator>().SetTrigger(npcData.AnimationTrigger);
@@ -103,7 +105,7 @@ public class TreeStateEatingMinigameWrangle : TreeState
         // If both sticks are in, change to next phase of minigame
         if (lsIn && rsIn)
         {
-            TreeStateEatingMinigameMash.Data data = new TreeStateEatingMinigameMash.Data(npcData.SkinType, percentage);
+            TreeStateEatingMinigameMash.Data data = new TreeStateEatingMinigameMash.Data(npc, percentage);
             
             Tree.ChangeState("EatingMinigameMash", data);
 

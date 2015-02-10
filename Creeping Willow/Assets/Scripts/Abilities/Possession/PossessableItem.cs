@@ -39,6 +39,8 @@ public abstract class PossessableItem : Possessable {
 				newY = baseY;
 			}
 			transform.position = new Vector3(newX, newY);
+
+            Debug.Log("Do we get here?");
 		}
 		if(blinking){
 			SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
