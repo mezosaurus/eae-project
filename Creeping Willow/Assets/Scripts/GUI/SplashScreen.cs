@@ -9,17 +9,21 @@ public class SplashScreen : MonoBehaviour
 		None,
 		Unity,
 		Utah,
-		CreepingWillow,
+		Team,
+		Game,
 		Load,
 	}
 
 	public Image unityImage;
 	public Image eaeImage;
 	public Image utahImage;
-	public Image creepingWillowImage;
+	public Image teamImage;
+	public Image gameImage;
+
 	public Image coverImage;
 	public Image coverImage1;
 	public Image coverImage2;
+	public Image coverImage3;
 
 	private bool fadeStarted;
 	private bool axisBusy;
@@ -42,16 +46,18 @@ public class SplashScreen : MonoBehaviour
 		coverImage.enabled = true;
 		coverImage1.enabled = false;
 		coverImage2.enabled = false;
+		coverImage3.enabled = false;
 
 		unityImage.enabled = true;
 		eaeImage.enabled = false;
 		utahImage.enabled = false;
-		creepingWillowImage.enabled = false;
+		teamImage.enabled = false;
+		gameImage.enabled = false;
 
 		axisBusy = false;
 
 		PersistentObject = GameObject.Find( "PersistentObject" );
-		Object.DontDestroyOnLoad( PersistentObject );
+		GameObject.DontDestroyOnLoad( PersistentObject );
 	}
 
 	void Update()
@@ -67,9 +73,14 @@ public class SplashScreen : MonoBehaviour
 			case SplashNumber.Load:
 				break;
 
-			case SplashNumber.CreepingWillow:
-				timer = ( 4*bt + 6*ft + 3*st );
-				creepingWillowImage.enabled = false;
+			case SplashNumber.Game:
+				timer = ( 5*bt + 8*ft + 4*st );
+				gameImage.enabled = false;
+				break;
+
+			case SplashNumber.Team:
+				timer = ( 4*bt + 7*ft + 3*st );
+				teamImage.enabled = false;
 				break;
 
 			case SplashNumber.Utah:
@@ -94,35 +105,69 @@ public class SplashScreen : MonoBehaviour
 		}
 
 		// Load Level
-		if( timer >= ( 4*bt + 6*ft + 3*st ) )
+		if( timer >= ( 5*bt + 8*ft + 4*st ) )
 		{
 			splash = SplashNumber.Load;
 			GoToMenu();
 		}
 		// Blank
-		else if( timer > ( 3*bt + 6*ft + 3*st ) && timer < ( 4*bt + 6*ft + 3*st ) && splash == SplashNumber.CreepingWillow )
+		else if( timer > ( 4*bt + 8*ft + 4*st ) && timer < ( 5*bt + 8*ft + 4*st ) && splash == SplashNumber.Game )
 		{
-			creepingWillowImage.enabled = false;
+			gameImage.enabled = false;
 			fadeStarted = false;
 		}
 		// Fade out logo
-		else if( timer > ( 3*bt + 5*ft + 3*st ) && timer < ( 3*bt + 6*ft + 3*st ) && !fadeStarted )
+		else if( timer > ( 4*bt + 7*ft + 4*st ) && timer < ( 4*bt + 8*ft + 4*st ) && !fadeStarted )
 		{
-			creepingWillowImage.CrossFadeAlpha( 0, ft, true );
+			gameImage.CrossFadeAlpha( 0, ft, true );
 			fadeStarted = true;
 		}
 		// Show Logo
-		else if( timer >= ( 3*bt + 5*ft + 2*st ) && timer < ( 3*bt + 5*ft + 3*st ) )
+		else if( timer >= ( 4*bt + 7*ft + 3*st ) && timer < ( 4*bt + 7*ft + 4*st ) )
 		{
-			creepingWillowImage.enabled = true;
-			coverImage2.enabled = false;
-			splash = SplashNumber.CreepingWillow;
+			gameImage.enabled = true;
+			coverImage3.enabled = false;
+			splash = SplashNumber.Game;
 			fadeStarted = false;
 		}
-		// Fade in logo
+		// Fade in game logo
+		else if( timer > ( 4*bt + 6*ft + 3*st ) && timer < ( 4*bt + 7*ft + 3*st ) && !fadeStarted )
+		{
+			gameImage.enabled = true;
+			coverImage3.CrossFadeAlpha( 0, ft, true );
+			fadeStarted = true;
+		}
+
+
+
+
+
+
+		// Blank
+		else if( timer > ( 3*bt + 6*ft + 3*st ) && timer < ( 4*bt + 6*ft + 3*st ) && splash == SplashNumber.Team )
+		{
+			teamImage.enabled = false;
+			coverImage3.enabled = true;
+			fadeStarted = false;
+		}
+		// Fade out team logo
+		else if( timer > ( 3*bt + 5*ft + 3*st ) && timer < ( 3*bt + 6*ft + 3*st ) && !fadeStarted )
+		{
+			teamImage.CrossFadeAlpha( 0, ft, true );
+			fadeStarted = true;
+		}
+		// Show team logo
+		else if( timer >= ( 3*bt + 5*ft + 2*st ) && timer < ( 3*bt + 5*ft + 3*st ) )
+		{
+			teamImage.enabled = true;
+			coverImage2.enabled = false;
+			splash = SplashNumber.Team;
+			fadeStarted = false;
+		}
+		// Fade in team logo
 		else if( timer > ( 3*bt + 4*ft + 2*st ) && timer < ( 3*bt + 5*ft + 2*st ) && !fadeStarted )
 		{
-			creepingWillowImage.enabled = true;
+			teamImage.enabled = true;
 			coverImage2.CrossFadeAlpha( 0, ft, true );
 			fadeStarted = true;
 		}
