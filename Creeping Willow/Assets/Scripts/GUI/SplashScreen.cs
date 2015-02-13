@@ -31,6 +31,8 @@ public class SplashScreen : MonoBehaviour
 	private const float ft = 1.0f;
 	private const float bt = 1.0f;
 
+	private GameObject PersistentObject;
+
 	public void Start()
 	{
 		fadeStarted = false;
@@ -47,6 +49,9 @@ public class SplashScreen : MonoBehaviour
 		creepingWillowImage.enabled = false;
 
 		axisBusy = false;
+
+		PersistentObject = GameObject.Find( "PersistentObject" );
+		Object.DontDestroyOnLoad( PersistentObject );
 	}
 
 	void Update()
