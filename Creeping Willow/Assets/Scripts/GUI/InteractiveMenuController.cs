@@ -33,7 +33,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private float totalZoomTime;
 	private float elapsedZoomTime;
 	private MenuPosition currentPosition;
-	private LevelLoader levelLoader;
+	private GameObject PersistentObject;
 
 	void Awake()
 	{
@@ -56,7 +56,7 @@ public class InteractiveMenuController : MonoBehaviour
 
 		totalZoomTime = 10.0f;
 
-		levelLoader = GameObject.Find( "PersistentObject" ).GetComponent<LevelLoader>();
+		PersistentObject = GameObject.Find( "PersistentObject" );
 	}
 
 	void OnDestroy() {}
@@ -248,7 +248,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public void LoadLevel( string i_levelName )
 	{
 		// Persist the level loader
-		levelLoader.levelName = i_levelName;
+		PersistentObject.GetComponent<LevelLoader>().levelName = i_levelName;
 
 		// Load the new level
 		Application.LoadLevel( "LoadingScreen" );
