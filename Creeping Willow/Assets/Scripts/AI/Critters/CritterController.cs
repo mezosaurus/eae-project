@@ -59,8 +59,10 @@ public class CritterController : AIController {
 	
 	protected void move()
 	{
-		if (!isOnPath)
+		if (!isOnPath || (!killSelf && Time.time >= nextMoveTime))
 		{
+			nextMoveTime = Time.time + waitTime;
+
 			isOnPath = true;
 			pathPosition = spawnPosition + Random.insideUnitCircle * 2;
 			nextPath.transform.position = pathPosition;
@@ -68,20 +70,23 @@ public class CritterController : AIController {
 		
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
-		
-		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
+
+		Vector3 movement = Vector3.MoveTowards (positionNPC, nextPath.transform.position, step);
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		
-		if (biasPosition.x == 0)
+
+		if (biasPosition.x == 0 && biasPosition.y == 0)
 		{
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
 		}
-		else
+		else if (biasPosition.y >= 0)
 		{
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
 		}
-		
+		else
+		{
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
+		}
 		Vector3 changeMovement = avoid (direction);
 		if( changeMovement != Vector3.zero )
 		{	
@@ -110,7 +115,6 @@ public class CritterController : AIController {
 			}
 			else
 			{
-				//Debug.Log("kill");
 				killSelf = true;
 				isOnPath = true;
 				pathPosition = spawnPosition;

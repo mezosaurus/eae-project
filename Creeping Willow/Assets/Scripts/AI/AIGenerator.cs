@@ -284,7 +284,10 @@ public class AIGenerator : GameBehavior
 		else if (enemyAIList.Contains(NPC)) 
 			enemyAIList.Remove(NPC);
 		else if (critterAIList.Contains(NPC))
+		{
+			lastCritterTime = Time.time;
 			critterAIList.Remove(NPC);
+		}
 	}
 	
 	// For use when updating spawn points to 'gates'
