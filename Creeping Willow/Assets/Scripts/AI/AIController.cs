@@ -81,7 +81,8 @@ public class AIController : GameBehavior {
 	// Panic variables
     protected float panicThreshold = 10;
 	protected Vector3 panickedPos;
-    //protected float panicTime;
+	protected float previousAlertLevel = 0.0f;
+	//protected float panicTime;
     //protected float timePanicked;
 
 	// Alert variables
@@ -219,6 +220,19 @@ public class AIController : GameBehavior {
 	{
 
 	}
+
+	//-----------------------
+	// Collision Methods
+	//-----------------------
+
+	protected virtual void OnCollisionEnter2D(Collision2D collision)
+	{
+	}
+
+	protected virtual void OnCollisionExit2D(Collision2D collision)
+	{
+	}
+
 	//-----------------------
 	// Trigger Methods
 	//-----------------------
@@ -240,7 +254,12 @@ public class AIController : GameBehavior {
 			enteredMap = true;
 			ignoreBorder (false, other);
 		}
-    }
+		if (other.tag.Equals("Possessor"))
+		{
+			alertLevel = previousAlertLevel;
+			decrementAlertLevel();
+		}
+	}
 
 	protected virtual void OnTriggerEnter2D(Collider2D other)
 	{
@@ -307,7 +326,23 @@ public class AIController : GameBehavior {
             // Increment alertLevel
 			increaseAlertLevel(hearingAlertMultiplier);
         }
-    }
+		if (other.tag.Equals("Possessor"))
+		{
+			if(panicked || alerted)
+				return;
+			
+			if (Vector2.Distance(other.gameObject.transform.position, gameObject.transform.position) > (0.5f * GetComponent<CircleCollider2D>().radius))
+				return;
+			
+			previousAlertLevel = alertLevel;
+			if (previousAlertLevel < alertThreshold)
+			{
+				previousAlertLevel = (panicThreshold - alertThreshold) / 4 + alertThreshold;
+			}
+			alertLevel = panicThreshold - 0.01f;
+			alert();
+		}
+	}
 	
 	protected bool updateNPC()
 	{

@@ -108,8 +108,10 @@ public class StationaryAIController : AIController
 		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
 	}
 
-	void OnCollisionEnter2D(Collision2D collision)
+	protected override void OnCollisionEnter2D(Collision2D collision)
 	{
+		base.OnCollisionEnter2D (collision);
+
 		if (!killSelf && !panicked && collision.collider.Equals (bench.collider2D)) {
 			this.GetComponent<BoxCollider2D> ().isTrigger = true;
 		}

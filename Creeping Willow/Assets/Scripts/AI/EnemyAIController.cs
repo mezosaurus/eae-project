@@ -305,8 +305,10 @@ public class EnemyAIController : AIController
 			base.decrementAlertLevel();
 	}
 
-	void OnCollisionEnter2D(Collision2D collision)
+	protected override void OnCollisionEnter2D(Collision2D collision)
 	{
+		base.OnCollisionEnter2D (collision);
+
 		if (angry && collision.gameObject.tag.Equals(player.tag))
 		{
 			// TODO: It's axe time
