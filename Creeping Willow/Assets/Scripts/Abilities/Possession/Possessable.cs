@@ -15,15 +15,8 @@ public abstract class Possessable : GameBehavior {
 	protected virtual void Start(){
 		baseX = transform.position.x;
 		baseY = transform.position.y;
-		Active = false;
-		MessageCenter.Instance.RegisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
-		MessageCenter.Instance.RegisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
-	}
 
-	protected virtual void OnDestroy()
-	{
-		MessageCenter.Instance.UnregisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
-		MessageCenter.Instance.UnregisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
+		Active = false;
 	}
 
 	// Update is called once per frame
@@ -58,18 +51,6 @@ public abstract class Possessable : GameBehavior {
 	public virtual void exorcise(){
 			Active = false;
 			Instantiate(Resources.Load("Particles/soulsmoke"), transform.position, Quaternion.identity);
-	}
-
-	void HandlePossessorSpawned(Message message){
-		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
-		ps.Play();
-//		Debug.Log ("spawned");
-	}
-
-	void HandlePossessorDestroyed(Message message){
-		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
-		ps.Stop();
-//		Debug.Log ("destroyed");
 	}
 
 }

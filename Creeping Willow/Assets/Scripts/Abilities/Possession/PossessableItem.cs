@@ -7,22 +7,18 @@ public abstract class PossessableItem : Possessable {
 	protected bool blinking = false;
 	float blinkingColor = 0.0f;
 	float shakeAmount = 1.0f;
+	public GameObject possessionTexture;
 
 	protected virtual void Start(){
+		base.Start ();
+		possessionTexture = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessionClue"));
+		
+		possessionTexture.renderer.enabled = false;
+		TextureScript alertTs = possessionTexture.GetComponent<TextureScript> ();
+		alertTs.target = gameObject;
 		colors.Add("red", new Color(1.0f, 0.0f, 0.0f, 1.0f));
 		colors.Add("green", new Color(0.0f, 1.0f, 0.0f, 1.0f));
 		colors.Add("blue", new Color(0.0f, 0.0f, 1.0f, 1.0f));
-		baseX = transform.position.x;
-		baseY = transform.position.y;
-		Active = false;
-		MessageCenter.Instance.RegisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
-		MessageCenter.Instance.RegisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
-	}
-
-	protected virtual void OnDestroy()
-	{
-		MessageCenter.Instance.UnregisterListener (MessageType.PossessorSpawned, HandlePossessorSpawned);
-		MessageCenter.Instance.UnregisterListener (MessageType.PossessorDestroyed, HandlePossessorDestroyed);
 	}
 
 	// Update is called once per frame
@@ -124,17 +120,4 @@ public abstract class PossessableItem : Possessable {
 		base.exorcise ();
 		Active = false;
 	}
-
-	void HandlePossessorSpawned(Message message){
-		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
-		ps.Play();
-//		Debug.Log ("spawned");
-	}
-
-	void HandlePossessorDestroyed(Message message){
-		ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
-		ps.Stop();
-//		Debug.Log ("destroyed");
-	}
-
 }

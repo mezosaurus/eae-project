@@ -20,7 +20,6 @@ public class Possessor : GameBehavior {
 		possessing = false;
 		objectToPossess = null;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
-		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
 	}
 
 	// Update is called once per frame
@@ -40,6 +39,8 @@ public class Possessor : GameBehavior {
 				possessable.possess();
 				MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
 				if(possessable is PossessableItem){
+					PossessableItem item = possessable as PossessableItem;
+					item.possessionTexture.renderer.enabled = false;
 					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
 					SpriteRenderer face = this.gameObject.GetComponent<SpriteRenderer>();
 					face.color = new Color(1f, 1f, 1f, 0f);
@@ -60,6 +61,8 @@ public class Possessor : GameBehavior {
 				objectToPossess = collider.gameObject;
 				Possessable possessable = objectToPossess.GetComponent<Possessable>();
 				if(possessable is PossessableItem){
+					PossessableItem item = possessable as PossessableItem;
+					item.possessionTexture.renderer.enabled = true;
 					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
 					Color color = Color.white;
 					if(colors.TryGetValue("transparent", out color)){
@@ -75,6 +78,8 @@ public class Possessor : GameBehavior {
 			Possessable possessable = objectToPossess.GetComponent<Possessable>();
 			if(possessable is PossessableItem){
 				SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+				PossessableItem item = possessable as PossessableItem;
+				item.possessionTexture.renderer.enabled = false;
 				Color color = Color.white;
 				if(colors.TryGetValue("opaque", out color)){
 					renderer.color = color;
