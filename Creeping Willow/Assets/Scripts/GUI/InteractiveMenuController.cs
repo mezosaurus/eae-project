@@ -9,12 +9,14 @@ public class InteractiveMenuController : MonoBehaviour
 	{
 		MainGate,
 		LevelSelect,
+		ModeSelect,
 		Options,
 		Scores,
 	}
 
 	public Button[] mainButtons;
 	public Button[] levelButtons;
+	public Button[] modeButtons;
 	public Button[] scoresButtons;
 	public Button[] optionsButtons;
 	public AudioClip clickSound;
@@ -32,7 +34,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private float totalZoomTime;
 	private float elapsedZoomTime;
 	private MenuPosition currentPosition;
-	private GameObject PersistentObject;
+	private LevelLoader levelLoader;
 
 	void Awake()
 	{
@@ -53,9 +55,9 @@ public class InteractiveMenuController : MonoBehaviour
 		if( cursorImage )
 			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
 
-		totalZoomTime = 10.0f;
+		totalZoomTime = 25.0f;
 
-		PersistentObject = GameObject.Find( "PersistentObject" );
+		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
 	}
 
 	void OnDestroy() {}
@@ -66,6 +68,9 @@ public class InteractiveMenuController : MonoBehaviour
 			button.interactable = false;
 		
 		foreach( Button button in levelButtons )
+			button.interactable = false;
+
+		foreach( Button button in modeButtons )
 			button.interactable = false;
 		
 		foreach( Button button in scoresButtons )
@@ -87,7 +92,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( mainButtons[ 0 ].gameObject );
 
 		// Set the next camera position
-		cameraPosition = new Vector3( 0, 0, -200 );
+		cameraPosition = new Vector3( 0, 50, -275 );
 
 		// set the gate rotation
 		gateRotationLeft = Quaternion.Euler( 0, 0, 0 );
@@ -110,7 +115,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( levelButtons[ 0 ].gameObject );
 
 		// Set the next camera position
-		cameraPosition = new Vector3( 0, 0, 500 );
+		cameraPosition = new Vector3( 0, 0, 400 );
 
 		// set the gate rotation
 		gateRotationLeft = Quaternion.Euler( 0, -45, 0 );
@@ -118,6 +123,25 @@ public class InteractiveMenuController : MonoBehaviour
 
 		currentPosition = MenuPosition.LevelSelect;
 
+		elapsedZoomTime = 0.0f;
+	}
+
+	public void GoToModeSelect()
+	{
+		// Get rid of all other buttons
+		DisableAllButtons();
+		
+		// Show all the buttons
+		foreach( Button button in modeButtons )
+			button.interactable = true;
+		
+		EventSystem.current.SetSelectedGameObject( modeButtons[ 0 ].gameObject );
+		
+		// Set the next camera position
+		cameraPosition = new Vector3( 1500, 0, 400 );
+		
+		currentPosition = MenuPosition.ModeSelect;
+		
 		elapsedZoomTime = 0.0f;
 	}
 
@@ -188,6 +212,10 @@ public class InteractiveMenuController : MonoBehaviour
 					EventSystem.current.SetSelectedGameObject( levelButtons[ 0 ].gameObject );
 					break;
 
+				case MenuPosition.ModeSelect:
+					EventSystem.current.SetSelectedGameObject( modeButtons[ 0 ].gameObject );
+					break;
+
 				case MenuPosition.Scores:
 					EventSystem.current.SetSelectedGameObject( scoresButtons[ 0 ].gameObject );
 					break;
@@ -208,6 +236,8 @@ public class InteractiveMenuController : MonoBehaviour
 				Application.Quit();
 			else if( currentPosition == MenuPosition.LevelSelect || currentPosition == MenuPosition.Scores || currentPosition == MenuPosition.Options )
 				GoToMainMenu();
+			else if( currentPosition == MenuPosition.ModeSelect )
+				GoToLevelSelect();
 
 			axisBusy = true;
 		}
@@ -234,6 +264,9 @@ public class InteractiveMenuController : MonoBehaviour
 		foreach( Button button in levelButtons )
 			button.OnDeselect( new BaseEventData( EventSystem.current ) );
 
+		foreach( Button button in modeButtons )
+			button.OnDeselect( new BaseEventData( EventSystem.current ) );
+
 		foreach( Button button in scoresButtons )
 			button.OnDeselect( new BaseEventData( EventSystem.current ) );
 
@@ -241,11 +274,20 @@ public class InteractiveMenuController : MonoBehaviour
 			button.OnDeselect( new BaseEventData( EventSystem.current ) );
 	}
 
-	public void LoadLevel( string i_levelName )
+	public void SetLevel( string i_levelName )
 	{
 		// Persist the level loader
-		PersistentObject.GetComponent<LevelLoader>().levelName = i_levelName;
+		levelLoader.levelName = i_levelName;
+	}
 
+	public void SetMode( string i_modeName )
+	{
+		// Persist the level loader
+		levelLoader.modeName = i_modeName;
+	}
+
+	public void LoadLevel()
+	{
 		// Load the new level
 		Application.LoadLevel( "LoadingScreen" );
 
