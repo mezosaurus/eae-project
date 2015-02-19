@@ -23,6 +23,7 @@ public enum MessageType
 	NPCAlertLevel,
 	NotorietyMaxed,
 	ScoreChanged,
+	SendScore,
 	LevelFinished,
 	LevelStart,
     CameraChangedObjectFollowed,
