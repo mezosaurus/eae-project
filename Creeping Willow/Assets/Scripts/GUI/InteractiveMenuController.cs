@@ -22,7 +22,6 @@ public class InteractiveMenuController : MonoBehaviour
 	public GameObject camera;
 	public GameObject gateLeft;
 	public GameObject gateRight;
-	public Image logo;
 
 	private bool axisBusy;
 	private bool usesSound;
@@ -95,8 +94,6 @@ public class InteractiveMenuController : MonoBehaviour
 		gateRotationRight = Quaternion.Euler( 0, 0, 0 );
 
 		currentPosition = MenuPosition.MainGate;
-
-		logo.enabled = true;
 		
 		elapsedZoomTime = 0.0f;
 	}
@@ -105,7 +102,6 @@ public class InteractiveMenuController : MonoBehaviour
 	{
 		// Get rid of all other buttons
 		DisableAllButtons();
-		logo.enabled = false;
 
 		// Show all the buttons
 		foreach( Button button in levelButtons )
@@ -114,7 +110,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( levelButtons[ 0 ].gameObject );
 
 		// Set the next camera position
-		cameraPosition = new Vector3( 0, 0, 270 );
+		cameraPosition = new Vector3( 0, 0, 500 );
 
 		// set the gate rotation
 		gateRotationLeft = Quaternion.Euler( 0, -45, 0 );
