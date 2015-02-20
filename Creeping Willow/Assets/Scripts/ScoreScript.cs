@@ -278,7 +278,7 @@ public class ScoreScript : MonoBehaviour {
 						GlobalGameStateManager.playerNames = names;
 						entered = true;						
 						MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
-						MessageCenter.Instance.Broadcast (new SendScoresMessage(_score, Application.loadedLevelName));
+						MessageCenter.Instance.Broadcast (new SendScoresMessage(_score, initials, Application.loadedLevelName));
 					}
 				}
 			}
