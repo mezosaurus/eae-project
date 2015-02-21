@@ -100,7 +100,7 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: direction
-    m_EventTreshold: 2
+    m_EventTreshold: 3
     m_ExitTime: 1
   m_Atomic: 1
   m_Solo: 0
@@ -140,7 +140,7 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: direction
-    m_EventTreshold: 2
+    m_EventTreshold: 3
     m_ExitTime: 1
   m_Atomic: 1
   m_Solo: 0
@@ -157,7 +157,7 @@ State:
   m_Motions:
   - {fileID: 7400000, guid: dc35196da7a833a4190c7831ec774a95, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
-  m_Position: {x: 48, y: 48, z: 0}
+  m_Position: {x: -108, y: 132, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -172,7 +172,7 @@ State:
   m_Motions:
   - {fileID: 7400000, guid: 02ebb9aaaa9b4e74ca3b603c786201e0, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
-  m_Position: {x: 48, y: 156, z: 0}
+  m_Position: {x: 48, y: 48, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -187,7 +187,7 @@ State:
   m_Motions:
   - {fileID: 7400000, guid: 61bfd1f2dc23e5c418d8613a809f40f8, type: 2}
   m_ParentStateMachine: {fileID: 110700000}
-  m_Position: {x: 312, y: 108, z: 0}
+  m_Position: {x: 48, y: 228, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -198,7 +198,7 @@ StateMachine:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Base Layer
-  m_DefaultState: {fileID: 110200000}
+  m_DefaultState: {fileID: 110233893}
   m_States:
   - {fileID: 110200000}
   - {fileID: 110233893}

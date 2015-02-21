@@ -18,6 +18,7 @@ public class AIGenerator : GameBehavior
 	public float spawnTime = 5;
 	public float critterSpawnTime = 15;
 	public bool isMaze = false;
+	public bool spawnAxe = false;
 
 	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
@@ -63,6 +64,12 @@ public class AIGenerator : GameBehavior
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
+		if (spawnAxe)
+		{
+			spawnAxe = false;
+			createEnemyNPC(Vector3.zero);
+		}
+
 		if (lastSpawnTime <= Time.time - spawnTime && isRoomAvailableForNewNPC())
 		{
 			lastSpawnTime = Time.time;

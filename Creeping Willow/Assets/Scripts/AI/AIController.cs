@@ -35,6 +35,7 @@ public class AIController : GameBehavior
 				STILL = 0,
 				MOVING_DOWN = 1,
 				MOVING_UP = 2,
+				STILL_ACTION = 3,
 		}
 
 		// NPC variables
