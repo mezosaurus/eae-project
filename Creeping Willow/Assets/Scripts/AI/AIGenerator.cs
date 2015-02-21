@@ -204,7 +204,7 @@ public class AIGenerator : GameBehavior
 		}
 		else
 		{
-			loadNPCWithSkin(newNPC, "mower_skin", NPCSkinType.MowerMan);
+			loadNPCWithSkin(newNPC, "hottie_skin", NPCSkinType.Hottie);
 		}
 	}
 
@@ -220,7 +220,14 @@ public class AIGenerator : GameBehavior
 	void createWanderNPC()
 	{
 		GameObject newNPC = createNPC(this.wanderNPC, wanderAIList);
-		loadNPCWithSkin(newNPC, "hippie_skin", NPCSkinType.Hippie);
+		if (Random.Range(0,2) == 0)
+		{
+			loadNPCWithSkin(newNPC, "hippie_skin", NPCSkinType.Hippie);
+		}
+		else
+		{
+			loadNPCWithSkin(newNPC, "mower_skin", NPCSkinType.MowerMan);
+		}
 	}
 
 	void createEnemyNPC(Vector3 panickedPosition)
@@ -315,7 +322,8 @@ public enum NPCSkinType
     Bopper,
     Hippie,
     AxeMan,
-    Critter
+	Hottie,
+    Critter,
 }
 
 
