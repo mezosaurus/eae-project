@@ -49,6 +49,7 @@ public class Possessor : GameBehavior {
 					if(colors.TryGetValue("opaque", out color)){
 						renderer.color = color;
 					}
+					Debug.Log ("playing sound");
 				}
 				Destroy(this.gameObject);
 			}

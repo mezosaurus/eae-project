@@ -8,6 +8,8 @@ public abstract class PossessableItem : Possessable {
 	float blinkingColor = 0.0f;
 	float shakeAmount = 1.0f;
 	public GameObject possessionTexture;
+	protected bool scaring = false;
+	protected bool luring = false;
 
 	protected virtual void Start(){
 		base.Start ();
@@ -102,12 +104,21 @@ public abstract class PossessableItem : Possessable {
 		base.HandleInput();
 		if (Input.GetAxis("LT") > 0.2f) {
 			if(Active){
-				useAbility(true);
+				if(!scaring){
+					useAbility(true);
+					scaring = true;
+				}
 			}
 		}else if (Input.GetAxis("RT") > 0.2f) {
 			if(Active){
-				useAbility(false);
+				if(!luring){
+					useAbility(false);
+					luring = true;
+				}
 			}
+		}else{
+			scaring = false;
+			luring = false;
 		}
 	}
 
