@@ -10,6 +10,7 @@ public abstract class Possessable : GameBehavior {
 	protected bool acting = false;
 	protected bool needToSend = false;
 	public AudioClip actionSound;
+	public AudioClip possessSound;
 	protected Dictionary<string, Color> colors = new Dictionary<string, Color>();
 
 	protected virtual void Start(){
@@ -46,6 +47,9 @@ public abstract class Possessable : GameBehavior {
 	}
 
 	public virtual void possess(){
+		audio.Stop();
+		audio.clip = possessSound;
+		audio.Play();
 	}
 
 	public virtual void exorcise(){
