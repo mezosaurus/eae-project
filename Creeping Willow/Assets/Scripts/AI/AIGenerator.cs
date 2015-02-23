@@ -20,7 +20,8 @@ public class AIGenerator : GameBehavior
 	public float critterSpawnTime = 15;
 	public bool isMaze = false;
 	public bool startWithActiveAxeMan = false;
-	public bool spawnAxe = false;
+	public bool spawnAxeWanderDEBUG = false;
+	public bool spawnAxeActiveDEBUG = false;
 
 	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
@@ -63,9 +64,9 @@ public class AIGenerator : GameBehavior
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
-		if (spawnAxe)
+		if (spawnAxeWanderDEBUG)
 		{
-			spawnAxe = false;
+			spawnAxeWanderDEBUG = false;
 			createActiveEnemyNPC();
 		}
 
@@ -180,13 +181,37 @@ public class AIGenerator : GameBehavior
 		controller.setMovingPath(movePath);
 		controller.setInMaze (isMaze);
 
-		if (Random.Range(0,2) == 0)
+		if (isMaze)
 		{
-			loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);
+			switch (Random.Range(0,5))
+			{
+			case 0:
+				loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);
+				break;
+			case 1:
+				loadNPCWithSkin(newNPC, "hottie_skin", NPCSkinType.Hottie);
+				break;
+			case 2:
+				loadNPCWithSkin(newNPC, "mower_skin", NPCSkinType.MowerMan);
+				break;
+			case 3:
+				loadNPCWithSkin(newNPC, "hippie_skin", NPCSkinType.Hippie);
+				break;
+			case 4:
+				loadNPCWithSkin(newNPC, "oldman_skin", NPCSkinType.OldMan);
+				break;
+			}
 		}
 		else
 		{
-			loadNPCWithSkin(newNPC, "hottie_skin", NPCSkinType.Hottie);
+			if (Random.Range(0,2) == 0)
+			{
+				loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);
+			}
+			else
+			{
+				loadNPCWithSkin(newNPC, "hottie_skin", NPCSkinType.Hottie);
+			}
 		}
 	}
 
@@ -197,6 +222,7 @@ public class AIGenerator : GameBehavior
 		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
 		int rand = Random.Range (0, benches.Length);
 		newNPC.GetComponent<StationaryAIController> ().setStationaryPoint (benches [rand]);
+		loadNPCWithSkin (newNPC, "oldman_skin", NPCSkinType.OldMan);
 	}
 	
 	void createWanderNPC()
@@ -218,7 +244,6 @@ public class AIGenerator : GameBehavior
 			return;
 		
 		GameObject newNPC = createNPC (this.enemyNPCActive, enemyAIList);
-		GameObject panickedPoint = new GameObject ();
 		newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (getRandomMovePath());
 	}
 

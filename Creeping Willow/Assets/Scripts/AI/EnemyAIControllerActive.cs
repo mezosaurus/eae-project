@@ -72,7 +72,7 @@ public class EnemyAIControllerActive : EnemyAIController
 		}
 	}
 	
-	private void handleSitting()
+	protected override void handleSitting()
 	{
 		/*
 		if (treePath) 
