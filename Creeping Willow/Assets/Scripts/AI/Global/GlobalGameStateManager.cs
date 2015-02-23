@@ -58,6 +58,16 @@ public static class GlobalGameStateManager
 		return guiMatrix;
 	}
 
+    public static void SendHighscoreToServer()
+    {
+
+    }
+
+    private static void SendSecureMessageToServer(byte[] data)
+    {
+
+    }
+
     private static IDictionary<NPCSkinType, NPCData> PopulateNPCData()
     {
         Dictionary<NPCSkinType, NPCData> data = new Dictionary<NPCSkinType, NPCData>();

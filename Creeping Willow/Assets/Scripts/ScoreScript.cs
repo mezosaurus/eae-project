@@ -20,6 +20,28 @@ public enum ScoreState
 	END_SCORING
 }
 
+/****************************************
+ * 
+ * Added by Matt for high score purposes
+ * 
+ ****************************************/
+
+public enum ScoreGameType
+{
+    SoulSurvivor = 1,
+    Marked,
+    Timed
+}
+
+public enum ScoreLevel
+{
+    Tutorial = 1,
+    BloodyBeginnings,
+    LakesideLullaby,
+    OverTroubledWaters,
+    HallowedLabyrinth
+}
+
 public class ScoreScript : MonoBehaviour {
 	
 	/// <summary>
@@ -278,7 +300,9 @@ public class ScoreScript : MonoBehaviour {
 						GlobalGameStateManager.playerNames = names;
 						entered = true;						
 						MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
-						MessageCenter.Instance.Broadcast (new SendScoresMessage(_score, initials, Application.loadedLevelName));
+
+                        // Upload the high score to the server
+                        ServerMessaging.UploadScoreToServer(initials, (System.UInt32)_score, ScoreGameType.SoulSurvivor, Application.loadedLevelName);
 					}
 				}
 			}
@@ -1381,5 +1405,4 @@ public class ScoreScript : MonoBehaviour {
 		bountyState = (int)BountyState.BOUNTY_SHOWING;
 		bountyRaised = true;*/
 	}
-
 }

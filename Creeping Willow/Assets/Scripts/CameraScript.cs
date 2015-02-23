@@ -21,7 +21,7 @@ public class CameraScript : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    {
+    {        
         MessageCenter.Instance.RegisterListener(MessageType.CameraZoom, HandleCameraZoomMessage);
         MessageCenter.Instance.RegisterListener(MessageType.CameraChangedObjectFollowed, HandleChangeObjectFollowed);
         //MessageCenter.Instance.RegisterListener(MessageType.CameraZoomOut, HandleCameraZoomOutMessage);
