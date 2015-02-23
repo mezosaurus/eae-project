@@ -12,6 +12,10 @@ public class PathingScript : MonoBehaviour
 
 	public GameObject getRandomPath()
 	{
+		if (subPaths == null)
+		{
+			subPaths = GameObject.FindGameObjectsWithTag("Path");
+		}
 		int rand = Random.Range (0, subPaths.Length);
 		return subPaths [rand];
 	}

@@ -74,6 +74,8 @@ public class EnemyAIControllerActive : EnemyAIController
 	
 	protected override void handleSitting()
 	{
+		nextPath = movePath.getNextPath (nextPath, gameObject);
+
 		/*
 		if (treePath) 
 		{
@@ -200,7 +202,7 @@ public class EnemyAIControllerActive : EnemyAIController
 	public void setMovingPath(SubpathScript movePath)
 	{
 		this.movePath = movePath;
-		nextPath = movePath.getNextPath (null, gameObject);
+		nextPath = movePath.getNextPath (gameObject, gameObject);
 		initAxeMan ();
 	}
 

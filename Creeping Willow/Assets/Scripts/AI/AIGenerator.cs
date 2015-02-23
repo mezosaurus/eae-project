@@ -242,9 +242,10 @@ public class AIGenerator : GameBehavior
 	{
 		if (enemyAIList.Count > 15)
 			return;
-		
-		GameObject newNPC = createNPC (this.enemyNPCActive, enemyAIList);
-		newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (getRandomMovePath());
+
+		SubpathScript movePath = getRandomMovePath ();
+		GameObject newNPC = createNPC (this.enemyNPCActive, enemyAIList, movePath.getNextPath(null,null).transform.position);
+		newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (movePath);
 	}
 
 	void createEnemyNPC(Vector3 panickedPosition)
