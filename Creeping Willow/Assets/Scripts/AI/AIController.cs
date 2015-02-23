@@ -552,6 +552,12 @@ public class AIController : GameBehavior
 		//timePanicked = panicCooldownSeconds;
 		moveDir = transform.position - getPlayer ().transform.position;
 		broadcastAlertLevelChanged (AlertLevelType.Panic);
+
+		if (GameObject.Find("AIGenerator").GetComponent<AIGenerator>().isMaze)
+		{
+			NPCPanickedOffMapMessage message = new NPCPanickedOffMapMessage (panickedPos);
+			MessageCenter.Instance.Broadcast (message);
+		}
 	}
 
 	protected virtual void scare (Vector3 scaredPosition)
