@@ -34,6 +34,7 @@ public class AIGenerator : GameBehavior
 	private ArrayList pathAIList;
 	private ArrayList wanderAIList;
 	private ArrayList enemyAIList;
+	private ArrayList activeEnemyAIList;
 	private ArrayList critterAIList;
 		
 	// Game Functions
@@ -47,6 +48,7 @@ public class AIGenerator : GameBehavior
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
 		enemyAIList = new ArrayList ();
+		activeEnemyAIList = new ArrayList ();
 		if (critterSpawnPoints.Length != 0)
 			critterAIList = new ArrayList ();
 
@@ -240,11 +242,11 @@ public class AIGenerator : GameBehavior
 
 	void createActiveEnemyNPC()
 	{
-		if (enemyAIList.Count > 15)
+		if (activeEnemyAIList.Count > 15)
 			return;
 
 		SubpathScript movePath = getRandomMovePath ();
-		GameObject newNPC = createNPC (this.enemyNPCActive, enemyAIList, movePath.getNextPath(null,null).transform.position);
+		GameObject newNPC = createNPC (this.enemyNPCActive, activeEnemyAIList, movePath.getNextPath(null,null).transform.position);
 		newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (movePath);
 	}
 
@@ -353,6 +355,14 @@ public class AIGenerator : GameBehavior
 			wanderAIList.Remove(NPC);
 		else if (enemyAIList.Contains(NPC)) 
 			enemyAIList.Remove(NPC);
+		else if (activeEnemyAIList.Contains(NPC))
+		{
+			activeEnemyAIList.Remove(NPC);
+
+			// Hyrda Effect (every one that's killed spawns two more)
+			createActiveEnemyNPC();
+			createActiveEnemyNPC();
+		}
 		else if (critterAIList.Contains(NPC))
 		{
 			lastCritterTime = Time.time;
