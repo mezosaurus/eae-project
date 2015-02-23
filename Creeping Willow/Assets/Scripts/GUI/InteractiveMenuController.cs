@@ -24,6 +24,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public GameObject camera;
 	public GameObject gateLeft;
 	public GameObject gateRight;
+	public Text levelText;
 
 	private bool axisBusy;
 	private bool usesSound;
@@ -35,6 +36,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private float elapsedZoomTime;
 	private MenuPosition currentPosition;
 	private LevelLoader levelLoader;
+	private string levelName;
 
 	void Awake()
 	{
@@ -136,6 +138,8 @@ public class InteractiveMenuController : MonoBehaviour
 			button.interactable = true;
 		
 		EventSystem.current.SetSelectedGameObject( modeButtons[ 0 ].gameObject );
+
+		levelText.text = levelName;
 		
 		// Set the next camera position
 		cameraPosition = new Vector3( 1500, 0, 400 );
@@ -278,6 +282,17 @@ public class InteractiveMenuController : MonoBehaviour
 	{
 		// Persist the level loader
 		levelLoader.levelName = i_levelName;
+
+		if( i_levelName == "Evan_Level1" )
+			levelName = "Bloody Beginnings";
+		else if( i_levelName == "Quadrants" )
+			levelName = "Lakeside Lullaby";
+		else if( i_levelName == "Bridge_Level" )
+			levelName = "Over Troubled Waters";
+		else if( i_levelName == "Maze_Level" )
+			levelName = "Hallowed Labyrinth";
+		else
+			levelName = "Error";
 	}
 
 	public void SetMode( string i_modeName )
