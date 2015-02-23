@@ -41,6 +41,7 @@ public class IntroScript : MonoBehaviour
 		boxStyle.fontSize = 45;
 		boxStyle.wordWrap = true;
 		boxStyle.alignment = TextAnchor.UpperCenter;
+		boxStyle.normal.textColor = Color.red;
 
 		// prepare the style for buttons
 		GUI.skin.button.normal.background = buttonImage;
@@ -50,6 +51,7 @@ public class IntroScript : MonoBehaviour
 		buttonStyle.font = guiFont;
 		buttonStyle.fontSize = 85;
 		buttonStyle.alignment = TextAnchor.MiddleCenter;
+		buttonStyle.normal.textColor = Color.red;
 
 		drawIntroBox();
 
