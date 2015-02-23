@@ -56,7 +56,7 @@ public class ServerMessaging : MonoBehaviour
         form.AddBinaryData("data", data);
 
         // Upload the form to the web server
-        WWW www = new WWW("http://localhost/cwhstest/upload.php", form);
+        WWW www = new WWW("http://creepingwillow.com/scores.php?submit", form);
 
         yield return www;
 
