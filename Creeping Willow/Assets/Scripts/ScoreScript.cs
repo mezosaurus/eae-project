@@ -49,7 +49,7 @@ public class ScoreScript : MonoBehaviour {
 	/// </summary>
 	public float frequency;
 
-	// scoring texts
+	// score number images
 	public Texture2D plusSign;
 	public Texture2D minusSign;
 	public Texture2D numZero;
@@ -63,6 +63,38 @@ public class ScoreScript : MonoBehaviour {
 	public Texture2D numEight;
 	public Texture2D numNine;
 	public Font myFont;
+
+	// bounty images
+	public Texture2D bountyBoxImage;
+	public Texture2D bountyBoxTextImage;
+
+	// score text images
+	public Texture2D scoreImage;
+	public Texture2D highscoreImage;
+
+	// multiplier bar images
+	public Texture2D bar1;
+	public Texture2D bar2;
+	public Texture2D bar3;
+	public Texture2D bar4;
+	public Texture2D bar5;
+	public Texture2D bar6;
+	public Texture2D bar7;
+	public Texture2D bar8;
+	public Texture2D bar9;
+	public Texture2D bar10;
+	public Texture2D bar11;
+	public Texture2D bar12;
+	public Texture2D bar13;
+	public Texture2D bar14;
+	public Texture2D bar15;
+	public Texture2D bar16;
+	public Texture2D bar17;
+	public Texture2D bar18;
+	public Texture2D bar19;
+	public Texture2D bar20;
+	public Texture2D bar21;
+	public Texture2D bar22;
 
 	bool gameStarted = false;
 	
@@ -142,7 +174,7 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 	// Score GUI variables
-	float offsetX = 200;
+	float offsetX = 300;
 	float offsetY = 50;
 	float sizeX = 150;
 	float sizeY = 50;
@@ -193,6 +225,9 @@ public class ScoreScript : MonoBehaviour {
 	
 	int bountyState;
 	float bountyIncrement = 0;
+	float currentBountyImageHeight;
+	float currentBountyTextHeight;
+	float currentBountyBoxHeight;
 	
 	GameObject BountyNPC;
 	Texture2D BountyNPCImage;
@@ -208,7 +243,7 @@ public class ScoreScript : MonoBehaviour {
 	float multYOffset = 20;
 	float multXOffset = 20;
 	float multLength;
-	float multHeight = 30;
+	float multHeight;
 
 	int currentMultiplier = 1;
 	int multiplierPoints = 10;
@@ -247,12 +282,16 @@ public class ScoreScript : MonoBehaviour {
 		
 		scoreState = (int)ScoreState.NO_SCORING;
 		bountyState = (int)BountyState.BOUNTY_HIDDEN;
-		BountyNPCImage = new Texture2D (1, 1);
+		BountyNPCImage = null;//new Texture2D (1, 1);
 		
 		// bounty
-		bountySizeX = (int)Screen.width * .2f;
-		bountyLabelSizeY = 30;
-		bountyRectSizeY = (int)Screen.height * .2f;
+		bountySizeX = (int)Screen.width * .3f;
+		bountyLabelSizeY = (int)Screen.height * .15f;
+		bountyRectSizeY = (int)Screen.height * .3f;
+
+		currentBountyBoxHeight = Screen.height-bountyLabelSizeY;
+		currentBountyTextHeight = Screen.height-bountyLabelSizeY*3/4;
+		currentBountyImageHeight = Screen.height+bountyRectSizeY;
 		
 		popupIncrement = popupIncrementMax;
 		popupIncrement2 = popupIncrementMax2;
@@ -260,14 +299,15 @@ public class ScoreScript : MonoBehaviour {
 		sideL = Screen.width / 3;
 		sideR = Screen.width * 2 / 3;
 		startHeight = Screen.height * 2 / 3;
-		endHeight = 50;
+		endHeight = 100;
 		endX = multXOffset;
 		
 		highscores = GlobalGameStateManager.highscores;
 		names = GlobalGameStateManager.playerNames;
 		
 		// mult variabes
-		multLength = Screen.width / 5;
+		multLength = Screen.width / 3;
+		multHeight = Screen.height / 10;
 		lastMultiplierTime = Time.time;
 		currentMultiplierTime = Time.time;
 
@@ -421,7 +461,7 @@ public class ScoreScript : MonoBehaviour {
 			
 			// update sliding increment
 			if( slideIncrement < slideMax )
-				slideIncrement += 2f;
+				slideIncrement += 2.5f;
 			
 			// npc type
 			if( eatenString == npcEatenString )
@@ -509,7 +549,7 @@ public class ScoreScript : MonoBehaviour {
 
 			scoreTimer = 0;
 			
-			float fracTime = (Time.time - moveStartTime) / 2f;
+			float fracTime = (Time.time - moveStartTime) / 1.25f;
 			float xPos = Mathf.Lerp(sideL, endX, fracTime);
 			float yPos = Mathf.Lerp(startHeight, endHeight, fracTime);
 			myStyle.fontSize = (int)Mathf.Lerp(startFont, endFont, fracTime);
@@ -736,7 +776,7 @@ public class ScoreScript : MonoBehaviour {
 				GUI.color = guiColor;
 			}
 			
-			GUI.Box (new Rect (Screen.width-offsetX, Screen.height-offsetY-myStyle.fontSize-10-popupIncrement, sizeX, sizeY), "" + (displayScore * currentMultiplier), myStyle);
+			GUI.Box (new Rect (Screen.width-offsetX+sizeX-10, Screen.height-offsetY-myStyle.fontSize-10-popupIncrement, sizeX, sizeY), "" + (displayScore * currentMultiplier), myStyle);
 			
 			popupIncrement += 1f;
 			
@@ -747,11 +787,14 @@ public class ScoreScript : MonoBehaviour {
 		myStyle.fontSize = 30;
 		myStyle.normal.textColor = Color.white;
 		myStyle.alignment = TextAnchor.MiddleRight;
-		GUI.Box (new Rect (Screen.width-offsetX, Screen.height-offsetY, sizeX, sizeY), "SCORE: " + _score, myStyle);
+		
+		GUI.DrawTexture (new Rect (Screen.width-offsetX, Screen.height-offsetY, sizeX, sizeY), scoreImage);
+		GUI.Box (new Rect (Screen.width-offsetX+sizeX-10, Screen.height-offsetY, sizeX, sizeY), "" + _score, myStyle);
 		
 		// high score
 		myStyle.normal.textColor = Color.yellow;
-		GUI.Box (new Rect (Screen.width-offsetX, 10, sizeX, sizeY), "HIGH SCORE: " + highscores[0], myStyle);
+		GUI.DrawTexture (new Rect (Screen.width-offsetX, 10, sizeX, sizeY), highscoreImage);
+		GUI.Box (new Rect (Screen.width-offsetX+sizeX-10, 10, sizeX, sizeY), "" + highscores[0], myStyle);
 		
 		
 		
@@ -762,26 +805,37 @@ public class ScoreScript : MonoBehaviour {
 		// probably should use switch-case, but meh
 		if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
 		{
-			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
-			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height,bountySizeX,bountyRectSizeY), BountyNPCImage);
+			GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyRectSizeY+bountyLabelSizeY), bountyBoxImage);
+			GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX*3/8,Screen.height-bountyLabelSizeY*3/4,bountySizeX*3/4,bountyLabelSizeY*3/4), bountyBoxTextImage);
+			if( BountyNPCImage != null )
+				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/8,Screen.height+bountyRectSizeY/4,bountySizeX/4,bountyRectSizeY*3/5), BountyNPCImage);
 		}
 		else if( bountyState == (int)BountyState.BOUNTY_SHOWN )
 		{
-			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyRectSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
-			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyRectSizeY,bountySizeX,bountyRectSizeY), BountyNPCImage);
+			GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyRectSizeY,bountySizeX,bountyRectSizeY+bountyLabelSizeY), bountyBoxImage);
+			GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX*3/8,Screen.height-bountyLabelSizeY*3/4-bountyRectSizeY,bountySizeX*3/4,bountyLabelSizeY*3/4), bountyBoxTextImage);
+			if( BountyNPCImage != null )
+				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/8,Screen.height-bountyRectSizeY*3/4,bountySizeX/4,bountyRectSizeY*3/5), BountyNPCImage);
 		}
 		else if( bountyState == (int)BountyState.BOUNTY_SHOWING )
 		{
 			if( bountyIncrement >= bountyRectSizeY )
 			{
+				currentBountyBoxHeight = Screen.height-bountyLabelSizeY-bountyIncrement;
+				currentBountyTextHeight = Screen.height-bountyLabelSizeY*3/4-bountyIncrement;
+				currentBountyImageHeight = Screen.height-bountyIncrement+bountyRectSizeY/4;
+
 				bountyState = (int)BountyState.BOUNTY_SHOWN;
 				bountyIncrement = bountyRectSizeY;
 			}
 			else
 			{
 				bountyIncrement += 2f;
-				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
-				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyIncrement,bountySizeX,bountyRectSizeY), BountyNPCImage);
+
+				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyRectSizeY+bountyLabelSizeY), bountyBoxImage);
+				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX*3/8,Screen.height-bountyLabelSizeY*3/4-bountyIncrement,bountySizeX*3/4,bountyLabelSizeY*3/4), bountyBoxTextImage);
+				if( BountyNPCImage != null )
+					GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/8,Screen.height-bountyIncrement+bountyRectSizeY/4,bountySizeX/4,bountyRectSizeY*3/5), BountyNPCImage);
 			}
 			
 			
@@ -790,21 +844,31 @@ public class ScoreScript : MonoBehaviour {
 		{
 			if( bountyIncrement <= 0 )
 			{
+				currentBountyBoxHeight = Screen.height-bountyLabelSizeY-bountyIncrement;
+				currentBountyTextHeight = Screen.height-bountyLabelSizeY*3/4-bountyIncrement;
+				currentBountyImageHeight = Screen.height-bountyIncrement+bountyRectSizeY/4;
+
 				bountyState = (int)BountyState.BOUNTY_HIDDEN;
 				bountyIncrement = 0;
 			}
 			else
 			{
 				bountyIncrement -= 2f;
-				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
-				GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyIncrement,bountySizeX,bountyRectSizeY), BountyNPCImage);
+
+				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyRectSizeY+bountyLabelSizeY), bountyBoxImage);
+				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX*3/8,Screen.height-bountyLabelSizeY*3/4-bountyIncrement,bountySizeX*3/4,bountyLabelSizeY*3/4), bountyBoxTextImage);
+				if( BountyNPCImage != null )
+					GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/8,Screen.height-bountyIncrement+bountyRectSizeY/4,bountySizeX/4,bountyRectSizeY*3/5), BountyNPCImage);
 			}
 			
 		}
 		else // default - BOUNTY_HIDDEN
 		{
-			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyLabelSizeY), "Current Bounty (Right Bumper)");
-			GUI.Box (new Rect(Screen.width/2-bountySizeX/2,Screen.height,bountySizeX,bountyRectSizeY), BountyNPCImage);
+
+			GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY,bountySizeX,bountyRectSizeY+bountyLabelSizeY), bountyBoxImage);
+			GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX*3/8,Screen.height-bountyLabelSizeY*3/4,bountySizeX*3/4,bountyLabelSizeY*3/4), bountyBoxTextImage);
+			if( BountyNPCImage != null )
+				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/8,Screen.height+bountyRectSizeY/4,bountySizeX/4,bountyRectSizeY*3/5), BountyNPCImage);
 		}
 		
 		
@@ -847,7 +911,8 @@ public class ScoreScript : MonoBehaviour {
 		
 		myStyle.fontSize = 50;
 
-		GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
+		//GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
+
 		//GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
 		GUI.DrawTexture (new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplierImage, ScaleMode.ScaleToFit);
 
@@ -859,20 +924,26 @@ public class ScoreScript : MonoBehaviour {
 				float timeRatio = (Time.time - lastMultiplierTime) / multiplierSliderTime;
 				float tempRatio = (newValue - prevValue) * timeRatio;
 
-				GUI.Box (new Rect (multXOffset, multYOffset+2, ((prevValue + tempRatio) % (float)multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+				//GUI.Box (new Rect (multXOffset, multYOffset+2, ((prevValue + tempRatio) % (float)multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+
+				GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage(((prevValue + tempRatio) % (float)multIncre) / (float)multIncre * (multLength - 4),multLength));
 			}
 			else
 			{
 				multiplierIsChanging = false;
 
-				if( multiplierPoints % multIncre != 0 )
-					GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+				//if( multiplierPoints % multIncre != 0 )
+				//	GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+
+				GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage((multiplierPoints % multIncre) / (float)multIncre * (multLength - 4),multLength));
 			}
 		}
 		else
 		{
-			if( multiplierPoints % multIncre != 0 )
-				GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+			//if( multiplierPoints % multIncre != 0 )
+			//	GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
+
+			GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage((multiplierPoints % multIncre) / (float)multIncre * (multLength - 4),multLength));
 		}
 	}
 	
@@ -983,6 +1054,62 @@ public class ScoreScript : MonoBehaviour {
 
 	}
 
+	// get corresponding image from multiplier points
+	Texture2D getMultiplierBarImage(float num, float total)
+	{
+		//Debug.Log ("num image: " + num);
+		
+		switch((int)Mathf.Round((num/total)*21))
+		{
+		case 0:
+			return bar22;
+		case 1:
+			return bar21;
+		case 2:
+			return bar20;
+		case 3:
+			return bar19;
+		case 4:
+			return bar18;
+		case 5:
+			return bar17;
+		case 6:
+			return bar16;
+		case 7:
+			return bar15;
+		case 8:
+			return bar14;
+		case 9:
+			return bar13;
+		case 10:
+			return bar12;
+		case 11:
+			return bar11;
+		case 12:
+			return bar10;
+		case 13:
+			return bar9;
+		case 14:
+			return bar8;
+		case 15:
+			return bar7;
+		case 16:
+			return bar6;
+		case 17:
+			return bar5;
+		case 18:
+			return bar4;
+		case 19:
+			return bar3;
+		case 20:
+			return bar2;
+		case 21:
+			return bar1;
+		default:
+			return bar22;
+		}
+		
+	}
 
 
 	// add a score
@@ -1224,7 +1351,7 @@ public class ScoreScript : MonoBehaviour {
 		if( BountyNPC != null && BountyNPC.Equals(mess.NPC) )
 		{
 			BountyNPC = null;
-			BountyNPCImage = new Texture2D(1,1);
+			BountyNPCImage = null;//new Texture2D(1,1);
 		}
 	}
 	
@@ -1264,7 +1391,7 @@ public class ScoreScript : MonoBehaviour {
 			npcScore = BOUNTY_EATEN;
 			eatenString = bountyEatenString;
 			BountyNPC = null;
-			BountyNPCImage = new Texture2D(1,1);
+			BountyNPCImage = null;//new Texture2D(1,1);
 		}
 		if( mess.NPC.GetComponent<EnemyAIController>() != null )
 		{
