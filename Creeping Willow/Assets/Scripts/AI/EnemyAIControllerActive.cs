@@ -20,35 +20,13 @@ public class EnemyAIControllerActive : EnemyAIController
 	protected float nextInvestigateTime = 0;
 	//*/
 	
-	new public void Start()
-	{
-		base.Start ();
-		xScale = -xScale;
-	}
-	
-	protected override void NPCOnDestroy()
-	{
-		MessageCenter.Instance.Broadcast (new EnemyNPCDestroyedMessage (gameObject));
-	}
-	
 	protected override void GameUpdate () 
 	{
-		if (grabbed)
-			return;
-		
-		if (angry)
+		if (updateEnemyNPC ())
 		{
-			player = getPlayer();
-			chasePlayer();
 			return;
 		}
-		
-		if (updateNPC ())
-			return;	
-		
-		// if lure is deleted
-		if( nextPath == null ) return;
-		
+
 		if (investigating)
 		{
 			if (leaveTime <= Time.time)
@@ -96,6 +74,7 @@ public class EnemyAIControllerActive : EnemyAIController
 	
 	private void handleSitting()
 	{
+		/*
 		if (treePath) 
 		{
 			nextInvestigateTime = Time.time + sittingTime;
@@ -138,23 +117,11 @@ public class EnemyAIControllerActive : EnemyAIController
 				leaveTime = Time.time + investigateTime;
 			}			
 		}
+		//*/
 	}
-	
-	private void animateCharacter(Vector3 movement, Vector3 moveTo)
-	{
-		determineDirectionChange (transform.position, movement);
-		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		//if (biasPosition.x == 0 && biasPosition.y == 0)
-		if (movement == moveTo && biasPosition.x == 0 && biasPosition.y == 0)
-		{
-			//no movement
-			//flipXScale(!lastDirectionWasRight);
-			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
-		}
-		else
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
-	}
-	
+
+	// Shouldn't need to overwrite
+	/*
 	private void chasePlayer()
 	{
 		rigidbody2D.velocity = Vector2.zero;
@@ -180,7 +147,9 @@ public class EnemyAIControllerActive : EnemyAIController
 			determineDirectionChange(transform.position, movement);
 		}
 	}
-	
+	*/
+
+	/*
 	private void investigate()
 	{
 		if (nextInvestigateTime <= Time.time)
@@ -224,91 +193,19 @@ public class EnemyAIControllerActive : EnemyAIController
 			investigatePath = true;
 			Vector2 position = Random.insideUnitCircle * wanderRadius;
 			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
-			//*/
 		}
-	}
-	
-	public void setStationaryPoint(GameObject panickedNPC)
-	{
-		panickedNPCPosition = panickedNPC.transform.position;
-		panickedNPCPosition = new Vector3 (panickedNPCPosition.x, panickedNPCPosition.y);
-		calledToPoint = true;
-		nextPath = new GameObject ();
-		nextPath.transform.position = panickedNPCPosition;
-		
-		SpriteRenderer[] sceneObjects = FindObjectsOfType<SpriteRenderer>();
-		treeList = new ArrayList ();
-		if (player == null)
-			player = GameObject.Find("Player");
-		
-		treeList.Add (player);
-		
-		foreach (SpriteRenderer sceneObject in sceneObjects)
-		{
-			if (sceneObject.sprite == null)
-				continue;
-			
-			string name = sceneObject.sprite.name;
-			if (name.Equals("cw_tree_2") || name.Equals("cw_tree_3") || name.Equals ("cw_tree_4") || name.Equals("cw_tree_5") || name.Equals("cw_tree_6"))
-			{
-				if (Vector3.Distance(panickedNPCPosition, sceneObject.gameObject.transform.position) < wanderRadius) {
-					treeList.Add (sceneObject.gameObject);
-				}
-			}
-		}
-	}
-	
-	protected override void alert()
-	{
-		if (!angry)
-		{
-			base.alert ();
-			setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
-		}
-	}
-	
-	override protected bool NPCHandleSeeingPlayer()
-	{
-		panic ();
-		return true;
-	}
-	
-	//Used by wander enemy
-	/*
-	override protected GameObject getNextPath()
-	{
-		nextPath = new GameObject ();
-		nextPath.transform.position = panickedNPCPosition;
-		return nextPath;
 	}
 	//*/
-	
-	override protected void panic()
+
+	public void setMovingPath(SubpathScript movePath)
 	{
-		if (!angry)
-		{
-			base.panic ();
-			panicked = false;
-			
-			angry = true;
-		}
+		this.movePath = movePath;
+		nextPath = movePath.getNextPath (null, gameObject);
+		initAxeMan ();
 	}
-	
-	override protected void decrementAlertLevel()
+
+	override protected GameObject getNextPath()
 	{
-		if (!angry)
-			base.decrementAlertLevel();
-	}
-	
-	protected override void OnCollisionEnter2D(Collision2D collision)
-	{
-		base.OnCollisionEnter2D (collision);
-		
-		if (angry && collision.gameObject.tag.Equals(player.tag))
-		{
-			// TODO: It's axe time
-			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
-			MessageCenter.Instance.Broadcast(message);
-		}
+		return movePath.getNextPath (nextPath, gameObject);
 	}
 }

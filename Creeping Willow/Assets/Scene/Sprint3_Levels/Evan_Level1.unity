@@ -2619,6 +2619,14 @@ Prefab:
       propertyPath: critterSpawnTime
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: enemyNPCActive
+      value: 
+      objectReference: {fileID: 100000, guid: 1134c49acb1a1fb4092e0f0e51b9f008, type: 2}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: enemyNPCWander
+      value: 
+      objectReference: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
   m_RootGameObject: {fileID: 1771423460}
@@ -2849,6 +2857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &241093264
 AudioSource:
@@ -6217,6 +6226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   actionSound: {fileID: 0}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   Speed: 40
   Eating: 0
   BodyParts:
@@ -8118,6 +8128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   Speed: 40
   Eating: 0
   BodyParts:
@@ -9014,6 +9025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &546705538
 AudioSource:
@@ -13947,6 +13959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &782311928
 AudioSource:
@@ -15507,6 +15520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &850236914
 AudioSource:
@@ -17021,7 +17035,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &871013887
 Rigidbody2D:
@@ -18303,7 +18318,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &875312767
 Rigidbody2D:
@@ -20521,6 +20537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &977065069
 AudioSource:
@@ -22090,7 +22107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &997798233
 Rigidbody2D:
@@ -23419,6 +23437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1002917929
 AudioSource:
@@ -25830,6 +25849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1010658283
 EdgeCollider2D:
@@ -26824,6 +26844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1094527629
 AudioSource:
@@ -28404,7 +28425,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1117870964
 Rigidbody2D:
@@ -30373,7 +30395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1190658020
 Rigidbody2D:
@@ -31863,6 +31886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1201490606
 AudioSource:
@@ -33696,7 +33720,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1293849171
 Rigidbody2D:
@@ -35679,6 +35704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1417152105
 AudioSource:
@@ -36989,6 +37015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1424735762
 AudioSource:
@@ -40514,6 +40541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1545302630
 AudioSource:
@@ -43224,7 +43252,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1696973095
 Rigidbody2D:
@@ -44584,7 +44613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1702009084
 Rigidbody2D:
@@ -46707,7 +46737,8 @@ MonoBehaviour:
   pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
   stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
   wanderNPC: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
-  enemyNPC: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
+  enemyNPCWander: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
+  enemyNPCActive: {fileID: 100000, guid: 1134c49acb1a1fb4092e0f0e51b9f008, type: 2}
   critterNPC: {fileID: 107086, guid: 7d0da34a69c2f5f499c6c32d1d0ed0eb, type: 2}
   maxNumberOfEachNPC: 1
   spawnTag: Respawn
@@ -46717,6 +46748,8 @@ MonoBehaviour:
   spawnTime: 5
   critterSpawnTime: 10
   isMaze: 0
+  startWithActiveAxeMan: 0
+  spawnAxe: 0
 --- !u!1001 &1774663714
 Prefab:
   m_ObjectHideFlags: 0
@@ -48843,6 +48876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   Speed: 40
   Eating: 0
   BodyParts:
@@ -49824,6 +49858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &2040384504
 AudioSource:
@@ -51429,6 +51464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &2072091286
 AudioSource:
@@ -52990,7 +53026,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 0
-  actionSound: {fileID: 0}
+  actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &2089713432
 Rigidbody2D:
@@ -55189,6 +55226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
+  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &2140823196
 AudioSource:

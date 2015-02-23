@@ -20,35 +20,13 @@ public class EnemyAIControllerWander : EnemyAIController
 	protected float nextInvestigateTime = 0;
 	//*/
 
-	new public void Start()
-	{
-		base.Start ();
-		xScale = -xScale;
-	}
-	
-	protected override void NPCOnDestroy()
-	{
-		MessageCenter.Instance.Broadcast (new EnemyNPCDestroyedMessage (gameObject));
-	}
-	
 	protected override void GameUpdate () 
 	{
-		if (grabbed)
-			return;
-		
-		if (angry)
+		if (updateEnemyNPC ())
 		{
-			player = getPlayer();
-			chasePlayer();
 			return;
 		}
-		
-		if (updateNPC ())
-			return;	
-		
-		// if lure is deleted
-		if( nextPath == null ) return;
-		
+
 		if (investigating)
 		{
 			if (leaveTime <= Time.time)
@@ -94,7 +72,7 @@ public class EnemyAIControllerWander : EnemyAIController
 		}
 	}
 	
-	private void handleSitting()
+	protected override void handleSitting()
 	{
 		if (treePath) 
 		{
@@ -139,49 +117,8 @@ public class EnemyAIControllerWander : EnemyAIController
 			}			
 		}
 	}
-	
-	private void animateCharacter(Vector3 movement, Vector3 moveTo)
-	{
-		determineDirectionChange (transform.position, movement);
-		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		//if (biasPosition.x == 0 && biasPosition.y == 0)
-		if (movement == moveTo && biasPosition.x == 0 && biasPosition.y == 0)
-		{
-			//no movement
-			//flipXScale(!lastDirectionWasRight);
-			//setAnimatorInteger(axeManWalkingKey, (int)AxeManWalkingDirection.STILL);
-		}
-		else
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
-	}
-	
-	private void chasePlayer()
-	{
-		rigidbody2D.velocity = Vector2.zero;
-		Vector3 pathPosition = player.transform.position;
-		Vector3 positionNPC = transform.position;
-		float step = speed * Time.deltaTime;
-		
-		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
-		
-		animateCharacter(movement, pathPosition);
-		
-		Vector3 changeMovement = avoid (Vector3.Normalize(movement - transform.position));
-		
-		if( changeMovement != Vector3.zero )
-		{
-			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
-			transform.position = newPos;
-			determineDirectionChange(transform.position, newPos);
-		}
-		else
-		{
-			transform.position = movement;
-			determineDirectionChange(transform.position, movement);
-		}
-	}
-	
-	private void investigate()
+
+	protected override void investigate()
 	{
 		if (nextInvestigateTime <= Time.time)
 		{
@@ -195,10 +132,10 @@ public class EnemyAIControllerWander : EnemyAIController
 				{
 					if (treeList.Count == 0)
 						break;
-					
+
 					rand = Random.Range(0, treeList.Count);
 					tree = (GameObject)treeList[rand];
-					if (tree.Equals(player) && Vector3.Distance(player.transform.position, panickedNPCPosition) > wanderRadius)
+					if (tree != null && tree.Equals(player) && Vector3.Distance(player.transform.position, panickedNPCPosition) > wanderRadius)
 					{
 						tree = null;
 						treeList.RemoveAt(rand);
@@ -235,71 +172,17 @@ public class EnemyAIControllerWander : EnemyAIController
 		calledToPoint = true;
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
-		
-		SpriteRenderer[] sceneObjects = FindObjectsOfType<SpriteRenderer>();
-		treeList = new ArrayList ();
-		if (player == null)
-			player = GameObject.Find("Player");
-		
-		treeList.Add (player);
-		
-		foreach (SpriteRenderer sceneObject in sceneObjects)
-		{
-			if (sceneObject.sprite == null)
-				continue;
-			
-			string name = sceneObject.sprite.name;
-			if (name.Equals("cw_tree_2") || name.Equals("cw_tree_3") || name.Equals ("cw_tree_4") || name.Equals("cw_tree_5") || name.Equals("cw_tree_6"))
-			{
-				if (Vector3.Distance(panickedNPCPosition, sceneObject.gameObject.transform.position) < wanderRadius) {
-					treeList.Add (sceneObject.gameObject);
-				}
-			}
-		}
+
+		initAxeMan ();
 	}
-	
-	protected override void alert()
-	{
-		if (!angry)
-		{
-			base.alert ();
-			setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
-		}
-	}
-	
-	override protected bool NPCHandleSeeingPlayer()
-	{
-		panic ();
-		return true;
-	}
-	
-	//Used by wander enemy
-	//*
+
 	override protected GameObject getNextPath()
 	{
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
 		return nextPath;
 	}
-	//*/
-	
-	override protected void panic()
-	{
-		if (!angry)
-		{
-			base.panic ();
-			panicked = false;
-			
-			angry = true;
-		}
-	}
-	
-	override protected void decrementAlertLevel()
-	{
-		if (!angry)
-			base.decrementAlertLevel();
-	}
-	
+
 	protected override void OnCollisionEnter2D(Collision2D collision)
 	{
 		base.OnCollisionEnter2D (collision);
