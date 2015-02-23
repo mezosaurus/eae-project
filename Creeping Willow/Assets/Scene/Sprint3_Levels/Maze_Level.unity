@@ -68266,7 +68266,8 @@ MonoBehaviour:
   pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
   stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
   wanderNPC: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
-  enemyNPC: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
+  enemyNPCWander: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
+  enemyNPCActive: {fileID: 100000, guid: 1134c49acb1a1fb4092e0f0e51b9f008, type: 2}
   critterNPC: {fileID: 107086, guid: 7d0da34a69c2f5f499c6c32d1d0ed0eb, type: 2}
   maxNumberOfEachNPC: 9
   spawnTag: Respawn
@@ -68276,6 +68277,9 @@ MonoBehaviour:
   spawnTime: 1
   critterSpawnTime: 2
   isMaze: 1
+  startWithActiveAxeMan: 1
+  spawnAxeWanderDEBUG: 0
+  spawnAxeActiveDEBUG: 0
 --- !u!1001 &1286101833
 Prefab:
   m_ObjectHideFlags: 0
@@ -68493,6 +68497,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
       propertyPath: spawnTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: startWithActiveAxeMan
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

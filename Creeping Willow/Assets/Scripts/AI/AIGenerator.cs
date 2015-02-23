@@ -7,7 +7,8 @@ public class AIGenerator : GameBehavior
 	public GameObject pathNPC;
 	public GameObject stationaryNPC;
 	public GameObject wanderNPC;
-	public GameObject enemyNPC;
+	public GameObject enemyNPCWander;
+	public GameObject enemyNPCActive;
 	public GameObject critterNPC;
 	public int maxNumberOfEachNPC = 1;
 
@@ -18,19 +19,26 @@ public class AIGenerator : GameBehavior
 	public float spawnTime = 5;
 	public float critterSpawnTime = 15;
 	public bool isMaze = false;
+	public bool startWithActiveAxeMan = false;
+	public bool spawnAxeWanderDEBUG = false;
+	public bool spawnAxeActiveDEBUG = false;
 
 	private int numberOfNPCs = 3;	// Decremented to 2 for no wander AI
 	private float lastSpawnTime;
 	private GameObject[] spawnPoints;
 	private GameObject[] critterSpawnPoints;
+	private string skinPrefix = "prefabs/AI/NPCSkinPrefabs/";
 
 	private float lastCritterTime; 
 	private ArrayList stationaryAIList;
 	private ArrayList pathAIList;
 	private ArrayList wanderAIList;
 	private ArrayList enemyAIList;
+	private ArrayList activeEnemyAIList;
 	private ArrayList critterAIList;
 		
+	// Game Functions
+
 	void Start()
 	{
 		spawnPoints = GameObject.FindGameObjectsWithTag(spawnTag);
@@ -40,6 +48,7 @@ public class AIGenerator : GameBehavior
 		pathAIList = new ArrayList ();
 		wanderAIList = new ArrayList ();
 		enemyAIList = new ArrayList ();
+		activeEnemyAIList = new ArrayList ();
 		if (critterSpawnPoints.Length != 0)
 			critterAIList = new ArrayList ();
 
@@ -53,16 +62,16 @@ public class AIGenerator : GameBehavior
 		MessageCenter.Instance.UnregisterListener (MessageType.NPCDestroyed, NPCDestroyListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.NotorietyMaxed, NotorietyMeterListener);
 	}
-	
-	private void NotorietyMeterListener(Message message)
-	{
-		NotorietyMaxedMessage notorietyMessage = message as NotorietyMaxedMessage;
-		createEnemyNPC (notorietyMessage.panickedPosition);
-	}
-	
+
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
+		if (spawnAxeWanderDEBUG)
+		{
+			spawnAxeWanderDEBUG = false;
+			createActiveEnemyNPC();
+		}
+
 		if (lastSpawnTime <= Time.time - spawnTime && isRoomAvailableForNewNPC())
 		{
 			lastSpawnTime = Time.time;
@@ -75,7 +84,7 @@ public class AIGenerator : GameBehavior
 			createCritterNPC();
 		}
 	}
-	
+
 	private void initMap()
 	{
 		// 3 pathing npcs
@@ -102,39 +111,15 @@ public class AIGenerator : GameBehavior
 				newStationary.GetComponent<StationaryAIController> ().setStationaryPoint (bench);
 			}
 		}
-	}
-	
-	bool isRoomAvailableForNewNPC()
-	{
-		if (pathAIList == null) {
-			Debug.Log ("PATH ERROR");
-			return false;
-		}
-		if (stationaryAIList == null) {
-			Debug.Log ("STATIONARY ERROR");
-			return false;
-		}
 
-		if (wanderAIList == null) {
-			Debug.Log ("WANDER ERROR");
-			return false;
+		if (startWithActiveAxeMan)
+		{
+			createActiveEnemyNPC();
 		}
+	}
 
-		if (pathAIList.Count >= maxNumberOfEachNPC
-		    && stationaryAIList.Count >= maxNumberOfEachNPC
-		    && wanderAIList.Count >= maxNumberOfEachNPC
-		    )
-			return false;
-		
-		return true;
-	}
-	
-	Vector2 getRandomSpawnPoint()
-	{
-		int rand = Random.Range(0, spawnPoints.Length);
-		return spawnPoints[rand].transform.position;
-	}
-	
+	// Create NPC Functions
+
 	void createNewNPC()
 	{
 		int rand = Random.Range (0, numberOfNPCs);
@@ -186,7 +171,7 @@ public class AIGenerator : GameBehavior
 	
 	void createPathNPC()
 	{
-		SubpathScript movePath = GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+		SubpathScript movePath = getRandomMovePath();
 		createPathNPC (getRandomSpawnPoint (), movePath);
 	}
 
@@ -198,13 +183,37 @@ public class AIGenerator : GameBehavior
 		controller.setMovingPath(movePath);
 		controller.setInMaze (isMaze);
 
-		if (Random.Range(0,2) == 0)
+		if (isMaze)
 		{
-			loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);
+			switch (Random.Range(0,5))
+			{
+			case 0:
+				loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);
+				break;
+			case 1:
+				loadNPCWithSkin(newNPC, "hottie_skin", NPCSkinType.Hottie);
+				break;
+			case 2:
+				loadNPCWithSkin(newNPC, "mower_skin", NPCSkinType.MowerMan);
+				break;
+			case 3:
+				loadNPCWithSkin(newNPC, "hippie_skin", NPCSkinType.Hippie);
+				break;
+			case 4:
+				loadNPCWithSkin(newNPC, "oldman_skin", NPCSkinType.OldMan);
+				break;
+			}
 		}
 		else
 		{
-			loadNPCWithSkin(newNPC, "hottie_skin", NPCSkinType.Hottie);
+			if (Random.Range(0,2) == 0)
+			{
+				loadNPCWithSkin(newNPC, "bopper_skin", NPCSkinType.Bopper);
+			}
+			else
+			{
+				loadNPCWithSkin(newNPC, "hottie_skin", NPCSkinType.Hottie);
+			}
 		}
 	}
 
@@ -215,6 +224,7 @@ public class AIGenerator : GameBehavior
 		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
 		int rand = Random.Range (0, benches.Length);
 		newNPC.GetComponent<StationaryAIController> ().setStationaryPoint (benches [rand]);
+		loadNPCWithSkin (newNPC, "oldman_skin", NPCSkinType.OldMan);
 	}
 	
 	void createWanderNPC()
@@ -230,15 +240,25 @@ public class AIGenerator : GameBehavior
 		}
 	}
 
+	void createActiveEnemyNPC()
+	{
+		if (activeEnemyAIList.Count > 15)
+			return;
+
+		SubpathScript movePath = getRandomMovePath ();
+		GameObject newNPC = createNPC (this.enemyNPCActive, activeEnemyAIList, movePath.getNextPath(null,null).transform.position);
+		newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (movePath);
+	}
+
 	void createEnemyNPC(Vector3 panickedPosition)
 	{
 		if (enemyAIList.Count > 15)
 			return;
 		
-		GameObject newNPC = createNPC (this.enemyNPC, enemyAIList);
+		GameObject newNPC = createNPC (this.enemyNPCWander, enemyAIList);
 		GameObject panickedPoint = new GameObject ();
 		panickedPoint.transform.position = panickedPosition;
-		newNPC.GetComponent<EnemyAIController> ().setStationaryPoint (panickedPoint);
+		newNPC.GetComponent<EnemyAIControllerWander> ().setStationaryPoint (panickedPoint);
 	}
 
 	void createCritterNPC()
@@ -252,26 +272,71 @@ public class AIGenerator : GameBehavior
 
 	GameObject createNPC(GameObject NPC, ArrayList aiList)
 	{
-		GameObject npc = (GameObject)Instantiate (NPC, getRandomSpawnPoint (), Quaternion.identity);
-		aiList.Add (npc);
-		return npc;
+		return createNPC (NPC, aiList, getRandomSpawnPoint());
 	}
 	
 	GameObject createNPC(GameObject NPC, ArrayList aiList, Vector2 spawnPoint)
 	{
 		GameObject npc = (GameObject)Instantiate (NPC, spawnPoint, Quaternion.identity);
+		npc.transform.SetParent (transform);
 		aiList.Add (npc);
 		return npc;
 	}
+
+	// Helper Functions
+
+	bool isRoomAvailableForNewNPC()
+	{
+		if (pathAIList == null) {
+			Debug.Log ("PATH ERROR");
+			return false;
+		}
+		if (stationaryAIList == null) {
+			Debug.Log ("STATIONARY ERROR");
+			return false;
+		}
 		
+		if (wanderAIList == null) {
+			Debug.Log ("WANDER ERROR");
+			return false;
+		}
+		
+		if (pathAIList.Count >= maxNumberOfEachNPC
+		    && stationaryAIList.Count >= maxNumberOfEachNPC
+		    && wanderAIList.Count >= maxNumberOfEachNPC
+		    )
+			return false;
+		
+		return true;
+	}
+	
+	Vector2 getRandomSpawnPoint()
+	{
+		int rand = Random.Range(0, spawnPoints.Length);
+		return spawnPoints[rand].transform.position;
+	}
+	
+	SubpathScript getRandomMovePath()
+	{
+		return GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
+	}
+
 	void loadNPCWithSkin(GameObject npc, string skinName, NPCSkinType skinType)
 	{
-		string skinLoc = "prefabs/AI/NPCSkinPrefabs/" + skinName;
+		string skinLoc = skinPrefix + skinName;
 		GameObject skin = (GameObject)Instantiate (Resources.Load (skinLoc));
 		npc.GetComponent<SpriteRenderer> ().sprite = skin.GetComponent<SpriteRenderer> ().sprite;
 		npc.GetComponent<Animator> ().runtimeAnimatorController = skin.GetComponent<Animator> ().runtimeAnimatorController;
         npc.GetComponent<AIController>().SkinType = skinType;
 		Destroy (skin);
+	}
+
+	// Listeners
+	
+	private void NotorietyMeterListener(Message message)
+	{
+		NotorietyMaxedMessage notorietyMessage = message as NotorietyMaxedMessage;
+		createEnemyNPC (notorietyMessage.panickedPosition);
 	}
 
 	void NPCDestroyListener(Message message)
@@ -290,13 +355,23 @@ public class AIGenerator : GameBehavior
 			wanderAIList.Remove(NPC);
 		else if (enemyAIList.Contains(NPC)) 
 			enemyAIList.Remove(NPC);
+		else if (activeEnemyAIList.Contains(NPC))
+		{
+			activeEnemyAIList.Remove(NPC);
+
+			// Hyrda Effect (every one that's killed spawns two more)
+			createActiveEnemyNPC();
+			createActiveEnemyNPC();
+		}
 		else if (critterAIList.Contains(NPC))
 		{
 			lastCritterTime = Time.time;
 			critterAIList.Remove(NPC);
 		}
 	}
-	
+
+	// Somewhat dead code
+
 	// For use when updating spawn points to 'gates'
 	float getSpawnXPosition()
 	{

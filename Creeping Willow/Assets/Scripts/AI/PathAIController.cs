@@ -20,7 +20,7 @@ public class PathAIController : AIController
 
 	override protected GameObject getNextPath()
 	{
-		return movePath.getNextPath(null, gameObject);
+		return movePath.getNextPath(gameObject, gameObject);
 	}
 	
 	// Update is called once per frame

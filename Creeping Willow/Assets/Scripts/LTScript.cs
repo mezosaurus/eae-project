@@ -11,7 +11,7 @@ public class LTScript : MonoBehaviour
     {
         this.target = target;
 
-        if (target != null)
+		if (target != null && GlobalGameStateManager.NPCData.ContainsKey(target.GetComponent<AIController>().SkinType))
             offset = GlobalGameStateManager.NPCData[target.GetComponent<AIController>().SkinType].LTOffset;
     }
 
