@@ -109,6 +109,13 @@ public class AIController : GameBehavior
 	int avoidCounter = 0;
 	Vector3 avoidCurrentDirection;
 
+	// NPC Sounds
+	public AudioClip gasp1;
+	public AudioClip gasp2;
+	public AudioClip gasp3;
+	protected ArrayList gasps = new ArrayList();
+	protected bool playGasp = true;
+
 	/*void OnGUI() {
 	int sizeX = 20;
 	int sizeY = 60;
@@ -143,6 +150,11 @@ public class AIController : GameBehavior
 	// Use this for initialization
 	public void Start ()
 	{
+		// Initialize gasp sounds
+		gasps.Add (gasp1);
+		gasps.Add (gasp2);
+		gasps.Add (gasp3);
+
 		enteredMap = false;
 		// Alert Texture
 		alertTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIAlert"));
@@ -519,6 +531,7 @@ public class AIController : GameBehavior
 			alertTexture.renderer.enabled = false;
 			alerted = false;
 			alertLevel = 0;
+			playGasp = true;
 		}
 	}
 
