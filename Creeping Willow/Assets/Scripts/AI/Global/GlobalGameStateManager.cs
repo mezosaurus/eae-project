@@ -76,6 +76,7 @@ public static class GlobalGameStateManager
         AddNPCType(data, NPCSkinType.Hippie, new NPCDataHippie());
         AddNPCType(data, NPCSkinType.MowerMan, new NPCDataMowerMan());
         AddNPCType(data, NPCSkinType.OldMan, new NPCDataOldMan());
+        AddNPCType(data, NPCSkinType.Hottie, new NPCDataHottie());
         AddNPCType(data, NPCSkinType.Critter, new NPCDataSquirrel());
 
         return data;
