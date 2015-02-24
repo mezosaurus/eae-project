@@ -90,6 +90,21 @@ public class EnemyAIControllerWander : EnemyAIController
 				nextInvestigateTime = Time.time + 0.33f;
 			}
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_ACTION);
+			if (hitCounter == 1)
+			{
+				audio.PlayOneShot (hitSound1, 0.8f);
+				hitCounter = 2;
+			}
+			else if (hitCounter == 2)
+			{
+				audio.PlayOneShot (hitSound2, 0.8f);
+				hitCounter = 3;
+			}
+			else
+			{
+				audio.PlayOneShot (hitSound3, 0.8f);
+				hitCounter = 1;
+			}
 		}
 		
 		if (checkingPlayer && nextInvestigateTime <= Time.time)
