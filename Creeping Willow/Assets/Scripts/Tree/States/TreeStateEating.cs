@@ -31,21 +31,20 @@ public class TreeStateEating : TreeState
         Tree.BodyParts.RightLowerForegroundArm.transform.eulerAngles = new Vector3(0f, 0f, npcData.RightLowerArmEndAngle);
 
         // Play chew sound
-        if (Tree.audio.isPlaying) Tree.audio.Stop();
+        //if (Tree.audio.isPlaying) Tree.audio.Stop();
 
         Tree.audio.clip = Tree.Sounds.Chew;
 
         Tree.audio.Play();
 
         timeElapsed = 0f;
-
-        Debug.Log("Entered eating state");
     }
 
     private void Eat()
     {        
         GlobalGameStateManager.SoulConsumedTimer = 3.5f;
 
+        Tree.audio.Stop();
         Tree.audio.clip = Tree.Sounds.SoulConsumed;
         Tree.audio.Play();
 

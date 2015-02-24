@@ -20,6 +20,11 @@ public class ServerMessaging : MonoBehaviour
         {"Bridge_Level", ScoreLevel.OverTroubledWaters},
         {"Maze_Level", ScoreLevel.HallowedLabyrinth}
     };
+
+    private static readonly Dictionary<GameMode, ScoreGameType> gameTypeLookup = new Dictionary<GameMode, ScoreGameType>()
+    {
+        //{GameMode.}
+    };
     
 
     

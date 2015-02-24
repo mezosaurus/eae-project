@@ -29,6 +29,10 @@ public class TreeStateActive : TreeState
         lt2 = (GameObject)GameObject.Instantiate(Tree.Prefabs.LT);
         
         ChangeSpritesToDirection(Vector2.zero);
+
+        /*Tree.audio.clip = Tree.Sounds.Walk;
+        Tree.audio.volume = 0.25f;
+        Tree.audio.loop = true;*/
     }
 
     public override void Update()
@@ -50,6 +54,16 @@ public class TreeStateActive : TreeState
 
             velocity *= Tree.Speed * bonusSpeed * Time.deltaTime;
         }
+
+        /*if(velocity != Vector2.zero)
+        {
+            if(!Tree.audio.isPlaying)
+                Tree.audio.Play();
+        }
+        else
+        {  
+            Tree.audio.Stop();
+        }*/
 
         Tree.rigidbody2D.velocity = velocity;
 
@@ -243,6 +257,10 @@ public class TreeStateActive : TreeState
     public override void Leave()
     {
         Tree.rigidbody2D.velocity = Vector2.zero;
+
+        /*Tree.audio.Stop();
+        Tree.audio.volume = 1f;
+        Tree.audio.loop = false;*/
 
         GameObject.Destroy(lt1);
         GameObject.Destroy(lt2);
