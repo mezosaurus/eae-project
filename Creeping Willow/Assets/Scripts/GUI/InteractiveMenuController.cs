@@ -161,7 +161,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( scoresButtons[ 0 ].gameObject );
 		
 		// Set the next camera position
-		cameraPosition = new Vector3( 320, 0, -120 );
+		cameraPosition = new Vector3( 540, 10, -123 );
 		currentPosition = MenuPosition.Scores;
 
 		elapsedZoomTime = 0.0f;
