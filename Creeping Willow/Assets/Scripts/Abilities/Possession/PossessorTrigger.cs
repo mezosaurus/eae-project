@@ -37,8 +37,7 @@ public class PossessorTrigger : GameBehavior {
 					PossessableItem item = possessable as PossessableItem;
 					item.possessionTexture.renderer.enabled = false;
 					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
-					SpriteRenderer face = this.gameObject.GetComponent<SpriteRenderer>();
-					face.color = new Color(1f, 1f, 1f, 0f);
+
 
 					Color color = Color.white;
 					if(colors.TryGetValue("opaque", out color)){
@@ -46,7 +45,9 @@ public class PossessorTrigger : GameBehavior {
 					}
 					Debug.Log ("playing sound");
 				}
+				Destroy(this.parent);
 				Destroy(this.gameObject);
+
 			}
 		}
 	}

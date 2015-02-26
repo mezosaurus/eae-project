@@ -20,7 +20,8 @@ public class Possessor : GameBehavior {
 		colliding = false;
 		possessing = false;
 		objectToPossess = null;
-		triggerObject = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessionClue"));
+		triggerObject = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessorTrigger"));
+		triggerObject.GetComponent<PossessorTrigger> ().parent = this.gameObject;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 
