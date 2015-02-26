@@ -16,7 +16,6 @@ GameObject:
   - 199: {fileID: 19900000}
   - 198: {fileID: 19800000}
   - 95: {fileID: 9506302}
-  - 82: {fileID: 8257014}
   m_Layer: 8
   m_Name: WanderNPC
   m_TagString: NPC
@@ -73,64 +72,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .5, y: .349999994}
   m_Center: {x: 0, y: -.100000001}
---- !u!82 &8257014
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
 --- !u!95 &9506302
 Animator:
   serializedVersion: 3
@@ -159,15 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTag: Respawn
   npcTag: NPC
-  lureTag: Lure
-  SkinType: 0
-  IsTaggedByTree: 0
-  isCritterType: 0
   lurePower: 3
   speed: .300000012
   scaredCooldownSeconds: 6
   panicCooldownSeconds: 2
-  lureCooldownSeconds: 2
   detectLevel: .230000004
   visionDistance: 2.5
   visionAngleSize: 120
@@ -179,17 +115,12 @@ MonoBehaviour:
   scared: 0
   lured: 0
   killSelf: 0
-  numPathStart: 0
-  numStationaryStart: 0
   alertDecrement: .0299999993
   emptyAlert: {fileID: 0}
   fullAlert: {fileID: 0}
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
-  gasp1: {fileID: 8300000, guid: 9df9bced205b0774bb37cce377cec3c5, type: 3}
-  gasp2: {fileID: 8300000, guid: a2a6602589f633a419c5a77367816d42, type: 3}
-  gasp3: {fileID: 8300000, guid: 0b6f231c80294d94cb5ec8221b0b0f63, type: 3}
   waitTime: 3
   wanderTag: Wander
 --- !u!198 &19800000
