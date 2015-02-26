@@ -234,7 +234,7 @@ public class InteractiveMenuController : MonoBehaviour
 			}
 		}
 		// The user wants to go back
-		else if( !axisBusy && ( Input.GetAxisRaw( "Back" ) != 0 || Input.GetAxisRaw( "B" ) != 0 ) )
+		else if( !axisBusy && ( Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "B" ) ) )
 		{
 			if( currentPosition == MenuPosition.MainGate )
 				Application.Quit();
