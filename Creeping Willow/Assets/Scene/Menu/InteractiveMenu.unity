@@ -1210,6 +1210,18 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 1.25
       objectReference: {fileID: 0}
+    - target: {fileID: 11428604, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11428606, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
   m_RootGameObject: {fileID: 1891219175}
@@ -2674,19 +2686,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 405
+      value: 623.099976
       objectReference: {fileID: 0}
     - target: {fileID: 22479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -30
+      value: -21.7000008
       objectReference: {fileID: 0}
     - target: {fileID: 22479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 22479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 22479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_AnchorMin.x
@@ -3392,11 +3404,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 128604, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_Name
-      value: ScoresButton
+      value: CreditsButton
       objectReference: {fileID: 0}
     - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_Text
-      value: Scores
+      value: Credits
       objectReference: {fileID: 0}
     - target: {fileID: 11428604, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4930,6 +4942,67 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 58094716}
   m_GameObject: {fileID: 714097037}
+--- !u!1 &728235598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 728235599}
+  - 222: {fileID: 728235601}
+  - 114: {fileID: 728235600}
+  m_Layer: 0
+  m_Name: Credits
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &728235599
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 728235598}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: .0654999986, y: .0654999986, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1546425334}
+  m_RootOrder: 3
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 544.400024, y: 11.5}
+  m_SizeDelta: {x: 3839.99976, y: 2160}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &728235600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 728235598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f46249b8e0aaa0b499e218029a1c4a8e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &728235601
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 728235598}
 --- !u!1001 &732047664
 Prefab:
   m_ObjectHideFlags: 0
@@ -6826,7 +6899,7 @@ RectTransform:
   - {fileID: 1783898572}
   - {fileID: 1891219176}
   m_Father: {fileID: 1546425334}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: 2}
@@ -8111,7 +8184,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Scores
+  m_Text: Credits
 --- !u!222 &1120173529
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9518,7 +9591,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 83200430}
   m_GameObject: {fileID: 1301808279}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -10246,7 +10319,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1424133841}
   m_Layer: 0
-  m_Name: ScoresButtons
+  m_Name: CreditsButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10264,7 +10337,7 @@ RectTransform:
   m_Children:
   - {fileID: 1438685030}
   m_Father: {fileID: 1546425334}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 8.11999989, y: 0}
@@ -10517,8 +10590,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 405, y: -30}
-  m_SizeDelta: {x: 40, y: 20}
+  m_AnchoredPosition: {x: 623.099976, y: -21.7000008}
+  m_SizeDelta: {x: 50, y: 25}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1438685031
 MonoBehaviour:
@@ -11166,6 +11239,7 @@ RectTransform:
   - {fileID: 1948390776}
   - {fileID: 1995632022}
   - {fileID: 1475818324}
+  - {fileID: 728235599}
   - {fileID: 987276270}
   - {fileID: 1424133841}
   - {fileID: 2061354287}
@@ -11782,7 +11856,6 @@ MonoBehaviour:
   mainButtons:
   - {fileID: 814784420}
   - {fileID: 1783898573}
-  - {fileID: 1891219177}
   levelButtons:
   - {fileID: 1637448556}
   - {fileID: 1709138489}
@@ -13644,7 +13717,7 @@ GameObject:
   - 114: {fileID: 1783898574}
   - 114: {fileID: 1783898573}
   m_Layer: 5
-  m_Name: ScoresButton
+  m_Name: CreditsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14482,7 +14555,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 83200430}
   m_GameObject: {fileID: 1891219175}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -14537,7 +14610,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 83200430}
   m_GameObject: {fileID: 1891219175}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -16021,7 +16094,7 @@ RectTransform:
   m_Children:
   - {fileID: 1580929596}
   m_Father: {fileID: 1546425334}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -8, y: 0}

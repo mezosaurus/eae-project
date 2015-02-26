@@ -161,7 +161,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( scoresButtons[ 0 ].gameObject );
 		
 		// Set the next camera position
-		cameraPosition = new Vector3( 320, 0, -120 );
+		cameraPosition = new Vector3( 540, 10, -123 );
 		currentPosition = MenuPosition.Scores;
 
 		elapsedZoomTime = 0.0f;
@@ -234,7 +234,7 @@ public class InteractiveMenuController : MonoBehaviour
 			}
 		}
 		// The user wants to go back
-		else if( !axisBusy && ( Input.GetAxisRaw( "Back" ) != 0 || Input.GetAxisRaw( "B" ) != 0 ) )
+		else if( !axisBusy && ( Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "B" ) ) )
 		{
 			if( currentPosition == MenuPosition.MainGate )
 				Application.Quit();

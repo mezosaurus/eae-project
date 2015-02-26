@@ -64,7 +64,7 @@ public class SplashScreen : MonoBehaviour
 	{
 		timer += Time.deltaTime;
 
-		if( !axisBusy && ( Input.GetMouseButtonDown( 0 ) || Input.GetAxisRaw( "A" ) != 0 ) )
+		if( !axisBusy && ( Input.GetMouseButtonDown( 0 ) || Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "A" ) ) )
 		{
 			axisBusy = true;
 

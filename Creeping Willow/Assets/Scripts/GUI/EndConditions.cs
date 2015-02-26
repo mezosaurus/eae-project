@@ -4,6 +4,7 @@ using System.Collections;
 public enum GameMode
 {
 	Survival,
+	Marked,
 	Feast,
 	Timed,
 }
@@ -27,8 +28,11 @@ public class EndConditions : GameBehavior
 	void Start()
 	{
 		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
+
 		if( levelLoader.modeName == "Survival" )
 			gameMode = GameMode.Survival;
+		if( levelLoader.modeName == "Marked" )
+			gameMode = GameMode.Marked;
 		else if( levelLoader.modeName == "Feast" )
 			gameMode = GameMode.Feast;
 		else if( levelLoader.modeName == "Timed" )
