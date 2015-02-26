@@ -198,7 +198,7 @@ public class InteractiveMenuController : MonoBehaviour
 			EventSystem.current.SetSelectedGameObject( null );
 		}
 		// Check for controller movement
-		else if( !axisBusy && Input.GetAxis( "LSX" ) != 0 )
+		else if( !axisBusy && ( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "MenuX" ) != 0 ) )
 		{
 			Screen.showCursor = false;
 			Screen.lockCursor = true;
