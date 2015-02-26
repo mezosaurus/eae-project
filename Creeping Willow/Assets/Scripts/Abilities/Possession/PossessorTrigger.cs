@@ -8,30 +8,31 @@ public class PossessorTrigger : GameBehavior {
 	protected AbilityType type;
 	private GameObject objectToPossess;
 	public Texture2D possessionControls;
+	public GameObject parent;
 	// Use this for initialization
 	protected virtual void Start () {
 		colors.Add("transparent", new Color(1f, 1f, 1f, .5f));
 		colors.Add("opaque", new Color(1f, 1f, 1f, 1f));
 		objectToPossess = null;
-		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 
 	// Update is called once per frame
 	protected override void GameUpdate () {
+		transform.position = parent.transform.position;
 		HandleInput();
 	}
 
 	protected virtual void HandleInput(){
-			Vector3 prevPosition = transform.position;
-			Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
-			velocity = velocity * speed * Time.deltaTime;
-			transform.position += (Vector3) velocity;
+//			Vector3 prevPosition = transform.position;
+//			Vector2 velocity = new Vector2(Input.GetAxis("LSX"), Input.GetAxis("LSY"));
+//			velocity = velocity * speed * Time.deltaTime;
+//			transform.position += (Vector3) velocity;
 
 		if (Input.GetButtonDown("A")) {
 			if(objectToPossess != null){
 				Possessable possessable = objectToPossess.GetComponent<Possessable>();
 				possessable.possess();
-				MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+				//MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
 				if(possessable is PossessableItem){
 					PossessableItem item = possessable as PossessableItem;
 					item.possessionTexture.renderer.enabled = false;

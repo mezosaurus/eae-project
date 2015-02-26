@@ -11,6 +11,7 @@ public class Possessor : GameBehavior {
 	protected AbilityType type;
 	private GameObject objectToPossess;
 	public Texture2D possessionControls;
+	private GameObject triggerObject;
 	// Use this for initialization
 	protected virtual void Start () {
 		colors.Add("transparent", new Color(1f, 1f, 1f, .5f));
@@ -19,6 +20,7 @@ public class Possessor : GameBehavior {
 		colliding = false;
 		possessing = false;
 		objectToPossess = null;
+		triggerObject = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessionClue"));
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 	}
 
@@ -33,81 +35,81 @@ public class Possessor : GameBehavior {
 			velocity = velocity * speed * Time.deltaTime;
 			transform.position += (Vector3) velocity;
 
-		if (Input.GetButtonDown("A")) {
-			if(objectToPossess != null){
-				Possessable possessable = objectToPossess.GetComponent<Possessable>();
-				possessable.possess();
-				MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
-				if(possessable is PossessableItem){
-					PossessableItem item = possessable as PossessableItem;
-					item.possessionTexture.renderer.enabled = false;
-					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
-					SpriteRenderer face = this.gameObject.GetComponent<SpriteRenderer>();
-					face.color = new Color(1f, 1f, 1f, 0f);
+//		if (Input.GetButtonDown("A")) {
+//			if(objectToPossess != null){
+//				Possessable possessable = objectToPossess.GetComponent<Possessable>();
+//				possessable.possess();
+//				MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+//				if(possessable is PossessableItem){
+//					PossessableItem item = possessable as PossessableItem;
+//					item.possessionTexture.renderer.enabled = false;
+//					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+//					SpriteRenderer face = this.gameObject.GetComponent<SpriteRenderer>();
+//					face.color = new Color(1f, 1f, 1f, 0f);
 
-					Color color = Color.white;
-					if(colors.TryGetValue("opaque", out color)){
-						renderer.color = color;
-					}
-					Debug.Log ("playing sound");
-				}
-				Destroy(this.gameObject);
-			}
-		}
+//					Color color = Color.white;
+//					if(colors.TryGetValue("opaque", out color)){
+//						renderer.color = color;
+//					}
+//					Debug.Log ("playing sound");
+//				}
+//				Destroy(this.gameObject);
+//			}
+//		}
 	}
 
-	void OnTriggerEnter2D(Collider2D collider){
-		if(collider.gameObject.GetComponent<Possessable>() != null){
-			if(objectToPossess == null){
-				objectToPossess = collider.gameObject;
-				Possessable possessable = objectToPossess.GetComponent<Possessable>();
-				if(possessable is PossessableItem){
-					PossessableItem item = possessable as PossessableItem;
-					item.possessionTexture.renderer.enabled = true;
-					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
-					Color color = Color.white;
-					if(colors.TryGetValue("transparent", out color)){
-						renderer.color = color;
-					}
-				}
-			}
-		}
-	}
+//	void OnTriggerEnter2D(Collider2D collider){
+//		if(collider.gameObject.GetComponent<Possessable>() != null){
+//			if(objectToPossess == null){
+//				objectToPossess = collider.gameObject;
+//				Possessable possessable = objectToPossess.GetComponent<Possessable>();
+//				if(possessable is PossessableItem){
+//					PossessableItem item = possessable as PossessableItem;
+//					item.possessionTexture.renderer.enabled = true;
+//					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+//					Color color = Color.white;
+//					if(colors.TryGetValue("transparent", out color)){
+//						renderer.color = color;
+//					}
+//				}
+//			}
+//		}
+//	}
 	
-	void OnTriggerExit2D(Collider2D collider){
-		if(collider.gameObject.Equals(objectToPossess)){
-			Possessable possessable = objectToPossess.GetComponent<Possessable>();
-			if(possessable is PossessableItem){
-				SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
-				PossessableItem item = possessable as PossessableItem;
-				item.possessionTexture.renderer.enabled = false;
-				Color color = Color.white;
-				if(colors.TryGetValue("opaque", out color)){
-					renderer.color = color;
-				}
-			}
-			objectToPossess = null;
-		}
-	}
+//	void OnTriggerExit2D(Collider2D collider){
+//		if(collider.gameObject.Equals(objectToPossess)){
+//			Possessable possessable = objectToPossess.GetComponent<Possessable>();
+//			if(possessable is PossessableItem){
+//				SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+//				PossessableItem item = possessable as PossessableItem;
+//				item.possessionTexture.renderer.enabled = false;
+//				Color color = Color.white;
+//				if(colors.TryGetValue("opaque", out color)){
+//					renderer.color = color;
+//				}
+//			}
+//			objectToPossess = null;
+//		}
+//	}
 
-	void ExitPossession(Message message){
-		ExitPossession();
-	}
+//	void ExitPossession(Message message){
+//		ExitPossession();
+//	}
 
-	protected virtual void ExitPossession(){
-		GameObject player = GameObject.Find ("Player");
-		player.GetComponent<PlayerAbilityScript_v2>().abilityInUse = false;
-		if (objectToPossess != null) {
-			SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
-			Color color = Color.white;
-			if(colors.TryGetValue("opaque", out color)){
-				renderer.color = color;
-			}
-		}
-		MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
-		MessageCenter.Instance.UnregisterListener (MessageType.EnemyNPCInvestigatingPlayer, ExitPossession);
-		Destroy(this.gameObject);
-	}
+//	protected virtual void ExitPossession(){
+//		GameObject player = GameObject.Find ("Player");
+//		player.GetComponent<PlayerAbilityScript_v2>().abilityInUse = false;
+//		if (objectToPossess != null) {
+//			SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+//			Color color = Color.white;
+//			if(colors.TryGetValue("opaque", out color)){
+//				renderer.color = color;
+//			}
+//		}
+//		MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+//		MessageCenter.Instance.UnregisterListener (MessageType.EnemyNPCInvestigatingPlayer, ExitPossession);
+//		Destroy(this.gameObject);
+//	}
 
 	void OnGUI(){
 		float width = 197/2;
