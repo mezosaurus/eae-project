@@ -116,8 +116,6 @@ public class Possessor : GameBehavior {
 		float top = 0;
 		float right = Screen.width - 50;
 		if (possessing) {
-			Debug.Log("here");
-			Debug.Log(possessionControls);
 			GUI.DrawTexture( new Rect(right - width,top + height, width, height), possessionControls, ScaleMode.ScaleToFit );
 		}
 	}
