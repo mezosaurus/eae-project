@@ -20,14 +20,22 @@ public class ServerMessaging : MonoBehaviour
         {"Bridge_Level", ScoreLevel.OverTroubledWaters},
         {"Maze_Level", ScoreLevel.HallowedLabyrinth}
     };
+
+    private static readonly Dictionary<GameMode, ScoreGameType> gameTypeLookup = new Dictionary<GameMode, ScoreGameType>()
+    {
+        {GameMode.Feast, ScoreGameType.Marked},
+        {GameMode.Survival, ScoreGameType.SoulSurvivor},
+        {GameMode.Timed, ScoreGameType.Timed}
+    };
     
 
     
-    public static void UploadScoreToServer(string name, UInt32 score, ScoreGameType gameType, string levelName)
+    public static void UploadScoreToServer(string name, UInt32 score, GameMode gameMode, string levelName)
     {
         if (name.Length != 3) return;
         try
         {
+            ScoreGameType gameType = gameTypeLookup[gameMode];
             ScoreLevel level = levelLookup[levelName];
             
             byte[] buffer = new byte[9];

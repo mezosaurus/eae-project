@@ -342,7 +342,13 @@ public class ScoreScript : MonoBehaviour {
 						MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 
                         // Upload the high score to the server
-                        ServerMessaging.UploadScoreToServer(initials, (System.UInt32)_score, ScoreGameType.SoulSurvivor, Application.loadedLevelName);
+                        GameMode gameType = GameMode.Survival;
+
+                        EndConditions ec = GameObject.FindObjectOfType<EndConditions>();
+
+                        if (ec != null) gameType = ec.gameMode;
+
+                        ServerMessaging.UploadScoreToServer(initials, (System.UInt32)_score, gameType, Application.loadedLevelName);
 					}
 				}
 			}

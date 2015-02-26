@@ -1042,9 +1042,9 @@ AudioSource:
   m_GameObject: {fileID: 175926691}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 52a6d999c5229ea4e9fb4c706a92d0a9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: dc3bb33d1d8e0214bad22f2104bce233, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: .0599999987
+  m_Volume: .200000003
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5926,7 +5926,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1329878726}
   m_GameObject: {fileID: 889610828}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61242014fdac4b247beab2edf5fb2cb8, type: 3}
   m_Name: 
@@ -10565,7 +10565,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1329878726}
   m_GameObject: {fileID: 1533896969}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
@@ -10574,9 +10574,9 @@ MonoBehaviour:
   y: 385
   width: 120
   height: 60
-  defaultImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
-  hoverImage: {fileID: 2800000, guid: 6c1bb5df0ac552f45baf2444b7b38528, type: 3}
-  downClickImage: {fileID: 2800000, guid: 19734350c6ca5774194336c389cfb669, type: 3}
+  defaultImage: {fileID: 2800000, guid: 9bd5020f4d7ef0a49b682ad903a303b7, type: 3}
+  hoverImage: {fileID: 2800000, guid: 9e5e125fedf518e4db38bba8d824b918, type: 3}
+  downClickImage: {fileID: 2800000, guid: 9bd5020f4d7ef0a49b682ad903a303b7, type: 3}
   text: Menu
   font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
   scene: InteractiveMenu
@@ -12483,7 +12483,8 @@ MonoBehaviour:
   pathNPC: {fileID: 100000, guid: a7100f39e9d96c1409fe1436de4dc832, type: 2}
   stationaryNPC: {fileID: 100000, guid: 0b688e165df5bb3449d128a0f7be22cb, type: 2}
   wanderNPC: {fileID: 100000, guid: 4a026dcfe8c063a45ae0d44804267dbf, type: 2}
-  enemyNPC: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
+  enemyNPCWander: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
+  enemyNPCActive: {fileID: 100000, guid: 1134c49acb1a1fb4092e0f0e51b9f008, type: 2}
   critterNPC: {fileID: 107086, guid: 7d0da34a69c2f5f499c6c32d1d0ed0eb, type: 2}
   maxNumberOfEachNPC: 5
   spawnTag: Respawn
@@ -12493,6 +12494,9 @@ MonoBehaviour:
   spawnTime: 5
   critterSpawnTime: 2
   isMaze: 0
+  startWithActiveAxeMan: 0
+  spawnAxeWanderDEBUG: 0
+  spawnAxeActiveDEBUG: 0
 --- !u!1001 &1774663714
 Prefab:
   m_ObjectHideFlags: 0
@@ -12757,11 +12761,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1897359437}
-  - 114: {fileID: 1897359436}
-  - 114: {fileID: 1897359435}
   - 114: {fileID: 1897359434}
   - 114: {fileID: 1897359433}
-  - 114: {fileID: 1897359432}
   - 114: {fileID: 1897359431}
   m_Layer: 0
   m_Name: LevelGUI
@@ -12773,30 +12774,7 @@ GameObject:
 --- !u!114 &1897359431
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400010, guid: 25339d73221062946b64e720c3069606,
-    type: 2}
-  m_PrefabInternal: {fileID: 107091247}
-  m_GameObject: {fileID: 1897359430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36f158883d0691943b603902a3cfd788, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WinConditionsRequired: 1
-  TargetNPC: {fileID: 0}
-  UseTargetNPC: 0
-  NumNPCsEaten: 5
-  UseNPCsEaten: 1
-  LossConditionsRequired: 1
-  UsePlayerDied: 1
-  MaxNPCsPanicked: 5
-  UseMaxNPCsPanicked: 0
-  TimeOutIsLoss: 0
-  UseTimerOut: 1
---- !u!114 &1897359432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400008, guid: 25339d73221062946b64e720c3069606,
+  m_PrefabParentObject: {fileID: 11477902, guid: 25339d73221062946b64e720c3069606,
     type: 2}
   m_PrefabInternal: {fileID: 107091247}
   m_GameObject: {fileID: 1897359430}
@@ -12805,8 +12783,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c123a7cea88ed647a4c7d79b47105f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notorietyMax: 100
-  axemanHeadTexture: {fileID: 2800000, guid: 87afa330a5521504da52bac5ee3562f7, type: 3}
+  notorietyMax: 75
+  axemanHeadTexture: {fileID: 2800000, guid: ba7d52548efade9429825ce3f25575f3, type: 3}
+  bar1: {fileID: 2800000, guid: 011404c289f42104dbdc307f4a898ead, type: 3}
+  bar2: {fileID: 2800000, guid: 8dc7b9e19c077a84b8ff72c6bcda0c76, type: 3}
+  bar3: {fileID: 2800000, guid: bc7fd0a93a743cd4f9a7ba58da874646, type: 3}
+  bar4: {fileID: 2800000, guid: 8cd5ab8191198034da6f2c283c13b99a, type: 3}
+  bar5: {fileID: 2800000, guid: 7169d07d590802c45894c424a8421f56, type: 3}
+  bar6: {fileID: 2800000, guid: 3b9ccb7ccc9e37c44b694ccb532ce476, type: 3}
+  bar7: {fileID: 2800000, guid: 4dad9563e236e7c45b0c4b4cefe6727a, type: 3}
+  bar8: {fileID: 2800000, guid: 5fc64e222c134b94aa73290cf82632ee, type: 3}
+  bar9: {fileID: 2800000, guid: b0c64aced56e5f94f870bc9820d69e5f, type: 3}
+  bar10: {fileID: 2800000, guid: b0b6e01f1256fbb46bdd924b40f573fb, type: 3}
+  bar11: {fileID: 2800000, guid: b362f44c2b44e8544a3b7687593b853b, type: 3}
+  bar12: {fileID: 2800000, guid: 514470c77787f7440ba976738e75e09d, type: 3}
+  bar13: {fileID: 2800000, guid: a2ce86091d7e33940b135717f2d5f2a7, type: 3}
+  bar14: {fileID: 2800000, guid: 6a9b8741d47a3a14da67a22cbd111b56, type: 3}
+  bar15: {fileID: 2800000, guid: bc07662f49716a8488d70fc3c79ae2a9, type: 3}
+  bar16: {fileID: 2800000, guid: 36df11943caed68489cfedfc3da6601c, type: 3}
+  bar17: {fileID: 2800000, guid: 943e047218a7ce046ae0f0c3afc8df9d, type: 3}
+  bar18: {fileID: 2800000, guid: 272fc771674dc48458972d4f8b260cb5, type: 3}
+  bar19: {fileID: 2800000, guid: 8b4995a060782b047afbb6f147433548, type: 3}
+  bar20: {fileID: 2800000, guid: a5eed3b09c50a774b9c77dfed7885eba, type: 3}
+  bar21: {fileID: 2800000, guid: 9a5c71e7fc502f742a9a872d9a66ed3e, type: 3}
+  bar22: {fileID: 2800000, guid: fe64f5abf0c5f4c459f6940234674d15, type: 3}
 --- !u!114 &1897359433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12839,54 +12839,6 @@ MonoBehaviour:
   buttonImage: {fileID: 2800000, guid: a1ff98706552344488c6a9d970eedaa1, type: 3}
   sound: {fileID: 8300000, guid: 57e5d70f222a9d44cb2a03f388fdd3ba, type: 3}
   TutorialImages: []
---- !u!114 &1897359435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400002, guid: 25339d73221062946b64e720c3069606,
-    type: 2}
-  m_PrefabInternal: {fileID: 107091247}
-  m_GameObject: {fileID: 1897359430}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 125168a9251b5b144b99612f98071aff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ability1Texture: {fileID: 2800000, guid: c35d511d9050e3147a8a7b62ecfdb234, type: 3}
-  ability2Texture: {fileID: 2800000, guid: d529573ad845a664782781a00fd7ebf2, type: 3}
-  ability3Texture: {fileID: 2800000, guid: 62ef0ec84fea3b748858223de01cd512, type: 3}
-  ability4Texture: {fileID: 2800000, guid: 62c262b7a1013f046a7364e3138ccdee, type: 3}
-  coverTexture: {fileID: 2800000, guid: 447fa0b4c73cb8a42802bf81e1f27f2f, type: 3}
-  button1Texture: {fileID: 2800000, guid: 87afa330a5521504da52bac5ee3562f7, type: 3}
-  button2Texture: {fileID: 2800000, guid: 3c33e9654756ece408e8fbc64e8bea95, type: 3}
-  button3Texture: {fileID: 2800000, guid: 21be6a01f7c6eca4591204d3505b4924, type: 3}
-  button4Texture: {fileID: 2800000, guid: 793ed7f0afeb4ad4588a1dc395029aae, type: 3}
-  left: 10
-  top: 600
-  width: 400
-  height: 100
-  ability1Type: 0
-  ability2Type: 1
-  ability3Type: 2
-  ability4Type: 3
---- !u!114 &1897359436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 25339d73221062946b64e720c3069606,
-    type: 2}
-  m_PrefabInternal: {fileID: 107091247}
-  m_GameObject: {fileID: 1897359430}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e94a6b244ee769f41b74453cc62b61d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cycleTexture: {fileID: 2800000, guid: fc698dd3d58e31f4e97da0411c22a0b1, type: 3}
-  coverTexture: {fileID: 2800000, guid: 7a1ba2a6a5b50594eac0c64a9e267cfa, type: 3}
-  limitTime: 0
-  totalTime: 0
-  dayLength: 30
-  startingAngle: 90
-  endingAngle: 0
 --- !u!4 &1897359437
 Transform:
   m_ObjectHideFlags: 0

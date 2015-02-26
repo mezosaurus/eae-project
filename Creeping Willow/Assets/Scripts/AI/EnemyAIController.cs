@@ -18,6 +18,12 @@ public class EnemyAIController : AIController
 
 	protected float nextInvestigateTime = 0;
 
+	// Hit sound vars
+	public AudioClip hitSound1;
+	public AudioClip hitSound2;
+	public AudioClip hitSound3;
+	protected int hitCounter = 1;
+
 	new public void Start()
 	{
 		base.Start ();
