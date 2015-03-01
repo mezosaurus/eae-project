@@ -65,7 +65,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Size: {x: .600000024, y: .400000006}
@@ -126,9 +126,15 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
+  gasp1: {fileID: 0}
+  gasp2: {fileID: 0}
+  gasp3: {fileID: 0}
   investigateTime: 60
   sittingTime: 5
   wanderRadius: 5
+  hitSound1: {fileID: 0}
+  hitSound2: {fileID: 0}
+  hitSound3: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

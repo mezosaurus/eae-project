@@ -66,10 +66,16 @@ public class AIGenerator : GameBehavior
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
+		if (spawnAxeActiveDEBUG)
+		{
+			spawnAxeActiveDEBUG = false;
+			createActiveEnemyNPC();
+		}
+
 		if (spawnAxeWanderDEBUG)
 		{
 			spawnAxeWanderDEBUG = false;
-			createActiveEnemyNPC();
+			createWanderEnemyNPC(Vector3.zero);			
 		}
 
 		if (lastSpawnTime <= Time.time - spawnTime && isRoomAvailableForNewNPC())
@@ -250,7 +256,7 @@ public class AIGenerator : GameBehavior
 		newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (movePath);
 	}
 
-	void createEnemyNPC(Vector3 panickedPosition)
+	void createWanderEnemyNPC(Vector3 panickedPosition)
 	{
 		if (enemyAIList.Count > 15)
 			return;
@@ -336,7 +342,7 @@ public class AIGenerator : GameBehavior
 	private void NotorietyMeterListener(Message message)
 	{
 		NotorietyMaxedMessage notorietyMessage = message as NotorietyMaxedMessage;
-		createEnemyNPC (notorietyMessage.panickedPosition);
+		createWanderEnemyNPC (notorietyMessage.panickedPosition);
 	}
 
 	void NPCDestroyListener(Message message)

@@ -119,7 +119,7 @@ public class PathAIController : AIController
 	protected override void alert()
 	{
 		base.alert ();
-		if (playGasp)
+		if (playGasp && false)
 		{
 			int rand = Random.Range (0, gasps.Count);
 			AudioClip gasp = (AudioClip)gasps[rand];

@@ -150,7 +150,9 @@ public class EnemyAIControllerWander : EnemyAIController
 
 					rand = Random.Range(0, treeList.Count);
 					tree = (GameObject)treeList[rand];
-					if (tree != null && tree.Equals(player) && Vector3.Distance(player.transform.position, panickedNPCPosition) > wanderRadius)
+
+					// Check if player tree is outside range
+					if (tree != null && tree.tag.Equals("Player") && Vector3.Distance(tree.transform.position, panickedNPCPosition) > wanderRadius)
 					{
 						tree = null;
 						treeList.RemoveAt(rand);
@@ -161,12 +163,14 @@ public class EnemyAIControllerWander : EnemyAIController
 				{
 					Vector3 nextTreePosition = tree.transform.position;
 					treeList.RemoveAt(rand);	// Remove the tree so it won't be chopped again
+					// Set offset for tree so axe man can actually cut it
+					// TODO: Set x offset to left if coming from left, to right if coming from right
+					// TODO: x offset check (if tree.x > transform.position.x) coming from left else coming from right
 					nextPath.transform.position = new Vector3(nextTreePosition.x, nextTreePosition.y - transform.renderer.bounds.size.y/5);
 					treePath = true;
 					investigatePath = false;
-					checkingPlayer = tree.Equals(player);
-					Debug.Log (checkingPlayer);
-					
+					checkingPlayer = tree.Equals(getPlayer());
+
 					return;
 				}
 			}
