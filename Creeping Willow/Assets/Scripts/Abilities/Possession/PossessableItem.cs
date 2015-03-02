@@ -102,14 +102,14 @@ public abstract class PossessableItem : Possessable {
 			}
 		}*/
 		base.HandleInput();
-		if (Input.GetAxis("LT") > 0.2f) {
+		if (Input.GetAxis("LT") > 0.2f || Input.GetKeyDown(KeyCode.LeftBracket)) {
 			if(Active){
 				if(!scaring){
 					useAbility(true);
 					scaring = true;
 				}
 			}
-		}else if (Input.GetAxis("RT") > 0.2f) {
+		}else if (Input.GetAxis("RT") > 0.2f || Input.GetKeyDown (KeyCode.RightBracket)) {
 			if(Active){
 				if(!luring){
 					useAbility(false);

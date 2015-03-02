@@ -27,7 +27,7 @@ public class AIGenerator : GameBehavior
 	private float lastSpawnTime;
 	private GameObject[] spawnPoints;
 	private GameObject[] critterSpawnPoints;
-	private string skinPrefix = "prefabs/AI/NPCSkinPrefabs/";
+	private static string skinPrefix = "prefabs/AI/NPCSkinPrefabs/";
 
 	private float lastCritterTime; 
 	private ArrayList stationaryAIList;
@@ -327,7 +327,7 @@ public class AIGenerator : GameBehavior
 		return GameObject.Find (pathTag).GetComponent<PathingScript> ().getRandomPath().GetComponent<SubpathScript>();
 	}
 
-	void loadNPCWithSkin(GameObject npc, string skinName, NPCSkinType skinType)
+	public static void loadNPCWithSkin(GameObject npc, string skinName, NPCSkinType skinType)
 	{
 		string skinLoc = skinPrefix + skinName;
 		GameObject skin = (GameObject)Instantiate (Resources.Load (skinLoc));
