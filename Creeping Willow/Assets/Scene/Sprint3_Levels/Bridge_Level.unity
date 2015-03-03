@@ -1497,7 +1497,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &5247489
 EdgeCollider2D:
@@ -2938,7 +2939,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &22652414
 EdgeCollider2D:
@@ -3244,7 +3246,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &48115123
 Prefab:
@@ -4189,7 +4191,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c664f101088090547ab2d281991efc80, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5cc4c8c85522e1549afb3c2e2fa420c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &100030794
 GameObject:
@@ -5738,7 +5740,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ce8b2d4732771e144a7e5ea37f7e1bd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: da9bac4af8683d14f9130215850a4423, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &174982513
 Prefab:
@@ -5812,6 +5814,7 @@ GameObject:
   - 114: {fileID: 175926698}
   - 114: {fileID: 175926699}
   - 82: {fileID: 175926700}
+  - 82: {fileID: 175926702}
   - 114: {fileID: 175926701}
   m_Layer: 0
   m_Name: Main Camera
@@ -5935,7 +5938,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: dc3bb33d1d8e0214bad22f2104bce233, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: .0599999987
+  m_Volume: .150000006
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6034,6 +6037,64 @@ MonoBehaviour:
   bar20: {fileID: 2800000, guid: ca8eb6cbb3a9caa4caf3a08aa264e99d, type: 3}
   bar21: {fileID: 2800000, guid: 696feaf6bd943444392d85049de33af8, type: 3}
   bar22: {fileID: 2800000, guid: 0a4f6cc7162e9d34c9dbe05bfda3d9d8, type: 3}
+--- !u!82 &175926702
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 175926691}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 52a6d999c5229ea4e9fb4c706a92d0a9, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: .200000003
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &176878830
 GameObject:
   m_ObjectHideFlags: 0
@@ -8050,7 +8111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &232251092
 EdgeCollider2D:
@@ -8373,7 +8435,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &241093264
 AudioSource:
@@ -9763,7 +9826,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 469a243c1656b434b83f3d3b3168dfb4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f51f3210fd0d0a14ebaaf2042d0d0cf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &253709955
 Prefab:
@@ -10018,7 +10081,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &263841258
 GameObject:
@@ -10845,7 +10908,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &304823402
 Prefab:
@@ -12677,7 +12740,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &340073227
 EdgeCollider2D:
@@ -13166,6 +13230,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 359909150}
   - 212: {fileID: 359909149}
+  - 68: {fileID: 359909151}
   m_Layer: 0
   m_Name: Tent1
   m_TagString: Untagged
@@ -13204,10 +13269,26 @@ Transform:
   m_GameObject: {fileID: 359909148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -21.8899994, y: 9.27999973, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_LocalScale: {x: .300000012, y: .300000012, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
+--- !u!68 &359909151
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6801908, guid: 847c08397750d43eeae87f4145637d57,
+    type: 2}
+  m_PrefabInternal: {fileID: 790504690}
+  m_GameObject: {fileID: 359909148}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Points:
+  - {x: -1.73826849, y: -.667034745}
+  - {x: .453516632, y: .670588791}
+  - {x: 1.7721684, y: -.346045494}
+  - {x: -.314776093, y: -1.68616927}
+  - {x: -1.73031485, y: -.6503582}
 --- !u!1 &365799177
 GameObject:
   m_ObjectHideFlags: 0
@@ -13257,7 +13338,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d7fed60e35835ec458a591b9a0a4e9d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3dd99d10e81fe842a05014b744aed85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &365965658
 GameObject:
@@ -15004,7 +15085,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &395752723
 EdgeCollider2D:
@@ -16490,7 +16572,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &401650180
 EdgeCollider2D:
@@ -18173,7 +18256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &426379543
 EdgeCollider2D:
@@ -19170,7 +19254,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1020885f5861b6d4facdb59fb87d7d02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7171a26872d03e045b0ac6b2415f3493, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &479336084
 Prefab:
@@ -20696,7 +20780,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &499109804
 EdgeCollider2D:
@@ -22175,7 +22260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &508426048
 EdgeCollider2D:
@@ -23724,7 +23810,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &523008991
 EdgeCollider2D:
@@ -23972,7 +24059,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1020885f5861b6d4facdb59fb87d7d02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7171a26872d03e045b0ac6b2415f3493, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &528069783
 Prefab:
@@ -24067,7 +24154,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c664f101088090547ab2d281991efc80, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5cc4c8c85522e1549afb3c2e2fa420c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &532520389
 GameObject:
@@ -24516,7 +24603,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &546705538
 AudioSource:
@@ -27399,7 +27487,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &561923844
 EdgeCollider2D:
@@ -27909,7 +27998,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1020885f5861b6d4facdb59fb87d7d02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7171a26872d03e045b0ac6b2415f3493, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &586674984
 GameObject:
@@ -29171,7 +29260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &586709522
 EdgeCollider2D:
@@ -31268,7 +31358,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &634108937
 EdgeCollider2D:
@@ -31563,7 +31654,7 @@ Transform:
   m_GameObject: {fileID: 645179566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.71000004, y: 4.26999998, z: 0}
-  m_LocalScale: {x: .494436681, y: .494436681, z: .494436681}
+  m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
@@ -31684,7 +31775,7 @@ GameObject:
 --- !u!114 &649654231
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11477902, guid: 25339d73221062946b64e720c3069606,
+  m_PrefabParentObject: {fileID: 11400008, guid: 25339d73221062946b64e720c3069606,
     type: 2}
   m_PrefabInternal: {fileID: 754950216}
   m_GameObject: {fileID: 649654230}
@@ -31693,7 +31784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c123a7cea88ed647a4c7d79b47105f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notorietyMax: 75
+  notorietyMax: 100
   axemanHeadTexture: {fileID: 2800000, guid: ba7d52548efade9429825ce3f25575f3, type: 3}
   bar1: {fileID: 2800000, guid: 011404c289f42104dbdc307f4a898ead, type: 3}
   bar2: {fileID: 2800000, guid: 8dc7b9e19c077a84b8ff72c6bcda0c76, type: 3}
@@ -33099,7 +33190,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ce8b2d4732771e144a7e5ea37f7e1bd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: da9bac4af8683d14f9130215850a4423, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &705326891
 GameObject:
@@ -34561,7 +34652,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &718227673
 EdgeCollider2D:
@@ -34718,7 +34810,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 469a243c1656b434b83f3d3b3168dfb4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f51f3210fd0d0a14ebaaf2042d0d0cf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &721916850
 Prefab:
@@ -36079,7 +36171,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d7fed60e35835ec458a591b9a0a4e9d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3dd99d10e81fe842a05014b744aed85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &770682662
 Prefab:
@@ -36391,7 +36483,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &782311928
 AudioSource:
@@ -39173,7 +39266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &812554401
 EdgeCollider2D:
@@ -39263,7 +39357,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 469a243c1656b434b83f3d3b3168dfb4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f51f3210fd0d0a14ebaaf2042d0d0cf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &818084860
 Prefab:
@@ -40650,7 +40744,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &822989198
 EdgeCollider2D:
@@ -41316,7 +41411,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &850236914
 AudioSource:
@@ -44219,7 +44315,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &867823127
 EdgeCollider2D:
@@ -44859,7 +44956,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 469a243c1656b434b83f3d3b3168dfb4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f51f3210fd0d0a14ebaaf2042d0d0cf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &903309906
 Prefab:
@@ -46039,7 +46136,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ce8b2d4732771e144a7e5ea37f7e1bd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: da9bac4af8683d14f9130215850a4423, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &952719382
 Prefab:
@@ -46641,7 +46738,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &977065069
 AudioSource:
@@ -48198,7 +48296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1002917929
 AudioSource:
@@ -50610,7 +50709,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1010658283
 EdgeCollider2D:
@@ -53062,7 +53162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1076504915
 EdgeCollider2D:
@@ -53370,7 +53471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1094527629
 AudioSource:
@@ -55039,7 +55141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1117870964
 Rigidbody2D:
@@ -57617,7 +57720,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1128139344
 EdgeCollider2D:
@@ -58259,7 +58363,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 469a243c1656b434b83f3d3b3168dfb4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f51f3210fd0d0a14ebaaf2042d0d0cf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1175169847
 GameObject:
@@ -58978,7 +59082,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1201490606
 AudioSource:
@@ -60472,7 +60577,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c664f101088090547ab2d281991efc80, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5cc4c8c85522e1549afb3c2e2fa420c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1218755927
 GameObject:
@@ -61094,7 +61199,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1249037437
 GameObject:
@@ -62305,7 +62410,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1249037444
 EdgeCollider2D:
@@ -63326,7 +63432,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1314131206
 GameObject:
@@ -64707,7 +64813,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1317954209
 EdgeCollider2D:
@@ -64908,7 +65015,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1020885f5861b6d4facdb59fb87d7d02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7171a26872d03e045b0ac6b2415f3493, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1331613680
 GameObject:
@@ -67549,7 +67656,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1414819517
 EdgeCollider2D:
@@ -67906,7 +68014,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1417152105
 AudioSource:
@@ -69256,7 +69365,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1424735762
 AudioSource:
@@ -70815,7 +70925,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d7fed60e35835ec458a591b9a0a4e9d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3dd99d10e81fe842a05014b744aed85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1442677131
 GameObject:
@@ -71741,7 +71851,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d7fed60e35835ec458a591b9a0a4e9d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3dd99d10e81fe842a05014b744aed85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1487483903
 GameObject:
@@ -71792,7 +71902,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1488833605
 GameObject:
@@ -72824,7 +72934,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &1545302630
 AudioSource:
@@ -75355,7 +75466,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d7fed60e35835ec458a591b9a0a4e9d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3dd99d10e81fe842a05014b744aed85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &1570663504
 Prefab:
@@ -77455,7 +77566,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1660222491
 GameObject:
@@ -78300,7 +78411,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1020885f5861b6d4facdb59fb87d7d02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7171a26872d03e045b0ac6b2415f3493, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1691761585
 GameObject:
@@ -79989,7 +80100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1711956934
 EdgeCollider2D:
@@ -80995,7 +81107,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d7fed60e35835ec458a591b9a0a4e9d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3dd99d10e81fe842a05014b744aed85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1751389433
 GameObject:
@@ -81472,6 +81584,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1787938963}
   - 212: {fileID: 1787938962}
+  - 68: {fileID: 1787938964}
   m_Layer: 0
   m_Name: Tent1
   m_TagString: Untagged
@@ -81510,10 +81623,26 @@ Transform:
   m_GameObject: {fileID: 1787938961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -23.7600002, y: 9.51000023, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_LocalScale: {x: .300000012, y: .300000012, z: .5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
+--- !u!68 &1787938964
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6801908, guid: 847c08397750d43eeae87f4145637d57,
+    type: 2}
+  m_PrefabInternal: {fileID: 2109790797}
+  m_GameObject: {fileID: 1787938961}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Points:
+  - {x: -1.73826849, y: -.667034745}
+  - {x: .453516632, y: .670588791}
+  - {x: 1.7721684, y: -.346045494}
+  - {x: -.314776093, y: -1.68616927}
+  - {x: -1.73031485, y: -.6503582}
 --- !u!1 &1788248254
 GameObject:
   m_ObjectHideFlags: 0
@@ -81714,7 +81843,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1798365782
 GameObject:
@@ -83440,7 +83569,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1833289863
 EdgeCollider2D:
@@ -85091,7 +85221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1864800354
 EdgeCollider2D:
@@ -87041,7 +87172,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &1906774497
 EdgeCollider2D:
@@ -87619,7 +87751,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &1947445480
 Prefab:
@@ -88970,7 +89102,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1020885f5861b6d4facdb59fb87d7d02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7171a26872d03e045b0ac6b2415f3493, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &2007248967
 Prefab:
@@ -89121,7 +89253,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53f33b481c54a64993254647345259e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c82c7c8ddbc95fe41ba1e7d6a90eda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2019274650
 GameObject:
@@ -90518,7 +90650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &2025413324
 EdgeCollider2D:
@@ -90871,7 +91004,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &2040384504
 AudioSource:
@@ -92067,7 +92201,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4081728647
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1020885f5861b6d4facdb59fb87d7d02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7171a26872d03e045b0ac6b2415f3493, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2046130006
 GameObject:
@@ -92614,7 +92748,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: 82149bf52f8ab174a8c097e205fd9775, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &2072091286
 AudioSource:
@@ -95923,7 +96058,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &2117614631
 EdgeCollider2D:
@@ -96738,7 +96874,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: e44d57346bbd9014c84c98dc8bc4a2ae, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!82 &2140823196
 AudioSource:
@@ -98037,7 +98174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   actionSound: {fileID: 0}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 0}
+  exitSound: {fileID: 0}
   Speed: 40
   Eating: 0
   BodyParts:
@@ -98083,8 +98221,9 @@ MonoBehaviour:
       - {fileID: 2800000, guid: b7b0b7fe3201a47468f307a95a6ed53c, type: 3}
   Sounds:
     Music: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
-    Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
-    SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
+    Chew: {fileID: 8300000, guid: 87840c5becb0e644198a017fe373840d, type: 3}
+    SoulConsumed: {fileID: 8300000, guid: 327fc382e9cbf9a44a4339bd37536078, type: 3}
+    Walk: {fileID: 0}
   Prefabs:
     LT: {fileID: 106830, guid: 3bcadc3bba60ce54d95f60b0c7246bb5, type: 2}
     ThumbStick: {fileID: 159668, guid: 10c984281b83ab841b7c7ce64c529a8b, type: 2}
@@ -99496,7 +99635,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!68 &2145319705
 EdgeCollider2D:

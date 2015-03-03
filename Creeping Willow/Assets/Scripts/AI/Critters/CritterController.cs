@@ -20,6 +20,10 @@ public class CritterController : AIController {
 	private Vector2 spawnPosition;
 	private bool isOnPath;
 
+	// critter sounds
+	public AudioClip idleSound;
+	public AudioClip walkSound;
+
 	new void Start()
 	{
 		//Debug.Log ("start");
@@ -78,6 +82,7 @@ public class CritterController : AIController {
 		if (biasPosition.x == 0 && biasPosition.y == 0)
 		{
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			audio.PlayOneShot (idleSound, 0.7f);
 		}
 		else if (biasPosition.y >= 0)
 		{
@@ -93,11 +98,13 @@ public class CritterController : AIController {
 			Vector3 newPos = Vector3.MoveTowards(transform.position,changeMovement,step);
 			determineDirectionChange(transform.position, newPos);
 			transform.position = newPos;
+			audio.PlayOneShot (walkSound, 0.7f);
 		}
 		else
 		{
 			determineDirectionChange(transform.position, movement);
 			transform.position = movement;
+			audio.PlayOneShot (walkSound, 0.7f);
 		}
 		
 		if (movement == new Vector3(pathPosition.x, pathPosition.y) && !lured)

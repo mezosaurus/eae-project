@@ -91,13 +91,6 @@ public class StationaryAIController : AIController
 	protected override void alert()
 	{
 		base.alert ();
-		if (playGasp && false)
-		{
-			int rand = Random.Range (0, gasps.Count);
-			AudioClip gasp = (AudioClip)gasps[rand];
-			audio.PlayOneShot (gasp, 0.8f);
-			playGasp = false;
-		}
 		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
 	}
 

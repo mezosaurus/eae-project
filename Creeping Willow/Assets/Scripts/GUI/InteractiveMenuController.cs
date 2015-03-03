@@ -19,7 +19,6 @@ public class InteractiveMenuController : MonoBehaviour
 	public Button[] modeButtons;
 	public Button[] scoresButtons;
 	public Button[] optionsButtons;
-	public AudioClip clickSound;
 	public Texture2D cursorImage;
 	public GameObject camera;
 	public GameObject gateLeft;
@@ -38,6 +37,12 @@ public class InteractiveMenuController : MonoBehaviour
 	private LevelLoader levelLoader;
 	private string levelName;
 
+	// menu sounds
+	public AudioClip clickSound;
+	public AudioClip gateSound;
+	public AudioClip levelSound;
+	private bool playGateSound = true;
+
 	void Awake()
 	{
 		axisBusy = false;
@@ -45,8 +50,8 @@ public class InteractiveMenuController : MonoBehaviour
 		if( clickSound )
 		{
 			usesSound = true;
-			clickAudio = gameObject.AddComponent<AudioSource>();
-			clickAudio.clip = clickSound;
+			//clickAudio = gameObject.AddComponent<AudioSource>();
+			//clickAudio.clip = clickSound;
 		}
 
 		if( mainButtons.Length <= 0 )
@@ -84,6 +89,7 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void GoToMainMenu()
 	{
+		playGateSound = true;
 		// Get rid of all other buttons
 		DisableAllButtons();
 
@@ -107,6 +113,11 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void GoToLevelSelect()
 	{
+		if (playGateSound) 
+		{
+			camera.audio.PlayOneShot (gateSound, 0.8f);
+			playGateSound = false;
+		}
 		// Get rid of all other buttons
 		DisableAllButtons();
 
@@ -130,6 +141,7 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void GoToModeSelect()
 	{
+		camera.audio.PlayOneShot (levelSound, 0.8f);
 		// Get rid of all other buttons
 		DisableAllButtons();
 		

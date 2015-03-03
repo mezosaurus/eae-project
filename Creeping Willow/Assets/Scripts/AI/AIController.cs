@@ -542,6 +542,14 @@ public class AIController : GameBehavior
 
 		alertTexture.renderer.enabled = true;
 		alerted = true;
+		if (playGasp)
+		{
+			Debug.Log("play gasp sound");
+			int rand = Random.Range (0, gasps.Count);
+			AudioClip gasp = (AudioClip)gasps[rand];
+			audio.PlayOneShot (gasp, 0.8f);
+			playGasp = false;
+		}
 		broadcastAlertLevelChanged (AlertLevelType.Alert);
 		Vector3 direction = getPlayer ().transform.position - gameObject.transform.position;
 		if (direction.x > 0)

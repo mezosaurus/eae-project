@@ -10,7 +10,8 @@ public abstract class Possessable : GameBehavior {
 	protected bool acting = false;
 	protected bool needToSend = false;
 	public AudioClip actionSound;
-	public AudioClip possessSound;
+	public AudioClip enterSound;
+	public AudioClip exitSound;
 	protected Dictionary<string, Color> colors = new Dictionary<string, Color>();
 
 	protected virtual void Start(){
@@ -47,14 +48,13 @@ public abstract class Possessable : GameBehavior {
 	}
 
 	public virtual void possess(){
-		audio.Stop();
-		audio.clip = possessSound;
-		audio.Play();
+		audio.PlayOneShot (enterSound, 0.7f);
 	}
 
 	public virtual void exorcise(){
-			Active = false;
-			Instantiate(Resources.Load("Particles/soulsmoke"), transform.position, Quaternion.identity);
+		audio.PlayOneShot (exitSound, 0.7f);
+		Active = false;
+		Instantiate(Resources.Load("Particles/soulsmoke"), transform.position, Quaternion.identity);
 	}
 
 }

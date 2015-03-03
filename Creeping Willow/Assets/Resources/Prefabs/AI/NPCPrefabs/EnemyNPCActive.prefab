@@ -14,6 +14,7 @@ GameObject:
   - 212: {fileID: 21200000}
   - 95: {fileID: 9500000}
   - 58: {fileID: 5800000}
+  - 82: {fileID: 8216900}
   m_Layer: 8
   m_Name: EnemyNPCActive
   m_TagString: NPC
@@ -70,6 +71,64 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .600000024, y: .400000006}
   m_Center: {x: -.100000001, y: -.300000012}
+--- !u!82 &8216900
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -126,9 +185,15 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
+  gasp1: {fileID: 0}
+  gasp2: {fileID: 0}
+  gasp3: {fileID: 0}
   investigateTime: 60
   sittingTime: 5
   wanderRadius: 5
+  hitSound1: {fileID: 8300000, guid: ddf6b91ee65cfb54ca01090f82bb1dfb, type: 3}
+  hitSound2: {fileID: 8300000, guid: 502d42b088b7bf14395f805e53b0dea3, type: 3}
+  hitSound3: {fileID: 8300000, guid: f8dbc99db1af97a4eaf6a04d30b521eb, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

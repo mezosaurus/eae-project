@@ -921,6 +921,7 @@ GameObject:
   - 114: {fileID: 175926698}
   - 114: {fileID: 175926699}
   - 82: {fileID: 175926700}
+  - 82: {fileID: 175926702}
   - 114: {fileID: 175926701}
   m_Layer: 0
   m_Name: Main Camera
@@ -1044,7 +1045,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: dc3bb33d1d8e0214bad22f2104bce233, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: .200000003
+  m_Volume: .150000006
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1143,6 +1144,64 @@ MonoBehaviour:
   bar20: {fileID: 2800000, guid: ca8eb6cbb3a9caa4caf3a08aa264e99d, type: 3}
   bar21: {fileID: 2800000, guid: 696feaf6bd943444392d85049de33af8, type: 3}
   bar22: {fileID: 2800000, guid: 0a4f6cc7162e9d34c9dbe05bfda3d9d8, type: 3}
+--- !u!82 &175926702
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 175926691}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 52a6d999c5229ea4e9fb4c706a92d0a9, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: .200000003
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &176878830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3359,7 +3418,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &871013887
 Rigidbody2D:
@@ -4669,7 +4729,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &875312767
 Rigidbody2D:
@@ -5926,7 +5987,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1329878726}
   m_GameObject: {fileID: 889610828}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61242014fdac4b247beab2edf5fb2cb8, type: 3}
   m_Name: 
@@ -6766,7 +6827,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1190658020
 Rigidbody2D:
@@ -8279,7 +8341,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1293849171
 Rigidbody2D:
@@ -10565,7 +10628,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1329878726}
   m_GameObject: {fileID: 1533896969}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08baa05100869e8409da9205001507c2, type: 3}
   m_Name: 
@@ -10948,7 +11011,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &1696973095
 Rigidbody2D:
@@ -12774,7 +12838,7 @@ GameObject:
 --- !u!114 &1897359431
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11477902, guid: 25339d73221062946b64e720c3069606,
+  m_PrefabParentObject: {fileID: 11400008, guid: 25339d73221062946b64e720c3069606,
     type: 2}
   m_PrefabInternal: {fileID: 107091247}
   m_GameObject: {fileID: 1897359430}
@@ -12783,7 +12847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c123a7cea88ed647a4c7d79b47105f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notorietyMax: 75
+  notorietyMax: 100
   axemanHeadTexture: {fileID: 2800000, guid: ba7d52548efade9429825ce3f25575f3, type: 3}
   bar1: {fileID: 2800000, guid: 011404c289f42104dbdc307f4a898ead, type: 3}
   bar2: {fileID: 2800000, guid: 8dc7b9e19c077a84b8ff72c6bcda0c76, type: 3}
@@ -13916,7 +13980,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 8300000, guid: fb105fa87fce8924986a2516daff9289, type: 3}
-  possessSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
 --- !u!50 &2089713432
 Rigidbody2D:
