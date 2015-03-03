@@ -98,13 +98,11 @@ public class CritterController : AIController {
 			Vector3 newPos = Vector3.MoveTowards(transform.position,changeMovement,step);
 			determineDirectionChange(transform.position, newPos);
 			transform.position = newPos;
-			audio.PlayOneShot (walkSound, 0.7f);
 		}
 		else
 		{
 			determineDirectionChange(transform.position, movement);
 			transform.position = movement;
-			audio.PlayOneShot (walkSound, 0.7f);
 		}
 		
 		if (movement == new Vector3(pathPosition.x, pathPosition.y) && !lured)
