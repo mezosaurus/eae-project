@@ -22,13 +22,11 @@ public class EnemyAIControllerWander : EnemyAIController
 
 	protected override void GameUpdate () 
 	{
-		Debug.Log ("Update");
 		if (updateEnemyNPC ())
 		{
 			return;
 		}
 
-		Debug.Log ("Investigating");
 		if (investigating)
 		{
 			if (leaveTime <= Time.time)
@@ -40,11 +38,9 @@ public class EnemyAIControllerWander : EnemyAIController
 					calledToPoint = false;
 					Destroy(nextPath);
 				}
-				Debug.Log ("Getting leaving path");
 				nextPath = getLeavingPath();
 			}
 
-			Debug.Log ("Calling Investigate");
 			investigate();
 		}
 		
@@ -54,12 +50,9 @@ public class EnemyAIControllerWander : EnemyAIController
 		
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
-		Debug.Log ("Animate Character");
 		animateCharacter(movement, pathPosition);
 		
-		//Vector3 changeMovement = avoid (direction);
-
-		Vector3 changeMovement = Vector3.zero;
+		Vector3 changeMovement = avoid (direction);
 
 		if( changeMovement != Vector3.zero )
 		{
@@ -69,16 +62,13 @@ public class EnemyAIControllerWander : EnemyAIController
 		}
 		else
 		{
-			Debug.Log ("Updating Position");
 			transform.position = movement;
 			determineDirectionChange(transform.position, movement);
 		}
 		
 		if (movement == pathPosition)
 		{
-			Debug.Log ("Handle Sitting");
 			handleSitting();
-			Debug.Log ("Done Handle Sitting");
 		}
 	}
 	
@@ -124,7 +114,6 @@ public class EnemyAIControllerWander : EnemyAIController
 		
 		if (investigatePath)
 		{
-			Debug.Log("Investigate Path");
 			nextInvestigateTime = Time.time + sittingTime;
 			investigating = true;
 			investigatePath = false;
@@ -146,24 +135,18 @@ public class EnemyAIControllerWander : EnemyAIController
 
 	protected override void investigate()
 	{
-		Debug.Log ("In Investigate: " + nextInvestigateTime + "\t" + Time.time);
 		if (nextInvestigateTime <= Time.time)
 		{
-			Debug.Log ("New Investigate");
 			investigating = false;
 			if (Random.value > 0.5)
 			{
 				GameObject tree = null;
 				int rand = 0;
 
-				Debug.Log ("Looking for tree");
 				while(tree == null)
 				{
-					Debug.Log ("Loop: " + treeList.Count);
 					if (treeList.Count == 0)
 						break;
-					if (treeList.Count == 1)
-						Debug.Log ("Debugging here");
 
 					rand = Random.Range(0, treeList.Count);
 					tree = (GameObject)treeList[rand];
@@ -182,10 +165,8 @@ public class EnemyAIControllerWander : EnemyAIController
 					}
 				}
 
-				Debug.Log ("Done looping");
 				if (tree != null)
 				{
-					Debug.Log ("Valid Tree: " + tree);
 					Vector3 nextTreePosition = tree.transform.position;
 					treeList.RemoveAt(rand);	// Remove the tree so it won't be chopped again
 					// Set offset for tree so axe man can actually cut it
@@ -195,15 +176,10 @@ public class EnemyAIControllerWander : EnemyAIController
 					treePath = true;
 					investigatePath = false;
 					checkingPlayer = tree.Equals(getPlayer());
-					if (checkingPlayer)
-					{
-						Debug.Log ("Checking Player");
-					}
 
 					return;
 				}
 			}
-			Debug.Log ("done Rand");			
 			//*
 			treePath = false;
 			investigatePath = true;
@@ -240,6 +216,21 @@ public class EnemyAIControllerWander : EnemyAIController
 			// TODO: It's axe time
 			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
 			MessageCenter.Instance.Broadcast(message);
+			Debug.Log ("Kill Player Message Sent");
 		}
+	}
+
+	// To use in case avoid doesn't get better.
+	protected override void OnTriggerStay2D(Collider2D other)
+	{
+		/*
+		Vector3 pos = other.gameObject.transform.position;
+		if (angry && other.tag.Equals("Player") && Vector3.Distance(pos, transform.position) < wanderRadius/4)
+		{
+			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
+			MessageCenter.Instance.Broadcast(message);
+			Debug.Log ("Kill Player Message Sent");
+		}
+		//*/
 	}
 }
