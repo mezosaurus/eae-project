@@ -1472,6 +1472,11 @@ public class ScoreScript : MonoBehaviour {
 		
 		// used to convert from sprite sheet to current sprite
 		Sprite sprite = BountyNPC.GetComponent<SpriteRenderer> ().sprite;
+		if (sprite == null)
+		{
+			Debug.Log ("Something Broke here: " + this.GetType ().Name);
+			return;
+		}
 		Color[] pixels = sprite.texture.GetPixels (
 			(int)sprite.textureRect.x, 
 			(int)sprite.textureRect.y, 

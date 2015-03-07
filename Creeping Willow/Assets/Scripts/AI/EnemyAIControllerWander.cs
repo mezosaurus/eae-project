@@ -22,11 +22,13 @@ public class EnemyAIControllerWander : EnemyAIController
 
 	protected override void GameUpdate () 
 	{
+		Debug.Log ("Update");
 		if (updateEnemyNPC ())
 		{
 			return;
 		}
 
+		Debug.Log ("Investigating");
 		if (investigating)
 		{
 			if (leaveTime <= Time.time)
@@ -38,9 +40,11 @@ public class EnemyAIControllerWander : EnemyAIController
 					calledToPoint = false;
 					Destroy(nextPath);
 				}
+				Debug.Log ("Getting leaving path");
 				nextPath = getLeavingPath();
 			}
-			
+
+			Debug.Log ("Calling Investigate");
 			investigate();
 		}
 		
@@ -50,10 +54,13 @@ public class EnemyAIControllerWander : EnemyAIController
 		
 		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
+		Debug.Log ("Animate Character");
 		animateCharacter(movement, pathPosition);
 		
-		Vector3 changeMovement = avoid (direction);
-		
+		//Vector3 changeMovement = avoid (direction);
+
+		Vector3 changeMovement = Vector3.zero;
+
 		if( changeMovement != Vector3.zero )
 		{
 			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
@@ -62,13 +69,16 @@ public class EnemyAIControllerWander : EnemyAIController
 		}
 		else
 		{
+			Debug.Log ("Updating Position");
 			transform.position = movement;
 			determineDirectionChange(transform.position, movement);
 		}
 		
 		if (movement == pathPosition)
 		{
+			Debug.Log ("Handle Sitting");
 			handleSitting();
+			Debug.Log ("Done Handle Sitting");
 		}
 	}
 	
@@ -92,17 +102,17 @@ public class EnemyAIControllerWander : EnemyAIController
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_ACTION);
 			if (hitCounter == 1)
 			{
-				audio.PlayOneShot (hitSound1, 0.8f);
+				//audio.PlayOneShot (hitSound1, 0.8f);
 				hitCounter = 2;
 			}
 			else if (hitCounter == 2)
 			{
-				audio.PlayOneShot (hitSound2, 0.8f);
+				//audio.PlayOneShot (hitSound2, 0.8f);
 				hitCounter = 3;
 			}
 			else
 			{
-				audio.PlayOneShot (hitSound3, 0.8f);
+				//audio.PlayOneShot (hitSound3, 0.8f);
 				hitCounter = 1;
 			}
 		}
@@ -114,6 +124,7 @@ public class EnemyAIControllerWander : EnemyAIController
 		
 		if (investigatePath)
 		{
+			Debug.Log("Investigate Path");
 			nextInvestigateTime = Time.time + sittingTime;
 			investigating = true;
 			investigatePath = false;
@@ -135,21 +146,33 @@ public class EnemyAIControllerWander : EnemyAIController
 
 	protected override void investigate()
 	{
+		Debug.Log ("In Investigate: " + nextInvestigateTime + "\t" + Time.time);
 		if (nextInvestigateTime <= Time.time)
 		{
+			Debug.Log ("New Investigate");
 			investigating = false;
 			if (Random.value > 0.5)
 			{
 				GameObject tree = null;
 				int rand = 0;
-				
+
+				Debug.Log ("Looking for tree");
 				while(tree == null)
 				{
+					Debug.Log ("Loop: " + treeList.Count);
 					if (treeList.Count == 0)
 						break;
+					if (treeList.Count == 1)
+						Debug.Log ("Debugging here");
 
 					rand = Random.Range(0, treeList.Count);
 					tree = (GameObject)treeList[rand];
+
+					if (tree == null && treeList.Count == 1)
+					{
+						treeList.RemoveAt(rand);
+						break;
+					}
 
 					// Check if player tree is outside range
 					if (tree != null && tree.tag.Equals("Player") && Vector3.Distance(tree.transform.position, panickedNPCPosition) > wanderRadius)
@@ -158,9 +181,11 @@ public class EnemyAIControllerWander : EnemyAIController
 						treeList.RemoveAt(rand);
 					}
 				}
-				
+
+				Debug.Log ("Done looping");
 				if (tree != null)
 				{
+					Debug.Log ("Valid Tree: " + tree);
 					Vector3 nextTreePosition = tree.transform.position;
 					treeList.RemoveAt(rand);	// Remove the tree so it won't be chopped again
 					// Set offset for tree so axe man can actually cut it
@@ -170,11 +195,15 @@ public class EnemyAIControllerWander : EnemyAIController
 					treePath = true;
 					investigatePath = false;
 					checkingPlayer = tree.Equals(getPlayer());
+					if (checkingPlayer)
+					{
+						Debug.Log ("Checking Player");
+					}
 
 					return;
 				}
 			}
-			
+			Debug.Log ("done Rand");			
 			//*
 			treePath = false;
 			investigatePath = true;
