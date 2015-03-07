@@ -148,7 +148,7 @@ public class AIController : GameBehavior
 }*/
 
 	// Use this for initialization
-	public void Start ()
+	public virtual void Start ()
 	{
 		// Initialize gasp sounds
 		gasps.Add (gasp1);

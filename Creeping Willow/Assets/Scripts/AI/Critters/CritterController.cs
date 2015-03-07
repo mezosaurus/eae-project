@@ -23,10 +23,10 @@ public class CritterController : AIController {
 	// critter sounds
 	public AudioClip idleSound;
 	public AudioClip walkSound;
+	public AudioClip popSound;
 
-	new void Start()
+	public override void Start()
 	{
-		//Debug.Log ("start");
 		base.Start ();
 		float time = Time.time;
 		nextMoveTime = time + waitTime;
