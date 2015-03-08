@@ -14,7 +14,7 @@ public abstract class PossessableItem : Possessable {
 	protected virtual void Start(){
 		base.Start ();
 		possessionTexture = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessionClue"));
-		
+		possessionTexture.transform.parent = transform;
 		possessionTexture.renderer.enabled = false;
 		TextureScript alertTs = possessionTexture.GetComponent<TextureScript> ();
 		alertTs.target = gameObject;

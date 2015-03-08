@@ -18,7 +18,6 @@ public class PossessorTrigger : GameBehavior {
 
 	// Update is called once per frame
 	protected override void GameUpdate () {
-		transform.position = parent.transform.position;
 		HandleInput();
 	}
 
@@ -45,7 +44,7 @@ public class PossessorTrigger : GameBehavior {
 					}
 					Debug.Log ("playing sound");
 				}
-				Destroy(this.parent);
+				Destroy(this.transform.parent.gameObject);
 				Destroy(this.gameObject);
 
 			}

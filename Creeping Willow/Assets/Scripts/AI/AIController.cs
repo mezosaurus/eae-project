@@ -203,6 +203,7 @@ public class AIController : GameBehavior
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer (npcTag);
 		Physics2D.IgnoreLayerCollision (npcLayer, npcLayer);
+		Physics2D.IgnoreLayerCollision (npcLayer, 9);
 
 
 		// Broadcast start of lifecycle
