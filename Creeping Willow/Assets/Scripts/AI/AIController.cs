@@ -203,6 +203,7 @@ public class AIController : GameBehavior
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer (npcTag);
 		Physics2D.IgnoreLayerCollision (npcLayer, npcLayer);
+		Physics2D.IgnoreLayerCollision (npcLayer, 9);
 
 
 		// Broadcast start of lifecycle
@@ -877,10 +878,15 @@ public class AIController : GameBehavior
 
 	protected Vector3 avoid (Vector3 currentNPCDirection)
 	{
+		//return Vector3.zero;
 		if( avoidCounter < 10 )
 		{
 			avoidCounter++;
 			return avoidCurrentDirection;
+		}
+		else
+		{
+			avoidCounter = 0;
 		}
 
 		float checkDistance = 1f;

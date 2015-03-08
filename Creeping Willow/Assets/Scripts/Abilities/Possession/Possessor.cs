@@ -14,15 +14,19 @@ public class Possessor : GameBehavior {
 	private GameObject triggerObject;
 	// Use this for initialization
 	protected virtual void Start () {
+		Physics2D.IgnoreLayerCollision (8, 10, true);
+		Physics2D.IgnoreLayerCollision (0, 10, true);
 		colors.Add("transparent", new Color(1f, 1f, 1f, .5f));
 		colors.Add("opaque", new Color(1f, 1f, 1f, 1f));
 		canPlace = true;
 		colliding = false;
 		possessing = false;
 		objectToPossess = null;
-		triggerObject = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessorTrigger"));
-		triggerObject.GetComponent<PossessorTrigger> ().parent = this.gameObject;
+		ParticleSystem particleSystem = gameObject.GetComponent<ParticleSystem> ();
+		particleSystem.renderer.sortingLayerID = 2;
+		particleSystem.renderer.sortingOrder = -1;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
+		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
 	}
 
 	// Update is called once per frame
@@ -112,6 +116,9 @@ public class Possessor : GameBehavior {
 //		Destroy(this.gameObject);
 //	}
 
+	void OnDestroy(){
+		MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+	}
 	void OnGUI(){
 		float width = 197/2;
 		float height = 121/2;

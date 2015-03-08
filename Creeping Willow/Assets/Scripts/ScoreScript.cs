@@ -245,9 +245,9 @@ public class ScoreScript : MonoBehaviour {
 	float multLength;
 	float multHeight;
 
-	int currentMultiplier = 1;
-	int multiplierPoints = 10;
+	int currentMultiplier = 3;
 	int popupMultiplier = 0;
+	int multiplierPoints = 10;
 
 	// multiplier timers
 	float lastMultiplierTime;
@@ -264,7 +264,9 @@ public class ScoreScript : MonoBehaviour {
 	Texture2D currentMultiplierImage;
 	Texture2D multiplierSign;
 	Texture2D multiplierPointImage;
-	
+
+	// game mode marked selected
+	bool marked = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -310,6 +312,14 @@ public class ScoreScript : MonoBehaviour {
 		multHeight = Screen.height / 10;
 		lastMultiplierTime = Time.time;
 		currentMultiplierTime = Time.time;
+
+		if( LevelLoader.instance.modeName == "Feast" )
+		{
+			currentMultiplier = 9;
+			popupMultiplier = 0;
+			multiplierPoints = 40;
+			marked = true;
+		}
 
 		currentMultiplierImage = getNumberImage (currentMultiplier);
 		multiplierSign = plusSign;
@@ -962,6 +972,9 @@ public class ScoreScript : MonoBehaviour {
 	// update multiplier
 	void addMultiplier(int num)
 	{
+		if( marked )
+			return;
+
 		if( multiplierIsChanging )
 			prevValue = prevValue + (newValue - prevValue) * ( (Time.time - lastMultiplierTime) / multiplierSliderTime );
 		else

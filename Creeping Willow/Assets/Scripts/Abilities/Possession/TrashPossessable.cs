@@ -3,6 +3,11 @@ using System.Collections;
 //using XInputDotNetPure;
 
 public class TrashPossessable : PossessableItem {
+	
+	protected override void Start(){
+		base.Start ();
+		hintOffset = new Vector2(0, .85f);
+	}
 
 	// Update is called once per frame
 	protected override void GameUpdate () {
