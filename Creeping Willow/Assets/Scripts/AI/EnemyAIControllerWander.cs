@@ -183,8 +183,9 @@ public class EnemyAIControllerWander : EnemyAIController
 			//*
 			treePath = false;
 			investigatePath = true;
-			Vector2 position = Random.insideUnitCircle * wanderRadius;
-			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
+			//Vector2 position = Random.insideUnitCircle * wanderRadius;
+			//nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
+			nextPath.transform.position = getWanderPoint(panickedNPCPosition);
 			//*/
 		}
 	}

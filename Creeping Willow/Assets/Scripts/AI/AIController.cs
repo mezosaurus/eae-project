@@ -158,21 +158,21 @@ public class AIController : GameBehavior
 		enteredMap = false;
 		// Alert Texture
 		alertTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIAlert"));
-		alertTexture.transform.SetParent (transform);
+		alertTexture.transform.SetParent (transform, false);
 		alertTexture.renderer.enabled = false;
 		TextureScript alertTs = alertTexture.GetComponent<TextureScript> ();
 		alertTs.target = gameObject;
 
 		// Panic Texture
 		panicTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIPanic"));
-		panicTexture.transform.SetParent (transform);
+		panicTexture.transform.SetParent (transform, true);
 		panicTexture.renderer.enabled = false;
 		TextureScript panicTs = panicTexture.GetComponent<TextureScript> ();
 		panicTs.target = gameObject;
 
 		// Scare Texture
 		scaredTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIScared"));
-		scaredTexture.transform.SetParent (transform);
+		scaredTexture.transform.SetParent (transform, true);
 		scaredTexture.renderer.enabled = false;
 		TextureScript scaredTs = scaredTexture.GetComponent<TextureScript> ();
 		scaredTs.target = gameObject;
@@ -468,6 +468,15 @@ public class AIController : GameBehavior
 	//-----------------------
 	// Helper Methods
 	//-----------------------
+
+	protected GameObject createTempGameObject(Vector3 pos, Transform parent)
+	{
+		GameObject tempObject = new GameObject ();
+		tempObject.transform.position = pos;
+		//tempObject.transform.SetParent (parent, true);
+		
+		return tempObject;
+	}
 
 	virtual protected bool NPCHandleSeeingPlayer ()
 	{
