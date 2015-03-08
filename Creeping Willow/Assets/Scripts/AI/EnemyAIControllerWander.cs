@@ -40,7 +40,7 @@ public class EnemyAIControllerWander : EnemyAIController
 				}
 				nextPath = getLeavingPath();
 			}
-			
+
 			investigate();
 		}
 		
@@ -53,7 +53,7 @@ public class EnemyAIControllerWander : EnemyAIController
 		animateCharacter(movement, pathPosition);
 		
 		Vector3 changeMovement = avoid (direction);
-		
+
 		if( changeMovement != Vector3.zero )
 		{
 			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
@@ -92,17 +92,17 @@ public class EnemyAIControllerWander : EnemyAIController
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_ACTION);
 			if (hitCounter == 1)
 			{
-				audio.PlayOneShot (hitSound1, 0.8f);
+				//audio.PlayOneShot (hitSound1, 0.8f);
 				hitCounter = 2;
 			}
 			else if (hitCounter == 2)
 			{
-				audio.PlayOneShot (hitSound2, 0.8f);
+				//audio.PlayOneShot (hitSound2, 0.8f);
 				hitCounter = 3;
 			}
 			else
 			{
-				audio.PlayOneShot (hitSound3, 0.8f);
+				//audio.PlayOneShot (hitSound3, 0.8f);
 				hitCounter = 1;
 			}
 		}
@@ -142,7 +142,7 @@ public class EnemyAIControllerWander : EnemyAIController
 			{
 				GameObject tree = null;
 				int rand = 0;
-				
+
 				while(tree == null)
 				{
 					if (treeList.Count == 0)
@@ -151,6 +151,12 @@ public class EnemyAIControllerWander : EnemyAIController
 					rand = Random.Range(0, treeList.Count);
 					tree = (GameObject)treeList[rand];
 
+					if (tree == null && treeList.Count == 1)
+					{
+						treeList.RemoveAt(rand);
+						break;
+					}
+
 					// Check if player tree is outside range
 					if (tree != null && tree.tag.Equals("Player") && Vector3.Distance(tree.transform.position, panickedNPCPosition) > wanderRadius)
 					{
@@ -158,7 +164,7 @@ public class EnemyAIControllerWander : EnemyAIController
 						treeList.RemoveAt(rand);
 					}
 				}
-				
+
 				if (tree != null)
 				{
 					Vector3 nextTreePosition = tree.transform.position;
@@ -174,7 +180,6 @@ public class EnemyAIControllerWander : EnemyAIController
 					return;
 				}
 			}
-			
 			//*
 			treePath = false;
 			investigatePath = true;
@@ -211,6 +216,21 @@ public class EnemyAIControllerWander : EnemyAIController
 			// TODO: It's axe time
 			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
 			MessageCenter.Instance.Broadcast(message);
+			Debug.Log ("Kill Player Message Sent");
 		}
+	}
+
+	// To use in case avoid doesn't get better.
+	protected override void OnTriggerStay2D(Collider2D other)
+	{
+		/*
+		Vector3 pos = other.gameObject.transform.position;
+		if (angry && other.tag.Equals("Player") && Vector3.Distance(pos, transform.position) < wanderRadius/4)
+		{
+			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
+			MessageCenter.Instance.Broadcast(message);
+			Debug.Log ("Kill Player Message Sent");
+		}
+		//*/
 	}
 }
