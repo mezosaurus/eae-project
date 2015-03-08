@@ -58,11 +58,14 @@ public class PossessorTrigger : GameBehavior {
 				Possessable possessable = objectToPossess.GetComponent<Possessable>();
 				if(possessable is PossessableItem){
 					PossessableItem item = possessable as PossessableItem;
-					item.possessionTexture.renderer.enabled = true;
 					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+					SpriteRenderer hintRenderer = item.possessionTexture.GetComponent<SpriteRenderer>();
 					Color color = Color.white;
 					if(colors.TryGetValue("transparent", out color)){
 						renderer.color = color;
+					}
+					if(colors.TryGetValue("opaque", out color)){
+						hintRenderer.color = color;
 					}
 				}
 			}
@@ -75,10 +78,13 @@ public class PossessorTrigger : GameBehavior {
 			if(possessable is PossessableItem){
 				SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
 				PossessableItem item = possessable as PossessableItem;
-				item.possessionTexture.renderer.enabled = false;
+				SpriteRenderer hintRenderer = item.possessionTexture.GetComponent<SpriteRenderer>();
 				Color color = Color.white;
 				if(colors.TryGetValue("opaque", out color)){
 					renderer.color = color;
+				}
+				if(colors.TryGetValue("transparent", out color)){
+					hintRenderer.color = color;
 				}
 			}
 			objectToPossess = null;

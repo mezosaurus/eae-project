@@ -25,9 +25,8 @@ public class Possessor : GameBehavior {
 		ParticleSystem particleSystem = gameObject.GetComponent<ParticleSystem> ();
 		particleSystem.renderer.sortingLayerID = 2;
 		particleSystem.renderer.sortingOrder = -1;
-		//triggerObject = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessorTrigger"));
-		//triggerObject.transform.parent = transform;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
+		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
 	}
 
 	// Update is called once per frame
@@ -117,6 +116,9 @@ public class Possessor : GameBehavior {
 //		Destroy(this.gameObject);
 //	}
 
+	void OnDestroy(){
+		MessageCenter.Instance.Broadcast(new PossessorDestroyedMessage(this));
+	}
 	void OnGUI(){
 		float width = 197/2;
 		float height = 121/2;

@@ -10,17 +10,28 @@ public abstract class PossessableItem : Possessable {
 	public GameObject possessionTexture;
 	protected bool scaring = false;
 	protected bool luring = false;
+	public Vector2 hintOffset;
 
 	protected virtual void Start(){
 		base.Start ();
 		possessionTexture = (GameObject)Instantiate(Resources.Load("prefabs/Abilities/PossessionClue"));
 		possessionTexture.transform.parent = transform;
 		possessionTexture.renderer.enabled = false;
-		TextureScript alertTs = possessionTexture.GetComponent<TextureScript> ();
+		HintTextureScript alertTs = possessionTexture.GetComponent<HintTextureScript> ();
 		alertTs.target = gameObject;
 		colors.Add("red", new Color(1.0f, 0.0f, 0.0f, 1.0f));
 		colors.Add("green", new Color(0.0f, 1.0f, 0.0f, 1.0f));
 		colors.Add("blue", new Color(0.0f, 0.0f, 1.0f, 1.0f));
+		MessageCenter.Instance.RegisterListener (MessageType.PossessorSpawned, ShowHint);
+		MessageCenter.Instance.RegisterListener (MessageType.PossessorDestroyed, HideHint);
+	}
+
+	protected void ShowHint(Message message){
+		this.possessionTexture.renderer.enabled = true;
+	}
+
+	protected void HideHint(Message message){
+		this.possessionTexture.renderer.enabled = false;
 	}
 
 	// Update is called once per frame
@@ -38,7 +49,6 @@ public abstract class PossessableItem : Possessable {
 			}
 			transform.position = new Vector3(newX, newY);
 
-            Debug.Log("Do we get here?");
 		}
 		if(blinking){
 			SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
@@ -130,5 +140,10 @@ public abstract class PossessableItem : Possessable {
 	public override void exorcise(){
 		base.exorcise ();
 		Active = false;
+	}
+
+	void OnDestroy(){
+		MessageCenter.Instance.UnregisterListener (MessageType.PossessorSpawned, ShowHint);
+		MessageCenter.Instance.UnregisterListener (MessageType.PossessorDestroyed, HideHint);
 	}
 }
