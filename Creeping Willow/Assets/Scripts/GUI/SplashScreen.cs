@@ -99,6 +99,13 @@ public class SplashScreen : MonoBehaviour
 				break;
 			}
 		}
+		// The user wants to go back
+		else if( !axisBusy && ( Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "Cancel" ) ) )
+		{
+			Application.Quit();
+			
+			axisBusy = true;
+		}
 		else
 		{
 			axisBusy = false;
