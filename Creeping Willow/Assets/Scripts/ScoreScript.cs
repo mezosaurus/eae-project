@@ -62,6 +62,7 @@ public class ScoreScript : MonoBehaviour {
 	public Texture2D numSeven;
 	public Texture2D numEight;
 	public Texture2D numNine;
+	public Texture2D _x;
 	public Font myFont;
 
 	// bounty images
@@ -115,9 +116,22 @@ public class ScoreScript : MonoBehaviour {
 	public readonly int BOUNTY_EATEN = 100;
 	
 	// stationary multipliers
-	public readonly int stealthMultiplier = 6;
-	public readonly int droppingFliesMultiplier = 3;
+	public readonly int stealthMultiplier = 4;
+	public readonly int droppingFliesMultiplier = 4;
 	public readonly int lureMultiplier = 2;
+
+	public readonly int axemanEaten3Multiplier = 8;
+	public readonly int axemanEaten4Multiplier = 10;
+	public readonly int oldEaten3Multiplier = 6;
+	public readonly int oldEaten4Multiplier = 8;
+	public readonly int childEaten3Multiplier = 6;
+	public readonly int childEaten4Multiplier = 8;
+	public readonly int hottieEaten3Multiplier = 6;
+	public readonly int hottieEaten4Multiplier = 8;
+	public readonly int mowerEaten3Multiplier = 6;
+	public readonly int mowerEaten4Multiplier = 8;
+	public readonly int varietyEaten3Multiplier = 6;
+
 	int streakMultiplier = 1;
 	
 	// multiplier points
@@ -131,19 +145,34 @@ public class ScoreScript : MonoBehaviour {
 	bool isStealth = false;
 	bool isQuick = false;
 	bool isLured = false;
+	bool isPattern = false;
 	
 	
 	// output strings
-	readonly string npcEatenString = "Person Kill";
+	readonly string npcEatenString = "Soulful Snack";
 	readonly string bountyEatenString = "Target Kill";
-	readonly string enemyEatenString = "Axeman Kill";
+	readonly string enemyEatenString = "The Axe Man";
 	string eatenString;
+	string eatenRowString;
 	//readonly string npcGrabbedString = "Person grabbed";
 	//readonly string npcLuredString = "Person lured";
 	
-	readonly string stealthString = "Stealth Kill";
-	readonly string streakString = "Quick Kill";
-	readonly string luredString = "Lured Kill";
+	readonly string stealthString = "Quiet Giant";
+	readonly string streakString = "Ghastly Glutton";
+	readonly string luredString = "Come To Me";
+
+	readonly string axemanEaten3 = "Lumberjacked!";
+	readonly string axemanEaten4 = "Flannel Forager";
+	readonly string oldEaten3 = "Geriatricide!";
+	readonly string oldEaten4 = "Grey Dawn";
+	readonly string childEaten3 = "Infanticide!";
+	readonly string childEaten4 = "Bane of the Playground";
+	readonly string hottieEaten3 = "Hot Tamale";
+	readonly string hottieEaten4 = "Bye Bye Love";
+	readonly string mowerEaten3 = "Yard Worked";
+	readonly string mowerEaten4 = "The Lost Landscapers";
+	readonly string varietyEaten3 = "Variety Platter";
+
 	
 	float timeSinceLastKill = -1;
 	float lastKillTime = -100;
@@ -156,7 +185,8 @@ public class ScoreScript : MonoBehaviour {
 	
 	ArrayList deleteScaredNPCS = new ArrayList();
 	
-	
+
+	ArrayList npcsEatenList = new ArrayList();
 	
 	
 	// saved scores
@@ -170,7 +200,7 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 
-	//s GUI Variables
+	// GUI Variables
 	
 	
 	// Score GUI variables
@@ -267,6 +297,7 @@ public class ScoreScript : MonoBehaviour {
 
 	// game mode marked selected
 	bool marked = false;
+	bool paused = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -476,7 +507,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// update sliding increment
-			if( slideIncrement < slideMax )
+			if( slideIncrement < slideMax && !paused )
 				slideIncrement += 2.5f;
 			
 			// npc type
@@ -500,6 +531,16 @@ public class ScoreScript : MonoBehaviour {
 				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
 				//myStyle.alignment = TextAnchor.MiddleRight;
 				//GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + AXEMAN_EATEN, myStyle);
+			}
+
+			// pattern
+			if( isPattern )
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), eatenRowString, myStyle);
+				//myStyle.alignment = TextAnchor.MiddleRight;
+				//GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), stealthMultiplier + "x", myStyle);
+				offset++;
 			}
 			// stealth
 			if( isStealth )
@@ -551,7 +592,8 @@ public class ScoreScript : MonoBehaviour {
 			offset++;
 			
 			// update time left
-			scoreTimer += scoreIncrement;
+			if( !paused )
+				scoreTimer += scoreIncrement;
 			
 			if( scoreTimer > scoreIncrementMax )
 			{
@@ -587,6 +629,14 @@ public class ScoreScript : MonoBehaviour {
 			{
 				myStyle.alignment = TextAnchor.MiddleLeft;
 				GUI.Label(new Rect(xPos, yPos, popupX, popupY), eatenString, myStyle);
+			}
+
+			// pattern
+			if( isPattern )
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), eatenRowString, myStyle);
+				offset++;
 			}
 			// stealth
 			if( isStealth )
@@ -653,6 +703,14 @@ public class ScoreScript : MonoBehaviour {
 				myStyle.alignment = TextAnchor.MiddleLeft;
 				GUI.Label(new Rect(endX, endHeight, popupX, popupY), eatenString, myStyle);
 			}
+
+			// pattern
+			if( isPattern )
+			{
+				myStyle.alignment = TextAnchor.MiddleLeft;
+				GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), eatenRowString, myStyle);
+				offset++;
+			}
 			// stealth
 			if( isStealth )
 			{
@@ -695,7 +753,8 @@ public class ScoreScript : MonoBehaviour {
 			offset++;
 			
 			// update time left
-			scoreTimer += scoreIncrement;
+			if( !paused )
+				scoreTimer += scoreIncrement;
 			
 			if( scoreTimer > scoreIncrementMax )
 				scoreState = (int)ScoreState.END_SCORING;
@@ -712,6 +771,7 @@ public class ScoreScript : MonoBehaviour {
 			addMultiplier(tmpMultiplier);
 			tmpMultiplier = 0;
 
+			isPattern = false;
 			isLured = false;
 			isStealth = false;
 			isQuick = false;
@@ -751,7 +811,8 @@ public class ScoreScript : MonoBehaviour {
 			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), multiplierPointImage, ScaleMode.ScaleToFit);
 			
 			// increment height
-			popupIncrement2 += 1.5f;
+			if( !paused )
+				popupIncrement2 += 1.5f;
 			
 			// check statement for pop-up statements
 			if( popupIncrement2 > popupIncrementMax2 )
@@ -793,8 +854,9 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			GUI.Box (new Rect (Screen.width-offsetX+sizeX-10, Screen.height-offsetY-myStyle.fontSize-10-popupIncrement, sizeX, sizeY), "" + (displayScore * currentMultiplier), myStyle);
-			
-			popupIncrement += 1f;
+
+			if( !paused )
+				popupIncrement += 1f;
 			
 			GUI.color = savedGuiColor; // revert to previous alpha
 		}
@@ -846,7 +908,8 @@ public class ScoreScript : MonoBehaviour {
 			}
 			else
 			{
-				bountyIncrement += 2f;
+				if( !paused )
+					bountyIncrement += 2f;
 
 				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyRectSizeY+bountyLabelSizeY), bountyBoxImage);
 				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX*3/8,Screen.height-bountyLabelSizeY*3/4-bountyIncrement,bountySizeX*3/4,bountyLabelSizeY*3/4), bountyBoxTextImage);
@@ -869,7 +932,8 @@ public class ScoreScript : MonoBehaviour {
 			}
 			else
 			{
-				bountyIncrement -= 2f;
+				if( !paused )
+					bountyIncrement -= 2f;
 
 				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/2,Screen.height-bountyLabelSizeY-bountyIncrement,bountySizeX,bountyRectSizeY+bountyLabelSizeY), bountyBoxImage);
 				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX*3/8,Screen.height-bountyLabelSizeY*3/4-bountyIncrement,bountySizeX*3/4,bountyLabelSizeY*3/4), bountyBoxTextImage);
@@ -931,6 +995,7 @@ public class ScoreScript : MonoBehaviour {
 
 		//GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
 		GUI.DrawTexture (new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplierImage, ScaleMode.ScaleToFit);
+		GUI.DrawTexture (new Rect (multXOffset + multLength + 35, multYOffset, 50, multHeight), _x, ScaleMode.ScaleToFit);
 
 		if( multiplierIsChanging )
 		{
@@ -1043,8 +1108,6 @@ public class ScoreScript : MonoBehaviour {
 	// get corresponding image from number
 	Texture2D getNumberImage(int num)
 	{
-		//Debug.Log ("num image: " + num);
-
 		switch(num)
 		{
 		case 0:
@@ -1076,8 +1139,6 @@ public class ScoreScript : MonoBehaviour {
 	// get corresponding image from multiplier points
 	Texture2D getMultiplierBarImage(float num, float total)
 	{
-		//Debug.Log ("num image: " + num);
-		
 		switch((int)Mathf.Round((num/total)*21))
 		{
 		case 0:
@@ -1228,6 +1289,7 @@ public class ScoreScript : MonoBehaviour {
 		MessageCenter.Instance.RegisterListener (MessageType.NPCDestroyed, HandleNPCDestroyed);
 		MessageCenter.Instance.RegisterListener (MessageType.LevelFinished, HandleLevelFinished);
 		MessageCenter.Instance.RegisterListener (MessageType.LevelStart, HandleLevelStart);
+		MessageCenter.Instance.RegisterListener (MessageType.PauseChanged, HandlePauseChanged);
 	}
 	
 	void UnregisterListeners()
@@ -1239,7 +1301,8 @@ public class ScoreScript : MonoBehaviour {
 		MessageCenter.Instance.UnregisterListener(MessageType.NPCEaten, HandleNPCEaten);
 		MessageCenter.Instance.UnregisterListener(MessageType.NPCCreated, HandleNPCCreated);
 		MessageCenter.Instance.UnregisterListener(MessageType.NPCDestroyed, HandleNPCDestroyed);
-		MessageCenter.Instance.UnregisterListener (MessageType.LevelFinished, HandleLevelFinished);
+		MessageCenter.Instance.UnregisterListener(MessageType.LevelFinished, HandleLevelFinished);
+		MessageCenter.Instance.UnregisterListener(MessageType.PauseChanged, HandlePauseChanged);
 	}
 	
 	
@@ -1281,11 +1344,6 @@ public class ScoreScript : MonoBehaviour {
 		{
 			if( NPC.GetComponent<AIController>().getLastLure().Equals(mess.Lure) )
 				return;
-		}
-		
-		if( mess.Lure.lurePower >= NPC.GetComponent<AIController>().lurePower )
-		{
-			//luredNPCs.Add (NPC);
 		}
 		
 		luredNPCs.Add (NPC);
@@ -1397,6 +1455,287 @@ public class ScoreScript : MonoBehaviour {
 		
 		tmpMultiplier = 0;
 		lastMultiplierTime = Time.time;
+
+		AIController controller = mess.NPC.GetComponent<AIController> ();
+		string skin = controller.SkinType.ToString();
+		npcsEatenList.Add (skin);
+
+		int eatenCount = npcsEatenList.Count;
+		eatenRowString = "";
+		bool match = true;
+		bool passed = true;
+		string[] eatenArray = (string[])npcsEatenList.ToArray(typeof(string));
+		
+		// check for specific ai skins and patterns
+		if( eatenCount >= 4 )
+		{
+			passed = false;
+
+			if( skin.Equals("Bopper") )
+			{
+				// eat 4+ children in a row
+				for( int i = eatenCount - 4; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("Bopper") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						passed = true;
+						break;
+					}
+				}
+
+				if( match )
+				{
+					tmpMultiplier += childEaten4Multiplier;
+					isPattern = true;
+					eatenRowString = childEaten4;
+				}
+			}
+			else if( skin == "Hottie" )
+			{
+				// eat 4+ hotties in a row
+				for( int i = eatenCount - 4; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("Hottie") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						passed = true;
+						break;
+					}
+				}
+
+				if( match )
+				{
+					tmpMultiplier += hottieEaten4Multiplier;
+					isPattern = true;
+					eatenRowString = hottieEaten4;
+				}
+			}
+			else if( skin.Equals("MowerMan") )
+			{
+				// eat 4+ mowermen in a row
+				for( int i = eatenCount - 4; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("MowerMan") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						passed = true;
+						break;
+					}
+				}
+
+				if( match )
+				{
+					tmpMultiplier += mowerEaten4Multiplier;
+					isPattern = true;
+					eatenRowString = mowerEaten4;
+				}
+			}
+			else if( skin.Equals("OldMan") )
+			{
+				// eat 4+ oldmen in a row
+				for( int i = eatenCount - 4; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("OldMan") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						passed = true;
+						break;
+					}
+				}
+
+				if( match )
+				{
+					tmpMultiplier += oldEaten4Multiplier;
+					isPattern = true;
+					eatenRowString = oldEaten4;
+				}
+			}
+			else if( skin.Equals("AxeMan") )
+			{
+				// eat 4+ axemen in a row
+				for( int i = eatenCount - 4; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("AxeMan") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						passed = true;
+						break;
+					}
+				}
+
+				if( match )
+				{
+					tmpMultiplier += axemanEaten4Multiplier;
+					isPattern = true;
+					eatenRowString = axemanEaten4;
+				}
+			}
+		}
+
+		if( eatenCount >= 3 && ( match == false || passed == true ) )
+		{
+			match = true;
+
+			if( skin.Equals("Bopper") )
+			{
+				// eat 3 children in a row
+				for( int i = eatenCount - 3; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("Bopper") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						break;
+					}
+				}
+				
+				if( match )
+				{
+					tmpMultiplier += childEaten3Multiplier;
+					isPattern = true;
+					eatenRowString = childEaten3;
+				}
+			}
+			else if( skin.Equals("Hottie") )
+			{
+				// eat 3 hotties in a row
+				for( int i = eatenCount - 3; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("Hottie") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						break;
+					}
+				}
+				
+				if( match )
+				{
+					tmpMultiplier += hottieEaten3Multiplier;
+					isPattern = true;
+					eatenRowString = hottieEaten3;
+				}
+			}
+			else if( skin.Equals("MowerMan") )
+			{
+				// eat 3 mowermen in a row
+				for( int i = eatenCount - 3; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("MowerMan") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						break;
+					}
+				}
+				
+				if( match )
+				{
+					tmpMultiplier += mowerEaten3Multiplier;
+					isPattern = true;
+					eatenRowString = mowerEaten3;
+				}
+			}
+			else if( skin.Equals("OldMan") )
+			{
+				// eat 3 oldmen in a row
+				for( int i = eatenCount - 3; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("OldMan") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						break;
+					}
+				}
+				
+				if( match )
+				{
+					tmpMultiplier += oldEaten3Multiplier;
+					isPattern = true;
+					eatenRowString = oldEaten3;
+				}
+			}
+			else if( skin.Equals("AxeMan") )
+			{
+				// eat 3 axemen in a row
+				for( int i = eatenCount - 3; i < eatenCount; i++ )
+				{
+					if( eatenArray[i].Equals("AxeMan") )
+					{
+						continue;
+					}
+					else
+					{
+						match = false;
+						break;
+					}
+				}
+				
+				if( match )
+				{
+					tmpMultiplier += axemanEaten3Multiplier;
+					isPattern = true;
+					eatenRowString = axemanEaten3;
+				}
+			}
+
+			// 3 different npcs in a row
+			if( match == false )
+			{
+				match = true;
+
+				string npc1 = eatenArray[eatenCount-3];
+				string npc2 = eatenArray[eatenCount-2];
+				string npc3 = eatenArray[eatenCount-1];
+
+				if( npc1.Equals(npc2) || npc1.Equals(npc3) || npc2.Equals(npc3) )
+				{
+					match = false;
+				}
+
+				if( match )
+				{
+					tmpMultiplier += varietyEaten3Multiplier;
+					isPattern = true;
+					eatenRowString = varietyEaten3;
+				}
+			}
+		}
+
 		
 		// update score multipliers and base scores
 		if( timeSinceLastKill < lastKillBonus )
@@ -1555,5 +1894,23 @@ public class ScoreScript : MonoBehaviour {
 		
 		bountyState = (int)BountyState.BOUNTY_SHOWING;
 		bountyRaised = true;*/
+	}
+
+
+
+	protected void HandlePauseChanged(Message message)
+	{
+		PauseChangedMessage mess = message as PauseChangedMessage;
+		
+		paused = mess.isPaused;
+
+		if( paused )
+		{
+			Time.timeScale = 0;
+		}
+		else
+		{
+			Time.timeScale = 1;
+		}
 	}
 }

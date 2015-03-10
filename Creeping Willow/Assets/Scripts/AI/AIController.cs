@@ -869,7 +869,7 @@ public class AIController : GameBehavior
 	protected Vector3 avoid (Vector3 currentNPCDirection)
 	{
 		//return Vector3.zero;
-		if( avoidCounter < 10 )
+		if( avoidCounter < 15 )
 		{
 			avoidCounter++;
 			return avoidCurrentDirection;
