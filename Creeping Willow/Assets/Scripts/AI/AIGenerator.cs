@@ -36,6 +36,8 @@ public class AIGenerator : GameBehavior
 	private ArrayList enemyAIList;
 	private ArrayList activeEnemyAIList;
 	private ArrayList critterAIList;
+
+	public AudioClip axemanSoundtrack;
 		
 	// Game Functions
 
@@ -260,7 +262,14 @@ public class AIGenerator : GameBehavior
 	{
 		if (enemyAIList.Count > 15)
 			return;
-		
+
+		// Play axeman soundtrack
+		AudioSource[] aSources = Camera.main.transform.GetComponents<AudioSource>();
+		AudioSource soundtrackSource = aSources [0];
+		soundtrackSource.Stop ();
+		soundtrackSource.clip = axemanSoundtrack;
+		soundtrackSource.loop = true;
+		soundtrackSource.Play ();
 		GameObject newNPC = createNPC (this.enemyNPCWander, enemyAIList);
 		GameObject panickedPoint = new GameObject ();
 		panickedPoint.transform.position = panickedPosition;
