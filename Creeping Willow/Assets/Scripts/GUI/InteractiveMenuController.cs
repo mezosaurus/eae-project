@@ -99,7 +99,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( mainButtons[ 0 ].gameObject );
 
 		// Set the next camera position
-		cameraPosition = new Vector3( 0, 50, -275 );
+		cameraPosition = new Vector3( 0, 55, -305 );
 
 		// set the gate rotation
 		gateRotationLeft = Quaternion.Euler( 0, 0, 0 );
@@ -172,7 +172,7 @@ public class InteractiveMenuController : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( scoresButtons[ 0 ].gameObject );
 		
 		// Set the next camera position
-		cameraPosition = new Vector3( 540, 10, -123 );
+		cameraPosition = new Vector3( 545, 10, -123 );
 		currentPosition = MenuPosition.Scores;
 
 		elapsedZoomTime = 0.0f;
