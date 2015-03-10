@@ -5,6 +5,8 @@ public class TreeStateActive : TreeState
 {
     private List<GameObject> npcsInRange;
     private GameObject lt1, lt2;
+    private uint walkAudio;
+    private int lastLegFrame;
 
     
     public override void Enter(object data)
@@ -33,6 +35,11 @@ public class TreeStateActive : TreeState
         /*Tree.audio.clip = Tree.Sounds.Walk;
         Tree.audio.volume = 0.25f;
         Tree.audio.loop = true;*/
+
+        walkAudio = 0;
+        lastLegFrame = -1;
+
+        Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Walk[walkAudio];
     }
 
     public override void Update()
@@ -55,15 +62,30 @@ public class TreeStateActive : TreeState
             velocity *= Tree.Speed * bonusSpeed * Time.deltaTime;
         }
 
-        /*if(velocity != Vector2.zero)
+        if(velocity != Vector2.zero)
         {
-            if(!Tree.audio.isPlaying)
-                Tree.audio.Play();
+            // Get which frame the leg animation is on
+            AnimatorStateInfo stateInfo = Tree.BodyParts.Legs.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+            float animationPercent = (stateInfo.normalizedTime % 1.0f);
+            int currentLegFrame = Mathf.FloorToInt(animationPercent * 3f) + 1;
+            
+            if (!Tree.BodyParts.Trunk.audio.isPlaying && currentLegFrame != lastLegFrame)
+            {
+                lastLegFrame = currentLegFrame;
+                walkAudio++;
+
+                Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Walk[walkAudio % Tree.Sounds.Walk.Length];
+
+                Tree.BodyParts.Trunk.audio.Play();
+            }
         }
         else
         {  
             Tree.audio.Stop();
-        }*/
+
+            walkAudio = 1;
+            lastLegFrame = -1;
+        }
 
         Tree.rigidbody2D.velocity = velocity;
 
