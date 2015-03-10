@@ -16,6 +16,13 @@ public class testCritter : CritterController, OnPossessListener {
 	{
 		// TODO: Play explode animation
 		audio.PlayOneShot (popSound);
-		destroyNPC ();
+		string popLocation = "Particles/Particle System_critterpop";
+		GameObject pop = (GameObject)Instantiate (Resources.Load (popLocation), Vector3.zero, Quaternion.identity);
+		pop.transform.SetParent (transform, false);
+		pop.GetComponent<ParticleSystem> ().Play ();
+		float duration = pop.GetComponent<ParticleSystem> ().duration;
+		Destroy (pop, duration);
+		//TODO: display no texture
+		Destroy (gameObject, duration);
 	}
 }	
