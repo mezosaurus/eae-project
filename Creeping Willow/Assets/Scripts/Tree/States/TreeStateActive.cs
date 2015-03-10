@@ -39,8 +39,8 @@ public class TreeStateActive : TreeState
         walkAudio = 0;
         lastLegFrame = -1;
 
-		Debug.Log ("THERE IS SOMETHING BROKEN HERE!!!!!!!!!\nPLEASE FIX THIS!!!!\nI CAN\'T PLAY THE GAME WITH THIS LINE UNCOMMENTED\nMAKE SURE TO RUN YOUR CODE BEFORE PUSHING!!!!!\nNO CODE SHOULD BE PUSHED THAT REQUIRES UNCOMMENTING!!!!!\nTHIS IS IN FILE TreeStateActive.cs");
-        //Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Walk[walkAudio];
+		//Debug.Log ("THERE IS SOMETHING BROKEN HERE!!!!!!!!!\nPLEASE FIX THIS!!!!\nI CAN\'T PLAY THE GAME WITH THIS LINE UNCOMMENTED\nMAKE SURE TO RUN YOUR CODE BEFORE PUSHING!!!!!\nNO CODE SHOULD BE PUSHED THAT REQUIRES UNCOMMENTING!!!!!\nTHIS IS IN FILE TreeStateActive.cs");
+        Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Walk[walkAudio];
     }
 
     public override void Update()
@@ -70,8 +70,8 @@ public class TreeStateActive : TreeState
             float animationPercent = (stateInfo.normalizedTime % 1.0f);
             int currentLegFrame = Mathf.FloorToInt(animationPercent * 3f) + 1;
 
-			Debug.Log ("THERE IS ALSO SOMETHING BROKEN HERE!!!!!!!!!\nPLEASE FIX THIS!!!!\nI CAN\'T PLAY THE GAME WITH THIS LINE UNCOMMENTED\nMAKE SURE TO RUN YOUR CODE BEFORE PUSHING!!!!!\nNO CODE SHOULD BE PUSHED THAT REQUIRES UNCOMMENTING!!!!!\nTHIS IS IN FILE TreeStateActive.cs");
-			/*
+			//Debug.Log ("THERE IS ALSO SOMETHING BROKEN HERE!!!!!!!!!\nPLEASE FIX THIS!!!!\nI CAN\'T PLAY THE GAME WITH THIS LINE UNCOMMENTED\nMAKE SURE TO RUN YOUR CODE BEFORE PUSHING!!!!!\nNO CODE SHOULD BE PUSHED THAT REQUIRES UNCOMMENTING!!!!!\nTHIS IS IN FILE TreeStateActive.cs");
+			
             if (!Tree.BodyParts.Trunk.audio.isPlaying && currentLegFrame != lastLegFrame)
             {
                 lastLegFrame = currentLegFrame;
@@ -81,7 +81,7 @@ public class TreeStateActive : TreeState
 
                 Tree.BodyParts.Trunk.audio.Play();
             }
-            */
+            
         }
         else
         {  
