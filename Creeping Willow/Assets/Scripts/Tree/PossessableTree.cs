@@ -217,6 +217,6 @@ namespace Tree.Private
     [Serializable]
     public class Prefabs
     {
-        public GameObject LT, ThumbStick;
+        public GameObject LT, ThumbStick, A;
     }
 }
