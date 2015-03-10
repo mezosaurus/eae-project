@@ -58,6 +58,9 @@ public class SplashScreen : MonoBehaviour
 
 		PersistentObject = GameObject.Find( "PersistentObject" );
 		GameObject.DontDestroyOnLoad( PersistentObject );
+
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
 	}
 
 	void Update()

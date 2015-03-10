@@ -19,7 +19,6 @@ public class InteractiveMenuController : MonoBehaviour
 	public Button[] modeButtons;
 	public Button[] scoresButtons;
 	public Button[] optionsButtons;
-	public Texture2D cursorImage;
 	public GameObject camera;
 	public GameObject gateLeft;
 	public GameObject gateRight;
@@ -59,12 +58,12 @@ public class InteractiveMenuController : MonoBehaviour
 
 		GoToMainMenu();
 
-		if( cursorImage )
-			Cursor.SetCursor( cursorImage, new Vector2( cursorImage.width / 2, cursorImage.height / 2 ), CursorMode.ForceSoftware );
-
 		totalZoomTime = 25.0f;
 
 		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
+
+		Screen.showCursor = true;
+		Screen.lockCursor = false;
 	}
 
 	void OnDestroy() {}
