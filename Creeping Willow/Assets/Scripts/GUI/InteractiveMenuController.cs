@@ -245,15 +245,22 @@ public class InteractiveMenuController : MonoBehaviour
 			}
 		}
 		// The user wants to go back
-		else if( !axisBusy && ( Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "Cancel" ) || Input.GetButtonDown( "B" ) ) )
+		else if( !axisBusy && ( Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "B" ) ) )
 		{
-			if( currentPosition == MenuPosition.MainGate )
+			if( currentPosition == MenuPosition.MainGate && Vector3.Distance( camera.transform.position, cameraPosition ) < 5.0f )
 				Application.Quit();
 			else if( currentPosition == MenuPosition.LevelSelect || currentPosition == MenuPosition.Scores || currentPosition == MenuPosition.Options )
 				GoToMainMenu();
 			else if( currentPosition == MenuPosition.ModeSelect )
 				GoToLevelSelect();
 
+			axisBusy = true;
+		}
+		// The user wants to quit
+		else if( !axisBusy && Input.GetButtonDown( "Cancel" ) )
+		{
+			Application.Quit();
+			
 			axisBusy = true;
 		}
 		else

@@ -102,8 +102,8 @@ public class SplashScreen : MonoBehaviour
 				break;
 			}
 		}
-		// The user wants to go back
-		else if( !axisBusy && ( Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "Cancel" ) ) )
+		// The user wants to quit
+		else if( !axisBusy && Input.GetButtonDown( "Cancel" ) )
 		{
 			Application.Quit();
 			
@@ -147,12 +147,6 @@ public class SplashScreen : MonoBehaviour
 			coverImage3.CrossFadeAlpha( 0, ft, true );
 			fadeStarted = true;
 		}
-
-
-
-
-
-
 		// Blank
 		else if( timer > ( 3*bt + 6*ft + 3*st ) && timer < ( 4*bt + 6*ft + 3*st ) && splash == SplashNumber.Team )
 		{

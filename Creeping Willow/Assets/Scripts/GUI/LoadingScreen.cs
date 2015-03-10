@@ -15,7 +15,11 @@ public class LoadingScreen : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-	
+		// The user wants to quit
+		if( Input.GetButtonDown( "Cancel" ) )
+		{
+			Application.Quit();
+		}
 	}
 }
 
