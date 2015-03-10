@@ -13,9 +13,10 @@ public class SubpathNormalScript : SubpathScript
 			//return paths[0];
 		}
 		int index = 0;
+		Vector3 currentPathPosition = currentPath.transform.position;
 		for (int i = 0; i < paths.Length ; i++)
 		{
-			if (paths[i] == currentPath)
+			if (paths[i].transform.position == currentPathPosition)
 			{
 				index = i;
 				break;

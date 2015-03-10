@@ -24,7 +24,7 @@ public class EnemyAIController : AIController
 	public AudioClip hitSound3;
 	protected int hitCounter = 1;
 
-	new public void Start()
+	public override void Start()
 	{
 		base.Start ();
 		xScale = -xScale;
@@ -209,6 +209,12 @@ public class EnemyAIController : AIController
 			nextPath.transform.position = new Vector3(position.x, position.y, 0.0f) + panickedNPCPosition;
 		}
 		//*/
+	}
+
+	protected Vector3 getWanderPoint(Vector3 center)
+	{
+		Vector2 position = Random.insideUnitCircle * wanderRadius;
+		return new Vector3(position.x, position.y, 0.0f) + center;
 	}
 
 	protected override bool NPCHandleSeeingPlayer()

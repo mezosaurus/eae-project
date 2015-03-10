@@ -3,6 +3,11 @@ using System.Collections;
 //using XInputDotNetPure;
 
 public class LampPossessable: PossessableItem {
+	
+	protected override void Start(){
+		base.Start ();
+		hintOffset = new Vector2(-0.05f, 1.5f);
+	}
 
 	// Update is called once per frame
 	protected override void GameUpdate () {

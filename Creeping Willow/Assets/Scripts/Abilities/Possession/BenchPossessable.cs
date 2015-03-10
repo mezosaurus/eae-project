@@ -5,6 +5,12 @@ using System.Collections.Generic;
 
 public class BenchPossessable : PossessableItem {
 
+	protected override void Start(){
+		base.Start ();
+		hintOffset = new Vector2(.25f, .85f);
+	}
+
+
 	// Update is called once per frame
 	protected override void GameUpdate () {
 		base.GameUpdate ();

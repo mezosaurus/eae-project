@@ -18,7 +18,6 @@ public class PossessorTrigger : GameBehavior {
 
 	// Update is called once per frame
 	protected override void GameUpdate () {
-		transform.position = parent.transform.position;
 		HandleInput();
 	}
 
@@ -45,7 +44,7 @@ public class PossessorTrigger : GameBehavior {
 					}
 					Debug.Log ("playing sound");
 				}
-				Destroy(this.parent);
+				Destroy(this.transform.parent.gameObject);
 				Destroy(this.gameObject);
 
 			}
@@ -59,11 +58,14 @@ public class PossessorTrigger : GameBehavior {
 				Possessable possessable = objectToPossess.GetComponent<Possessable>();
 				if(possessable is PossessableItem){
 					PossessableItem item = possessable as PossessableItem;
-					item.possessionTexture.renderer.enabled = true;
 					SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
+					SpriteRenderer hintRenderer = item.possessionTexture.GetComponent<SpriteRenderer>();
 					Color color = Color.white;
 					if(colors.TryGetValue("transparent", out color)){
 						renderer.color = color;
+					}
+					if(colors.TryGetValue("opaque", out color)){
+						hintRenderer.color = color;
 					}
 				}
 			}
@@ -76,10 +78,13 @@ public class PossessorTrigger : GameBehavior {
 			if(possessable is PossessableItem){
 				SpriteRenderer renderer = objectToPossess.GetComponent<SpriteRenderer>();
 				PossessableItem item = possessable as PossessableItem;
-				item.possessionTexture.renderer.enabled = false;
+				SpriteRenderer hintRenderer = item.possessionTexture.GetComponent<SpriteRenderer>();
 				Color color = Color.white;
 				if(colors.TryGetValue("opaque", out color)){
 					renderer.color = color;
+				}
+				if(colors.TryGetValue("transparent", out color)){
+					hintRenderer.color = color;
 				}
 			}
 			objectToPossess = null;

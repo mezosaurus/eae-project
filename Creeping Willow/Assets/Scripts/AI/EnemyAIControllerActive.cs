@@ -19,9 +19,20 @@ public class EnemyAIControllerActive : EnemyAIController
 
 	protected float nextInvestigateTime = 0;
 	//*/
-	
+
+	protected GameObject lastPathPosition;
+	protected string deleteTag = "Immovable";
+	protected bool sitting = false;
+
+	public override void Start ()
+	{
+		base.Start ();
+		lastPathPosition = createTempGameObject (nextPath.transform.position, transform);
+	}
+
 	protected override void GameUpdate () 
 	{
+		//Debug.Log ("NextPath: " + nextPath + "\t" + nextPath.transform.position);
 		if (updateEnemyNPC ())
 		{
 			return;
@@ -57,25 +68,53 @@ public class EnemyAIControllerActive : EnemyAIController
 		if( changeMovement != Vector3.zero )
 		{
 			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
-			transform.position = newPos;
 			determineDirectionChange(transform.position, newPos);
+			transform.position = newPos;
 		}
 		else
 		{
-			transform.position = movement;
 			determineDirectionChange(transform.position, movement);
+			transform.position = movement;
 		}
 		
 		if (movement == pathPosition)
 		{
-			handleSitting();
+			if (!sitting) {
+				handleSitting();
+			}
+		}
+		else
+		{
+			sitting = false;
 		}
 	}
 	
 	protected override void handleSitting()
 	{
-		nextPath = movePath.getNextPath (nextPath, gameObject);
+		if (!sitting)
+		{
+			sitting = true;
+			int rand = Random.Range(0, 4);
 
+			if (nextPath.tag.Equals(deleteTag))
+			{
+				Destroy(nextPath);
+			}
+			else
+			{
+				lastPathPosition.transform.position = nextPath.transform.position;
+			}
+
+			if (rand == 0)
+			{
+				nextPath = createTempGameObject(getWanderPoint(lastPathPosition.transform.position), transform);
+				nextPath.tag = deleteTag;
+			}
+			else
+			{
+				nextPath = movePath.getNextPath (lastPathPosition, gameObject);
+			}
+		}
 		/*
 		if (treePath) 
 		{
@@ -123,36 +162,9 @@ public class EnemyAIControllerActive : EnemyAIController
 	}
 
 	// Shouldn't need to overwrite
-	/*
-	private void chasePlayer()
-	{
-		rigidbody2D.velocity = Vector2.zero;
-		Vector3 pathPosition = player.transform.position;
-		Vector3 positionNPC = transform.position;
-		float step = speed * Time.deltaTime;
-		
-		Vector3 movement = Vector3.MoveTowards (positionNPC, pathPosition, step);
-		
-		animateCharacter(movement, pathPosition);
-		
-		Vector3 changeMovement = avoid (Vector3.Normalize(movement - transform.position));
-		
-		if( changeMovement != Vector3.zero )
-		{
-			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
-			transform.position = newPos;
-			determineDirectionChange(transform.position, newPos);
-		}
-		else
-		{
-			transform.position = movement;
-			determineDirectionChange(transform.position, movement);
-		}
-	}
-	*/
 
 	/*
-	private void investigate()
+	protected override void investigate()
 	{
 		if (nextInvestigateTime <= Time.time)
 		{
@@ -202,12 +214,12 @@ public class EnemyAIControllerActive : EnemyAIController
 	public void setMovingPath(SubpathScript movePath)
 	{
 		this.movePath = movePath;
-		nextPath = movePath.getNextPath (gameObject, gameObject);
+		nextPath = movePath.getNextPath (null, gameObject);
 		initAxeMan ();
 	}
 
 	override protected GameObject getNextPath()
 	{
-		return movePath.getNextPath (nextPath, gameObject);
+		return movePath.getNextPath (lastPathPosition, gameObject);
 	}
 }
