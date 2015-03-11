@@ -19,7 +19,6 @@ public class InteractiveMenuController : MonoBehaviour
 	public Button[] modeButtons;
 	public Button[] scoresButtons;
 	public Button[] optionsButtons;
-	public GameObject camera;
 	public GameObject gateLeft;
 	public GameObject gateRight;
 	public Text levelText;
@@ -34,6 +33,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private MenuPosition currentPosition;
 	private LevelLoader levelLoader;
 	private string levelName;
+	private GameObject camera;
 
 	// menu sounds
 	public AudioClip gateSound;
@@ -48,6 +48,9 @@ public class InteractiveMenuController : MonoBehaviour
 		soundManager = GameObject.FindObjectOfType<SoundManager>();
 		soundManager.ChangeMusic( menuMusic );
 
+		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
+		Time.timeScale = 1;
+
 		axisBusy = false;
 
 		if( mainButtons.Length <= 0 )
@@ -59,6 +62,8 @@ public class InteractiveMenuController : MonoBehaviour
 
 		Screen.showCursor = true;
 		Screen.lockCursor = false;
+
+		camera = GameObject.Find( "Main Camera" );
 	}
 
 	void OnDestroy() {}
