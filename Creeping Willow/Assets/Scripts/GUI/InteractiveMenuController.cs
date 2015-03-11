@@ -25,7 +25,6 @@ public class InteractiveMenuController : MonoBehaviour
 	public Text levelText;
 
 	private bool axisBusy;
-	private bool usesSound;
 	private AudioSource clickAudio;
 	private Vector3 cameraPosition;
 	private Quaternion gateRotationLeft;
@@ -34,26 +33,17 @@ public class InteractiveMenuController : MonoBehaviour
 	private float elapsedZoomTime;
 	private MenuPosition currentPosition;
 	private LevelLoader levelLoader;
-	private SoundManager soundManager;
 	private string levelName;
 
 	// menu sounds
-	public AudioClip clickSound;
 	public AudioClip gateSound;
 	public AudioClip levelSound;
 
-	private AudioSource soundEffectSource;
+	private SoundManager soundManager;
 
 	void Awake()
 	{
 		axisBusy = false;
-
-		if( clickSound )
-		{
-			usesSound = true;
-			//clickAudio = gameObject.AddComponent<AudioSource>();
-			//clickAudio.clip = clickSound;
-		}
 
 		if( mainButtons.Length <= 0 )
 			throw new UnassignedReferenceException( "No button was given to the menu" );
@@ -64,8 +54,6 @@ public class InteractiveMenuController : MonoBehaviour
 
 		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
 		soundManager = GameObject.FindObjectOfType<SoundManager>();
-
-		soundEffectSource = soundManager.GetComponents<AudioSource>()[ 1 ];
 
 		Screen.showCursor = true;
 		Screen.lockCursor = false;
@@ -117,10 +105,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public void GoToLevelSelect()
 	{
 		// Play the gate sound if it is closed
-		if( currentPosition == MenuPosition.MainGate && soundEffectSource ) 
+		if( currentPosition == MenuPosition.MainGate && soundManager ) 
 		{
-			soundEffectSource.clip = gateSound;
-			soundEffectSource.Play();
+			soundManager.PlaySoundEffect( gateSound );
 		}
 
 		// Get rid of all other buttons
@@ -147,10 +134,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public void GoToModeSelect()
 	{
 		// Play the audio if from the correct screen
-		if( currentPosition == MenuPosition.LevelSelect && soundEffectSource ) 
+		if( currentPosition == MenuPosition.LevelSelect && soundManager ) 
 		{
-			soundEffectSource.clip = levelSound;
-			soundEffectSource.Play();
+			soundManager.PlaySoundEffect( levelSound );
 		}
 
 		// Get rid of all other buttons
@@ -260,11 +246,20 @@ public class InteractiveMenuController : MonoBehaviour
 		else if( !axisBusy && ( Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "B" ) ) )
 		{
 			if( currentPosition == MenuPosition.MainGate && Vector3.Distance( camera.transform.position, cameraPosition ) < 5.0f )
+			{
+				soundManager.PlayClickSound();
 				Application.Quit();
+			}
 			else if( currentPosition == MenuPosition.LevelSelect || currentPosition == MenuPosition.Scores || currentPosition == MenuPosition.Options )
+			{
+				soundManager.PlayClickSound();
 				GoToMainMenu();
+			}
 			else if( currentPosition == MenuPosition.ModeSelect )
+			{
+				soundManager.PlayClickSound();
 				GoToLevelSelect();
+			}
 
 			axisBusy = true;
 		}

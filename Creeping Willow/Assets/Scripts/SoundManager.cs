@@ -4,6 +4,11 @@ using System.Collections;
 public class SoundManager : MonoBehaviour
 {
 	private static SoundManager _instance;
+	private AudioSource musicSource;
+	private AudioSource uiSource;
+	private AudioSource effectsSource;
+
+	public AudioClip clickSound;
 
 	public static SoundManager instance
 	{
@@ -21,6 +26,10 @@ public class SoundManager : MonoBehaviour
 
 	void Awake()
 	{
+		musicSource = this.gameObject.GetComponents<AudioSource>()[ 0 ];
+		uiSource = this.gameObject.GetComponents<AudioSource>()[ 1 ];
+		effectsSource = this.gameObject.GetComponents<AudioSource>()[ 2 ];
+
 		if( _instance == null )
 		{
 			_instance = this;
@@ -41,5 +50,20 @@ public class SoundManager : MonoBehaviour
 	void Update()
 	{
 		
+	}
+
+	public void PlaySoundEffect( AudioClip clip )
+	{
+		effectsSource.clip = clip;
+		effectsSource.Play();
+	}
+
+	public void PlayClickSound()
+	{
+		if( clickSound )
+		{
+			uiSource.clip = clickSound;
+			uiSource.Play();
+		}
 	}
 }
