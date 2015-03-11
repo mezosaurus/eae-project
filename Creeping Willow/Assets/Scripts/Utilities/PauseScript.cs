@@ -114,7 +114,7 @@ public class PauseScript : MonoBehaviour {
 					}
 					else if( Input.GetButtonDown("A") )
 					{
-						Application.LoadLevel(0);
+						Application.LoadLevel(1);
 					}
 				}
 

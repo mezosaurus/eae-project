@@ -16,9 +16,15 @@ public class IntroScript : MonoBehaviour
 	private GUIContent buttonContent;
 	private int currentIntro;
 	private AudioSource mapAudio;
+	private SoundManager soundManager;
+
+	public AudioClip levelMusic;
 
 	void Start ()
 	{
+		soundManager = GameObject.FindObjectOfType<SoundManager>();
+		soundManager.ChangeMusic( levelMusic );
+
 		boxRect = new Rect( 485, 100, GlobalGameStateManager.originalWidth - 970, GlobalGameStateManager.originalHeight - 350 );
 		buttonRect = new Rect( GlobalGameStateManager.originalWidth / 2 - 150, 850, 300, 150 );
 		boxStyle = new GUIStyle();

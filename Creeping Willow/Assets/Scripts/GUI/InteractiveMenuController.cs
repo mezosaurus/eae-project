@@ -38,11 +38,16 @@ public class InteractiveMenuController : MonoBehaviour
 	// menu sounds
 	public AudioClip gateSound;
 	public AudioClip levelSound;
+	public AudioClip menuMusic;
 
 	private SoundManager soundManager;
 
 	void Awake()
 	{
+		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
+		soundManager = GameObject.FindObjectOfType<SoundManager>();
+		soundManager.ChangeMusic( menuMusic );
+
 		axisBusy = false;
 
 		if( mainButtons.Length <= 0 )
@@ -51,9 +56,6 @@ public class InteractiveMenuController : MonoBehaviour
 		GoToMainMenu();
 
 		totalZoomTime = 25.0f;
-
-		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
-		soundManager = GameObject.FindObjectOfType<SoundManager>();
 
 		Screen.showCursor = true;
 		Screen.lockCursor = false;

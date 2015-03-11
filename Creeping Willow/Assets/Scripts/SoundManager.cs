@@ -52,6 +52,20 @@ public class SoundManager : MonoBehaviour
 		
 	}
 
+	public void ChangeMusic( AudioClip clip )
+	{
+		if( musicSource.clip != clip && clip != null )
+		{
+			musicSource.Stop();
+			musicSource.clip = clip;
+		}
+
+		if( !musicSource.isPlaying )
+		{
+			musicSource.Play();
+		}
+	}
+
 	public void PlaySoundEffect( AudioClip clip )
 	{
 		effectsSource.clip = clip;
