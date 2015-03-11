@@ -34,13 +34,15 @@ public class InteractiveMenuController : MonoBehaviour
 	private float elapsedZoomTime;
 	private MenuPosition currentPosition;
 	private LevelLoader levelLoader;
+	private SoundManager soundManager;
 	private string levelName;
 
 	// menu sounds
 	public AudioClip clickSound;
 	public AudioClip gateSound;
 	public AudioClip levelSound;
-	private bool playGateSound = true;
+
+	private AudioSource soundEffectSource;
 
 	void Awake()
 	{
@@ -61,6 +63,9 @@ public class InteractiveMenuController : MonoBehaviour
 		totalZoomTime = 25.0f;
 
 		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
+		soundManager = GameObject.FindObjectOfType<SoundManager>();
+
+		soundEffectSource = soundManager.GetComponents<AudioSource>()[ 1 ];
 
 		Screen.showCursor = true;
 		Screen.lockCursor = false;
@@ -88,7 +93,6 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void GoToMainMenu()
 	{
-		playGateSound = true;
 		// Get rid of all other buttons
 		DisableAllButtons();
 
@@ -112,11 +116,13 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void GoToLevelSelect()
 	{
-		if (playGateSound) 
+		// Play the gate sound if it is closed
+		if( currentPosition == MenuPosition.MainGate && soundEffectSource ) 
 		{
-			camera.audio.PlayOneShot (gateSound, 0.8f);
-			playGateSound = false;
+			soundEffectSource.clip = gateSound;
+			soundEffectSource.Play();
 		}
+
 		// Get rid of all other buttons
 		DisableAllButtons();
 
@@ -140,7 +146,13 @@ public class InteractiveMenuController : MonoBehaviour
 
 	public void GoToModeSelect()
 	{
-		camera.audio.PlayOneShot (levelSound, 0.8f);
+		// Play the audio if from the correct screen
+		if( currentPosition == MenuPosition.LevelSelect && soundEffectSource ) 
+		{
+			soundEffectSource.clip = levelSound;
+			soundEffectSource.Play();
+		}
+
 		// Get rid of all other buttons
 		DisableAllButtons();
 		

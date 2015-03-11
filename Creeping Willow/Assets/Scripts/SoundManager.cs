@@ -1,23 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
-public class LevelLoader : MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
-	public string levelName;
-	public string modeName;
+	private static SoundManager _instance;
 
-	private static LevelLoader _instance;
-
-	public static LevelLoader instance
+	public static SoundManager instance
 	{
 		get
 		{
 			if( _instance == null )
 			{
-				_instance = GameObject.FindObjectOfType<LevelLoader>();
+				_instance = GameObject.FindObjectOfType<SoundManager>();
 				DontDestroyOnLoad( _instance.gameObject );
 			}
-
+			
 			return _instance;
 		}
 	}
@@ -35,14 +32,14 @@ public class LevelLoader : MonoBehaviour
 				Destroy( this.gameObject );
 		}
 	}
-
+	
 	void Start()
 	{
-
+		
 	}
-
+	
 	void Update()
 	{
-	
+		
 	}
 }
