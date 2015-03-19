@@ -42,8 +42,8 @@ public class AxeManKillInactiveTree : MonoBehaviour
         spriteRenderer.sprite = Sprites[0];
 
         // Play taunt
-        /*audio.clip = Sounds.Taunt;
-        audio.Play();*/
+        audio.clip = Sounds.Taunt;
+        audio.Play();
     }
 
     public void Instantiate(GameObject target, GameObject actualAxeMan, Finished callback)
@@ -65,23 +65,13 @@ public class AxeManKillInactiveTree : MonoBehaviour
 
     private void UpdatePhase0()
     {
-        /*if(!audio.isPlaying)
+        if(!audio.isPlaying)
         {
             // Change to phase 1
             phase = 1;
             spriteRenderer.sprite = Sprites[1];
 
             return;
-        }*/
-
-        // TEMPORARY
-        timer += Time.deltaTime;
-
-        if(timer > 1f)
-        {
-            timer = 0f;
-            phase = 1;
-            spriteRenderer.sprite = Sprites[1];
         }
     }
 
