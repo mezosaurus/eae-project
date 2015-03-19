@@ -259,7 +259,7 @@ public class EnemyAIController : AIController
 
 		if (angry && collision.gameObject.tag.Equals(player.tag))
 		{
-			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
+            PlayerKilledMessage message = new PlayerKilledMessage(gameObject, collision.gameObject);
 			MessageCenter.Instance.Broadcast(message);
 		}
 	}

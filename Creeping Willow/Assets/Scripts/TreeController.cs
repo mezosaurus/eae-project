@@ -550,7 +550,7 @@ public class TreeController : GameBehavior
             ChangeStateToNormal();
             Debug.Log("Dum4");*/
 
-            MessageCenter.Instance.Broadcast(new PlayerKilledMessage(grabbedNPC));
+            //MessageCenter.Instance.Broadcast(new PlayerKilledMessage(grabbedNPC));
 
             //invalidNpcsInRange.Add(grabbedNPC.GetInstanceID(), grabbedNPC);
             LeaveEatingState();
@@ -590,7 +590,7 @@ public class TreeController : GameBehavior
 
         if (percentage >= 1f)
         {
-            MessageCenter.Instance.Broadcast(new PlayerKilledMessage(grabbedNPC));
+            //MessageCenter.Instance.Broadcast(new PlayerKilledMessage(grabbedNPC));
             LeaveEatingState();
             ChangeStateToNormal();
 

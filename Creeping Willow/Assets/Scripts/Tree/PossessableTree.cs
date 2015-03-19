@@ -11,6 +11,7 @@ public class PossessableTree : Possessable
     
     public float Speed;
     public bool Eating;
+    public bool Dead;
     public Tree.Private.BodyParts BodyParts;
     public Tree.Private.Sprites Sprites;
     public Tree.Private.Sounds Sounds;
@@ -29,7 +30,7 @@ public class PossessableTree : Possessable
 
 
 	protected virtual void CreateStates()
-    {
+    {        
         states = new Dictionary<string, TreeState>();
 
         TreeState inactive = new TreeStateInactive();
@@ -64,6 +65,11 @@ public class PossessableTree : Possessable
 
 	protected override void Start ()
     {
+        Dead = false;
+
+        // Setup listener so we can know if we died
+        MessageCenter.Instance.RegisterListener(MessageType.PlayerKilled, HandleDeath);
+        
         CreateStates();
         LoadCircle();
 
@@ -92,6 +98,16 @@ public class PossessableTree : Possessable
     protected void OnTriggerExit2D(Collider2D collider)
     {
         currentState.OnTriggerExit(collider);
+    }
+
+    private void HandleDeath(Message m)
+    {
+        PlayerKilledMessage message = m as PlayerKilledMessage;
+
+        if(message.Tree == gameObject)
+        {
+            Dead = true;
+        }
     }
 
     protected override void GameUpdate()

@@ -6,10 +6,16 @@ public class AxeManKillInactiveTree : MonoBehaviour
     private const float SwingFrameTime = 0.436f / 2f;
 
 
-    public GameObject TargetTree;
+    public delegate void Finished(GameObject cinematic, GameObject actual);
+
+
     public Sprite[] Sprites;
     public _Sounds Sounds;
 
+
+    private GameObject targetTree;
+    private GameObject actualAxeMan;
+    private Finished finishedCallback;
 
     private SpriteRenderer spriteRenderer;
     private int phase;
@@ -40,6 +46,13 @@ public class AxeManKillInactiveTree : MonoBehaviour
         audio.Play();*/
     }
 
+    public void Instantiate(GameObject target, GameObject actualAxeMan, Finished callback)
+    {
+        targetTree = target;
+        this.actualAxeMan = actualAxeMan;
+        finishedCallback = callback;
+    }
+
     void Update()
     {
         switch(phase)
@@ -52,13 +65,23 @@ public class AxeManKillInactiveTree : MonoBehaviour
 
     private void UpdatePhase0()
     {
-        if(!audio.isPlaying)
+        /*if(!audio.isPlaying)
         {
             // Change to phase 1
             phase = 1;
             spriteRenderer.sprite = Sprites[1];
 
             return;
+        }*/
+
+        // TEMPORARY
+        timer += Time.deltaTime;
+
+        if(timer > 1f)
+        {
+            timer = 0f;
+            phase = 1;
+            spriteRenderer.sprite = Sprites[1];
         }
     }
 
@@ -95,7 +118,7 @@ public class AxeManKillInactiveTree : MonoBehaviour
                     spriteRenderer.sprite = Sprites[0];
 
                     // Destroy the tree
-                    Destroy(TargetTree);
+                    Destroy(targetTree);
 
                     // TODO: spawn tree explosion
                     // TODO: send GUI message
@@ -121,7 +144,8 @@ public class AxeManKillInactiveTree : MonoBehaviour
         }
         else
         {
-            // TODO: despawn and restart normal Axe Man
+            if(!audio.isPlaying)
+                finishedCallback(gameObject, actualAxeMan);
         }
     }
 

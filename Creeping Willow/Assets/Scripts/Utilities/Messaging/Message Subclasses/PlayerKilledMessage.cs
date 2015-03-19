@@ -4,10 +4,11 @@
 using UnityEngine;
 public class PlayerKilledMessage : Message
 {
-	public readonly GameObject NPC;
+    public readonly GameObject NPC, Tree;
 
-	public PlayerKilledMessage (GameObject NPC):base(MessageType.PlayerKilled)
+	public PlayerKilledMessage (GameObject npc, GameObject tree):base(MessageType.PlayerKilled)
 	{
-		this.NPC = NPC;
+        NPC = npc;
+        Tree = tree;
 	}
 }

@@ -215,7 +215,7 @@ public class EnemyAIControllerWander : EnemyAIController
 		if (angry && collision.gameObject.tag.Equals(player.tag))
 		{
 			// TODO: It's axe time
-			PlayerKilledMessage message = new PlayerKilledMessage(gameObject);
+			PlayerKilledMessage message = new PlayerKilledMessage(gameObject, collision.gameObject);
 			MessageCenter.Instance.Broadcast(message);
 			Debug.Log ("Kill Player Message Sent");
 		}

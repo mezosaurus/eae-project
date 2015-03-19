@@ -46,6 +46,13 @@ public class TreeStateInactive : TreeState
 
     public override void Update()
     {
+        if(Tree.Dead)
+        {
+            aButton.SetActive(false);
+
+            return;
+        }
+
         if (GameObject.FindGameObjectWithTag("Possessor") != null) aButton.SetActive(true);
         else aButton.SetActive(false);
     }
