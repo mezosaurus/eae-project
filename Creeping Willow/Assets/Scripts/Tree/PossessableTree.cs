@@ -17,8 +17,8 @@ public class PossessableTree : Possessable
     public Tree.Private.Prefabs Prefabs;
 
 
-    private Dictionary<string, TreeState> states;
-    private TreeState currentState;
+    protected Dictionary<string, TreeState> states;
+    protected TreeState currentState;
 
 
     public readonly float MaxBonusTime = 30f;
@@ -28,10 +28,10 @@ public class PossessableTree : Possessable
     public GUISkin BonusSkin;
 
 
-	private void CreateStates()
+	protected virtual void CreateStates()
     {
         states = new Dictionary<string, TreeState>();
-        
+
         TreeState inactive = new TreeStateInactive();
         TreeState active = new TreeStateActive();
         TreeState eatingMinigameWrangle = new TreeStateEatingMinigameWrangle();
@@ -48,7 +48,7 @@ public class PossessableTree : Possessable
 
         foreach (TreeState state in states.Values) state.Tree = this;
 
-        currentState = (Active) ? active : inactive;
+        currentState = (Active) ? states["Active"] : states["Inactive"];
 
         if (Active) MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 

@@ -18,7 +18,7 @@ public class OutroScript : MonoBehaviour
 		boxRect = new Rect( 485, 100, GlobalGameStateManager.originalWidth - 970, GlobalGameStateManager.originalHeight - 350 );
 		boxStyle = new GUIStyle();
 		boxContent = new GUIContent();
-		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+		//MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
 		this.enabled = false;
 		RegisterListeners();
 	}
