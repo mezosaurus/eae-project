@@ -44,6 +44,12 @@ public class TreeStateInactive : TreeState
         }
     }
 
+    public override void Update()
+    {
+        if (GameObject.FindGameObjectWithTag("Possessor") != null) aButton.SetActive(true);
+        else aButton.SetActive(false);
+    }
+
     public override void Leave()
     {
         SetAlpha(Tree.transform, 1f);
