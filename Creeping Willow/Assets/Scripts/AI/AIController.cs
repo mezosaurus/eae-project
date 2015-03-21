@@ -316,7 +316,8 @@ public class AIController : GameBehavior
 					nearWall = false;
 			}
 		} 
-		else if (other.tag == "Player") 
+		//else if (other.tag == "Player") 
+		else if (other.gameObject.Equals(getPlayer())) 
 		{
 			if (panicked) 
 			{
