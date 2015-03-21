@@ -37,8 +37,7 @@ public class EnemyAIController : AIController
 		if (player == null)
 			player = GameObject.Find("Player");
 
-		treeList.Add (getPlayer ());
-		//treeList.AddRange (getAllPlayerTrees ());
+		treeList.AddRange (getAllPlayerTrees ());
 
 		foreach (SpriteRenderer sceneObject in sceneObjects)
 		{
