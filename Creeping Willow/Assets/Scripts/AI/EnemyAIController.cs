@@ -36,9 +36,10 @@ public class EnemyAIController : AIController
 		treeList = new ArrayList ();
 		if (player == null)
 			player = GameObject.Find("Player");
-		
-		treeList.Add (getPlayer());
-		
+
+		treeList.Add (getPlayer ());
+		//treeList.AddRange (getAllPlayerTrees ());
+
 		foreach (SpriteRenderer sceneObject in sceneObjects)
 		{
 			if (sceneObject.sprite == null)
@@ -257,10 +258,19 @@ public class EnemyAIController : AIController
 	{
 		base.OnCollisionEnter2D (collision);
 
+		// TODO: See if instead of checking tag if we should check active player (getPlayer()) object
 		if (angry && collision.gameObject.tag.Equals(player.tag))
 		{
             PlayerKilledMessage message = new PlayerKilledMessage(gameObject, collision.gameObject);
 			MessageCenter.Instance.Broadcast(message);
+			angry = false;
+			killSelf = true;
 		}
+	}
+
+	protected virtual ArrayList getAllPlayerTrees() 
+	{
+		GameObject[] trees = GameObject.FindGameObjectsWithTag ("Player");
+		return new ArrayList(trees);
 	}
 }
