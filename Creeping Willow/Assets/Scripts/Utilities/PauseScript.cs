@@ -1,147 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PauseScript : MonoBehaviour {
+public class PauseScript : MonoBehaviour
+{
+	public Canvas PauseCanvas;
+	private bool isPaused;
 
-	public enum PauseState
+	void Start()
 	{
-		RESUME,
-		SETTINGS,
-		QUIT,
-		SETTINGS_IN
-	}
-
-	bool isPaused;
-	int state;
-
-	public GUITexture pauseScreenResume;
-	public GUITexture pauseScreenQuit;
-	public GUITexture pauseScreenSettings;
-	public GUITexture pauseScreenSettingsIn;
-
-	bool controllerInUse;
-
-	// Use this for initialization
-	void Start () {
 		isPaused = false;
-		state = -1;
-		controllerInUse = false;
 
-		pauseScreenResume.enabled = false;
-		pauseScreenQuit.enabled = false;
-		pauseScreenSettings.enabled = false;
-		pauseScreenSettingsIn.enabled = false;
+		PauseCanvas = GameObject.Find( "PauseCanvas" ).GetComponent<Canvas>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-		// wait for controller to be at rest
-		if( controllerInUse && Input.GetAxis("PauseStickY") == 0)
-			controllerInUse = false;
-		
-		if( controllerInUse && (Input.GetAxis("PauseStickY") < 0 || Input.GetAxis("PauseStickY") > 0) )
-			return;
-
+	void Update()
+	{
 		if( isPaused )
 		{
-			// if in second layer of pause menu
-			if( state == (int)PauseState.SETTINGS_IN )
+			// Exit pause screen
+			if( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "B" ) )
 			{
-				if( Input.GetButtonDown("B") )
-				{
-					state = (int)PauseState.SETTINGS;
-					pauseScreenSettingsIn.enabled = false;
-					pauseScreenSettings.enabled = true;
-					gameObject.GetComponent<HighScoreScript>().enabled = false;
-				}
-			}
-			else
-			{
-				// if resume state
-				if( state == (int)PauseState.RESUME )
-				{
-					if( Input.GetAxis("PauseStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
-					{
-						state = (int)PauseState.SETTINGS;
-						pauseScreenSettings.enabled = true;
-						pauseScreenResume.enabled = false;
-						controllerInUse = true;
-					}
-					else if( Input.GetButtonDown("A") )
-					{
-						isPaused = false;
-						pauseScreenResume.enabled = false;
-
-						MessageCenter.Instance.Broadcast(new PauseChangedMessage(false));
-						state = -1;
-					}
-				}
-				// settings state
-				else if( state == (int)PauseState.SETTINGS )
-				{
-					if( Input.GetAxis("PauseStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
-					{
-						state = (int)PauseState.QUIT;
-						pauseScreenSettings.enabled = false;
-						pauseScreenQuit.enabled = true;
-						controllerInUse = true;
-					}
-					else if( Input.GetAxis("PauseStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
-					{
-						state = (int)PauseState.RESUME;
-						pauseScreenSettings.enabled = false;
-						pauseScreenResume.enabled = true;
-						controllerInUse = true;
-					}
-					else if( Input.GetButtonDown("A") )
-					{
-						state = (int)PauseState.SETTINGS_IN;
-						pauseScreenSettings.enabled = false;
-						gameObject.GetComponent<HighScoreScript>().enabled = true;
-						pauseScreenSettingsIn.enabled = true;
-					}
-				}
-				// quit state
-				else if( state == (int)PauseState.QUIT )
-				{
-					if( Input.GetAxis("PauseStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
-					{
-						state = (int)PauseState.SETTINGS;
-						pauseScreenSettings.enabled = true;
-						pauseScreenQuit.enabled = false;
-						controllerInUse = true;
-					}
-					else if( Input.GetButtonDown("A") )
-					{
-						Application.LoadLevel(1);
-					}
-				}
-
-				// check for exit of pause screen
-				if( Input.GetButtonDown("Start") || Input.GetButtonDown("B") || Input.GetKeyDown(KeyCode.P))
-				{
-					isPaused = false;
-					pauseScreenResume.enabled = false;
-					pauseScreenQuit.enabled = false;
-					pauseScreenSettings.enabled = false;
-					
-					MessageCenter.Instance.Broadcast(new PauseChangedMessage(false));
-					state = -1;
-				}
+				isPaused = false;
+				PauseCanvas.enabled = false;
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
 			}
 		}
 		else
 		{
-			// pause game
-			if( Input.GetButtonDown("Start") || Input.GetKeyDown(KeyCode.P) )
+			// Pause game
+			if( Input.GetButtonDown( "Start" ) )
 			{
 				isPaused = true;
-				state = (int)PauseState.RESUME;
-				pauseScreenResume.enabled = true;
-				MessageCenter.Instance.Broadcast(new PauseChangedMessage(true));
+				PauseCanvas.enabled = true;
+				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
 			}
 		}
-
 	}
 }
