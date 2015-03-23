@@ -73,15 +73,23 @@ public class PauseScript : MonoBehaviour
 			// Pause game
 			if( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "Back" ) )
 			{
-				isPaused = true;
-				pauseCanvas.enabled = true;
-				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
-
-				EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
-
-				axisBusy = true;
+				Pause();
 			}
 		}
+	}
+
+	public void Pause()
+	{
+		isPaused = true;
+		pauseCanvas.enabled = true;
+		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+		
+		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
+		
+		axisBusy = true;
+		
+		foreach( Button button in pauseButtons )
+			button.interactable = true;
 	}
 
 	public void Resume()
@@ -89,11 +97,19 @@ public class PauseScript : MonoBehaviour
 		isPaused = false;
 		pauseCanvas.enabled = false;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
+
+		DisableAllButtons();
 	}
 
 	public void Menu()
 	{
-		// Load the new level
+		// Load the main menu
 		Application.LoadLevel( "InteractiveMenu" );
+	}
+
+	private void DisableAllButtons()
+	{
+		foreach( Button button in pauseButtons )
+			button.interactable = false;
 	}
 }
