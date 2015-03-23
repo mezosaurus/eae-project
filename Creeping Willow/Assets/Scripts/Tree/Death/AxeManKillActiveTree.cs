@@ -74,6 +74,9 @@ public class AxeManKillActiveTree : MonoBehaviour
             timer = 0f;
             frame = 4;
             spriteRenderer.sprite = Sprites[frame];
+
+            audio.clip = Sounds.Struggle[Random.Range(0, Sounds.Struggle.Length)];
+            audio.Play();
         }
         if(phase == 9001)
         {
@@ -147,7 +150,7 @@ public class AxeManKillActiveTree : MonoBehaviour
 
     private void UpdatePhase2()
     {
-        timer += Time.deltaTime;
+        /*timer += Time.deltaTime;
 
         if(timer > 1f)
         {
@@ -156,10 +159,10 @@ public class AxeManKillActiveTree : MonoBehaviour
 
             // Tell the tree to advance a phase
             MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage("PanToAxe"));
-        }
+        }*/
 
-        /*phase = 3;
-        MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage("Groan"));*/
+        phase = 3;
+        MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage("Groan"));
     }
 
     private void UpdatePhase3()
@@ -290,6 +293,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         public AudioClip Taunt;
         public AudioClip[] Chop;
         public AudioClip[] Gloat;
+        public AudioClip[] Struggle;
         public AudioClip Music;
     }
 }

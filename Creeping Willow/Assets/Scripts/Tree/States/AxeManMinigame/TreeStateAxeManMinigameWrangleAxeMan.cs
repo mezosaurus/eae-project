@@ -2,10 +2,16 @@
 
 public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
 {
+    private const float UpperArmStartAngle = 337.5777f;
+    private const float LowerArmStartAngle = 245.239f;
+    private const float UpperArmEndAngle = 357.470825f;
+    private const float LowerArmEndAngle = 273.74145f;
+
+
     private const float InRadius = 0.4f;
     private const float MaxThumbStickRadius = 1.5f;
     private const float ForwardForceValue = 0.65f;
-    private const float OpposingForceValue = 0.47f;
+    private const float OpposingForceValue = 0.46f;
     private const float MaxTime = 2f * (MaxThumbStickRadius / (ForwardForceValue - 0.25f));
 
 
@@ -18,7 +24,7 @@ public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
 
     public override void Enter(object data)
     {
-        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage(Tree.transform.position + new Vector3(0f, 0.7f), MaxTime, 1.5f, 0.8f));
+        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage(Tree.transform.position + new Vector3(0f, 0.7f), 0.25f, 1.5f, 15f));
         MessageCenter.Instance.Broadcast(new AxeManMinigameAxeManChangePhaseMessage(1001));
 
         axeMan = (data as Data).AxeMan;
@@ -67,9 +73,9 @@ public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
         // If both sticks are in, change to next phase of minigame
         if (lsIn && rsIn)
         {
-            //TreeStateEatingMinigameMash.Data data = new TreeStateEatingMinigameMash.Data(npc, percentage);
+            /*TreeStateAxeManMinigameMash.Data data = new TreeStateAxeManMinigameMash.Data(axeMan, percentage);
             
-            //Tree.ChangeState("EatingMinigameMash", data);
+            Tree.ChangeState("AxeManMinigameMash", data);*/
 
             return;
         }
@@ -124,7 +130,7 @@ public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
         UpdateArms(progress);
 
         // Update timer
-        //timeElapsed += Time.deltaTime;
+        timeElapsed += Time.deltaTime;
 
         float timePercentage = Mathf.Clamp(timeElapsed / MaxTime, 0f, 1f);
         percentage = Mathf.RoundToInt(timePercentage * 100f);
@@ -142,11 +148,11 @@ public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
 
     protected void UpdateArms(float percentage)
     {
-        /*float upperAngle = npcData.RightUpperArmStartAngle + ((npcData.RightUpperArmMidpointAngle - npcData.RightUpperArmStartAngle) * percentage);
-        float lowerAngle = npcData.RightLowerArmStartAngle + ((npcData.RightLowerArmMidpointAngle - npcData.RightLowerArmStartAngle) * percentage);
+        float upperAngle = UpperArmStartAngle + ((UpperArmEndAngle - UpperArmStartAngle) * percentage);
+        float lowerAngle = LowerArmStartAngle + ((LowerArmEndAngle - LowerArmStartAngle) * percentage);
 
         Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
-        Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);*/
+        Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);
     }
 
     protected void Lose()

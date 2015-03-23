@@ -53,6 +53,7 @@ public class PossessableTree : Possessable
         TreeState axeManMinigameLowerToAxeMan = new TreeStateAxeManMinigameLowerToAxeMan();
         TreeState axeManMinigameRaiseAxeMan = new TreeStateAxeManMinigameRaiseAxeMan();
         TreeState axeManMinigameWrangleAxeMan = new TreeStateAxeManMinigameWrangleAxeMan();
+        TreeState axeManMinigameMash = new TreeStateAxeManMinigameMash();
 
         states.Add("Inactive", inactive);
         states.Add("Active", active);
@@ -74,6 +75,7 @@ public class PossessableTree : Possessable
         states.Add("AxeManMinigameLowerToAxeMan", axeManMinigameLowerToAxeMan);
         states.Add("AxeManMinigameRaiseAxeMan", axeManMinigameRaiseAxeMan);
         states.Add("AxeManMinigameWrangleAxeMan", axeManMinigameWrangleAxeMan);
+        states.Add("AxeManMinigameMash", axeManMinigameMash);
 
         foreach (TreeState state in states.Values) state.Tree = this;
 
@@ -144,6 +146,11 @@ public class PossessableTree : Possessable
         AxeManMinigameTreeChangePhaseMessage message = m as AxeManMinigameTreeChangePhaseMessage;
 
         ChangeState("AxeManMinigame" + message.Phase);
+    }
+
+    private void FixedUpdate()
+    {
+        currentState.FixedUpdate();
     }
 
     protected override void GameUpdate()
@@ -256,6 +263,7 @@ namespace Tree.Private
             public Sprite[] Circle;
             public Sprite LS, RS;
             public Texture[] Buttons;
+            public Sprite[] ButtonSprites;
         }
 
 
@@ -263,6 +271,7 @@ namespace Tree.Private
         public _Face Face;
         public Sprite LegsStill;
         public _EatingMinigame EatingMinigame;
+        public Sprite[] EatingAxeMan;
     }
 
     [Serializable]

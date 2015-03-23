@@ -82,6 +82,14 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.size
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingMinigame.ButtonSprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 444726, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -134,11 +142,341 @@ Prefab:
       propertyPath: Sounds.RemoveAxe
       value: 
       objectReference: {fileID: 8300000, guid: f8dbc99db1af97a4eaf6a04d30b521eb, type: 3}
+    - target: {fileID: 144722, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 144702, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 444702, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sounds.Groan
+      value: 
+      objectReference: {fileID: 8300000, guid: 9bdcc2fe0398e3c4aa2b2383cd15b34e, type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingMinigame.ButtonSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: b725b26baac01634da5edf8576a169ac,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingMinigame.ButtonSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: d5b91b99b96ca054d9b043d5e7062ee3,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingMinigame.ButtonSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: ee859f8929afdf84e8909d24b235286c,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingMinigame.ButtonSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: b7b0b7fe3201a47468f307a95a6ed53c,
+        type: 3}
+    - target: {fileID: 444710, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 444700, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 444722, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 444724, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 444714, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 444718, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: da93a1df958be8a4f9df76d091a13048,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: b0f3c77b6f5fde544a9b9f8feaf2b513,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: fc92b2766c65deb4b8fe5f082403d33a,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 66ad5cc88eb271f42b45ceb38f420f76,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 72e4d964b207fc54ea9634fde76750a4,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: e8205ded94fec6146a86436db6e57288,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: 602d292d2cf0f1a49a651c979e89089e,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300000, guid: bbc1b82eb94a97a4c9645e9bf919ce0e,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[8]
+      value: 
+      objectReference: {fileID: 21300000, guid: 24b0449a9bfbe614c89e4baa60a46d46,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[9]
+      value: 
+      objectReference: {fileID: 21300000, guid: a6e953931f4451148a6c9c942ce1b0ba,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[10]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1ad65fc27d767544ba387365640aa79d,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[11]
+      value: 
+      objectReference: {fileID: 21300000, guid: 18c2c55a910a3c643a8870f79040566b,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[13]
+      value: 
+      objectReference: {fileID: 21300000, guid: 82270fb355c21794899cc8b07bc680cd,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[12]
+      value: 
+      objectReference: {fileID: 21300000, guid: 2ec577dbb3ad79644a9acb6cfffad86f,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[14]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4c398108a65ee9b489a8216ac160e615,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[15]
+      value: 
+      objectReference: {fileID: 21300000, guid: 285d28942e027ed4bb79036109b65898,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[17]
+      value: 
+      objectReference: {fileID: 21300000, guid: db47fd8441275bc409fbce7a634ab987,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[16]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3e63c78c7d9d9b142bc15ad32443327f,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[18]
+      value: 
+      objectReference: {fileID: 21300000, guid: c16795a64f23adf4fb701bccfc7f8e20,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[19]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7258566cfbdaaf94caee01b6f75ec2cb,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[20]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f883687084fe54458d442545b3ab410,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[21]
+      value: 
+      objectReference: {fileID: 21300000, guid: 95d2d5b2d1ff82f448e0bd1e8abdf0c6,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[22]
+      value: 
+      objectReference: {fileID: 21300000, guid: 2a443eb071ecdc74280e9a327166b7bf,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[23]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8deebfa7afd540f4f99c9f5507aefc3a,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[24]
+      value: 
+      objectReference: {fileID: 21300000, guid: 589e56f36cc479c46b666e37c04d08e5,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[25]
+      value: 
+      objectReference: {fileID: 21300000, guid: 40267e11aef44cf4592edd944c434c73,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[26]
+      value: 
+      objectReference: {fileID: 21300000, guid: c573e6e784a8d88469034d473422db75,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[27]
+      value: 
+      objectReference: {fileID: 21300000, guid: 672a00ee5ce208c468efda4ba8247f9f,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[28]
+      value: 
+      objectReference: {fileID: 21300000, guid: 810e22e5eac2c7144a07998bfdd7e7f3,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[29]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8409af8c92c0d2d4cb5f912cedfd5c45,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[30]
+      value: 
+      objectReference: {fileID: 21300000, guid: f647dd7ded19873409b3cdb94c510149,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[31]
+      value: 
+      objectReference: {fileID: 21300000, guid: 86ab6a4a67de11e46a9d69183233b965,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[32]
+      value: 
+      objectReference: {fileID: 21300000, guid: a047565cedd9340419eac07e661e6bb0,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[33]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1ad64a79a9a39b34e83323da657953bb,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[34]
+      value: 
+      objectReference: {fileID: 21300000, guid: a217040381e61fb4abc6c655c0a49249,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[35]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9d04b97fdcd62c34293af471bee7b8d7,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[36]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1d57fa57178fc5a49b0123a573051bf7,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[37]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1fe87a4a576ee364599be3fed117115d,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[38]
+      value: 
+      objectReference: {fileID: 21300000, guid: cd36ea707b06a19448fbeb0b97b7c6a7,
+        type: 3}
+    - target: {fileID: 11444692, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
+      propertyPath: Sprites.EatingAxeMan.Array.data[39]
+      value: 
+      objectReference: {fileID: 21300000, guid: a3192c2484f873e4c919a034d3b93d08,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed5cb892c054f6a429f012328759f3e9, type: 2}
   m_RootGameObject: {fileID: 840685285}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &226732803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 226732806}
+  - 212: {fileID: 226732805}
+  - 95: {fileID: 226732804}
+  m_Layer: 0
+  m_Name: AxeMan-Struggle3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!95 &226732804
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 226732803}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1dca7aa06da5d074c9a9043463120ada, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!212 &226732805
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 226732803}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 51
+  m_Sprite: {fileID: 21300000, guid: f645cf2cf2854ad4a9d7b48dcd0949ab, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!4 &226732806
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 226732803}
+  m_LocalRotation: {x: 0, y: 0, z: -.973448217, w: -.228907272}
+  m_LocalPosition: {x: .429707736, y: -.213536039, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1577864694}
+  m_RootOrder: 1
 --- !u!1 &240877606
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,6 +2382,52 @@ MonoBehaviour:
       - {fileID: 2800000, guid: d5b91b99b96ca054d9b043d5e7062ee3, type: 3}
       - {fileID: 2800000, guid: ee859f8929afdf84e8909d24b235286c, type: 3}
       - {fileID: 2800000, guid: b7b0b7fe3201a47468f307a95a6ed53c, type: 3}
+      ButtonSprites:
+      - {fileID: 21300000, guid: b725b26baac01634da5edf8576a169ac, type: 3}
+      - {fileID: 21300000, guid: d5b91b99b96ca054d9b043d5e7062ee3, type: 3}
+      - {fileID: 21300000, guid: ee859f8929afdf84e8909d24b235286c, type: 3}
+      - {fileID: 21300000, guid: b7b0b7fe3201a47468f307a95a6ed53c, type: 3}
+    EatingAxeMan:
+    - {fileID: 21300000, guid: da93a1df958be8a4f9df76d091a13048, type: 3}
+    - {fileID: 21300000, guid: b0f3c77b6f5fde544a9b9f8feaf2b513, type: 3}
+    - {fileID: 21300000, guid: fc92b2766c65deb4b8fe5f082403d33a, type: 3}
+    - {fileID: 21300000, guid: 66ad5cc88eb271f42b45ceb38f420f76, type: 3}
+    - {fileID: 21300000, guid: 72e4d964b207fc54ea9634fde76750a4, type: 3}
+    - {fileID: 21300000, guid: e8205ded94fec6146a86436db6e57288, type: 3}
+    - {fileID: 21300000, guid: 602d292d2cf0f1a49a651c979e89089e, type: 3}
+    - {fileID: 21300000, guid: bbc1b82eb94a97a4c9645e9bf919ce0e, type: 3}
+    - {fileID: 21300000, guid: 24b0449a9bfbe614c89e4baa60a46d46, type: 3}
+    - {fileID: 21300000, guid: a6e953931f4451148a6c9c942ce1b0ba, type: 3}
+    - {fileID: 21300000, guid: 1ad65fc27d767544ba387365640aa79d, type: 3}
+    - {fileID: 21300000, guid: 18c2c55a910a3c643a8870f79040566b, type: 3}
+    - {fileID: 21300000, guid: 2ec577dbb3ad79644a9acb6cfffad86f, type: 3}
+    - {fileID: 21300000, guid: 82270fb355c21794899cc8b07bc680cd, type: 3}
+    - {fileID: 21300000, guid: 4c398108a65ee9b489a8216ac160e615, type: 3}
+    - {fileID: 21300000, guid: 285d28942e027ed4bb79036109b65898, type: 3}
+    - {fileID: 21300000, guid: 3e63c78c7d9d9b142bc15ad32443327f, type: 3}
+    - {fileID: 21300000, guid: db47fd8441275bc409fbce7a634ab987, type: 3}
+    - {fileID: 21300000, guid: c16795a64f23adf4fb701bccfc7f8e20, type: 3}
+    - {fileID: 21300000, guid: 7258566cfbdaaf94caee01b6f75ec2cb, type: 3}
+    - {fileID: 21300000, guid: 1f883687084fe54458d442545b3ab410, type: 3}
+    - {fileID: 21300000, guid: 95d2d5b2d1ff82f448e0bd1e8abdf0c6, type: 3}
+    - {fileID: 21300000, guid: 2a443eb071ecdc74280e9a327166b7bf, type: 3}
+    - {fileID: 21300000, guid: 8deebfa7afd540f4f99c9f5507aefc3a, type: 3}
+    - {fileID: 21300000, guid: 589e56f36cc479c46b666e37c04d08e5, type: 3}
+    - {fileID: 21300000, guid: 40267e11aef44cf4592edd944c434c73, type: 3}
+    - {fileID: 21300000, guid: c573e6e784a8d88469034d473422db75, type: 3}
+    - {fileID: 21300000, guid: 672a00ee5ce208c468efda4ba8247f9f, type: 3}
+    - {fileID: 21300000, guid: 810e22e5eac2c7144a07998bfdd7e7f3, type: 3}
+    - {fileID: 21300000, guid: 8409af8c92c0d2d4cb5f912cedfd5c45, type: 3}
+    - {fileID: 21300000, guid: f647dd7ded19873409b3cdb94c510149, type: 3}
+    - {fileID: 21300000, guid: 86ab6a4a67de11e46a9d69183233b965, type: 3}
+    - {fileID: 21300000, guid: a047565cedd9340419eac07e661e6bb0, type: 3}
+    - {fileID: 21300000, guid: 1ad64a79a9a39b34e83323da657953bb, type: 3}
+    - {fileID: 21300000, guid: a217040381e61fb4abc6c655c0a49249, type: 3}
+    - {fileID: 21300000, guid: 9d04b97fdcd62c34293af471bee7b8d7, type: 3}
+    - {fileID: 21300000, guid: 1d57fa57178fc5a49b0123a573051bf7, type: 3}
+    - {fileID: 21300000, guid: 1fe87a4a576ee364599be3fed117115d, type: 3}
+    - {fileID: 21300000, guid: cd36ea707b06a19448fbeb0b97b7c6a7, type: 3}
+    - {fileID: 21300000, guid: a3192c2484f873e4c919a034d3b93d08, type: 3}
   Sounds:
     Music: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
@@ -2053,6 +2437,7 @@ MonoBehaviour:
     Walk:
     - {fileID: 8300000, guid: d5d8a9bf84159ba4f974d31dff8b46aa, type: 3}
     - {fileID: 8300000, guid: 5714bf8515caf374e911a63a5f7ca228, type: 3}
+    Groan: {fileID: 8300000, guid: 9bdcc2fe0398e3c4aa2b2383cd15b34e, type: 3}
     RemoveAxe: {fileID: 8300000, guid: f8dbc99db1af97a4eaf6a04d30b521eb, type: 3}
   Prefabs:
     LT: {fileID: 106830, guid: 3bcadc3bba60ce54d95f60b0c7246bb5, type: 2}
@@ -2346,6 +2731,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1959975179}
+  - {fileID: 226732806}
   - {fileID: 1764642137}
   m_Father: {fileID: 903947188}
   m_RootOrder: 0
@@ -2571,7 +2957,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1577864694}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!95 &1764642138
 Animator:
   serializedVersion: 3
@@ -2698,6 +3084,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 926b78eae9cd2fe4b96c805f5b7853f9, type: 3}
   - {fileID: 21300000, guid: a7a4bf6e38bb5e041b7d2894e16693b2, type: 3}
   - {fileID: 21300000, guid: 849fd5f009c83ea4f8b49c6217284a20, type: 3}
+  - {fileID: 21300000, guid: f645cf2cf2854ad4a9d7b48dcd0949ab, type: 3}
+  - {fileID: 21300000, guid: a65b87fd746a5ac46a902ef9d5a6aa18, type: 3}
+  - {fileID: 21300000, guid: 31549c28ccdb9004c9c1071100bdfdae, type: 3}
+  - {fileID: 21300000, guid: 7506e9b6bf542dd4d8c66d56f997a015, type: 3}
   Sounds:
     Taunt: {fileID: 8300000, guid: 293bd78d43d02bb49a713c987b4b556c, type: 3}
     Chop:
@@ -2705,7 +3095,10 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 502d42b088b7bf14395f805e53b0dea3, type: 3}
     - {fileID: 8300000, guid: f8dbc99db1af97a4eaf6a04d30b521eb, type: 3}
     Gloat:
-    - {fileID: 8300000, guid: cb7ab91c6bc91d348b9278ea862e640f, type: 3}
+    - {fileID: 8300000, guid: 5c6cd788a876c104191cd07758cf1a79, type: 3}
+    Struggle:
+    - {fileID: 8300000, guid: 04c19a9e8de537b4b9400f4854d61a0b, type: 3}
+    - {fileID: 8300000, guid: 520931ef46874564798d290d0b3b3c86, type: 3}
     Music: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375, type: 3}
 --- !u!212 &1942873063
 SpriteRenderer:
@@ -2728,7 +3121,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: a7a4bf6e38bb5e041b7d2894e16693b2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 849fd5f009c83ea4f8b49c6217284a20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1942873064
 Transform:
@@ -2737,7 +3130,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1942873061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.18099999, y: -.626999974, z: 0}
+  m_LocalPosition: {x: -1.13999999, y: -.609000027, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

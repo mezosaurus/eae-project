@@ -30,6 +30,7 @@ public class TreeStateAxeManMinigamePanToAxe : TreeState
             if (!Tree.audio.isPlaying)
             {
                 Tree.audio.clip = Tree.Sounds.AxeManMinigameMusic;
+                Tree.audio.volume = 0.8f;
                 Tree.audio.Play();
             }
 
