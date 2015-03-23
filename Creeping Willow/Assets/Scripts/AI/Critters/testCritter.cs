@@ -14,15 +14,19 @@ public class testCritter : CritterController, OnPossessListener {
 
 	public void onPossess()
 	{
-		// TODO: Play explode animation
 		audio.PlayOneShot (popSound);
 		string popLocation = "Particles/Particle System_critterpop";
 		GameObject pop = (GameObject)Instantiate (Resources.Load (popLocation), Vector3.zero, Quaternion.identity);
 		pop.transform.SetParent (transform, false);
 		pop.GetComponent<ParticleSystem> ().Play ();
+		
+		// Destroy objects
 		float duration = pop.GetComponent<ParticleSystem> ().duration;
 		Destroy (pop, duration);
-		//TODO: display no texture
 		Destroy (gameObject, duration);
+
+		Vector3 position = gameObject.transform.position;
+		AbilityPlacedMessage message = new AbilityPlacedMessage (position.x, position.y, AbilityType.PossessionScare);
+		MessageCenter.Instance.Broadcast (message);
 	}
 }	
