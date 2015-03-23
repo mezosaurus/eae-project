@@ -40,12 +40,42 @@ public class PossessableTree : Possessable
         TreeState eatingMinigameMashInstant = new TreeStateEatingMinigameMashInstant();
         TreeState eating = new TreeStateEating();
 
+        // Axe man minigame states
+        TreeState axeManMinigameDead = new TreeStateAxeManMinigameDead();
+        TreeState axeManMinigameWaitForChop = new TreeStateAxeManMinigameWaitForChop();
+        TreeState axeManMinigameGroan = new TreeStateAxeManMinigameGroan();
+        TreeState axeManMinigamePanToAxe = new TreeStateAxeManMinigamePanToAxe();
+        TreeState axeManMinigameWrangleAxe = new TreeStateAxeManMinigameWrangleAxe();
+        TreeState axeManMinigameGrabAxe = new TreeStateAxeManMinigameGrabAxe();
+        TreeState axeManMinigameRemoveAxe = new TreeStateAxeManMinigameRemoveAxe();
+        TreeState axeManMinigameRaiseAxe = new TreeStateAxeManMinigameRaiseAxe();
+        TreeState axeManMinigameDropAxe = new TreeStateAxeManMinigameDropAxe();
+        TreeState axeManMinigameLowerToAxeMan = new TreeStateAxeManMinigameLowerToAxeMan();
+        TreeState axeManMinigameRaiseAxeMan = new TreeStateAxeManMinigameRaiseAxeMan();
+        TreeState axeManMinigameWrangleAxeMan = new TreeStateAxeManMinigameWrangleAxeMan();
+        TreeState axeManMinigameMash = new TreeStateAxeManMinigameMash();
+
         states.Add("Inactive", inactive);
         states.Add("Active", active);
         states.Add("EatingMinigameWrangle", eatingMinigameWrangle);
         states.Add("EatingMinigameMash", eatingMinigameMash);
         states.Add("EatingMinigameMashInstant", eatingMinigameMashInstant);
         states.Add("Eating", eating);
+
+        // Axe man minigame state
+        states.Add("AxeManMinigameDead", axeManMinigameDead);
+        states.Add("AxeManMinigameWaitForChop", axeManMinigameWaitForChop);
+        states.Add("AxeManMinigameGroan", axeManMinigameGroan);
+        states.Add("AxeManMinigamePanToAxe", axeManMinigamePanToAxe);
+        states.Add("AxeManMinigameWrangleAxe", axeManMinigameWrangleAxe);
+        states.Add("AxeManMinigameGrabAxe", axeManMinigameGrabAxe);
+        states.Add("AxeManMinigameRemoveAxe", axeManMinigameRemoveAxe);
+        states.Add("AxeManMinigameRaiseAxe", axeManMinigameRaiseAxe);
+        states.Add("AxeManMinigameDropAxe", axeManMinigameDropAxe);
+        states.Add("AxeManMinigameLowerToAxeMan", axeManMinigameLowerToAxeMan);
+        states.Add("AxeManMinigameRaiseAxeMan", axeManMinigameRaiseAxeMan);
+        states.Add("AxeManMinigameWrangleAxeMan", axeManMinigameWrangleAxeMan);
+        states.Add("AxeManMinigameMash", axeManMinigameMash);
 
         foreach (TreeState state in states.Values) state.Tree = this;
 
@@ -60,7 +90,7 @@ public class PossessableTree : Possessable
     {
         Sprites.EatingMinigame.Circle = new Sprite[101];
 
-        for (int i = 0; i < 101; i++) Sprites.EatingMinigame.Circle[i] = Resources.Load<Sprite>("Textures/CircularProgressBar/CircleProgress" + (i + 1));
+        for (int i = 0; i < 101; i++) Sprites.EatingMinigame.Circle[i] = Resources.Load<Sprite>("Textures/CircularProgressBar2/CircleProgress" + (i + 1));
     }
 
 	protected override void Start ()
@@ -69,6 +99,7 @@ public class PossessableTree : Possessable
 
         // Setup listener so we can know if we died
         MessageCenter.Instance.RegisterListener(MessageType.PlayerKilled, HandleDeath);
+        MessageCenter.Instance.RegisterListener(MessageType.AxeManMinigameTreeChangePhase, HandleChangePhase);
         
         CreateStates();
         LoadCircle();
@@ -108,6 +139,18 @@ public class PossessableTree : Possessable
         {
             Dead = true;
         }
+    }
+
+    private void HandleChangePhase(Message m)
+    {
+        AxeManMinigameTreeChangePhaseMessage message = m as AxeManMinigameTreeChangePhaseMessage;
+
+        ChangeState("AxeManMinigame" + message.Phase);
+    }
+
+    private void FixedUpdate()
+    {
+        currentState.FixedUpdate();
     }
 
     protected override void GameUpdate()
@@ -177,6 +220,12 @@ public class PossessableTree : Possessable
 
         currentState.Enter(data);
     }
+
+    private void OnDestroy()
+    {
+        MessageCenter.Instance.UnregisterListener(MessageType.PlayerKilled, HandleDeath);
+        MessageCenter.Instance.UnregisterListener(MessageType.AxeManMinigameTreeChangePhase, HandleChangePhase);
+    }
 }
 
 namespace Tree.Private
@@ -184,7 +233,7 @@ namespace Tree.Private
     [Serializable]
     public class BodyParts
     {
-        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, RightGrabbedNPC, EatenNPC, MinigameCircle, Eyes, FlameEyes;
+        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, RightGrabbedNPC, EatenNPC, MinigameCircle, Eyes, FlameEyes, Axe;
     }
     
     [Serializable]
@@ -214,6 +263,7 @@ namespace Tree.Private
             public Sprite[] Circle;
             public Sprite LS, RS;
             public Texture[] Buttons;
+            public Sprite[] ButtonSprites;
         }
 
 
@@ -221,13 +271,15 @@ namespace Tree.Private
         public _Face Face;
         public Sprite LegsStill;
         public _EatingMinigame EatingMinigame;
+        public Sprite[] EatingAxeMan;
     }
 
     [Serializable]
     public class Sounds
     {
-        public AudioClip Music, Chew, SoulConsumed;
+        public AudioClip Music, Chew, SoulConsumed, AxeManMinigameMusic;
         public AudioClip[] Walk;
+        public AudioClip Groan, RemoveAxe;
     }
 
     [Serializable]

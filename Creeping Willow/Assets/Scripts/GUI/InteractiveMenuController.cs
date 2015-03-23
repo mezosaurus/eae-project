@@ -60,8 +60,8 @@ public class InteractiveMenuController : MonoBehaviour
 
 		totalZoomTime = 25.0f;
 
-		Screen.showCursor = true;
-		Screen.lockCursor = false;
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
 
 		camera = GameObject.Find( "Main Camera" );
 	}

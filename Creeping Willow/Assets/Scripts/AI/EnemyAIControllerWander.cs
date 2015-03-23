@@ -175,7 +175,8 @@ public class EnemyAIControllerWander : EnemyAIController
 					nextPath.transform.position = new Vector3(nextTreePosition.x, nextTreePosition.y - transform.renderer.bounds.size.y/5);
 					treePath = true;
 					investigatePath = false;
-					checkingPlayer = tree.Equals(getPlayer());
+					//checkingPlayer = tree.Equals(getPlayer ());
+					checkingPlayer = tree.tag.Equals(getPlayer().tag);
 
 					return;
 				}
@@ -208,6 +209,7 @@ public class EnemyAIControllerWander : EnemyAIController
 		return nextPath;
 	}
 
+	/*
 	protected override void OnCollisionEnter2D(Collision2D collision)
 	{
 		base.OnCollisionEnter2D (collision);
@@ -220,10 +222,12 @@ public class EnemyAIControllerWander : EnemyAIController
 			Debug.Log ("Kill Player Message Sent");
 		}
 	}
+	*/
 
 	// To use in case avoid doesn't get better.
 	protected override void OnTriggerStay2D(Collider2D other)
 	{
+		base.OnTriggerStay2D (other);
 		/*
 		Vector3 pos = other.gameObject.transform.position;
 		if (angry && other.tag.Equals("Player") && Vector3.Distance(pos, transform.position) < wanderRadius/4)

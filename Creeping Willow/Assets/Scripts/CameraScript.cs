@@ -12,6 +12,8 @@ public class CameraScript : MonoBehaviour
 
     private float zoomSpeed;
     private bool locked;
+    private Vector2 panFrom, panTo;
+    private float panTimer, panSpeed;
 
     // TEMP?
     private const int SoulConsumedSize = 14;
@@ -24,6 +26,7 @@ public class CameraScript : MonoBehaviour
     {        
         MessageCenter.Instance.RegisterListener(MessageType.CameraZoom, HandleCameraZoomMessage);
         MessageCenter.Instance.RegisterListener(MessageType.CameraChangedObjectFollowed, HandleChangeObjectFollowed);
+        MessageCenter.Instance.RegisterListener(MessageType.CameraZoomAndFocus, HandleZoomAndFocus);
         //MessageCenter.Instance.RegisterListener(MessageType.CameraZoomOut, HandleCameraZoomOutMessage);
         TargetSize = camera.orthographicSize;
         locked = true;
@@ -60,6 +63,19 @@ public class CameraScript : MonoBehaviour
         ObjectToFollowOffset = changeMessage.Offset;
     }
 
+    void HandleZoomAndFocus(Message m)
+    {
+        CameraZoomAndFocusMessage message = m as CameraZoomAndFocusMessage;
+
+        zoomSpeed = message.ZoomSpeed;
+        TargetSize = message.ZoomSize;
+
+        panFrom = transform.position;
+        panTo = message.Point;
+        panTimer = 0f;
+        panSpeed = message.PanSpeed;
+    }
+
     /*void HandleCameraZoomOutMessage(Message message)
     {
         zoomedIn = false;
@@ -81,6 +97,16 @@ public class CameraScript : MonoBehaviour
 
                 if ((targetPosition - transform.position).magnitude < 0.1f) locked = true;
             }*/
+        }
+
+        if(panSpeed > 0f)
+        {
+            panTimer += Time.deltaTime;
+            Vector2 position = Vector2.Lerp(panFrom, panTo, panTimer / panSpeed);
+
+            transform.position = new Vector3(position.x, position.y, -10f);
+
+            if (panTimer >= panSpeed) panSpeed = 0f;
         }
 
         /*if(zoomedIn && camera.orthographicSize != 1.5f)

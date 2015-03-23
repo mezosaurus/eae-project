@@ -142,6 +142,15 @@ public class CritterController : AIController {
 		//setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING);
 	}
 
+	protected override void scare (Vector3 scaredPosition)
+	{
+		return;
+	}
+
+	protected override void lure (Vector3 lurePosition)
+	{
+		return;
+	}
 	public void setSpawnPosition(Vector2 spawn)
 	{
 		spawnPosition = spawn;
