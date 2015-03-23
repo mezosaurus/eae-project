@@ -34,4 +34,7 @@ public enum MessageType
 	PossessorDestroyed,
 	EnemyNPCDestroyed,
 	ScoreAdding,
+    AxeManMinigameTreeChangePhase,
+    AxeManMinigameAxeManChangePhase,
+    CameraZoomAndFocus,
 }
