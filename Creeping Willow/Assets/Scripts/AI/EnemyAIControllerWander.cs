@@ -209,12 +209,12 @@ public class EnemyAIControllerWander : EnemyAIController
 		return nextPath;
 	}
 
-	/*
+	
 	protected override void OnCollisionEnter2D(Collision2D collision)
 	{
 		base.OnCollisionEnter2D (collision);
 		
-		if (angry && collision.gameObject.tag.Equals(player.tag))
+		if (/*angry && */collision.gameObject.tag.Equals(player.tag))
 		{
 			// TODO: It's axe time
 			PlayerKilledMessage message = new PlayerKilledMessage(gameObject, collision.gameObject);
@@ -222,7 +222,7 @@ public class EnemyAIControllerWander : EnemyAIController
 			Debug.Log ("Kill Player Message Sent");
 		}
 	}
-	*/
+	
 
 	// To use in case avoid doesn't get better.
 	protected override void OnTriggerStay2D(Collider2D other)
