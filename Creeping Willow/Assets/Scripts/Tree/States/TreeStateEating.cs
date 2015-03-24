@@ -49,7 +49,7 @@ public class TreeStateEating : TreeState
         Tree.audio.Play();
 
         MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
-        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.15f)));
+        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
 
         /*Tree.BodyParts.FlameEyes.SetActive(true);

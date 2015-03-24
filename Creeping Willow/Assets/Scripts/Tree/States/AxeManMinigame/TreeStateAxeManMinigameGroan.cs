@@ -1,17 +1,40 @@
 ﻿using UnityEngine;
 
 public class TreeStateAxeManMinigameGroan : TreeState
-{    
+{
+    private const float ShakeAmount = 0.04f;
+    
+    private Vector3 originalCameraPosition;
+    
     public override void Enter(object data)
     {
         Tree.audio.clip = Tree.Sounds.Groan;
         Tree.audio.Play();
+
+        originalCameraPosition = GameObject.FindGameObjectWithTag("MainCamera").transform.position;
+
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
     }
 
     public override void Update()
     {
         if (!Tree.audio.isPlaying)
+        {
             Tree.ChangeState("AxeManMinigamePanToAxe");
+
+            return;
+        }
+
+        // Shake the camera
+        /*Vector3 position = Random.insideUnitSphere * ShakeAmount;
+
+        position.z = originalCameraPosition.z;
+
+        Camera.main.transform.position = position;*/
+
+        Vector2 offset = Random.insideUnitCircle * ShakeAmount;
+
+        Camera.main.transform.position = originalCameraPosition + (Vector3)offset;
     }
 
     public override void UpdateSorting()
@@ -29,5 +52,10 @@ public class TreeStateAxeManMinigameGroan : TreeState
         /*//Tree.BodyParts.Axe.GetComponent<SpriteRenderer>().sortingOrder = i + 6;
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sortingOrder = i + 7;*/
         Tree.BodyParts.Axe.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
+    }
+
+    public override void Leave()
+    {
+        Camera.main.transform.position = originalCameraPosition;
     }
 }

@@ -7,7 +7,7 @@ public class TreeStateAxeManMinigameWaitForChop : TreeState
     
     public override void Enter(object data)
     {
-        Tree.Active = false;
+        //Tree.Active = true;
         GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
         Tree.Eating = true;
 
@@ -18,9 +18,11 @@ public class TreeStateAxeManMinigameWaitForChop : TreeState
         Tree.BodyParts.MinigameCircle.SetActive(false);
         Tree.BodyParts.RightGrabbedNPC.SetActive(false);
 
-        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.EyesClosed;
 
         axeMan = GameObject.FindGameObjectWithTag("AxeManKillActiveTree");
+
+        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage2(Tree.transform.position + new Vector3(0f, 0.7f), 1.5f, 0.25f));
     }
 
     /*private void SetAlpha(Transform root, float alpha)

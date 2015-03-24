@@ -13,6 +13,7 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
     private float percentage, timeElapsed, sampledTime, averagePercentage;
     private int intPercentage, ticks;
     private bool won;
+    private float timer;
 
 
     public override void Enter(object data)
@@ -55,6 +56,7 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
         Tree.audio.Play();*/
 
         won = false;
+        timer = 0f;
     }
 
     public override void Update()
@@ -69,7 +71,29 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
         }
 
         if (Input.GetButtonDown(Buttons[button])) won = true;
+
+        timer += Time.deltaTime;
+
+        if(timer > 5f)
+        {
+            Lose();
+
+            return;
+        }
     }
+
+    protected void Lose()
+    {
+        Tree.BodyParts.RightLowerBackgroundArm.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+        Tree.BodyParts.Axe.SetActive(false);
+
+        Tree.audio.Stop();
+
+        MessageCenter.Instance.Broadcast(new AxeManMinigameAxeManChangePhaseMessage(9001));
+
+        Tree.ChangeState("AxeManMinigameDead");
+    }
+
     protected void UpdateArms(float percentage)
     {
         //float upperAngle = npcData.RightUpperArmMidpointAngle + ((npcData.RightUpperArmEndAngle - npcData.RightUpperArmMidpointAngle) * percentage);

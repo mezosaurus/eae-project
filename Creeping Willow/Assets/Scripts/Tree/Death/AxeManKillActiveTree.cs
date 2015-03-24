@@ -7,9 +7,6 @@ public class AxeManKillActiveTree : MonoBehaviour
     private const float StruggleFrameTime = 0.1f;
 
 
-    public delegate void Finished(GameObject cinematic, GameObject actual);
-
-
     public GameObject Axe;
     public Sprite[] Sprites;
     public _Sounds Sounds;
@@ -18,7 +15,6 @@ public class AxeManKillActiveTree : MonoBehaviour
     private GameObject targetTree;
     private PossessableTree tree;
     private GameObject actualAxeMan;
-    private Finished finishedCallback;
 
     private SpriteRenderer spriteRenderer;
     private uint phase;
@@ -54,11 +50,10 @@ public class AxeManKillActiveTree : MonoBehaviour
         MessageCenter.Instance.RegisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
     }
 
-    public void Instantiate(GameObject target, GameObject actualAxeMan, Finished callback)
+    public void Instantiate(GameObject target, GameObject actualAxeMan)
     {
         targetTree = target;
         this.actualAxeMan = actualAxeMan;
-        finishedCallback = callback;
         tree = targetTree.GetComponent<PossessableTree>();
     }
 
@@ -86,6 +81,12 @@ public class AxeManKillActiveTree : MonoBehaviour
             frame1 = true;
             spriteRenderer.sprite = Sprites[2];
             played = false;
+        }
+        // Phase 9875 is when the tree has won
+        if(phase == 98765)
+        {
+            Destroy(actualAxeMan);
+            Destroy(gameObject);
         }
     }
 
@@ -162,7 +163,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         }*/
 
         phase = 3;
-        MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage("Groan"));
+        MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage(targetTree, "Groan"));
     }
 
     private void UpdatePhase3()
@@ -283,7 +284,12 @@ public class AxeManKillActiveTree : MonoBehaviour
         else
         {
             if (!audio.isPlaying)
-                finishedCallback(gameObject, actualAxeMan);
+            {
+                /*actualAxeMan.SetActive(true);
+                Destroy(gameObject);*/
+
+                MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
+            }
         }
     }
 

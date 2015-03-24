@@ -12,6 +12,7 @@ public class PossessableTree : Possessable
     public float Speed;
     public bool Eating;
     public bool Dead;
+    public GameObject AxeMan, ActualAxeMan;
     public Tree.Private.BodyParts BodyParts;
     public Tree.Private.Sprites Sprites;
     public Tree.Private.Sounds Sounds;
@@ -54,6 +55,9 @@ public class PossessableTree : Possessable
         TreeState axeManMinigameRaiseAxeMan = new TreeStateAxeManMinigameRaiseAxeMan();
         TreeState axeManMinigameWrangleAxeMan = new TreeStateAxeManMinigameWrangleAxeMan();
         TreeState axeManMinigameMash = new TreeStateAxeManMinigameMash();
+        TreeState axeManMinigameEatingFirstHalf = new TreeStateAxeManMinigameEatingFirstHalf();
+        TreeState axeManMinigameEatingLastWords = new TreeStateAxeManMinigameEatingLastWords();
+        TreeState axeManMinigameEatingLastHalf = new TreeStateAxeManMinigameEatingLastHalf();
 
         states.Add("Inactive", inactive);
         states.Add("Active", active);
@@ -76,6 +80,9 @@ public class PossessableTree : Possessable
         states.Add("AxeManMinigameRaiseAxeMan", axeManMinigameRaiseAxeMan);
         states.Add("AxeManMinigameWrangleAxeMan", axeManMinigameWrangleAxeMan);
         states.Add("AxeManMinigameMash", axeManMinigameMash);
+        states.Add("AxeManMinigameEatingFirstHalf", axeManMinigameEatingFirstHalf);
+        states.Add("AxeManMinigameEatingLastWords", axeManMinigameEatingLastWords);
+        states.Add("AxeManMinigameEatingLastHalf", axeManMinigameEatingLastHalf);
 
         foreach (TreeState state in states.Values) state.Tree = this;
 
@@ -93,14 +100,23 @@ public class PossessableTree : Possessable
         for (int i = 0; i < 101; i++) Sprites.EatingMinigame.Circle[i] = Resources.Load<Sprite>("Textures/CircularProgressBar2/CircleProgress" + (i + 1));
     }
 
-	protected override void Start ()
+    public void StartActiveAxeManMinigame()
+    {
+        GameObject axeMan = (GameObject)GameObject.Instantiate(Prefabs.AxeManKillActive, transform.position + new Vector3(-1.14f, 0.091f), Quaternion.identity);
+        AxeMan = axeMan;
+
+        axeMan.GetComponent<AxeManKillActiveTree>().Instantiate(gameObject, ActualAxeMan);
+        ChangeState("AxeManMinigameWaitForChop");
+    }
+
+	protected /*override*/ void Awake()
     {
         Dead = false;
 
         // Setup listener so we can know if we died
         MessageCenter.Instance.RegisterListener(MessageType.PlayerKilled, HandleDeath);
         MessageCenter.Instance.RegisterListener(MessageType.AxeManMinigameTreeChangePhase, HandleChangePhase);
-        
+
         CreateStates();
         LoadCircle();
 
@@ -138,6 +154,15 @@ public class PossessableTree : Possessable
         if(message.Tree == gameObject)
         {
             Dead = true;
+            ActualAxeMan = message.NPC;
+
+            // See if the tree is already in the active state
+            if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE)
+            {
+                StartActiveAxeManMinigame();
+
+                return;
+            }
         }
     }
 
@@ -145,7 +170,8 @@ public class PossessableTree : Possessable
     {
         AxeManMinigameTreeChangePhaseMessage message = m as AxeManMinigameTreeChangePhaseMessage;
 
-        ChangeState("AxeManMinigame" + message.Phase);
+        if(message.Tree == gameObject)
+            ChangeState("AxeManMinigame" + message.Phase);
     }
 
     private void FixedUpdate()
@@ -248,7 +274,7 @@ namespace Tree.Private
         [Serializable]
         public class _Face
         {
-            public Sprite None, EyesClosed, MoveFront, MoveFrontRight, MoveRight, Crazy;
+            public Sprite None, EyesClosed, MoveFront, MoveFrontRight, MoveRight, Crazy, ChewedAxeMan;
         }
 
         [Serializable]
@@ -272,19 +298,22 @@ namespace Tree.Private
         public Sprite LegsStill;
         public _EatingMinigame EatingMinigame;
         public Sprite[] EatingAxeMan;
+        public Texture2D FinishHim;
     }
 
     [Serializable]
     public class Sounds
     {
-        public AudioClip Music, Chew, SoulConsumed, AxeManMinigameMusic;
+        public AudioClip Music, Chew, Burp, Laugh, SoulConsumed, SoulConsumed2, AxeManMinigameMusic;
         public AudioClip[] Walk;
         public AudioClip Groan, RemoveAxe;
+        public AudioClip[] ChewAxeMan;
+        public AudioClip[] AxeManLastWords;
     }
 
     [Serializable]
     public class Prefabs
     {
-        public GameObject LT, ThumbStick, A;
+        public GameObject LT, ThumbStick, A, AxeManKillActive;
     }
 }

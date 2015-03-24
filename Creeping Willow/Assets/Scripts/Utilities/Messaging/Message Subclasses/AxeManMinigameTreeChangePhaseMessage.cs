@@ -1,10 +1,14 @@
-﻿class AxeManMinigameTreeChangePhaseMessage : Message
+﻿using UnityEngine;
+
+class AxeManMinigameTreeChangePhaseMessage : Message
 {
+    public GameObject Tree;
     public string Phase;
 
 
-    public AxeManMinigameTreeChangePhaseMessage(string phase) : base(MessageType.AxeManMinigameTreeChangePhase)
+    public AxeManMinigameTreeChangePhaseMessage(GameObject tree, string phase) : base(MessageType.AxeManMinigameTreeChangePhase)
     {
+        Tree = tree;
         Phase = phase;
     }
 }

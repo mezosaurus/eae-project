@@ -18,6 +18,7 @@ public class TreeStateAxeManMinigameMash : TreeState
     private float percentage, timeElapsed, sampledTime, averagePercentage;
     private int intPercentage, ticks;
     private bool won;
+    private bool started;
 
 
     public override void Enter(object data)
@@ -56,6 +57,7 @@ public class TreeStateAxeManMinigameMash : TreeState
         sampledTime = 0f;
         averagePercentage = 0f;
         ticks = 0;
+        started = false;
 
         won = false;
     }
@@ -115,15 +117,21 @@ public class TreeStateAxeManMinigameMash : TreeState
         }
     }*/
 
+    public override void Update()
+    {
+        timeElapsed += Time.deltaTime;
+    }
+
     public override void FixedUpdate()
     {
         if (Camera.main.orthographicSize != Camera.main.GetComponent<CameraScript>().TargetSize) return;
+        if (!started) started = true;
 
         if(won)
         {
-            /*TreeStateEating.Data data = new TreeStateEating.Data(npc);
+            /*TreeStateEating.Data data = new TreeStateEating.Data(npc);*/
             
-            Tree.ChangeState("Eating", data);*/
+            Tree.ChangeState("AxeManMinigameEatingFirstHalf");
 
             return;
         }
@@ -220,6 +228,7 @@ public class TreeStateAxeManMinigameMash : TreeState
     public override void Leave()
     {
         //GameObject.Destroy(buttonIcon);
+        //Tree.audio.Stop();
     }
 
 

@@ -11,6 +11,14 @@ public class TreeStateActive : TreeState
     
     public override void Enter(object data)
     {
+        // Check to see if we're dead first of all
+        if(Tree.Dead)
+        {
+            Tree.StartActiveAxeManMinigame();
+
+            return;
+        }
+
         Tree.Active = true;
         GlobalGameStateManager.PosessionState = PosessionState.EXORCISABLE;
         Tree.Eating = false;
@@ -85,7 +93,7 @@ public class TreeStateActive : TreeState
         }
         else
         {  
-            Tree.audio.Stop();
+            Tree.BodyParts.Trunk.audio.Stop();
 
             walkAudio = 1;
             lastLegFrame = -1;

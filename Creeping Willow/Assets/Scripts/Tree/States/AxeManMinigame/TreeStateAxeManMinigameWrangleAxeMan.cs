@@ -24,7 +24,7 @@ public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
 
     public override void Enter(object data)
     {
-        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage(Tree.transform.position + new Vector3(0f, 0.7f), 0.25f, 1.5f, 15f));
+        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage2(Tree.BodyParts.MinigameCircle.transform.position, 1.7f, 0.25f));
         MessageCenter.Instance.Broadcast(new AxeManMinigameAxeManChangePhaseMessage(1001));
 
         axeMan = (data as Data).AxeMan;
@@ -73,9 +73,9 @@ public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
         // If both sticks are in, change to next phase of minigame
         if (lsIn && rsIn)
         {
-            /*TreeStateAxeManMinigameMash.Data data = new TreeStateAxeManMinigameMash.Data(axeMan, percentage);
+            TreeStateAxeManMinigameMash.Data data = new TreeStateAxeManMinigameMash.Data(axeMan, percentage);
             
-            Tree.ChangeState("AxeManMinigameMash", data);*/
+            Tree.ChangeState("AxeManMinigameMash", data);
 
             return;
         }
@@ -128,6 +128,10 @@ public class TreeStateAxeManMinigameWrangleAxeMan : TreeState
         float progress = (lsProgress + rsProgress) / 2f;
 
         UpdateArms(progress);
+
+        float cameraSize = Mathf.Lerp(1.7f, 1.2f, progress);   
+        Camera.main.orthographicSize = cameraSize;
+        Camera.main.GetComponent<CameraScript>().TargetSize = cameraSize;
 
         // Update timer
         timeElapsed += Time.deltaTime;

@@ -2,10 +2,14 @@
 
 public class TreeStateAxeManMinigameEatingFirstHalf : TreeState
 {
-    private GameObject axeMan;
-    private float timeElapsed;
+    private const float UpperArmStartAngle = 371.83527f;
+    private const float LowerArmStartAngle = 294.9953f;
+    private const float UpperArmEndAngle = 377.36395f;
+    private const float LowerArmEndAngle = 298.9052f;
+
+
     private int frame;
-    private float frameTimer;
+    private float frameTimer, timer, timeElapsed;
 
 
     public override void Enter(object data)
@@ -14,72 +18,65 @@ public class TreeStateAxeManMinigameEatingFirstHalf : TreeState
         //Tree.BodyParts.RightGrabbedNPC.SetActive(false);
         Tree.BodyParts.MinigameCircle.SetActive(false);
 
-        // Get parameters
-        Data parameters = data as Data;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingAxeMan[0];
 
-        axeMan = parameters.AxeMan;
+        MessageCenter.Instance.Broadcast(new AxeManMinigameAxeManChangePhaseMessage(98765));
 
-        // Set arm angles
-        /*Tree.BodyParts.RightUpperArm.transform.eulerAngles = new Vector3(0f, 0f, npcData.RightUpperArmEndAngle);
-        Tree.BodyParts.RightLowerForegroundArm.transform.eulerAngles = new Vector3(0f, 0f, npcData.RightLowerArmEndAngle);
-
-        // Play chew sound
-        //if (Tree.audio.isPlaying) Tree.audio.Stop();
-
-        Tree.audio.clip = Tree.Sounds.Chew;
-
-        Tree.audio.Play();
-
+        frame = 0;
+        frameTimer = 0f;
+        timer = 0f;
         timeElapsed = 0f;
-    }
-
-    private void Eat()
-    {        
-        GlobalGameStateManager.SoulConsumedTimer = 3.5f;
-
-        Tree.audio.Stop();
-        Tree.audio.clip = Tree.Sounds.SoulConsumed;
-        Tree.audio.Play();
-
-        MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
-        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.15f)));
-        MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
-
-        if(npc.GetComponent<AIController>().isCritterType)
-        {
-            switch(npc.GetComponent<CritterController>().critterUpgradeType)
-            {
-                case CritterType.poisonous:
-                    Tree.BonusPoisonTimer = Tree.MaxBonusTime;
-                    break;
-
-                default:
-                    Tree.BonusSpeedTimer = Tree.MaxBonusTime;
-                    break;
-            }
-        }
-
-        GameObject.Destroy(npc);
     }
 
     public override void Update()
     {
-        if(!Tree.audio.isPlaying)
+        if (frame == 10)
         {
-            Eat();
-            Tree.ChangeState("Active");
+            if (!Tree.BodyParts.Trunk.audio.isPlaying)
+            {
+                timer += Time.deltaTime;
+
+                if (timer > 1f)
+                    Tree.ChangeState("AxeManMinigameEatingLastWords");
+            }
 
             return;
         }
         
-        // Update arm rotation
-        if(timeElapsed < npcData.ArmEatTime)
+        frameTimer += Time.deltaTime;
+
+        if(frameTimer > 0.05f)
+        {
+            frame++;
+            frameTimer = 0f;
+
+            Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingAxeMan[frame];
+
+            if(frame == 10)
+            {
+                Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.ChewedAxeMan;
+
+                return;
+            }
+
+            if(frame == 3)
+            {
+                Tree.BodyParts.Trunk.audio.priority = 255;
+                Tree.BodyParts.Trunk.audio.rolloffMode = AudioRolloffMode.Linear;
+                Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.ChewAxeMan[0];
+                Tree.BodyParts.Trunk.audio.Play();
+            }
+        }
+
+        if (timeElapsed < 0.55f)
             timeElapsed += Time.deltaTime;
 
-        float percentage = Mathf.Clamp(timeElapsed / npcData.ArmEatTime, 0f, 1f);
+        if (timeElapsed > 0.55f) timeElapsed = 0.55f;
 
-        float upperAngle = npcData.RightUpperArmEndAngle + ((npcData.RightUpperArmFinalAngle - npcData.RightUpperArmEndAngle) * percentage);
-        float lowerAngle = npcData.RightLowerArmEndAngle + ((npcData.RightLowerArmFinalAngle - npcData.RightLowerArmEndAngle) * percentage);
+        float percentage = timeElapsed / 0.55f;
+
+        float upperAngle = UpperArmStartAngle + ((UpperArmEndAngle - UpperArmStartAngle) * percentage);
+        float lowerAngle = LowerArmStartAngle + ((LowerArmEndAngle - LowerArmStartAngle) * percentage);
 
         Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
         Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);
@@ -103,9 +100,8 @@ public class TreeStateAxeManMinigameEatingFirstHalf : TreeState
 
     public override void Leave()
     {
-        Tree.BodyParts.Eyes.SetActive(false);
-        Tree.BodyParts.Face.GetComponent<Animator>().enabled = false;
-        Tree.BodyParts.RightGrabbedNPC.SetActive(true);
+        //Tree.BodyParts.Eyes.SetActive(false);
+        //Tree.BodyParts.RightGrabbedNPC.SetActive(true);
         //Tree.BodyParts.Face.SetActive(true);
         //Tree.BodyParts.GrabbedNPC.SetActive(true);*/
     }
