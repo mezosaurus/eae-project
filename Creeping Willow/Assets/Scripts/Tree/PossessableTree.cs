@@ -109,7 +109,7 @@ public class PossessableTree : Possessable
         ChangeState("AxeManMinigameWaitForChop");
     }
 
-	protected /*override*/ void Awake()
+	protected override void Start()
     {
         Dead = false;
 
