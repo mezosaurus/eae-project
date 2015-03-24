@@ -7,9 +7,6 @@ public class TreeStateAxeManMinigameDead : TreeState
     
     public override void Enter(object data)
     {
-        Tree.Active = false;
-        GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
-
         axeMan = GameObject.FindGameObjectWithTag("AxeManKillActiveTree");
     }
 

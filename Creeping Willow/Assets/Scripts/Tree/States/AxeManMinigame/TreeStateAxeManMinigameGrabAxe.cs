@@ -18,7 +18,6 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
 
     public override void Enter(object data)
     {
-        GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
         //Tree.Eating = true;
 
         Tree.BodyParts.LeftArm.SetActive(false);

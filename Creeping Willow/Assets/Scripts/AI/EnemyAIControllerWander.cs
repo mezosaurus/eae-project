@@ -39,7 +39,22 @@ public class EnemyAIControllerWander : EnemyAIController
                 PlayerKilledMessage message = new PlayerKilledMessage(gameObject, GlobalGameStateManager.PanicTree);
                 MessageCenter.Instance.Broadcast(message);
 
-                nextPath.transform.position = new Vector3(26.81f, -2.93f);
+                // Find the closest respawn point
+                Vector3 position = Vector3.zero;
+                float distance = float.MaxValue;
+
+                foreach(GameObject spawnPoint in GameObject.FindGameObjectsWithTag("Respawn"))
+                {
+                    float d = Vector3.Distance(transform.position, spawnPoint.transform.position);
+
+                    if(d < distance)
+                    {
+                        d = distance;
+                        position = spawnPoint.transform.position;
+                    }
+                }
+
+                nextPath.transform.position = position; // new Vector3(26.81f, -2.93f);
                 killSelf = true;
 
                 return;

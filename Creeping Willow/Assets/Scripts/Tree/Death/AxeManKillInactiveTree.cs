@@ -109,6 +109,7 @@ public class AxeManKillInactiveTree : MonoBehaviour
 
                     // Destroy the tree
                     Destroy(targetTree);
+                    GlobalGameStateManager.PanicTree = null;
 
                     // TODO: spawn tree explosion
                     // TODO: send GUI message

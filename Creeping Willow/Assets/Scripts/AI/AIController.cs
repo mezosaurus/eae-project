@@ -336,6 +336,10 @@ public class AIController : GameBehavior
 			if (alertLevel >= panicThreshold) 
 			{
 				//Debug.Log("PANICKED");
+                GlobalGameStateManager.PanicTree = GetClosestPlayer(transform.position);
+
+                //GlobalGameStateManager.PanicTree.GetComponent<PossessableTree>().BodyParts.Trunk.GetComponent<SpriteRenderer>().color = Color.red;
+
 				panic ();
 			}
 
@@ -365,6 +369,25 @@ public class AIController : GameBehavior
 			alert ();
 		}
 	}
+
+    private GameObject GetClosestPlayer(Vector3 position)
+    {
+        GameObject player = null;
+        float distance = float.MaxValue;
+
+        foreach (PossessableTree tree in FindObjectsOfType<PossessableTree>())
+        {
+            float d = Vector3.Distance(tree.transform.position, position);
+
+            if (d < distance)
+            {
+                distance = d;
+                player = tree.gameObject;
+            }
+        }
+
+        return player;
+    }
 
 	protected bool updateNPC ()
 	{

@@ -28,9 +28,7 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
 
     public override void Enter(object data)
     {
-        GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
         GlobalGameStateManager.SoulConsumedTimer = 0f;
-        Tree.Eating = true;
 
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().color = Color.white;
 

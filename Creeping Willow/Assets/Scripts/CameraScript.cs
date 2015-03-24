@@ -109,6 +109,11 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetButtonDown("LB"))
+        {
+            Application.LoadLevel("InteractiveMenu");
+        }
+        
         if(ObjectToFollow != null)
         {
             Vector3 targetPosition = new Vector3(ObjectToFollow.position.x, ObjectToFollow.position.y, transform.position.z) + ObjectToFollowOffset;

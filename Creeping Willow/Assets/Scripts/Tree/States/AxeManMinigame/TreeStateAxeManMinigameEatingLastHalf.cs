@@ -44,7 +44,7 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
         
         if (phase == 1)
         {            
-            if (Tree.audio.volume > 0f)
+            /*if (Tree.audio.volume > 0f)
             {
                 Tree.audio.volume -= (Time.deltaTime * 1.785714286f);
             }
@@ -52,15 +52,14 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
             {
                 phase = 2;
                 timer = 0f;
+            }*/
+
+            if(!Tree.BodyParts.Trunk.audio.isPlaying)
+            {
+                phase = 2;
+                timer = 0f;
             }
 
-            percentage = 1f - Tree.audio.volume;
-
-            upperAngle = UpperArmEndAngle + ((UpperArmEnd2Angle - UpperArmEndAngle) * percentage);
-            lowerAngle = LowerArmEndAngle + ((LowerArmEnd2Angle - LowerArmEndAngle) * percentage);
-
-            Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
-            Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);
 
             return;
         }
@@ -74,18 +73,32 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
                 timer = 0f;
 
                 Tree.audio.volume = 1f;
-                Tree.audio.clip = Tree.Sounds.Laugh;
-                Tree.audio.Play();
+                Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Laugh;
+                Tree.BodyParts.Trunk.audio.Play();
             }
 
             return;
         }
         if(phase == 3)
         {
-            if(!Tree.audio.isPlaying)
+            if (Tree.audio.volume > 0f)
+            {
+                Tree.audio.volume -= (Time.deltaTime * 0.5f);
+            }
+
+            if (!Tree.BodyParts.Trunk.audio.isPlaying)
             {
                 phase = 4;
+                Tree.audio.volume = 1f;
             }
+
+            percentage = 1f - Tree.audio.volume;
+
+            upperAngle = UpperArmEndAngle + ((UpperArmEnd2Angle - UpperArmEndAngle) * percentage);
+            lowerAngle = LowerArmEndAngle + ((LowerArmEnd2Angle - LowerArmEndAngle) * percentage);
+
+            Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
+            Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);
 
             return;
         }
