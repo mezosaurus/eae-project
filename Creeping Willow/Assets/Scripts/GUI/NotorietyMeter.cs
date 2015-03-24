@@ -58,6 +58,7 @@ public class NotorietyMeter : MonoBehaviour
 	{
 		//MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
 		MessageCenter.Instance.RegisterListener (MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
+        MessageCenter.Instance.RegisterListener(MessageType.AxeManKilled, (message) => axemanCount--);
 	}
 	
 	protected void UnregisterListeners()

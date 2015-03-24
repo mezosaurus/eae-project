@@ -97,6 +97,13 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
             Tree.audio.clip = Tree.Sounds.SoulConsumed2;
             Tree.audio.Play();
 
+            foreach(GameObject go in Tree.DisabledForMinigame)
+            {
+                go.SetActive(true);
+            }
+
+            Tree.DisabledForMinigame = new System.Collections.Generic.List<GameObject>();
+
             //MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
             MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
             MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));

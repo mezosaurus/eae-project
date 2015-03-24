@@ -52,9 +52,7 @@ public class TreeStateActive : TreeState
     }
 
     public override void Update()
-    {
-        Debug.Log(GlobalGameStateManager.PosessionState);
-        
+    {        
         float bonusSpeed = (Tree.BonusSpeedTimer > 0f) ? 1.2f : 1f;
         
         // Update velocity

@@ -7,8 +7,6 @@ public class TreeStateAxeManMinigamePanToAxe : TreeState
     public override void Enter(object data)
     {
         Tree.Active = true;
-        GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
-        Tree.Eating = true;
 
         Tree.BodyParts.LeftArm.SetActive(false);
         Tree.BodyParts.RightArm.SetActive(false);
@@ -30,7 +28,7 @@ public class TreeStateAxeManMinigamePanToAxe : TreeState
             if (!Tree.audio.isPlaying)
             {
                 Tree.audio.clip = Tree.Sounds.AxeManMinigameMusic;
-                Tree.audio.volume = 0.8f;
+                //Tree.audio.volume = 0.8f;
                 Tree.audio.Play();
             }
 

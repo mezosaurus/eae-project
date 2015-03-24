@@ -20,12 +20,31 @@ public class EnemyAIControllerWander : EnemyAIController
 	protected float nextInvestigateTime = 0;
 	//*/
 
+    private bool sent = false;
+
 	protected override void GameUpdate () 
 	{
 		if (updateEnemyNPC ())
 		{
 			return;
 		}
+
+        if (GlobalGameStateManager.PanicTree != null)
+        {
+            //GlobalGameStateManager.PanicTree.GetComponent<PossessableTree>().BodyParts.Trunk.GetComponent<SpriteRenderer>().color = Color.red;
+
+            if (Vector3.Distance(transform.position, GlobalGameStateManager.PanicTree.transform.position) <= 2f && !sent)
+            {
+                sent = true;
+                PlayerKilledMessage message = new PlayerKilledMessage(gameObject, GlobalGameStateManager.PanicTree);
+                MessageCenter.Instance.Broadcast(message);
+
+                nextPath.transform.position = new Vector3(26.81f, -2.93f);
+                killSelf = true;
+
+                return;
+            }
+        }
 
 		if (investigating)
 		{
@@ -122,8 +141,11 @@ public class EnemyAIControllerWander : EnemyAIController
 		
 		if (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf)
 		{
-			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
-				destroyNPC();
+            if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
+            {
+                MessageCenter.Instance.Broadcast(new AxeManKilledMessage());
+                destroyNPC();
+            }
 			
 			if (!investigating)
 			{
@@ -158,11 +180,11 @@ public class EnemyAIControllerWander : EnemyAIController
 					}
 
 					// Check if player tree is outside range
-					if (tree != null && tree.tag.Equals("Player") && Vector3.Distance(tree.transform.position, panickedNPCPosition) > wanderRadius)
+					/*if (tree != null && tree.tag.Equals("Player") && Vector3.Distance(tree.transform.position, panickedNPCPosition) > wanderRadius)
 					{
 						tree = null;
 						treeList.RemoveAt(rand);
-					}
+					}*/
 				}
 
 				if (tree != null)
@@ -199,6 +221,10 @@ public class EnemyAIControllerWander : EnemyAIController
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
 
+        player = GlobalGameStateManager.PanicTree; // GetClosestPlayer(GlobalGameStateManager.PanicPosition);
+
+        Debug.Log("Set");
+
 		initAxeMan ();
 	}
 
@@ -206,22 +232,23 @@ public class EnemyAIControllerWander : EnemyAIController
 	{
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
+
 		return nextPath;
 	}
 
 	
-	protected override void OnCollisionEnter2D(Collision2D collision)
+	/*protected override void OnCollisionEnter2D(Collision2D collision)
 	{
 		base.OnCollisionEnter2D (collision);
 		
-		if (/*angry && */collision.gameObject.tag.Equals(player.tag))
+		if (angry && collision.gameObject.tag.Equals(player.tag))
 		{
 			// TODO: It's axe time
 			PlayerKilledMessage message = new PlayerKilledMessage(gameObject, collision.gameObject);
 			MessageCenter.Instance.Broadcast(message);
 			Debug.Log ("Kill Player Message Sent");
 		}
-	}
+	}*/
 	
 
 	// To use in case avoid doesn't get better.

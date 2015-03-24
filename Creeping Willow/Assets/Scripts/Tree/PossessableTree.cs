@@ -12,6 +12,7 @@ public class PossessableTree : Possessable
     public float Speed;
     public bool Eating;
     public bool Dead;
+    public List<GameObject> DisabledForMinigame;
     public GameObject AxeMan, ActualAxeMan;
     public Tree.Private.BodyParts BodyParts;
     public Tree.Private.Sprites Sprites;
@@ -149,6 +150,8 @@ public class PossessableTree : Possessable
 
     private void HandleDeath(Message m)
     {
+        Debug.Log("HandleDeath");
+        
         PlayerKilledMessage message = m as PlayerKilledMessage;
 
         if(message.Tree == gameObject)
@@ -157,7 +160,7 @@ public class PossessableTree : Possessable
             ActualAxeMan = message.NPC;
 
             // See if the tree is already in the active state
-            if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE)
+            if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE && Active)
             {
                 StartActiveAxeManMinigame();
 

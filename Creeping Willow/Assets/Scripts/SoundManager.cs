@@ -49,7 +49,8 @@ public class SoundManager : MonoBehaviour
 	
 	void Update()
 	{
-		
+        /*if (GameObject.FindGameObjectWithTag("MainCamera").audio.isPlaying)
+            musicSource.Stop();*/
 	}
 
 	public void ChangeMusic( AudioClip clip )

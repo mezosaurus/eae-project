@@ -85,6 +85,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         // Phase 9875 is when the tree has won
         if(phase == 98765)
         {
+            MessageCenter.Instance.Broadcast(new AxeManKilledMessage());
             Destroy(actualAxeMan);
             Destroy(gameObject);
         }
@@ -258,6 +259,7 @@ public class AxeManKillActiveTree : MonoBehaviour
 
                     // Destroy the tree
                     Destroy(targetTree);
+                    GlobalGameStateManager.PanicTree = null;
 
                     // TODO: spawn tree explosion
                     // TODO: send GUI message
@@ -291,6 +293,11 @@ public class AxeManKillActiveTree : MonoBehaviour
                 MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
             }
         }
+    }
+
+    void OnDestroy()
+    {
+        MessageCenter.Instance.UnregisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
     }
 
     [System.Serializable]
