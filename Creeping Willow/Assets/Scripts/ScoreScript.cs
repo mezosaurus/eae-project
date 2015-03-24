@@ -264,7 +264,7 @@ public class ScoreScript : MonoBehaviour {
 
 	int currentMultiplier = 3;
 	int popupMultiplier = 0;
-	int multiplierPoints = 0;
+	int multiplierPoints = 10;
 
 	// multiplier timers
 	float lastMultiplierTime;
@@ -312,8 +312,8 @@ public class ScoreScript : MonoBehaviour {
 		currentBountyTextHeight = Screen.height-bountyLabelSizeY*3/4;
 		currentBountyImageHeight = Screen.height+bountyRectSizeY;
 		
-		popupIncrement = popupIncrementMax;
-		popupIncrement2 = popupIncrementMax2;
+		popupIncrement = 0;
+		popupIncrement2 = 0;
 		
 		sideL = Screen.width / 3;
 		sideR = Screen.width * 2 / 3;
@@ -685,7 +685,7 @@ public class ScoreScript : MonoBehaviour {
 
 			// increment height
 			if( !paused )
-				popupIncrement2 += 1.5f;
+				popupIncrement2 += 1f;
 			
 			// check statement for pop-up statements
 			if( popupIncrement2 > popupIncrementMax2 )
@@ -1283,7 +1283,7 @@ public class ScoreScript : MonoBehaviour {
 		int npcScore = NPC_EATEN;
 		eatenString = npcEatenString;
 		
-		tmpMultiplier = 0;
+		tmpMultiplier = 3; // 5 for eating an npc
 		lastMultiplierTime = Time.time;
 
 		AIController controller = mess.NPC.GetComponent<AIController> ();
@@ -1656,7 +1656,7 @@ public class ScoreScript : MonoBehaviour {
 		Sprite sprite = BountyNPC.GetComponent<SpriteRenderer> ().sprite;
 		if (sprite == null)
 		{
-			Debug.Log ("Something Broke here: " + this.GetType ().Name);
+			Debug.Log ("NPC Sprite is Null: " + this.GetType ().Name);
 			return;
 		}
 		Color[] pixels = sprite.texture.GetPixels (

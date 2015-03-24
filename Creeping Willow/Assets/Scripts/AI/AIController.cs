@@ -286,6 +286,8 @@ public class AIController : GameBehavior
 		if (other.tag == "Player") 
 		{
 			playerInRange = true;
+			if( getPlayer() == null )
+				return;
 			PossessableTree script = getPlayer ().GetComponent<PossessableTree> ();
 			if (script != null && script.Eating) 
 			{
@@ -418,8 +420,8 @@ public class AIController : GameBehavior
 			if (changeMovement != Vector3.zero) 
 			{
 				Vector3 newPos = Vector3.MoveTowards (npcPosition, changeMovement, step);
-				transform.position = newPos;
 				determineDirectionChange (transform.position, newPos);
+				transform.position = newPos;
 			} 
 			else 
 			{
@@ -622,6 +624,8 @@ public class AIController : GameBehavior
 
 	protected bool checkForPlayer ()
 	{
+		if( getPlayer() == null )
+			return false;
 		Vector3 playerPos = getPlayer ().transform.position;
 
 		// check if NPC can see that far
@@ -889,16 +893,18 @@ public class AIController : GameBehavior
 		{
 			avoidCounter = 0;
 		}
-
+		
 		float checkDistance = 1f;
 		Vector3 direction = currentNPCDirection;
 		// get width/height
 		float radius = (float)Mathf.Max (gameObject.GetComponent<BoxCollider2D> ().size.x, gameObject.GetComponent<BoxCollider2D> ().size.y) / 2f;
 
+		LayerMask layermask = ~(1 << 8);
+
 		// check for object in the way
-		if (Physics2D.CircleCast (transform.position, radius, direction, checkDistance)) 
+		if (Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask)) 
 		{
-			RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction);
+			RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask);
 
 			if (hit == null)
 			{
@@ -919,6 +925,12 @@ public class AIController : GameBehavior
 				avoidCurrentDirection = Vector3.zero;
 				return Vector3.zero;
 			}
+			
+			if( this.GetType() == typeof(EnemyAIControllerWander) )
+			{
+				Debug.Log ("obj: " + transform.gameObject.ToString() );
+				Debug.Log ("hit: " + hit.transform.gameObject.ToString() );
+			}
 
 			if (hit.transform.gameObject.tag == "NPC" ||
 					hit.transform.gameObject.tag == "Border") // also invalid
@@ -928,6 +940,11 @@ public class AIController : GameBehavior
 			}
 
 			// VALID HIT!!!
+
+			if( this.GetType() == typeof(EnemyAIControllerWander) )
+			{
+				Debug.Log ("valid hit" );
+			}
 
 			//Debug.Log ("in cast");
 
@@ -958,16 +975,22 @@ public class AIController : GameBehavior
 			Vector3 rightDir = Quaternion.AngleAxis (-45, new Vector3 (0, 0, 1)) * direction;
 			Vector3 leftDir = Quaternion.AngleAxis (45, new Vector3 (0, 0, 1)) * direction;
 
-			if (Physics2D.CircleCast (transform.position, radius, leftDir, .2f)) {
+			if (Physics2D.CircleCast (transform.position, radius, leftDir, .2f, layermask)) {
 				leftDir = Quaternion.AngleAxis (90, new Vector3 (0, 0, 1)) * direction;
 			}
 
-			if (Physics2D.CircleCast (transform.position, radius, leftDir, .2f)) {
+			if (Physics2D.CircleCast (transform.position, radius, leftDir, .2f, layermask)) {
 				newPos = transform.position + 5 * rightDir;
 			} else {
 				newPos = transform.position + 5 * leftDir;
 			}
 			avoidCurrentDirection = newPos;
+
+			if( this.GetType() == typeof(EnemyAIControllerWander) )
+			{
+				Debug.Log ("worked" );
+			}
+
 			return newPos;
 		}
 		avoidCurrentDirection = Vector3.zero;

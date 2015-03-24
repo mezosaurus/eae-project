@@ -57,13 +57,13 @@ public class EnemyAIControllerWander : EnemyAIController
 		if( changeMovement != Vector3.zero )
 		{
 			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
-			transform.position = newPos;
 			determineDirectionChange(transform.position, newPos);
+			transform.position = newPos;
 		}
 		else
 		{
-			transform.position = movement;
 			determineDirectionChange(transform.position, movement);
+			transform.position = movement;
 		}
 		
 		if (movement == pathPosition)
