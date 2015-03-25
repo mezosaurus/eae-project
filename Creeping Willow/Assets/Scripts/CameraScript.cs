@@ -37,6 +37,8 @@ public class CameraScript : MonoBehaviour
         TargetSize = camera.orthographicSize;
         locked = true;
 
+		Screen.SetResolution (1600, 900, true);
+
         LoadSoulConsumedImages();
     }
 
