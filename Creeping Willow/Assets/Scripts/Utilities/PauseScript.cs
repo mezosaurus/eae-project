@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 
 public class PauseScript : MonoBehaviour
 {
+	public Button[] pauseButtons;
+
 	private Canvas pauseCanvas;
 	private bool isPaused;
 	private bool axisBusy;
-
-	public Button[] pauseButtons;
 
 	void Start()
 	{
@@ -87,15 +87,13 @@ public class PauseScript : MonoBehaviour
 		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
 		
 		axisBusy = true;
-		
-		foreach( Button button in pauseButtons )
-			button.interactable = true;
 	}
 
 	public void Resume()
 	{
 		isPaused = false;
 		pauseCanvas.enabled = false;
+
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
 
 		DisableAllButtons();
@@ -105,6 +103,12 @@ public class PauseScript : MonoBehaviour
 	{
 		// Load the main menu
 		Application.LoadLevel( "InteractiveMenu" );
+	}
+
+	private void EnableAllButtons()
+	{
+		foreach( Button button in pauseButtons )
+			button.interactable = true;
 	}
 
 	private void DisableAllButtons()
