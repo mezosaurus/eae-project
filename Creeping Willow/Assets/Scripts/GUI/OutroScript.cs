@@ -31,11 +31,13 @@ public class OutroScript : MonoBehaviour
 	protected void RegisterListeners()
 	{
 		MessageCenter.Instance.RegisterListener( MessageType.LevelFinished, HandleLevelFinishedMessage );
+		MessageCenter.Instance.RegisterListener( MessageType.ScoreAdding, HandleScoreAddingMessage );
 	}
 
 	protected void UnregisterListeners()
 	{
 		MessageCenter.Instance.UnregisterListener( MessageType.LevelFinished, HandleLevelFinishedMessage );
+		MessageCenter.Instance.UnregisterListener( MessageType.ScoreAdding, HandleScoreAddingMessage );
 	}
 
 	protected void HandleLevelFinishedMessage( Message message )
@@ -91,6 +93,13 @@ public class OutroScript : MonoBehaviour
 		}
 	}
 
+	protected void HandleScoreAddingMessage( Message message )
+	{
+		ScoreAddingMessage mess = message as ScoreAddingMessage;
+		if( mess.adding == false )
+			ReadyButtons();
+	}
+
 	void Update()
 	{	
 		if( isPaused )
@@ -137,9 +146,6 @@ public class OutroScript : MonoBehaviour
 		pauseCanvas.enabled = true;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
 
-		EnableAllButtons();
-		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
-
 		// Disable the other scripts until we are out of the menu
 		IntroScript introScript = GameObject.Find( "IntroCanvas" ).GetComponent<IntroScript>();
 		introScript.enabled = false;
@@ -148,6 +154,12 @@ public class OutroScript : MonoBehaviour
 		pauseScript.enabled = false;
 
 		axisBusy = true;
+	}
+
+	private void ReadyButtons()
+	{
+		EnableAllButtons();
+		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
 	}
 
 	public void Menu()
