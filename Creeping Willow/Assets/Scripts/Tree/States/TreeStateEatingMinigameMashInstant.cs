@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class TreeStateEatingMinigameMashInstant : TreeState
 {
@@ -47,6 +47,9 @@ public class TreeStateEatingMinigameMashInstant : TreeState
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(1.2f, 20f));
 
         UpdateArms(1f);
+
+		SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+		soundManager.PauseMusic();
 
         Tree.audio.clip = Tree.Sounds.Music;
         Tree.audio.Play();

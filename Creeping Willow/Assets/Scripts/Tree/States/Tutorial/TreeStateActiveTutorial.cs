@@ -121,6 +121,9 @@ public class TreeStateActiveTutorial : TreeState
             {
                 Tree.audio.Stop();
 
+				SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+				soundManager.ResumeMusic();
+
                 walkAudio = 1;
                 lastLegFrame = -1;
             }
