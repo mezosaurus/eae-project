@@ -84,6 +84,10 @@ public class PauseScript : MonoBehaviour
 		// Disable the other scripts until we are out of the menu
 		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
 		outroScript.enabled = false;
+
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
 		
 		axisBusy = true;
 	}
@@ -104,6 +108,10 @@ public class PauseScript : MonoBehaviour
 
 	public void Menu()
 	{
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
 		// Load the main menu
 		Application.LoadLevel( "InteractiveMenu" );
 	}

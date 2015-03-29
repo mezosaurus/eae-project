@@ -101,6 +101,10 @@ public class IntroScript : MonoBehaviour
 
 		DisableAllButtons();
 
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
 		// Get the other scripts ready to go
 		PauseScript pauseScript = GameObject.Find( "PauseCanvas" ).GetComponent<PauseScript>();
 		pauseScript.enabled = true;

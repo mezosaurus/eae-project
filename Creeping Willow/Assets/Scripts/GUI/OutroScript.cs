@@ -17,10 +17,6 @@ public class OutroScript : MonoBehaviour
 		isPaused = false;
 		axisBusy = false;
 
-		// Hide the cursor
-		Screen.showCursor = false;
-		Screen.lockCursor = true;
-
 		// Get the canvas and buttons ready
 		pauseCanvas = GameObject.Find( "OutroCanvas" ).GetComponent<Canvas>();
 		pauseCanvas.enabled = false;
@@ -153,6 +149,10 @@ public class OutroScript : MonoBehaviour
 		PauseScript pauseScript = GameObject.Find( "PauseCanvas" ).GetComponent<PauseScript>();
 		pauseScript.enabled = false;
 
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
 		axisBusy = true;
 	}
 
@@ -164,12 +164,21 @@ public class OutroScript : MonoBehaviour
 
 	public void Menu()
 	{
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
 		// Load the main menu
 		Application.LoadLevel( "InteractiveMenu" );
 	}
 
 	public void Retry()
 	{
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Restart the level
 		Application.LoadLevel( Application.loadedLevel );
 	}
 
