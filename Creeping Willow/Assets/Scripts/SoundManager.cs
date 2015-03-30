@@ -49,7 +49,8 @@ public class SoundManager : MonoBehaviour
 	
 	void Update()
 	{
-		
+        /*if (GameObject.FindGameObjectWithTag("MainCamera").audio.isPlaying)
+            musicSource.Stop();*/
 	}
 
 	public void ChangeMusic( AudioClip clip )
@@ -64,6 +65,16 @@ public class SoundManager : MonoBehaviour
 		{
 			musicSource.Play();
 		}
+	}
+
+	public void PauseMusic()
+	{
+		musicSource.Pause();
+	}
+
+	public void ResumeMusic()
+	{
+		musicSource.Play();
 	}
 
 	public void PlaySoundEffect( AudioClip clip )

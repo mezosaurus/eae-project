@@ -7,9 +7,6 @@ public class AxeManKillActiveTree : MonoBehaviour
     private const float StruggleFrameTime = 0.1f;
 
 
-    public delegate void Finished(GameObject cinematic, GameObject actual);
-
-
     public GameObject Axe;
     public Sprite[] Sprites;
     public _Sounds Sounds;
@@ -18,7 +15,6 @@ public class AxeManKillActiveTree : MonoBehaviour
     private GameObject targetTree;
     private PossessableTree tree;
     private GameObject actualAxeMan;
-    private Finished finishedCallback;
 
     private SpriteRenderer spriteRenderer;
     private uint phase;
@@ -54,11 +50,10 @@ public class AxeManKillActiveTree : MonoBehaviour
         MessageCenter.Instance.RegisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
     }
 
-    public void Instantiate(GameObject target, GameObject actualAxeMan, Finished callback)
+    public void Instantiate(GameObject target, GameObject actualAxeMan)
     {
         targetTree = target;
         this.actualAxeMan = actualAxeMan;
-        finishedCallback = callback;
         tree = targetTree.GetComponent<PossessableTree>();
     }
 
@@ -74,6 +69,9 @@ public class AxeManKillActiveTree : MonoBehaviour
             timer = 0f;
             frame = 4;
             spriteRenderer.sprite = Sprites[frame];
+
+            audio.clip = Sounds.Struggle[Random.Range(0, Sounds.Struggle.Length)];
+            audio.Play();
         }
         if(phase == 9001)
         {
@@ -83,6 +81,13 @@ public class AxeManKillActiveTree : MonoBehaviour
             frame1 = true;
             spriteRenderer.sprite = Sprites[2];
             played = false;
+        }
+        // Phase 9875 is when the tree has won
+        if(phase == 98765)
+        {
+            MessageCenter.Instance.Broadcast(new AxeManKilledMessage());
+            Destroy(actualAxeMan);
+            Destroy(gameObject);
         }
     }
 
@@ -147,7 +152,7 @@ public class AxeManKillActiveTree : MonoBehaviour
 
     private void UpdatePhase2()
     {
-        timer += Time.deltaTime;
+        /*timer += Time.deltaTime;
 
         if(timer > 1f)
         {
@@ -156,10 +161,10 @@ public class AxeManKillActiveTree : MonoBehaviour
 
             // Tell the tree to advance a phase
             MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage("PanToAxe"));
-        }
+        }*/
 
-        /*phase = 3;
-        MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage("Groan"));*/
+        phase = 3;
+        MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage(targetTree, "Groan"));
     }
 
     private void UpdatePhase3()
@@ -254,6 +259,7 @@ public class AxeManKillActiveTree : MonoBehaviour
 
                     // Destroy the tree
                     Destroy(targetTree);
+                    GlobalGameStateManager.PanicTree = null;
 
                     // TODO: spawn tree explosion
                     // TODO: send GUI message
@@ -280,8 +286,18 @@ public class AxeManKillActiveTree : MonoBehaviour
         else
         {
             if (!audio.isPlaying)
-                finishedCallback(gameObject, actualAxeMan);
+            {
+                /*actualAxeMan.SetActive(true);
+                Destroy(gameObject);*/
+
+                MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
+            }
         }
+    }
+
+    void OnDestroy()
+    {
+        MessageCenter.Instance.UnregisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
     }
 
     [System.Serializable]
@@ -290,6 +306,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         public AudioClip Taunt;
         public AudioClip[] Chop;
         public AudioClip[] Gloat;
+        public AudioClip[] Struggle;
         public AudioClip Music;
     }
 }

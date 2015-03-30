@@ -1,142 +1,129 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class IntroScript : MonoBehaviour
 {
-	public Font guiFont;
-	public Texture2D boxImage;
-	public Texture2D buttonImage;
-	public AudioClip sound;
-	public Texture2D[] TutorialImages;
-	private Rect boxRect;
-	private Rect buttonRect;
-	private GUIStyle boxStyle;
-	private GUIStyle buttonStyle;
-	private GUIContent boxContent;
-	private GUIContent buttonContent;
-	private int currentIntro;
-	private AudioSource mapAudio;
+	public AudioClip levelMusic;
+	public Button[] pauseButtons;
+
+	private Canvas pauseCanvas;
+	private bool isPaused;
+	private bool axisBusy;
+
 	private SoundManager soundManager;
 
-	public AudioClip levelMusic;
-
-	void Start ()
+	void Start()
 	{
+		// Pause the game
+		isPaused = true;
+		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+
+		axisBusy = false;
+
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Get the canvas and buttons ready
+		pauseCanvas = GameObject.Find( "IntroCanvas" ).GetComponent<Canvas>();
+		pauseCanvas.enabled = true;
+
+		EnableAllButtons();
+		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
+
+		// Disable the other scripts until we are out of the menu
+		PauseScript pauseScript = GameObject.Find( "PauseCanvas" ).GetComponent<PauseScript>();
+		pauseScript.enabled = false;
+
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = false;
+
+		// Switch the music
 		soundManager = GameObject.FindObjectOfType<SoundManager>();
 		soundManager.ChangeMusic( levelMusic );
-
-		boxRect = new Rect( 485, 100, GlobalGameStateManager.originalWidth - 970, GlobalGameStateManager.originalHeight - 350 );
-		buttonRect = new Rect( GlobalGameStateManager.originalWidth / 2 - 150, 850, 300, 150 );
-		boxStyle = new GUIStyle();
-		buttonStyle = new GUIStyle();
-		boxContent = new GUIContent();
-		buttonContent = new GUIContent();
-		GlobalGameStateManager.LevelState = LevelState.BEGINLEVEL;
-		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
-		mapAudio = gameObject.AddComponent<AudioSource>();
-		mapAudio.clip = sound;
-		currentIntro = 0;
 	}
 
-	void OnGUI ()
+	void Update()
 	{
-		GUI.matrix = GlobalGameStateManager.PrepareMatrix();
-
-		// prepare the style for the boxes
-		boxStyle.font = guiFont;
-		boxStyle.fontSize = 45;
-		boxStyle.wordWrap = true;
-		boxStyle.alignment = TextAnchor.UpperCenter;
-		boxStyle.normal.textColor = Color.red;
-
-		// prepare the style for buttons
-		GUI.skin.button.normal.background = buttonImage;
-		GUI.skin.button.hover.background = buttonImage;
-		GUI.skin.button.active.background = buttonImage;
-		buttonStyle = new GUIStyle( GUI.skin.button );
-		buttonStyle.font = guiFont;
-		buttonStyle.fontSize = 85;
-		buttonStyle.alignment = TextAnchor.MiddleCenter;
-		buttonStyle.normal.textColor = Color.red;
-
-		drawIntroBox();
-
-		GUI.matrix = Matrix4x4.identity;
+		if( isPaused )
+		{
+			// Check for mouse
+			if( Input.GetAxis( "Mouse X" ) != 0 || Input.GetAxis( "Mouse Y" ) != 0 )
+			{
+				Screen.showCursor = true;
+				Screen.lockCursor = false;
+				axisBusy = true;
+				EventSystem.current.SetSelectedGameObject( null );
+			}
+			// Check for controller movement
+			else if( !axisBusy && ( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "MenuX" ) != 0 ) )
+			{
+				Screen.showCursor = false;
+				Screen.lockCursor = true;
+				axisBusy = true;
+				
+				if( EventSystem.current.currentSelectedGameObject == null )
+				{
+					EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
+				}
+			}
+			// Exit pause screen
+			else if(  !axisBusy && ( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "B" ) ) )
+			{
+				StartBattle();
+				
+				axisBusy = true;
+			}
+			else
+			{
+				axisBusy = false;
+			}
+		}
+		else
+			axisBusy = false;
 	}
 
-	private void drawIntroBox ()
+	public void Menu()
 	{
-		if( currentIntro > TutorialImages.Length ) 
-		{
-			startBattle();
-			return;
-		}
-
-		switch( currentIntro )
-		{
-		case 0:
-			drawBox( "Feast on the Souls of the living\n\nwithout alerting the AxeMan", "Next", 85 );
-			break;
-			
-		case 1:
-			drawBox( "", "Next", 85 );
-			GUI.DrawTexture( boxRect, TutorialImages[ 0 ], ScaleMode.StretchToFill );
-			break;
-
-		case 2:
-			drawBox( "", "Next", 85 );
-			GUI.DrawTexture( boxRect, TutorialImages[ 1 ], ScaleMode.StretchToFill );
-			break;
-
-		case 3:
-			drawBox( "", "Next", 85 );
-			GUI.DrawTexture( boxRect, TutorialImages[ 2 ], ScaleMode.StretchToFill );
-			break;
-
-		case 4:
-			drawBox( "", "Next", 85 );
-			GUI.DrawTexture( boxRect, TutorialImages[ 3 ], ScaleMode.StretchToFill );
-			break;
-			
-		default:
-			break;
-		}
-
-		// create the start button
-		buttonStyle.fontSize = 85;
-		if( GUI.Button( buttonRect, buttonContent, buttonStyle ) )
-		{
-			mapAudio.PlayOneShot( sound );
-			currentIntro++;
-		}
+		// Load the main menu
+		Application.LoadLevel( "InteractiveMenu" );
 	}
 
-	private void startBattle()
+	public void StartBattle()
 	{
-		GlobalGameStateManager.LevelState = LevelState.INLEVEL;
-		this.enabled = false;
-		MessageCenter.Instance.Broadcast (new LevelStartMessage (LevelStartType.Start));
+		isPaused = false;
+		pauseCanvas.enabled = false;
+		
+		MessageCenter.Instance.Broadcast( new LevelStartMessage( LevelStartType.Start ) );
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
+
+		DisableAllButtons();
+
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Get the other scripts ready to go
+		PauseScript pauseScript = GameObject.Find( "PauseCanvas" ).GetComponent<PauseScript>();
+		pauseScript.enabled = true;
+
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = true;
+
+		this.enabled = false;
 	}
 
-	void Update ()
+	private void EnableAllButtons()
 	{
-		if( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "A" ) )
-		{
-			mapAudio.PlayOneShot( sound );
-			currentIntro++;
-		}
+		foreach( Button button in pauseButtons )
+			button.interactable = true;
 	}
-
-	private void drawBox( string boxText, string buttonText, int fontSize )
-	{	
-		// draw the box and text
-		boxContent.text = boxText;
-		boxStyle.fontSize = fontSize;
-		GUI.DrawTexture( boxRect, boxImage, ScaleMode.StretchToFill );
-		GUI.Label( new Rect ( boxRect.x + 100, boxRect.y + 100, boxRect.width - 200, boxRect.height - 200 ), boxContent, boxStyle );
-
-		// change the button text
-		buttonContent.text = buttonText;
+	
+	private void DisableAllButtons()
+	{
+		foreach( Button button in pauseButtons ) 
+			button.interactable = false;
 	}
 }

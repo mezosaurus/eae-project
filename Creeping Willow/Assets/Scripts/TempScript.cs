@@ -8,8 +8,8 @@ public class TempScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        AxeMan.GetComponent<AxeManKillActiveTree>().Instantiate(Tree, null, null);
-        Tree.GetComponent<PossessableTree>().ChangeState("AxeManMinigameWaitForChop");
+        AxeMan.GetComponent<AxeManKillActiveTree>().Instantiate(Tree, null);
+        Tree.GetComponent<PossessableTree>().ChangeState("AxeManMinigameWaitForChop", null);
 	}
 	
 	// Update is called once per frame

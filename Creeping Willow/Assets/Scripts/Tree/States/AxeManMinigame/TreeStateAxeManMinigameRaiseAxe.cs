@@ -20,7 +20,7 @@ public class TreeStateAxeManMinigameRaiseAxe : TreeState
 
     public override void Enter(object data)
     {
-        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage(Tree.transform.position + new Vector3(0f, 0.7f), MaxTime, 1.8f, 0.8f));
+        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage(Tree.transform.position + new Vector3(-0.57f, 0.7f), MaxTime, 2f, 0.8f));
 
         axe = (data as Data).Axe;
 

@@ -7,9 +7,9 @@ public class TreeStateAxeManMinigameWaitForChop : TreeState
     
     public override void Enter(object data)
     {
-        Tree.Active = false;
+        //Tree.Active = true;
         GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
-        Tree.Eating = true;
+        Tree.Eating = false;
 
         Tree.BodyParts.LeftArm.SetActive(true);
         Tree.BodyParts.RightArm.SetActive(true);
@@ -18,9 +18,32 @@ public class TreeStateAxeManMinigameWaitForChop : TreeState
         Tree.BodyParts.MinigameCircle.SetActive(false);
         Tree.BodyParts.RightGrabbedNPC.SetActive(false);
 
-        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.EyesClosed;
 
         axeMan = GameObject.FindGameObjectWithTag("AxeManKillActiveTree");
+
+        MessageCenter.Instance.Broadcast(new CameraZoomAndFocusMessage2(Tree.transform.position + new Vector3(0f, 0.7f), 1.5f, 0.25f));
+
+        // Disable all unecessary systems
+        SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+        GameObject levelGUI = GameObject.Find("LevelGUI");
+        GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        Tree.DisabledForMinigame = new System.Collections.Generic.List<GameObject>();
+
+        if (soundManager != null)
+        {
+            soundManager.gameObject.SetActive(false);
+            Tree.DisabledForMinigame.Add(soundManager.gameObject);
+        }
+
+        if (levelGUI != null)
+        {
+            levelGUI.SetActive(false);
+            Tree.DisabledForMinigame.Add(levelGUI);
+        }
+
+        mainCamera.audio.Stop();
     }
 
     /*private void SetAlpha(Transform root, float alpha)

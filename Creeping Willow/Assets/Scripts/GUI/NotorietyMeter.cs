@@ -56,13 +56,11 @@ public class NotorietyMeter : MonoBehaviour
 
 	protected void RegisterListeners()
 	{
-		//MessageCenter.Instance.RegisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
-		MessageCenter.Instance.RegisterListener (MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
+		MessageCenter.Instance.RegisterListener( MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage );
 	}
 	
 	protected void UnregisterListeners()
 	{
-		//MessageCenter.Instance.UnregisterListener( MessageType.NPCAlertLevel, HandleNPCAlertMessage );
 		MessageCenter.Instance.UnregisterListener( MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
 	}
 
@@ -76,7 +74,6 @@ public class NotorietyMeter : MonoBehaviour
 		{
 			MessageCenter.Instance.Broadcast( new NotorietyMaxedMessage( mess.PanickedPosition ) );
 			notoriety = notorietyMax;
-			axemanCount++;
 		}
 	}
 
@@ -135,30 +132,6 @@ public class NotorietyMeter : MonoBehaviour
 		}
 		
 	}
-
-	/*
-	protected void HandleNPCAlertMessage( Message message )
-	{
-		NPCAlertLevelMessage mess = message as NPCAlertLevelMessage;
-		
-		switch( mess.alertLevelType )
-		{
-		case AlertLevelType.Panic:
-			notoriety += 30.0f;
-
-			if( notoriety > notorietyMax )
-			{
-				MessageCenter.Instance.Broadcast( new NotorietyMaxedMessage( mess.NPC ) );
-				notoriety = notorietyMax;
-				axemanCount++;
-			}
-			break;
-			
-		default:
-			break;
-		}
-	}
-	*/
 	
 	void Update()
 	{
@@ -179,11 +152,18 @@ public class NotorietyMeter : MonoBehaviour
         float h = w;
         float t = top + (height / 2f) - ((axemanCount * h) / 2f);
 
+		axemanCount = CountAxemen();
+
 		for( int i = 0; i < axemanCount; i++ )
 		{
 			GUI.DrawTexture( new Rect( left + width, t + (i * h), w, h), axemanHeadTexture, ScaleMode.ScaleToFit );
 		}
 
 		GUI.matrix = Matrix4x4.identity;
+	}
+
+	private int CountAxemen()
+	{
+		return GameObject.FindObjectsOfType<EnemyAIController>().Length;
 	}
 }

@@ -5,8 +5,8 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
     private const float InRadius = 0.4f;
     private const float MaxThumbStickRadius = 1.5f;
     private const float ForwardForceValue = 0.65f;
-    private const float OpposingForceValue = 0.42f;
-    private const float MaxTime = 2f * (MaxThumbStickRadius / (ForwardForceValue - 0.25f));
+    private const float OpposingForceValue = 0.25f;
+    private const float MaxTime = 2f * (MaxThumbStickRadius / (ForwardForceValue * 1.2f));
 
     // arm constants
     private const float UpperArmStartAngle = 337.5777f;
@@ -18,7 +18,7 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
 
 
     private bool initialized;
-    private GameObject LS, RS, LSArrow, RSArrow;
+    private GameObject LS, /*RS,*/ LSArrow/*, RSArrow*/;
     private GameObject npc;
     private NPCData npcData;
     private bool grabbedTwo;
@@ -28,9 +28,7 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
 
     public override void Enter(object data)
     {
-        GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
         GlobalGameStateManager.SoulConsumedTimer = 0f;
-        Tree.Eating = true;
 
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().color = Color.white;
 
@@ -66,16 +64,16 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
     {
         // Create thumbsticks
         Vector3 lsOffset = Quaternion.Euler(0f, 0f, Random.Range(45f, 135f)) * new Vector3(0f, MaxThumbStickRadius);
-        Vector3 rsOffset = Quaternion.Euler(0f, 0f, Random.Range(45f, 135f)) * new Vector3(0f, -MaxThumbStickRadius);
+        //Vector3 rsOffset = Quaternion.Euler(0f, 0f, Random.Range(45f, 135f)) * new Vector3(0f, -MaxThumbStickRadius);
 
         LS = (GameObject)GameObject.Instantiate(Tree.Prefabs.ThumbStick, Tree.BodyParts.MinigameCircle.transform.position + lsOffset, Quaternion.identity);
-        RS = (GameObject)GameObject.Instantiate(Tree.Prefabs.ThumbStick, Tree.BodyParts.MinigameCircle.transform.position + rsOffset, Quaternion.identity);
+        //RS = (GameObject)GameObject.Instantiate(Tree.Prefabs.ThumbStick, Tree.BodyParts.MinigameCircle.transform.position + rsOffset, Quaternion.identity);
 
         LS.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.LS;
-        RS.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.RS;
+        //RS.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.RS;
 
         LSArrow = LS.transform.GetChild(0).gameObject;
-        RSArrow = RS.transform.GetChild(0).gameObject;
+        //RSArrow = RS.transform.GetChild(0).gameObject;
 
         Tree.BodyParts.MinigameCircle.transform.position = Tree.BodyParts.Axe.transform.position;
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[0];
@@ -93,13 +91,13 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
 
         // Determine whether thumbsticks are in the circle
         float lsDistance = Vector3.Distance(circle.position, LS.transform.position);
-        float rsDistance = Vector3.Distance(circle.position, RS.transform.position);
+        //float rsDistance = Vector3.Distance(circle.position, RS.transform.position);
 
         bool lsIn = (lsDistance <= InRadius);
-        bool rsIn = (rsDistance <= InRadius);
+        //bool rsIn = (rsDistance <= InRadius);
 
         // If both sticks are in, change to next phase of minigame
-        if (lsIn && rsIn)
+        if (lsIn/* && rsIn*/)
         {
             //TreeStateEatingMinigameMash.Data data = new TreeStateEatingMinigameMash.Data(npc, percentage);
 
@@ -109,25 +107,25 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
         }
 
         Vector3 lsDifference = circle.position - LS.transform.position;
-        Vector3 rsDifference = circle.position - RS.transform.position;
+        //Vector3 rsDifference = circle.position - RS.transform.position;
 
         // Apply forces if necessary
-        if (!lsIn || !rsIn)
+        if (!lsIn/* || !rsIn*/)
         {
             if (lsDistance < MaxThumbStickRadius)
             {
                 LS.transform.position -= (lsDifference.normalized * OpposingForceValue * Time.deltaTime);
             }
 
-            if (rsDistance < MaxThumbStickRadius)
+            /*if (rsDistance < MaxThumbStickRadius)
             {
                 RS.transform.position -= (rsDifference.normalized * OpposingForceValue * Time.deltaTime);
-            }
+            }*/
         }
 
         // Move the user toward their goal
         LS.transform.position += (new Vector3(Input.GetAxis("LSX"), Input.GetAxis("LSY")).normalized * ForwardForceValue * Time.deltaTime);
-        RS.transform.position += (new Vector3(Input.GetAxis("RSX"), Input.GetAxis("RSY")).normalized * ForwardForceValue * Time.deltaTime);
+        //RS.transform.position += (new Vector3(Input.GetAxis("RSX"), Input.GetAxis("RSY")).normalized * ForwardForceValue * Time.deltaTime);
 
         // Make sure the user can't go too far and make things even more difficult
         if (Vector3.Distance(circle.position, LS.transform.position) > MaxThumbStickRadius)
@@ -135,27 +133,27 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
             LS.transform.position = circle.position - ((circle.position - LS.transform.position).normalized * MaxThumbStickRadius);
         }
 
-        if (Vector3.Distance(circle.position, RS.transform.position) > MaxThumbStickRadius)
+        /*if (Vector3.Distance(circle.position, RS.transform.position) > MaxThumbStickRadius)
         {
             RS.transform.position = circle.position - ((circle.position - RS.transform.position).normalized * MaxThumbStickRadius);
-        }
+        }*/
 
         // Update arrows
         LSArrow.GetComponent<SpriteRenderer>().enabled = (lsIn) ? false : true;
-        RSArrow.GetComponent<SpriteRenderer>().enabled = (rsIn) ? false : true;
+        //RSArrow.GetComponent<SpriteRenderer>().enabled = (rsIn) ? false : true;
 
         float lsAngle = Mathf.Atan2(lsDifference.y, lsDifference.x) * Mathf.Rad2Deg;
-        float rsAngle = Mathf.Atan2(rsDifference.y, rsDifference.x) * Mathf.Rad2Deg;
+        //float rsAngle = Mathf.Atan2(rsDifference.y, rsDifference.x) * Mathf.Rad2Deg;
 
         LSArrow.transform.eulerAngles = new Vector3(0f, 0f, lsAngle);
-        RSArrow.transform.eulerAngles = new Vector3(0f, 0f, rsAngle);
+        //RSArrow.transform.eulerAngles = new Vector3(0f, 0f, rsAngle);
 
         // Update arms based on user progress
         float lsProgress = Mathf.Clamp(1f - ((Vector3.Distance(circle.position, LS.transform.position) - InRadius) / (MaxThumbStickRadius - InRadius)), 0f, 1f);
-        float rsProgress = Mathf.Clamp(1f - ((Vector3.Distance(circle.position, RS.transform.position) - InRadius) / (MaxThumbStickRadius - InRadius)), 0f, 1f);
-        float progress = (lsProgress + rsProgress) / 2f;
+        //float rsProgress = Mathf.Clamp(1f - ((Vector3.Distance(circle.position, RS.transform.position) - InRadius) / (MaxThumbStickRadius - InRadius)), 0f, 1f);
+        //float progress = (lsProgress + rsProgress) / 2f;
 
-        UpdateArms(progress);
+        UpdateArms(lsProgress);
 
         // Update timer
         timeElapsed += Time.deltaTime;
@@ -227,7 +225,7 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
     public override void Leave()
     {
         GameObject.Destroy(LS);
-        GameObject.Destroy(RS);
+        //GameObject.Destroy(RS);
 
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[100];
         Tree.BodyParts.MinigameCircle.transform.localPosition = new Vector3(0f, 0.367f);

@@ -25,13 +25,21 @@ public class TreeMonitor : MonoBehaviour
         //Destroy(m.Tree);
         m.NPC.SetActive(false);
 
-        // Spawn a killing axe man
-        GameObject axeMan = (GameObject)Instantiate(AxeManKillInactive, m.Tree.transform.position + new Vector3(-1.219f, -0.462f), Quaternion.identity);
+        if (m.Tree.GetComponent<PossessableTree>().Active)
+        {
 
-        axeMan.GetComponent<AxeManKillInactiveTree>().Instantiate(m.Tree, m.NPC, HandleCinematicFinished);
+        }
+        else
+        {
+            // Spawn a killing axe man
+            GameObject axeMan = (GameObject)Instantiate(AxeManKillInactive, m.Tree.transform.position + new Vector3(-1.14f, 0.091f), Quaternion.identity);
 
-        transform.position = new Vector3(m.Tree.transform.position.x, m.Tree.transform.position.y + 0.7f, -9f);
-        cam.enabled = true;
+            axeMan.GetComponent<AxeManKillInactiveTree>().Instantiate(m.Tree, m.NPC, HandleCinematicFinished);
+            m.Tree.GetComponent<PossessableTree>().AxeMan = axeMan;
+
+            transform.position = new Vector3(m.Tree.transform.position.x, m.Tree.transform.position.y + 0.7f, -9f);
+            cam.enabled = true;
+        }
     }
 
     private void HandleCinematicFinished(GameObject cinematic, GameObject actual)
@@ -48,7 +56,7 @@ public class TreeMonitor : MonoBehaviour
     void Update()
     {
         // TEMPORARY
-        GameObject[] trees = GameObject.FindGameObjectsWithTag("Player");
+        /*GameObject[] trees = GameObject.FindGameObjectsWithTag("Player");
 
         foreach(EnemyAIControllerWander enemy in GameObject.FindObjectsOfType<EnemyAIControllerWander>())
         {
@@ -56,12 +64,12 @@ public class TreeMonitor : MonoBehaviour
             
             foreach(GameObject tree in trees)
             {
-                if(Vector3.Distance(tree.transform.position, axeMan.transform.position) <= 1f)
+                if(!tree.GetComponent<PossessableTree>().Dead && Vector3.Distance(tree.transform.position, axeMan.transform.position) <= 1f)
                 {
                     MessageCenter.Instance.Broadcast(new PlayerKilledMessage(axeMan, tree));
                 }
             }
-        }
+        }*/
     }
 
     void OnGUI()

@@ -20,12 +20,46 @@ public class EnemyAIControllerWander : EnemyAIController
 	protected float nextInvestigateTime = 0;
 	//*/
 
+    private bool sent = false;
+
 	protected override void GameUpdate () 
 	{
 		if (updateEnemyNPC ())
 		{
 			return;
 		}
+
+        if (GlobalGameStateManager.PanicTree != null)
+        {
+            //GlobalGameStateManager.PanicTree.GetComponent<PossessableTree>().BodyParts.Trunk.GetComponent<SpriteRenderer>().color = Color.red;
+
+            if (Vector3.Distance(transform.position, GlobalGameStateManager.PanicTree.transform.position) <= 2f && !sent)
+            {
+                sent = true;
+                PlayerKilledMessage message = new PlayerKilledMessage(gameObject, GlobalGameStateManager.PanicTree);
+                MessageCenter.Instance.Broadcast(message);
+
+                // Find the closest respawn point
+                Vector3 position = Vector3.zero;
+                float distance = float.MaxValue;
+
+                foreach(GameObject spawnPoint in GameObject.FindGameObjectsWithTag("Respawn"))
+                {
+                    float d = Vector3.Distance(transform.position, spawnPoint.transform.position);
+
+                    if(d < distance)
+                    {
+                        d = distance;
+                        position = spawnPoint.transform.position;
+                    }
+                }
+
+                nextPath.transform.position = position; // new Vector3(26.81f, -2.93f);
+                killSelf = true;
+
+                return;
+            }
+        }
 
 		if (investigating)
 		{
@@ -57,13 +91,13 @@ public class EnemyAIControllerWander : EnemyAIController
 		if( changeMovement != Vector3.zero )
 		{
 			Vector3 newPos = Vector3.MoveTowards(positionNPC,changeMovement,step);
-			transform.position = newPos;
 			determineDirectionChange(transform.position, newPos);
+			transform.position = newPos;
 		}
 		else
 		{
-			transform.position = movement;
 			determineDirectionChange(transform.position, movement);
+			transform.position = movement;
 		}
 		
 		if (movement == pathPosition)
@@ -122,8 +156,11 @@ public class EnemyAIControllerWander : EnemyAIController
 		
 		if (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf)
 		{
-			if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
-				destroyNPC();
+            if (killSelf && !nextPath.transform.position.Equals(panickedNPCPosition))
+            {
+                MessageCenter.Instance.Broadcast(new AxeManKilledMessage());
+                destroyNPC();
+            }
 			
 			if (!investigating)
 			{
@@ -158,11 +195,11 @@ public class EnemyAIControllerWander : EnemyAIController
 					}
 
 					// Check if player tree is outside range
-					if (tree != null && tree.tag.Equals("Player") && Vector3.Distance(tree.transform.position, panickedNPCPosition) > wanderRadius)
+					/*if (tree != null && tree.tag.Equals("Player") && Vector3.Distance(tree.transform.position, panickedNPCPosition) > wanderRadius)
 					{
 						tree = null;
 						treeList.RemoveAt(rand);
-					}
+					}*/
 				}
 
 				if (tree != null)
@@ -199,6 +236,10 @@ public class EnemyAIControllerWander : EnemyAIController
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
 
+        player = GlobalGameStateManager.PanicTree; // GetClosestPlayer(GlobalGameStateManager.PanicPosition);
+
+        Debug.Log("Set");
+
 		initAxeMan ();
 	}
 
@@ -206,11 +247,12 @@ public class EnemyAIControllerWander : EnemyAIController
 	{
 		nextPath = new GameObject ();
 		nextPath.transform.position = panickedNPCPosition;
+
 		return nextPath;
 	}
 
-	/*
-	protected override void OnCollisionEnter2D(Collision2D collision)
+	
+	/*protected override void OnCollisionEnter2D(Collision2D collision)
 	{
 		base.OnCollisionEnter2D (collision);
 		
@@ -221,8 +263,8 @@ public class EnemyAIControllerWander : EnemyAIController
 			MessageCenter.Instance.Broadcast(message);
 			Debug.Log ("Kill Player Message Sent");
 		}
-	}
-	*/
+	}*/
+	
 
 	// To use in case avoid doesn't get better.
 	protected override void OnTriggerStay2D(Collider2D other)

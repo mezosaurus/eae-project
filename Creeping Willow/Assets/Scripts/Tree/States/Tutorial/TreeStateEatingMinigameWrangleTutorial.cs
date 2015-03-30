@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class TreeStateEatingMinigameWrangleTutorial : TreeState
 {
@@ -58,6 +58,9 @@ public class TreeStateEatingMinigameWrangleTutorial : TreeState
         // Play music if necessary
         if (parameters.PlayMusic)
         {
+        	SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+			soundManager.PauseMusic();
+
             Tree.audio.clip = Tree.Sounds.Music;
             Tree.audio.Play();
         }

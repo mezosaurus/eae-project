@@ -49,29 +49,9 @@ public class ScoreScript : MonoBehaviour {
 	/// </summary>
 	public float frequency;
 
-	// score number images
-	public Texture2D plusSign;
-	public Texture2D minusSign;
-	public Texture2D numZero;
-	public Texture2D numOne;
-	public Texture2D numTwo;
-	public Texture2D numThree;
-	public Texture2D numFour;
-	public Texture2D numFive;
-	public Texture2D numSix;
-	public Texture2D numSeven;
-	public Texture2D numEight;
-	public Texture2D numNine;
-	public Texture2D _x;
-	public Font myFont;
-
 	// bounty images
 	public Texture2D bountyBoxImage;
 	public Texture2D bountyBoxTextImage;
-
-	// score text images
-	public Texture2D scoreImage;
-	public Texture2D highscoreImage;
 
 	// multiplier bar images
 	public Texture2D bar1;
@@ -204,13 +184,13 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 	// Score GUI variables
-	float offsetX = 300;
+	float offsetX = 450;
 	float offsetY = 50;
-	float sizeX = 150;
-	float sizeY = 50;
+	float sizeX = 20;
+	float sizeY = 40;
 	
 	// popups
-	float popupX = 100;
+	float popupX = 20;
 	float popupY = 30;
 	float popupIncrement = 0;
 	readonly float popupIncrementMax = 50;
@@ -221,6 +201,13 @@ public class ScoreScript : MonoBehaviour {
 	float popupIncrement2 = 0;
 	readonly float popupIncrementMax2 = 100;
 	float popupAlpha2;
+
+	float popupXEnd = 14;
+	float popupYEnd = 21;
+
+	float scoreTextIncrement = 0;
+	readonly float scoreTextIncrementMax = 100;
+	float scoreTextAlpha;
 	
 	// sliding animation
 	float slideIncrement = 2f;
@@ -291,9 +278,8 @@ public class ScoreScript : MonoBehaviour {
 	float multiplierSliderTime = 1;
 
 	bool multiplierIsPositive = true;
-	Texture2D currentMultiplierImage;
-	Texture2D multiplierSign;
-	Texture2D multiplierPointImage;
+	string multiplierSign;
+	int multiplierPointImage;
 
 	// game mode marked selected
 	bool marked = false;
@@ -318,20 +304,20 @@ public class ScoreScript : MonoBehaviour {
 		BountyNPCImage = null;//new Texture2D (1, 1);
 		
 		// bounty
-		bountySizeX = (int)Screen.width * .3f;
-		bountyLabelSizeY = (int)Screen.height * .15f;
-		bountyRectSizeY = (int)Screen.height * .3f;
+		bountySizeX = (int)Screen.width * .25f;
+		bountyLabelSizeY = (int)Screen.height * .125f;
+		bountyRectSizeY = (int)Screen.height * .25f;
 
 		currentBountyBoxHeight = Screen.height-bountyLabelSizeY;
 		currentBountyTextHeight = Screen.height-bountyLabelSizeY*3/4;
 		currentBountyImageHeight = Screen.height+bountyRectSizeY;
 		
-		popupIncrement = popupIncrementMax;
-		popupIncrement2 = popupIncrementMax2;
+		popupIncrement = 0;
+		popupIncrement2 = 0;
 		
 		sideL = Screen.width / 3;
 		sideR = Screen.width * 2 / 3;
-		startHeight = Screen.height * 2 / 3;
+		startHeight = Screen.height * 1 / 3;
 		endHeight = 100;
 		endX = multXOffset;
 		
@@ -346,15 +332,14 @@ public class ScoreScript : MonoBehaviour {
 
 		if( LevelLoader.instance.modeName == "Feast" )
 		{
-			currentMultiplier = 9;
 			popupMultiplier = 0;
-			multiplierPoints = 40;
+			multiplierPoints = 95;
+			currentMultiplier = (int)Mathf.Ceil(multiplierPoints/multIncre) + 1;
 			marked = true;
 		}
 
-		currentMultiplierImage = getNumberImage (currentMultiplier);
-		multiplierSign = plusSign;
-		multiplierPointImage = numZero;
+		multiplierSign = "+";
+		multiplierPointImage = 0;
 	}
 	
 	
@@ -444,7 +429,6 @@ public class ScoreScript : MonoBehaviour {
 		
 		// multiplier updates
 		currentMultiplier = 1 + multiplierPoints / multIncre;
-		currentMultiplierImage = getNumberImage (currentMultiplier);
 		updateMultiplier ();
 
 		// data structure updates
@@ -497,267 +481,163 @@ public class ScoreScript : MonoBehaviour {
 		{
 			/*** display scores ***/
 			int offset = 1;
-			
+
 			// change alpha/transparency of score
-			if( slideIncrement <= .4f * slideMax )
+			if( scoreTextIncrement <= .4f * scoreTextIncrementMax )
 			{
-				popupAlpha = GUI.color.a * popupIncrement / (.4f * popupIncrementMax );
-				guiColor.a = popupAlpha;
+				scoreTextAlpha = GUI.color.a * scoreTextIncrement / (.4f * scoreTextIncrementMax );
+				guiColor.a = scoreTextAlpha;
 				GUI.color = guiColor;
 			}
-			
-			// update sliding increment
-			if( slideIncrement < slideMax && !paused )
-				slideIncrement += 2.5f;
-			
-			// npc type
-			if( eatenString == npcEatenString )
+			else if( scoreTextIncrement >= .6f * scoreTextIncrementMax )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
-				//myStyle.alignment = TextAnchor.MiddleRight;
-				//GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + NPC_EATEN, myStyle);
-			}
-			else if( eatenString == bountyEatenString )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
-				//myStyle.alignment = TextAnchor.MiddleRight;
-				//GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + BOUNTY_EATEN, myStyle);
-			}
-			else // axeman
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(sideL, startHeight, popupX, popupY), eatenString, myStyle);
-				//myStyle.alignment = TextAnchor.MiddleRight;
-				//GUI.Label(new Rect(sideR, startHeight, popupX, popupY), "" + AXEMAN_EATEN, myStyle);
+				scoreTextAlpha = GUI.color.a * ( scoreTextIncrementMax - scoreTextIncrement ) / (.4f * scoreTextIncrementMax );
+				guiColor.a = scoreTextAlpha;
+				GUI.color = guiColor;
 			}
 
+			// npc type
+			FontConverter.instance.parseStringToTextures (sideL, startHeight, popupX, popupY, eatenString);
+			
 			// pattern
 			if( isPattern )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), eatenRowString, myStyle);
-				//myStyle.alignment = TextAnchor.MiddleRight;
-				//GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), stealthMultiplier + "x", myStyle);
+				FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, eatenRowString);
 				offset++;
 			}
 			// stealth
 			if( isStealth )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), stealthString, myStyle);
-				//myStyle.alignment = TextAnchor.MiddleRight;
-				//GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), stealthMultiplier + "x", myStyle);
+				FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, stealthString);
 				offset++;
 			}
 			// lured
 			if( isLured )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), luredString, myStyle);
-				//myStyle.alignment = TextAnchor.MiddleRight;
-				//GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), lureMultiplier + "x", myStyle);
+				FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, luredString);
 				offset++;
 			}
 			// quick
 			if( isQuick )
 			{
 				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), streakString, myStyle);
-				//myStyle.alignment = TextAnchor.MiddleRight;
-				//GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), droppingFliesMultiplier + "x", myStyle);
+				FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, streakString);
 				offset++;
 			}
 			// streak
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Current Streak " + displayMultiplier + "x", myStyle);
-			//myStyle.alignment = TextAnchor.MiddleRight;
-			//GUI.Label(new Rect(sideR, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), displayMultiplier + "x", myStyle);
+			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Current Streak");
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, displayMultiplier + "");
 			offset++;
 			
 			// score
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Eating Score: " + displayScore, myStyle);
+			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Eating Score");
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, displayScore + "");
 			offset++;
 			
 			// multiplier
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Multiplier: " + currentMultiplier, myStyle);
+			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Multiplier");
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, currentMultiplier + "");
 			offset++;
 			
 			// total score
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(sideL, startHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Total Score: " + (displayScore * currentMultiplier), myStyle);
+			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Total Score");
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, "" + (displayScore * currentMultiplier * displayMultiplier));
 			offset++;
-			
-			// update time left
+
+			// increment timer
 			if( !paused )
-				scoreTimer += scoreIncrement;
+				scoreTextIncrement += .5f;
 			
-			if( scoreTimer > scoreIncrementMax )
+			// check statement for pop-up statements
+			if( scoreTextIncrement > scoreTextIncrementMax )
 			{
 				scoreState = (int)ScoreState.MOVE_SCORING;
-				moveStartTime = Time.time;
+				scoreTextIncrement = 0;
 			}
+
+			GUI.color = savedGuiColor; // revert to previous alpha
 		}
 		else if( scoreState == (int)ScoreState.MOVE_SCORING )
 		{
-			float startFont = myStyle.fontSize;
-
-			scoreTimer = 0;
-			
-			float fracTime = (Time.time - moveStartTime) / 1.25f;
-			float xPos = Mathf.Lerp(sideL, endX, fracTime);
-			float yPos = Mathf.Lerp(startHeight, endHeight, fracTime);
-			myStyle.fontSize = (int)Mathf.Lerp(startFont, endFont, fracTime);
-			
-			int offset = 1;
-			
-			// npc type
-			if( eatenString == npcEatenString )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(xPos, yPos, popupX, popupY), eatenString, myStyle);
-			}
-			else if( eatenString == bountyEatenString )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(xPos, yPos, popupX, popupY), eatenString, myStyle);
-			}
-			else // axeman
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(xPos, yPos, popupX, popupY), eatenString, myStyle);
-			}
-
-			// pattern
-			if( isPattern )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), eatenRowString, myStyle);
-				offset++;
-			}
-			// stealth
-			if( isStealth )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), stealthString, myStyle);
-				offset++;
-			}
-			// lured
-			if( isLured )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), luredString, myStyle);
-				offset++;
-			}
-			// quick
-			if( isQuick )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), streakString, myStyle);
-				offset++;
-			}
-			// streak
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), "Current Streak " + displayMultiplier + "x", myStyle);
-			offset++;
-			
-			// score
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), "Eating Score: " + displayScore, myStyle);
-			offset++;
-			
-			// multiplier
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), "Multiplier: " + currentMultiplier, myStyle);
-			offset++;
-			
-			// total score
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(xPos, yPos + offset*(myStyle.fontSize+2), popupX, popupY), "Total Score: " + (displayScore * currentMultiplier), myStyle);
-			offset++;
-			
-			if( xPos < endX + .1f )
-				scoreState = (int)ScoreState.STOP_SCORING;
+			scoreState = (int)ScoreState.STOP_SCORING;
 		}
 		else if( scoreState == (int)ScoreState.STOP_SCORING )
 		{
 			int offset = 1;
-			myStyle.fontSize = (int)endFont;
-			
+
+			// change alpha/transparency of score
+			if( scoreTextIncrement <= .2f * scoreTextIncrementMax )
+			{
+				scoreTextAlpha = GUI.color.a * scoreTextIncrement / (.2f * scoreTextIncrementMax );
+				guiColor.a = scoreTextAlpha;
+				GUI.color = guiColor;
+			}
+			else if( scoreTextIncrement >= .8f * scoreTextIncrementMax )
+			{
+				scoreTextAlpha = GUI.color.a * ( scoreTextIncrementMax - scoreTextIncrement ) / (.2f * scoreTextIncrementMax );
+				guiColor.a = scoreTextAlpha;
+				GUI.color = guiColor;
+			}
+
 			// npc type
-			if( eatenString == npcEatenString )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(endX, endHeight, popupX, popupY), eatenString, myStyle);
-			}
-			else if( eatenString == bountyEatenString )
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(endX, endHeight, popupX, popupY), eatenString, myStyle);
-			}
-			else // axeman
-			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(endX, endHeight, popupX, popupY), eatenString, myStyle);
-			}
+			FontConverter.instance.parseStringToTextures (endX, endHeight, popupXEnd, popupYEnd, eatenString);
 
 			// pattern
 			if( isPattern )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), eatenRowString, myStyle);
+				FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, eatenRowString);
 				offset++;
 			}
 			// stealth
 			if( isStealth )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), stealthString, myStyle);
+				FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, stealthString);
 				offset++;
 			}
 			// lured
 			if( isLured )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), luredString, myStyle);
+				FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, luredString);
 				offset++;
 			}
 			// quick
 			if( isQuick )
 			{
-				myStyle.alignment = TextAnchor.MiddleLeft;
-				GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), streakString, myStyle);
+				FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, streakString);
 				offset++;
 			}
 			// streak
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Current Streak " + displayMultiplier + "x", myStyle);
+			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Current Streak");
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, displayMultiplier + "");
 			offset++;
 			
 			// score
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Eating Score: " + displayScore, myStyle);
+			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Eating Score");
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "" + displayScore);
 			offset++;
 			
 			// multiplier
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Multiplier: " + currentMultiplier, myStyle);
+			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Multiplier");
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, currentMultiplier + "");
 			offset++;
 			
 			// total score
-			myStyle.alignment = TextAnchor.MiddleLeft;
-			GUI.Label(new Rect(endX, endHeight + offset*(myStyle.fontSize+2), popupX, popupY), "Total Score: " + (displayScore * currentMultiplier), myStyle);
+			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Total Score");
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "" + (displayScore * currentMultiplier * displayMultiplier));
 			offset++;
-			
-			// update time left
+
+			// increment timer
 			if( !paused )
-				scoreTimer += scoreIncrement;
+				scoreTextIncrement += .2f;
 			
-			if( scoreTimer > scoreIncrementMax )
+			// check statement for pop-up statements
+			if( scoreTextIncrement > scoreTextIncrementMax )
+			{
 				scoreState = (int)ScoreState.END_SCORING;
+				scoreTextIncrement = 0;
+			}
+			
+			GUI.color = savedGuiColor; // revert to previous alpha
 		}
 		else if( scoreState == (int)ScoreState.START_SCORING )
 		{
@@ -779,7 +659,7 @@ public class ScoreScript : MonoBehaviour {
 			scoreTimer = 0;
 			scoreState = (int)ScoreState.NO_SCORING;
 			displayScore = 0;
-			displayMultiplier = 0;
+			displayMultiplier = streakMultiplier;
 		}
 		
 		// display multiplier points
@@ -798,21 +678,14 @@ public class ScoreScript : MonoBehaviour {
 				guiColor.a = popupAlpha2;
 				GUI.color = guiColor;
 			}
-			/*
-			// score pop-up text
-			myStyle.normal.textColor = Color.black;
-			GUI.Label(new Rect(Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2, popupX, popupY), "" + displayScore, myStyle);*/
 			
 			// multiplier pop-up text
-			myStyle.normal.textColor = Color.red;
-			myStyle.fontSize = 100;
-			//GUI.Label(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), "" + popupMultiplier, myStyle);	
-			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), multiplierSign, ScaleMode.ScaleToFit);
-			GUI.DrawTexture(new Rect(Screen.width/2 - popupX/2 + 25, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY), multiplierPointImage, ScaleMode.ScaleToFit);
-			
+			FontConverter.instance.parseStringToTextures (Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY, multiplierSign + multiplierPointImage);
+
+
 			// increment height
 			if( !paused )
-				popupIncrement2 += 1.5f;
+				popupIncrement2 += 1f;
 			
 			// check statement for pop-up statements
 			if( popupIncrement2 > popupIncrementMax2 )
@@ -823,11 +696,6 @@ public class ScoreScript : MonoBehaviour {
 			
 			
 			GUI.color = savedGuiColor; // revert to previous alpha
-			/*
-			// score reason string
-			myStyle.fontSize = 30;
-			myStyle.normal.textColor = Color.white;
-			GUI.Label(new Rect(Screen.width/2, Screen.height/2 - popupY/2 + 150, popupX, popupY), "" + displayScoreString, myStyle);*/
 		}
 		
 		GUI.color = savedGuiColor; // revert to previous alpha
@@ -853,26 +721,21 @@ public class ScoreScript : MonoBehaviour {
 				GUI.color = guiColor;
 			}
 			
-			GUI.Box (new Rect (Screen.width-offsetX+sizeX-10, Screen.height-offsetY-myStyle.fontSize-10-popupIncrement, sizeX, sizeY), "" + (displayScore * currentMultiplier), myStyle);
+			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, Screen.height-offsetY-sizeY-popupIncrement, sizeX, sizeY, "" + (displayScore * currentMultiplier * displayMultiplier));
 
 			if( !paused )
-				popupIncrement += 1f;
+				popupIncrement += .75f;
 			
 			GUI.color = savedGuiColor; // revert to previous alpha
 		}
 		
 		// score
-		myStyle.fontSize = 30;
-		myStyle.normal.textColor = Color.white;
-		myStyle.alignment = TextAnchor.MiddleRight;
-		
-		GUI.DrawTexture (new Rect (Screen.width-offsetX, Screen.height-offsetY, sizeX, sizeY), scoreImage);
-		GUI.Box (new Rect (Screen.width-offsetX+sizeX-10, Screen.height-offsetY, sizeX, sizeY), "" + _score, myStyle);
+		FontConverter.instance.parseStringToTextures (Screen.width - offsetX + sizeX * 5, Screen.height-offsetY, sizeX, sizeY, "score");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, Screen.height-offsetY, sizeX, sizeY, "" + _score);
 		
 		// high score
-		myStyle.normal.textColor = Color.yellow;
-		GUI.DrawTexture (new Rect (Screen.width-offsetX, 10, sizeX, sizeY), highscoreImage);
-		GUI.Box (new Rect (Screen.width-offsetX+sizeX-10, 10, sizeX, sizeY), "" + highscores[0], myStyle);
+		FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 10, sizeX, sizeY, "" + highscores[0]);
 		
 		
 		
@@ -988,15 +851,10 @@ public class ScoreScript : MonoBehaviour {
 		
 		
 		/***** Score Multiplier GUI *****/
-		
-		myStyle.fontSize = 50;
 
-		//GUI.Box (new Rect (multXOffset, multYOffset, multLength, multHeight), "");
+		FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 50, multYOffset, 40, multHeight, currentMultiplier + "x");
 
-		//GUI.Label(new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplier + "x", myStyle);
-		GUI.DrawTexture (new Rect (multXOffset + multLength + 10, multYOffset, 50, multHeight), currentMultiplierImage, ScaleMode.ScaleToFit);
-		GUI.DrawTexture (new Rect (multXOffset + multLength + 35, multYOffset, 50, multHeight), _x, ScaleMode.ScaleToFit);
-
+		// multiplier bar
 		if( multiplierIsChanging )
 		{
 			// change(slide) data
@@ -1005,25 +863,16 @@ public class ScoreScript : MonoBehaviour {
 				float timeRatio = (Time.time - lastMultiplierTime) / multiplierSliderTime;
 				float tempRatio = (newValue - prevValue) * timeRatio;
 
-				//GUI.Box (new Rect (multXOffset, multYOffset+2, ((prevValue + tempRatio) % (float)multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
-
 				GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage(((prevValue + tempRatio) % (float)multIncre) / (float)multIncre * (multLength - 4),multLength));
 			}
 			else
 			{
 				multiplierIsChanging = false;
-
-				//if( multiplierPoints % multIncre != 0 )
-				//	GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
-
 				GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage((multiplierPoints % multIncre) / (float)multIncre * (multLength - 4),multLength));
 			}
 		}
 		else
 		{
-			//if( multiplierPoints % multIncre != 0 )
-			//	GUI.Box (new Rect (multXOffset, multYOffset+2, (multiplierPoints % multIncre) / (float)multIncre * (multLength - 4), multHeight-4), "");
-
 			GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage((multiplierPoints % multIncre) / (float)multIncre * (multLength - 4),multLength));
 		}
 	}
@@ -1054,8 +903,8 @@ public class ScoreScript : MonoBehaviour {
 		lastMultiplierTime = Time.time;
 		multiplierIsChanging = true;
 		multiplierIsPositive = true;
-		multiplierSign = plusSign;
-		multiplierPointImage = getNumberImage (num);
+		multiplierSign = "+";
+		multiplierPointImage = num;
 	}
 
 	// subtract a portion of multiplier
@@ -1075,8 +924,8 @@ public class ScoreScript : MonoBehaviour {
 		lastMultiplierTime = Time.time;
 		multiplierIsChanging = true;
 		multiplierIsPositive = false;
-		multiplierSign = minusSign;
-		multiplierPointImage = getNumberImage (num);
+		multiplierSign = "-";
+		multiplierPointImage = num;
 	}
 	
 	// reset multiplier
@@ -1084,6 +933,13 @@ public class ScoreScript : MonoBehaviour {
 	{
 		//subMultiplier (multiplierPoints);
 		multiplierPoints = 0;
+	}
+
+	// reset multiplier
+	void halfMultiplier()
+	{
+		//subMultiplier (multiplierPoints);
+		multiplierPoints /= 2;
 	}
 
 	// decrement multiplierPoints
@@ -1103,37 +959,6 @@ public class ScoreScript : MonoBehaviour {
 			subMultiplier(1);
 			lastMultiplierTime = Time.time;
 		}
-	}
-
-	// get corresponding image from number
-	Texture2D getNumberImage(int num)
-	{
-		switch(num)
-		{
-		case 0:
-			return numZero;
-		case 1:
-			return numOne;
-		case 2:
-			return numTwo;
-		case 3:
-			return numThree;
-		case 4:
-			return numFour;
-		case 5:
-			return numFive;
-		case 6:
-			return numSix;
-		case 7:
-			return numSeven;
-		case 8:
-			return numEight;
-		case 9:
-			return numNine;
-		default:
-			return numZero;
-		}
-
 	}
 
 	// get corresponding image from multiplier points
@@ -1384,7 +1209,12 @@ public class ScoreScript : MonoBehaviour {
 		else if( mess.alertLevelType == AlertLevelType.Panic )
 		{
 			streakMultiplier = 1;
-			resetMultiplier();
+
+			if( marked )
+				halfMultiplier();
+			else
+				resetMultiplier();
+
 			if( !alertedNPCs.Contains(mess.NPC) )
 				alertedNPCs.Add(mess.NPC);
 		}
@@ -1453,7 +1283,7 @@ public class ScoreScript : MonoBehaviour {
 		int npcScore = NPC_EATEN;
 		eatenString = npcEatenString;
 		
-		tmpMultiplier = 0;
+		tmpMultiplier = 3; // 5 for eating an npc
 		lastMultiplierTime = Time.time;
 
 		AIController controller = mess.NPC.GetComponent<AIController> ();
@@ -1779,7 +1609,7 @@ public class ScoreScript : MonoBehaviour {
 		displayScore = npcScore * stealth * quick * lure * streakMultiplier;
 
 		currentMultiplier = 1 + multiplierPoints / multIncre;
-		addScore(displayScore*currentMultiplier);
+		addScore(displayScore*currentMultiplier*displayMultiplier);
 		
 		scoreState = (int)ScoreState.START_SCORING;
 		
@@ -1826,7 +1656,7 @@ public class ScoreScript : MonoBehaviour {
 		Sprite sprite = BountyNPC.GetComponent<SpriteRenderer> ().sprite;
 		if (sprite == null)
 		{
-			Debug.Log ("Something Broke here: " + this.GetType ().Name);
+			Debug.Log ("NPC Sprite is Null: " + this.GetType ().Name);
 			return;
 		}
 		Color[] pixels = sprite.texture.GetPixels (

@@ -37,4 +37,6 @@ public enum MessageType
     AxeManMinigameTreeChangePhase,
     AxeManMinigameAxeManChangePhase,
     CameraZoomAndFocus,
+    CameraZoomAndFocus2,
+    AxeManKilled,
 }

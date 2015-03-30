@@ -347,6 +347,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &173594
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 473594}
+  - 212: {fileID: 21273594}
+  - 95: {fileID: 9573594}
+  m_Layer: 0
+  m_Name: AxeMan-Struggle3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!1 &173596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 473596}
+  - 212: {fileID: 21273596}
+  m_Layer: 0
+  m_Name: AxeMan-Axe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!4 &423594
 Transform:
   m_ObjectHideFlags: 1
@@ -354,7 +387,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123594}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: -.00100004673, y: .585999966, z: 0}
+  m_LocalPosition: {x: .0260000005, y: 1.29700005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444716}
@@ -433,7 +466,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444704}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &444704
 Transform:
   m_ObjectHideFlags: 1
@@ -445,6 +478,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444708}
+  - {fileID: 473594}
   - {fileID: 444702}
   m_Father: {fileID: 444722}
   m_RootOrder: 0
@@ -525,8 +559,8 @@ Transform:
   - {fileID: 444692}
   - {fileID: 444714}
   - {fileID: 444710}
-  - {fileID: 444718}
   - {fileID: 444724}
+  - {fileID: 444718}
   m_Father: {fileID: 444726}
   m_RootOrder: 0
 --- !u!4 &444718
@@ -540,7 +574,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444716}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!4 &444720
 Transform:
   m_ObjectHideFlags: 1
@@ -578,7 +612,7 @@ Transform:
   m_Children:
   - {fileID: 444730}
   m_Father: {fileID: 444716}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!4 &444726
 Transform:
   m_ObjectHideFlags: 1
@@ -586,11 +620,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.62499392, y: 2.65595865, z: -.0703125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444716}
   - {fileID: 444728}
+  - {fileID: 473596}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &444728
@@ -619,6 +654,30 @@ Transform:
   - {fileID: 444712}
   m_Father: {fileID: 444724}
   m_RootOrder: 0
+--- !u!4 &473594
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173594}
+  m_LocalRotation: {x: 0, y: 0, z: -.973448217, w: -.228907272}
+  m_LocalPosition: {x: .429707736, y: -.213536039, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 444704}
+  m_RootOrder: 1
+--- !u!4 &473596
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.158999994, y: -.0359999985, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 444726}
+  m_RootOrder: 2
 --- !u!50 &5044692
 Rigidbody2D:
   m_ObjectHideFlags: 1
@@ -853,6 +912,21 @@ Animator:
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &9573594
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173594}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1dca7aa06da5d074c9a9043463120ada, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11423594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -881,6 +955,8 @@ MonoBehaviour:
   exitSound: {fileID: 0}
   Speed: 40
   Eating: 0
+  Dead: 0
+  AxeMan: {fileID: 0}
   BodyParts:
     Trunk: {fileID: 144716}
     Face: {fileID: 144700}
@@ -898,6 +974,7 @@ MonoBehaviour:
     MinigameCircle: {fileID: 144728}
     Eyes: {fileID: 144706}
     FlameEyes: {fileID: 123594}
+    Axe: {fileID: 173596}
   Sprites:
     Trunk:
       Front: {fileID: 21300000, guid: bb952a777172c0d4b9165cdaec9fb08c, type: 3}
@@ -912,6 +989,7 @@ MonoBehaviour:
       MoveFrontRight: {fileID: 21300000, guid: 21e4162544354274692c7ce163be56f6, type: 3}
       MoveRight: {fileID: 21300000, guid: 2ce32937994109a4c945b9a377fb6d04, type: 3}
       Crazy: {fileID: 21300000, guid: 42b94c36df0f9744f80eb32106240f6c, type: 3}
+      ChewedAxeMan: {fileID: 21300000, guid: a6943efb4bebf1044b03b85febfa82a4, type: 3}
     LegsStill: {fileID: 21300000, guid: 1865e4d27e8411346aa3a051ef12e76b, type: 3}
     EatingMinigame:
       Circle: []
@@ -922,17 +1000,77 @@ MonoBehaviour:
       - {fileID: 2800000, guid: d5b91b99b96ca054d9b043d5e7062ee3, type: 3}
       - {fileID: 2800000, guid: ee859f8929afdf84e8909d24b235286c, type: 3}
       - {fileID: 2800000, guid: b7b0b7fe3201a47468f307a95a6ed53c, type: 3}
+      ButtonSprites:
+      - {fileID: 21300000, guid: b725b26baac01634da5edf8576a169ac, type: 3}
+      - {fileID: 21300000, guid: d5b91b99b96ca054d9b043d5e7062ee3, type: 3}
+      - {fileID: 21300000, guid: ee859f8929afdf84e8909d24b235286c, type: 3}
+      - {fileID: 21300000, guid: b7b0b7fe3201a47468f307a95a6ed53c, type: 3}
+    EatingAxeMan:
+    - {fileID: 21300000, guid: da93a1df958be8a4f9df76d091a13048, type: 3}
+    - {fileID: 21300000, guid: b0f3c77b6f5fde544a9b9f8feaf2b513, type: 3}
+    - {fileID: 21300000, guid: fc92b2766c65deb4b8fe5f082403d33a, type: 3}
+    - {fileID: 21300000, guid: 66ad5cc88eb271f42b45ceb38f420f76, type: 3}
+    - {fileID: 21300000, guid: 72e4d964b207fc54ea9634fde76750a4, type: 3}
+    - {fileID: 21300000, guid: e8205ded94fec6146a86436db6e57288, type: 3}
+    - {fileID: 21300000, guid: 602d292d2cf0f1a49a651c979e89089e, type: 3}
+    - {fileID: 21300000, guid: bbc1b82eb94a97a4c9645e9bf919ce0e, type: 3}
+    - {fileID: 21300000, guid: 24b0449a9bfbe614c89e4baa60a46d46, type: 3}
+    - {fileID: 21300000, guid: a6e953931f4451148a6c9c942ce1b0ba, type: 3}
+    - {fileID: 21300000, guid: 1ad65fc27d767544ba387365640aa79d, type: 3}
+    - {fileID: 21300000, guid: 18c2c55a910a3c643a8870f79040566b, type: 3}
+    - {fileID: 21300000, guid: 2ec577dbb3ad79644a9acb6cfffad86f, type: 3}
+    - {fileID: 21300000, guid: 82270fb355c21794899cc8b07bc680cd, type: 3}
+    - {fileID: 21300000, guid: 4c398108a65ee9b489a8216ac160e615, type: 3}
+    - {fileID: 21300000, guid: 285d28942e027ed4bb79036109b65898, type: 3}
+    - {fileID: 21300000, guid: 3e63c78c7d9d9b142bc15ad32443327f, type: 3}
+    - {fileID: 21300000, guid: db47fd8441275bc409fbce7a634ab987, type: 3}
+    - {fileID: 21300000, guid: c16795a64f23adf4fb701bccfc7f8e20, type: 3}
+    - {fileID: 21300000, guid: 7258566cfbdaaf94caee01b6f75ec2cb, type: 3}
+    - {fileID: 21300000, guid: 1f883687084fe54458d442545b3ab410, type: 3}
+    - {fileID: 21300000, guid: 95d2d5b2d1ff82f448e0bd1e8abdf0c6, type: 3}
+    - {fileID: 21300000, guid: 2a443eb071ecdc74280e9a327166b7bf, type: 3}
+    - {fileID: 21300000, guid: 8deebfa7afd540f4f99c9f5507aefc3a, type: 3}
+    - {fileID: 21300000, guid: 589e56f36cc479c46b666e37c04d08e5, type: 3}
+    - {fileID: 21300000, guid: 40267e11aef44cf4592edd944c434c73, type: 3}
+    - {fileID: 21300000, guid: c573e6e784a8d88469034d473422db75, type: 3}
+    - {fileID: 21300000, guid: 672a00ee5ce208c468efda4ba8247f9f, type: 3}
+    - {fileID: 21300000, guid: 810e22e5eac2c7144a07998bfdd7e7f3, type: 3}
+    - {fileID: 21300000, guid: 8409af8c92c0d2d4cb5f912cedfd5c45, type: 3}
+    - {fileID: 21300000, guid: f647dd7ded19873409b3cdb94c510149, type: 3}
+    - {fileID: 21300000, guid: 86ab6a4a67de11e46a9d69183233b965, type: 3}
+    - {fileID: 21300000, guid: a047565cedd9340419eac07e661e6bb0, type: 3}
+    - {fileID: 21300000, guid: 1ad64a79a9a39b34e83323da657953bb, type: 3}
+    - {fileID: 21300000, guid: a217040381e61fb4abc6c655c0a49249, type: 3}
+    - {fileID: 21300000, guid: 9d04b97fdcd62c34293af471bee7b8d7, type: 3}
+    - {fileID: 21300000, guid: 1d57fa57178fc5a49b0123a573051bf7, type: 3}
+    - {fileID: 21300000, guid: 1fe87a4a576ee364599be3fed117115d, type: 3}
+    - {fileID: 21300000, guid: cd36ea707b06a19448fbeb0b97b7c6a7, type: 3}
+    - {fileID: 21300000, guid: a3192c2484f873e4c919a034d3b93d08, type: 3}
+    FinishHim: {fileID: 2800000, guid: 97494fbace6c52c49947c0ee040e67a8, type: 3}
   Sounds:
     Music: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
+    Burp: {fileID: 8300000, guid: 6f051ba3d8cf0a44fb803a3b4516bf7a, type: 3}
+    Laugh: {fileID: 8300000, guid: 6ea6bd0896eea01469b0d2f39fa19275, type: 3}
     SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
+    SoulConsumed2: {fileID: 8300000, guid: 84e9141c20a97134dafe807bc7c9f7b2, type: 3}
+    AxeManMinigameMusic: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375,
+      type: 3}
     Walk:
     - {fileID: 8300000, guid: d5d8a9bf84159ba4f974d31dff8b46aa, type: 3}
     - {fileID: 8300000, guid: 5714bf8515caf374e911a63a5f7ca228, type: 3}
+    Groan: {fileID: 8300000, guid: 9bdcc2fe0398e3c4aa2b2383cd15b34e, type: 3}
+    RemoveAxe: {fileID: 8300000, guid: f8dbc99db1af97a4eaf6a04d30b521eb, type: 3}
+    ChewAxeMan:
+    - {fileID: 8300000, guid: aa10e4b5043cba047ba4d70dc1f9c2c6, type: 3}
+    - {fileID: 8300000, guid: 4646d2ad656f7d14d8ae9ec28057315a, type: 3}
+    AxeManLastWords:
+    - {fileID: 8300000, guid: 999213be3b15b0249b1a0376c1445fd7, type: 3}
   Prefabs:
     LT: {fileID: 106830, guid: 3bcadc3bba60ce54d95f60b0c7246bb5, type: 2}
     ThumbStick: {fileID: 159668, guid: 10c984281b83ab841b7c7ce64c529a8b, type: 2}
     A: {fileID: 157624, guid: e16142a6bfcf1114db3e0322343ad213, type: 2}
+    AxeManKillActive: {fileID: 184624, guid: c5200e88b67fccc4ab06a2a604d2c8c6, type: 2}
   BonusSpeedTimer: 0
   BonusPoisonTimer: 0
   BonusSkin: {fileID: 11400000, guid: e3c1bfde1e3fd244e8817475ee091c30, type: 2}
@@ -2123,7 +2261,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: 21300000, guid: 42b94c36df0f9744f80eb32106240f6c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 63b4011fdc0bbac4896245c2a13e2d6b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21244702
 SpriteRenderer:
@@ -2432,6 +2570,50 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 52
   m_Sprite: {fileID: 21300000, guid: 95ed9651f29879841800dc07f27e3757, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!212 &21273594
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173594}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 51
+  m_Sprite: {fileID: 21300000, guid: f645cf2cf2854ad4a9d7b48dcd0949ab, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!212 &21273596
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173596}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: d4bee8094fb44684ba2815e61a6f346f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

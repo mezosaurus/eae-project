@@ -8,8 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 114: {fileID: 11400004}
-  - 114: {fileID: 11400006}
   - 114: {fileID: 11400008}
   - 114: {fileID: 11460400}
   m_Layer: 0
@@ -31,37 +29,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9188188fd122d8d4eb99f4ea65e7a346, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guiFont: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  boxImage: {fileID: 2800000, guid: 2a77f529de579d144ab1b2321da1e1f5, type: 3}
-  buttonImage: {fileID: 2800000, guid: 9e5e125fedf518e4db38bba8d824b918, type: 3}
-  sound: {fileID: 8300000, guid: 57e5d70f222a9d44cb2a03f388fdd3ba, type: 3}
-  TutorialImages: []
-  levelMusic: {fileID: 8300000, guid: 9fa3fc2be1de4534fb69cf14bb754f1d, type: 3}
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 254700baea5533945bc6f3fe81fde11f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guiFont: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
-  boxImage: {fileID: 2800000, guid: 2a77f529de579d144ab1b2321da1e1f5, type: 3}
-  menu: {fileID: 116028, guid: f975eb96d299a484c9e28d67b438ebc7, type: 2}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,24 +76,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: .400000006
-  plusSign: {fileID: 2800000, guid: 5bb8a282c3621024abc40d6ec485b338, type: 3}
-  minusSign: {fileID: 2800000, guid: a01518903f97ead4fb6b2c0fe77bffa5, type: 3}
-  numZero: {fileID: 2800000, guid: eccc50786f74ea747b5ea8969810ffff, type: 3}
-  numOne: {fileID: 2800000, guid: 6324006fdd48268499b9cd4e0db2e101, type: 3}
-  numTwo: {fileID: 2800000, guid: 8b1faa8b0b0dc77448d46671005ddb4c, type: 3}
-  numThree: {fileID: 2800000, guid: 966b888d6c985014e9334dab279db245, type: 3}
-  numFour: {fileID: 2800000, guid: 62cf5a92fad552648b6a63d6a36cff46, type: 3}
-  numFive: {fileID: 2800000, guid: 7d26c7a1ec4db1e48b26d215cd35d76b, type: 3}
-  numSix: {fileID: 2800000, guid: 7940b4ae88ffea542b732453373fed57, type: 3}
-  numSeven: {fileID: 2800000, guid: 200257881f431ea45b37e02447e83309, type: 3}
-  numEight: {fileID: 2800000, guid: 40d438594a163aa4d804656139b3da96, type: 3}
-  numNine: {fileID: 2800000, guid: 46fa3f2067c007f409de8459d4df3afd, type: 3}
-  _x: {fileID: 2800000, guid: 9c0a3a55bd4e3f14cad7d56396bfaeba, type: 3}
-  myFont: {fileID: 12800000, guid: 945790ce9e8b7794180f0d4e8408e93e, type: 2}
   bountyBoxImage: {fileID: 2800000, guid: 2a77f529de579d144ab1b2321da1e1f5, type: 3}
   bountyBoxTextImage: {fileID: 2800000, guid: cd5e34e59e9bd8b418dad6199edea91d, type: 3}
-  scoreImage: {fileID: 2800000, guid: 70ebddec16197d24281f3896e4c44c71, type: 3}
-  highscoreImage: {fileID: 2800000, guid: bc1a822f1093e4342b109110ef10adac, type: 3}
   bar1: {fileID: 2800000, guid: f96189ffbc09ff247856221d09fb582c, type: 3}
   bar2: {fileID: 2800000, guid: ea4ac3ad1b17a014c9b827a6101ce13e, type: 3}
   bar3: {fileID: 2800000, guid: f06fe2a3067ae90489c9f9e5d06c7680, type: 3}

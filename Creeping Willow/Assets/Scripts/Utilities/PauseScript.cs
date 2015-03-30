@@ -1,147 +1,130 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class PauseScript : MonoBehaviour {
+public class PauseScript : MonoBehaviour
+{
+	public Button[] pauseButtons;
 
-	public enum PauseState
+	private Canvas pauseCanvas;
+	private bool isPaused;
+	private bool axisBusy;
+
+	void Start()
 	{
-		RESUME,
-		SETTINGS,
-		QUIT,
-		SETTINGS_IN
-	}
-
-	bool isPaused;
-	int state;
-
-	public GUITexture pauseScreenResume;
-	public GUITexture pauseScreenQuit;
-	public GUITexture pauseScreenSettings;
-	public GUITexture pauseScreenSettingsIn;
-
-	bool controllerInUse;
-
-	// Use this for initialization
-	void Start () {
 		isPaused = false;
-		state = -1;
-		controllerInUse = false;
+		axisBusy = false;
 
-		pauseScreenResume.enabled = false;
-		pauseScreenQuit.enabled = false;
-		pauseScreenSettings.enabled = false;
-		pauseScreenSettingsIn.enabled = false;
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Get the canvas and buttons ready
+		pauseCanvas = GameObject.Find( "PauseCanvas" ).GetComponent<Canvas>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-		// wait for controller to be at rest
-		if( controllerInUse && Input.GetAxis("PauseStickY") == 0)
-			controllerInUse = false;
-		
-		if( controllerInUse && (Input.GetAxis("PauseStickY") < 0 || Input.GetAxis("PauseStickY") > 0) )
-			return;
-
+	void Update()
+	{
 		if( isPaused )
 		{
-			// if in second layer of pause menu
-			if( state == (int)PauseState.SETTINGS_IN )
+			// Check for mouse
+			if( Input.GetAxis( "Mouse X" ) != 0 || Input.GetAxis( "Mouse Y" ) != 0 )
 			{
-				if( Input.GetButtonDown("B") )
+				Screen.showCursor = true;
+				Screen.lockCursor = false;
+				axisBusy = true;
+				EventSystem.current.SetSelectedGameObject( null );
+			}
+			// Check for controller movement
+			else if( !axisBusy && ( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "MenuX" ) != 0 ) )
+			{
+				Screen.showCursor = false;
+				Screen.lockCursor = true;
+				axisBusy = true;
+				
+				if( EventSystem.current.currentSelectedGameObject == null )
 				{
-					state = (int)PauseState.SETTINGS;
-					pauseScreenSettingsIn.enabled = false;
-					pauseScreenSettings.enabled = true;
-					gameObject.GetComponent<HighScoreScript>().enabled = false;
+					EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
 				}
+			}
+			// Exit pause screen
+			else if(  !axisBusy && ( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "B" ) ) )
+			{
+				Resume();
+
+				axisBusy = true;
 			}
 			else
 			{
-				// if resume state
-				if( state == (int)PauseState.RESUME )
-				{
-					if( Input.GetAxis("PauseStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
-					{
-						state = (int)PauseState.SETTINGS;
-						pauseScreenSettings.enabled = true;
-						pauseScreenResume.enabled = false;
-						controllerInUse = true;
-					}
-					else if( Input.GetButtonDown("A") )
-					{
-						isPaused = false;
-						pauseScreenResume.enabled = false;
-
-						MessageCenter.Instance.Broadcast(new PauseChangedMessage(false));
-						state = -1;
-					}
-				}
-				// settings state
-				else if( state == (int)PauseState.SETTINGS )
-				{
-					if( Input.GetAxis("PauseStickY") < 0 || Input.GetKeyDown(KeyCode.DownArrow) )
-					{
-						state = (int)PauseState.QUIT;
-						pauseScreenSettings.enabled = false;
-						pauseScreenQuit.enabled = true;
-						controllerInUse = true;
-					}
-					else if( Input.GetAxis("PauseStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
-					{
-						state = (int)PauseState.RESUME;
-						pauseScreenSettings.enabled = false;
-						pauseScreenResume.enabled = true;
-						controllerInUse = true;
-					}
-					else if( Input.GetButtonDown("A") )
-					{
-						state = (int)PauseState.SETTINGS_IN;
-						pauseScreenSettings.enabled = false;
-						gameObject.GetComponent<HighScoreScript>().enabled = true;
-						pauseScreenSettingsIn.enabled = true;
-					}
-				}
-				// quit state
-				else if( state == (int)PauseState.QUIT )
-				{
-					if( Input.GetAxis("PauseStickY") > 0 || Input.GetKeyDown(KeyCode.UpArrow) )
-					{
-						state = (int)PauseState.SETTINGS;
-						pauseScreenSettings.enabled = true;
-						pauseScreenQuit.enabled = false;
-						controllerInUse = true;
-					}
-					else if( Input.GetButtonDown("A") )
-					{
-						Application.LoadLevel(1);
-					}
-				}
-
-				// check for exit of pause screen
-				if( Input.GetButtonDown("Start") || Input.GetButtonDown("B") || Input.GetKeyDown(KeyCode.P))
-				{
-					isPaused = false;
-					pauseScreenResume.enabled = false;
-					pauseScreenQuit.enabled = false;
-					pauseScreenSettings.enabled = false;
-					
-					MessageCenter.Instance.Broadcast(new PauseChangedMessage(false));
-					state = -1;
-				}
+				axisBusy = false;
 			}
 		}
 		else
 		{
-			// pause game
-			if( Input.GetButtonDown("Start") || Input.GetKeyDown(KeyCode.P) )
+			axisBusy = false;
+
+			// Pause game
+			if( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "Back" ) )
 			{
-				isPaused = true;
-				state = (int)PauseState.RESUME;
-				pauseScreenResume.enabled = true;
-				MessageCenter.Instance.Broadcast(new PauseChangedMessage(true));
+				Pause();
 			}
 		}
+	}
 
+	public void Pause()
+	{
+		isPaused = true;
+		pauseCanvas.enabled = true;
+		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+
+		EnableAllButtons();
+		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
+
+		// Disable the other scripts until we are out of the menu
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = false;
+
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+		
+		axisBusy = true;
+	}
+
+	public void Resume()
+	{
+		isPaused = false;
+		pauseCanvas.enabled = false;
+
+		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
+
+		// Enable the other scripts until we are out of the menu
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = true;
+
+		DisableAllButtons();
+	}
+
+	public void Menu()
+	{
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Load the main menu
+		Application.LoadLevel( "InteractiveMenu" );
+	}
+
+	private void EnableAllButtons()
+	{
+		foreach( Button button in pauseButtons )
+			button.interactable = true;
+	}
+
+	private void DisableAllButtons()
+	{
+		foreach( Button button in pauseButtons )
+			button.interactable = false;
 	}
 }

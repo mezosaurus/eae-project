@@ -15,6 +15,11 @@ public class CameraScript : MonoBehaviour
     private Vector2 panFrom, panTo;
     private float panTimer, panSpeed;
 
+    // ZF2
+    private float zfTimer, zfTime;
+    private Vector3 zfPointFrom, zfPointTo;
+    private float zfZoomFrom, zfZoomTo;
+
     // TEMP?
     private const int SoulConsumedSize = 14;
     private int soulConsumed;
@@ -27,9 +32,12 @@ public class CameraScript : MonoBehaviour
         MessageCenter.Instance.RegisterListener(MessageType.CameraZoom, HandleCameraZoomMessage);
         MessageCenter.Instance.RegisterListener(MessageType.CameraChangedObjectFollowed, HandleChangeObjectFollowed);
         MessageCenter.Instance.RegisterListener(MessageType.CameraZoomAndFocus, HandleZoomAndFocus);
+        MessageCenter.Instance.RegisterListener(MessageType.CameraZoomAndFocus2, HandleZoomAndFocus2);
         //MessageCenter.Instance.RegisterListener(MessageType.CameraZoomOut, HandleCameraZoomOutMessage);
         TargetSize = camera.orthographicSize;
         locked = true;
+
+		Screen.SetResolution (1600, 900, true);
 
         LoadSoulConsumedImages();
     }
@@ -74,6 +82,25 @@ public class CameraScript : MonoBehaviour
         panTo = message.Point;
         panTimer = 0f;
         panSpeed = message.PanSpeed;
+
+        ObjectToFollow = null;
+    }
+
+    void HandleZoomAndFocus2(Message m)
+    {
+        CameraZoomAndFocusMessage2 message = m as CameraZoomAndFocusMessage2;
+
+        zfTimer = 0f;
+        zfTime = message.Speed;
+
+        zfPointFrom = transform.position;
+        zfPointTo = message.Point;
+        zfPointTo.z = transform.position.z;
+
+        zfZoomFrom = camera.orthographicSize;
+        zfZoomTo = message.Size;
+
+        ObjectToFollow = null;
     }
 
     /*void HandleCameraZoomOutMessage(Message message)
@@ -84,6 +111,11 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetButtonDown("LB"))
+        {
+            Application.LoadLevel("InteractiveMenu");
+        }
+        
         if(ObjectToFollow != null)
         {
             Vector3 targetPosition = new Vector3(ObjectToFollow.position.x, ObjectToFollow.position.y, transform.position.z) + ObjectToFollowOffset;
@@ -107,6 +139,21 @@ public class CameraScript : MonoBehaviour
             transform.position = new Vector3(position.x, position.y, -10f);
 
             if (panTimer >= panSpeed) panSpeed = 0f;
+        }
+
+        if(zfTime > 0f)
+        {
+            zfTimer += Time.deltaTime;
+
+            if (zfTimer > zfTime) zfTime = 0f;
+
+            float ratio = zfTimer / zfTime;
+
+            if (ratio > 1f) ratio = 1f;
+
+            transform.position = Vector3.Lerp(zfPointFrom, zfPointTo, ratio);
+            camera.orthographicSize = Mathf.Lerp(zfZoomFrom, zfZoomTo, ratio);
+            TargetSize = Mathf.Lerp(zfZoomFrom, zfZoomTo, ratio);
         }
 
         /*if(zoomedIn && camera.orthographicSize != 1.5f)
