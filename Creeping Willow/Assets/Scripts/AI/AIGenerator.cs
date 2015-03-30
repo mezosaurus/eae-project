@@ -276,7 +276,6 @@ public class AIGenerator : GameBehavior
 
 	void createActiveEnemyNPC(int count, bool preSpawn)
 	{
-		Debug.Log ("Axe Man Cometh!");
 		int max = 15;
 		int available = max - activeEnemyAIList.Count;
 		
