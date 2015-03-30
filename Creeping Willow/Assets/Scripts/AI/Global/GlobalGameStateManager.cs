@@ -89,4 +89,37 @@ public static class GlobalGameStateManager
 
         npcData.SkinType = skinType;
     }
+
+	public static void SavePlayerScores(int[] highscores, string[] names)
+	{
+		for( int i = 0; i < 10; i++ )
+		{
+			PlayerPrefs.SetInt(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_score_" + i, highscores[i]);
+			PlayerPrefs.SetString(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_name_" + i, names[i]);
+		}
+	}
+
+	public static int[] LoadScores()
+	{
+		int[] scores = new int[10];
+
+		for( int i = 0; i < 10; i++ )
+		{
+			scores[i] = PlayerPrefs.GetInt(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_score_" + i, 0);
+		}
+
+		return scores;
+	}
+
+	public static string[] LoadNames()
+	{
+		string[] names = new string[10];
+
+		for( int i = 0; i < 10; i++ )
+		{
+			names[i] = PlayerPrefs.GetString(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_name_" + i, "");
+		}
+
+		return names;
+	}
 }

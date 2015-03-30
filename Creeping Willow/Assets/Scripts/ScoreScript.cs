@@ -321,8 +321,10 @@ public class ScoreScript : MonoBehaviour {
 		endHeight = 100;
 		endX = multXOffset;
 		
-		highscores = GlobalGameStateManager.highscores;
-		names = GlobalGameStateManager.playerNames;
+		//highscores = GlobalGameStateManager.highscores;
+		//names = GlobalGameStateManager.playerNames;
+		highscores = GlobalGameStateManager.LoadScores ();
+		names = GlobalGameStateManager.LoadNames ();
 		
 		// mult variabes
 		multLength = Screen.width / 3;
@@ -362,8 +364,10 @@ public class ScoreScript : MonoBehaviour {
 					if (Input.GetButtonDown ("A"))
 					{
 						updateHighScores (_score, initials);
-						GlobalGameStateManager.highscores = highscores;
-						GlobalGameStateManager.playerNames = names;
+						//GlobalGameStateManager.highscores = highscores;
+						//GlobalGameStateManager.playerNames = names;
+						GlobalGameStateManager.SavePlayerScores(highscores, names);
+
 						entered = true;						
 						MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 
