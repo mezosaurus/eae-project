@@ -19,16 +19,21 @@ public class RoundBushPossessable : PossessableItem
 
     protected override void lure()
     {
-        base.lure();
-        blinking = true;
+        //base.lure();
+        //blinking = true;
+        Animator anim = gameObject.GetComponent<Animator>();
+        anim.SetTrigger("Lure");
         AbilityPlacedMessage message = new AbilityPlacedMessage(transform.position.x, transform.position.y, AbilityType.PossessionLure);
         MessageCenter.Instance.Broadcast(message);
+        //anim.SetBool("Lure", false);
     }
 
     protected override void scare()
     {
-        base.scare();
-        shaking = true;
+        //base.scare();
+        //shaking = true;
+        Animator anim = gameObject.GetComponent<Animator>();
+        anim.SetTrigger("Lure");
         AbilityPlacedMessage message = new AbilityPlacedMessage(transform.position.x, transform.position.y, AbilityType.PossessionScare);
         MessageCenter.Instance.Broadcast(message);
         //GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
@@ -36,7 +41,23 @@ public class RoundBushPossessable : PossessableItem
 
     public override void possess()
     {
+        Animator anim = gameObject.GetComponent<Animator>();
+        anim.SetBool("Exorcise", false);
+        anim.SetBool("Possess", true);
+        anim.enabled = true;
         base.possess();
-        animation.Play("possessbush3_3");
+    }
+
+    public override void exorcise()
+    {
+        Animator anim = gameObject.GetComponent<Animator>();
+        anim.SetBool("Possess", false);
+        anim.SetBool("Exorcise", true);
+        Invoke("baseExorcise", .5f);
+        //Invoke(base.possess());
+    }
+
+    public void baseExorcise(){
+        base.exorcise();
     }
 }
