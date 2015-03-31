@@ -110,6 +110,8 @@ public class AIController : GameBehavior
 	Vector3 avoidCurrentDirection;
 
 	/********** NPC SOUNDS **********/
+	// Mowing
+	public AudioClip mowing;
 	// Eaten
 	public AudioClip bopperEaten;
 	public AudioClip hippieEaten;
@@ -178,7 +180,11 @@ public class AIController : GameBehavior
 	// Use this for initialization
 	public virtual void Start ()
 	{
-
+		if (this.SkinType.Equals (NPCSkinType.MowerMan)) 
+		{
+			audio.clip = mowing;
+			audio.Play();
+		}
 		enteredMap = false;
 		// Alert Texture
 		alertTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIAlert"));
