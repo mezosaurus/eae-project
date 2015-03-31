@@ -14,24 +14,18 @@ public class PauseScript : MonoBehaviour
 	void Start()
 	{
 		isPaused = false;
+		axisBusy = false;
 
+		// Hide the cursor
 		Screen.showCursor = false;
 		Screen.lockCursor = true;
 
-		axisBusy = false;
-
+		// Get the canvas and buttons ready
 		pauseCanvas = GameObject.Find( "PauseCanvas" ).GetComponent<Canvas>();
 	}
 
 	void Update()
 	{
-		if( !axisBusy && Input.GetButtonDown( "Cancel" ) )
-		{
-			Application.Quit();
-			
-			axisBusy = true;
-		}
-
 		if( isPaused )
 		{
 			// Check for mouse
@@ -83,8 +77,17 @@ public class PauseScript : MonoBehaviour
 		isPaused = true;
 		pauseCanvas.enabled = true;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
-		
+
+		EnableAllButtons();
 		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
+
+		// Disable the other scripts until we are out of the menu
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = false;
+
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
 		
 		axisBusy = true;
 	}
@@ -96,11 +99,19 @@ public class PauseScript : MonoBehaviour
 
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( false ) );
 
+		// Enable the other scripts until we are out of the menu
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = true;
+
 		DisableAllButtons();
 	}
 
 	public void Menu()
 	{
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
 		// Load the main menu
 		Application.LoadLevel( "InteractiveMenu" );
 	}

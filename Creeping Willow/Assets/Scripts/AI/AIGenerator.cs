@@ -20,6 +20,10 @@ public class AIGenerator : GameBehavior
 	public float critterSpawnTime = 15;
 	public bool isMaze = false;
 	public bool startWithActiveAxeMan = false;
+	public int axeManStartCount = 1;
+	public bool levelSpawnsAxeMan = false;
+	public float activeEnemySpawnTime = 20f;
+	
 	public bool spawnAxeWanderDEBUG = false;
 	public bool spawnAxeActiveDEBUG = false;
 
@@ -30,6 +34,7 @@ public class AIGenerator : GameBehavior
 	private static string skinPrefix = "prefabs/AI/NPCSkinPrefabs/";
 
 	private float lastCritterTime; 
+	private float nextActiveEnemySpawnTime = 0.0f;
 	private ArrayList stationaryAIList;
 	private ArrayList pathAIList;
 	private ArrayList wanderAIList;
@@ -38,7 +43,7 @@ public class AIGenerator : GameBehavior
 	private ArrayList critterAIList;
 
 	public AudioClip axemanSoundtrack;
-		
+	
 	// Game Functions
 
 	void Start()
@@ -91,6 +96,12 @@ public class AIGenerator : GameBehavior
 			lastCritterTime = Time.time;
 			createCritterNPC();
 		}
+
+		if (levelSpawnsAxeMan && nextActiveEnemySpawnTime <= Time.time && activeEnemyAIList.Count / 3 <= 2)
+		{
+			nextActiveEnemySpawnTime = Time.time + activeEnemySpawnTime;
+			createActiveEnemyNPC();
+		}
 	}
 
 	private void initMap()
@@ -122,7 +133,7 @@ public class AIGenerator : GameBehavior
 
 		if (startWithActiveAxeMan)
 		{
-			createActiveEnemyNPC();
+			createActiveEnemyNPC(axeManStartCount, true);
 		}
 	}
 
@@ -250,12 +261,41 @@ public class AIGenerator : GameBehavior
 
 	void createActiveEnemyNPC()
 	{
-		if (activeEnemyAIList.Count > 15)
-			return;
+		createActiveEnemyNPC (1, false);
+	}
 
-		SubpathScript movePath = getRandomMovePath ();
-		GameObject newNPC = createNPC (this.enemyNPCActive, activeEnemyAIList, movePath.getNextPath(null,null).transform.position);
-		newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (movePath);
+	void createActiveEnemyNPC(bool preSpawn)
+	{
+		createActiveEnemyNPC (1, preSpawn);
+	}
+
+	void createActiveEnemyNPC(int count) 
+	{
+		createActiveEnemyNPC (count, false);
+	}
+
+	void createActiveEnemyNPC(int count, bool preSpawn)
+	{
+		int max = 15;
+		int available = max - activeEnemyAIList.Count;
+		
+		int create = Mathf.Min (count, available);
+		
+		for (; create > 0; create--)
+		{
+			SubpathScript movePath = getRandomMovePath ();
+			GameObject newNPC;
+			if (preSpawn)
+			{
+				Vector3 spawnPosition = movePath.getNextPath(null, null).transform.position;
+				newNPC = createNPC (this.enemyNPCActive, activeEnemyAIList, movePath.getNextPath(null,null).transform.position);
+			}
+			else
+			{
+				newNPC = createNPC (this.enemyNPCActive, activeEnemyAIList);
+			}
+			newNPC.GetComponent<EnemyAIControllerActive> ().setMovingPath (movePath);
+		}
 	}
 
 	void createWanderEnemyNPC(Vector3 panickedPosition)
@@ -375,8 +415,7 @@ public class AIGenerator : GameBehavior
 			activeEnemyAIList.Remove(NPC);
 
 			// Hyrda Effect (every one that's killed spawns two more)
-			createActiveEnemyNPC();
-			createActiveEnemyNPC();
+			createActiveEnemyNPC(2);
 		}
 		else if (critterAIList.Contains(NPC))
 		{

@@ -906,6 +906,7 @@ public class AIController : GameBehavior
 
 	protected Vector3 avoid (Vector3 currentNPCDirection)
 	{
+		//Debug.DrawLine (transform.position, transform.position + currentNPCDirection, Color.blue);
 		//return Vector3.zero;
 		if( avoidCounter < 15 )
 		{
@@ -922,18 +923,19 @@ public class AIController : GameBehavior
 		// get width/height
 		float radius = (float)Mathf.Max (gameObject.GetComponent<BoxCollider2D> ().size.x, gameObject.GetComponent<BoxCollider2D> ().size.y) / 2f;
 
+		// set layer to avoid (NPCS)
 		LayerMask layermask = ~(1 << 8);
-
+		RaycastHit2D hit;
 		// check for object in the way
-		if (Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask)) 
+		if (hit = Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask)) 
 		{
-			RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask);
+			//RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask);
 
-			if (hit == null)
+			/*if (hit == null)
 			{
 				avoidCurrentDirection = Vector3.zero;
 				return Vector3.zero;
-			}
+			}*/
 
 			if (hit.transform.gameObject == nextPath)
 			{
@@ -948,12 +950,6 @@ public class AIController : GameBehavior
 				avoidCurrentDirection = Vector3.zero;
 				return Vector3.zero;
 			}
-			
-			if( this.GetType() == typeof(EnemyAIControllerWander) )
-			{
-				Debug.Log ("obj: " + transform.gameObject.ToString() );
-				Debug.Log ("hit: " + hit.transform.gameObject.ToString() );
-			}
 
 			if (hit.transform.gameObject.tag == "NPC" ||
 					hit.transform.gameObject.tag == "Border") // also invalid
@@ -963,13 +959,6 @@ public class AIController : GameBehavior
 			}
 
 			// VALID HIT!!!
-
-			if( this.GetType() == typeof(EnemyAIControllerWander) )
-			{
-				Debug.Log ("valid hit" );
-			}
-
-			//Debug.Log ("in cast");
 
 			// if object is on top of next path location
 			if (Vector3.Distance (hit.transform.position, nextPath.transform.position) < .3f && hit.transform.gameObject != nextPath.transform.gameObject) 
@@ -1009,14 +998,12 @@ public class AIController : GameBehavior
 			}
 			avoidCurrentDirection = newPos;
 
-			if( this.GetType() == typeof(EnemyAIControllerWander) )
-			{
-				Debug.Log ("worked" );
-			}
-
 			return newPos;
 		}
-		avoidCurrentDirection = Vector3.zero;
-		return Vector3.zero;
+		else
+		{
+			avoidCurrentDirection = Vector3.zero;
+			return Vector3.zero;
+		}
 	}
 }

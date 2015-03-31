@@ -88,6 +88,9 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
 
         Tree.audio.Stop();
 
+		SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+		soundManager.ResumeMusic();
+
         MessageCenter.Instance.Broadcast(new AxeManMinigameAxeManChangePhaseMessage(9001));
 
         Tree.ChangeState("AxeManMinigameDead");

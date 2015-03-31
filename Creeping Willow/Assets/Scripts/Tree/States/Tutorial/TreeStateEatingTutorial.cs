@@ -45,6 +45,10 @@ public class TreeStateEatingTutorial : TreeState
         GlobalGameStateManager.SoulConsumedTimer = 3.5f;
 
         Tree.audio.Stop();
+
+		SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+		soundManager.ResumeMusic();
+
         Tree.audio.clip = Tree.Sounds.SoulConsumed;
         Tree.audio.Play();
 

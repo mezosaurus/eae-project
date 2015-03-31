@@ -67,6 +67,16 @@ public class SoundManager : MonoBehaviour
 		}
 	}
 
+	public void PauseMusic()
+	{
+		musicSource.Pause();
+	}
+
+	public void ResumeMusic()
+	{
+		musicSource.Play();
+	}
+
 	public void PlaySoundEffect( AudioClip clip )
 	{
 		effectsSource.clip = clip;

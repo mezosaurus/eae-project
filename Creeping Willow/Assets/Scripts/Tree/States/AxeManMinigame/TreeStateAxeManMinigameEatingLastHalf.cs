@@ -107,6 +107,10 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
             GlobalGameStateManager.SoulConsumedTimer = 3.5f;
 
             Tree.audio.Stop();
+
+			SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+			soundManager.ResumeMusic();
+
             Tree.audio.clip = Tree.Sounds.SoulConsumed2;
             Tree.audio.Play();
 

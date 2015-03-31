@@ -16,33 +16,37 @@ public class IntroScript : MonoBehaviour
 
 	void Start()
 	{
+		// Pause the game
 		isPaused = true;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
-		
+
+		axisBusy = false;
+
+		// Hide the cursor
 		Screen.showCursor = false;
 		Screen.lockCursor = true;
-		
-		axisBusy = false;
-		
+
+		// Get the canvas and buttons ready
 		pauseCanvas = GameObject.Find( "IntroCanvas" ).GetComponent<Canvas>();
 		pauseCanvas.enabled = true;
 
 		EnableAllButtons();
 		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
 
+		// Disable the other scripts until we are out of the menu
+		PauseScript pauseScript = GameObject.Find( "PauseCanvas" ).GetComponent<PauseScript>();
+		pauseScript.enabled = false;
+
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = false;
+
+		// Switch the music
 		soundManager = GameObject.FindObjectOfType<SoundManager>();
 		soundManager.ChangeMusic( levelMusic );
 	}
 
 	void Update()
 	{
-		if( !axisBusy && Input.GetButtonDown( "Cancel" ) )
-		{
-			Application.Quit();
-			
-			axisBusy = true;
-		}
-		
 		if( isPaused )
 		{
 			// Check for mouse
@@ -97,9 +101,16 @@ public class IntroScript : MonoBehaviour
 
 		DisableAllButtons();
 
-		// Get the pause script ready to go
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Get the other scripts ready to go
 		PauseScript pauseScript = GameObject.Find( "PauseCanvas" ).GetComponent<PauseScript>();
 		pauseScript.enabled = true;
+
+		OutroScript outroScript = GameObject.Find( "OutroCanvas" ).GetComponent<OutroScript>();
+		outroScript.enabled = true;
 
 		this.enabled = false;
 	}

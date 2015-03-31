@@ -1,140 +1,196 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class OutroScript : MonoBehaviour
 {
-	public Font guiFont;
-	public Texture2D boxImage;
-	public GameObject menu;
-	private Rect boxRect;
-	private GUIStyle boxStyle;
-	private GUIContent boxContent;
-	private int currentIntro;
-	private AudioSource mapAudio;
-	private string message;
+	public Button[] pauseButtons;
+	public Text outroMessage;
 
-	void Start ()
+	private Canvas pauseCanvas;
+	private bool isPaused;
+	private bool axisBusy;
+
+	void Start()
 	{
-		boxRect = new Rect( 485, 100, GlobalGameStateManager.originalWidth - 970, GlobalGameStateManager.originalHeight - 350 );
-		boxStyle = new GUIStyle();
-		boxContent = new GUIContent();
-		//MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
-		this.enabled = false;
+		isPaused = false;
+		axisBusy = false;
+
+		// Get the canvas and buttons ready
+		pauseCanvas = GameObject.Find( "OutroCanvas" ).GetComponent<Canvas>();
+		pauseCanvas.enabled = false;
+
 		RegisterListeners();
-	}
-	
-	void OnDestroy()
-	{
-		UnregisterListeners();
 	}
 
 	protected void RegisterListeners()
 	{
 		MessageCenter.Instance.RegisterListener( MessageType.LevelFinished, HandleLevelFinishedMessage );
+		MessageCenter.Instance.RegisterListener( MessageType.ScoreAdding, HandleScoreAddingMessage );
 	}
-	
+
 	protected void UnregisterListeners()
 	{
 		MessageCenter.Instance.UnregisterListener( MessageType.LevelFinished, HandleLevelFinishedMessage );
+		MessageCenter.Instance.UnregisterListener( MessageType.ScoreAdding, HandleScoreAddingMessage );
 	}
 
 	protected void HandleLevelFinishedMessage( Message message )
 	{
-		menu.GetComponent<MenuController>().enabled = true;
-		for( int i = 0; i < menu.GetComponent<MenuController>().buttons.Length; i++ )
-		{
-			menu.GetComponent<MenuController>().buttons[ i ].GetComponent<GUIButton>().enabled = true;
-		}
+		LevelEnded();
 
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
-
-		if( mess.Type == LevelFinishedType.Loss )
+		switch( mess.Type )
 		{
+		case LevelFinishedType.Loss:
 			switch( mess.Reason )
 			{
 			case LevelFinishedReason.MaxNPCsPanicked:
-				this.enabled = true;
-				this.message = "You have failed\n\nThe NPC noticed you and got scared";
-				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				outroMessage.text = "You have failed\n\nThe NPC noticed you and got scared";
 				break;
-
+				
 			case LevelFinishedReason.PlayerDied:
-				this.enabled = true;
-				this.message = "You have failed\n\nYour tree was chopped down and made into evil little toothpicks";
-				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				outroMessage.text = "You have failed\n\nYour tree was chopped down and made into evil little toothpicks";
 				break;
-
+				
 			case LevelFinishedReason.TimerOut:
-				this.enabled = true;
-				this.message = "You have failed\n\nYou ran out of time";
-				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				outroMessage.text = "You have failed\n\nYou ran out of time";
 				break;
-
+				
 			default:
 				break;
 			}
-		}
-		else if( mess.Type == LevelFinishedType.Win )
-		{
+			break;
+
+		case LevelFinishedType.Win:
 			switch( mess.Reason )
 			{
 			case LevelFinishedReason.TargetNPCEaten:
-				this.enabled = true;
-				this.message = "You have won\n\nYour target has been consumed";
-				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				outroMessage.text = "You have won\n\nYour target has been consumed";
 				break;
 				
 			case LevelFinishedReason.NumNPCsEaten:
-				this.enabled = true;
-				this.message = "You have won\n\nYour tree has feasted upon many souls";
-				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				outroMessage.text = "You have won\n\nYour tree has feasted upon many souls";
 				break;
-				
+
 			case LevelFinishedReason.TimerOut:
-				this.enabled = true;
-				this.message = "You have won\n\nYou survived the day";
-				MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+				outroMessage.text = "You have won\n\nYou survived the day";
 				break;
-				
+
 			default:
 				break;
 			}
+			break;
+
+		case LevelFinishedType.Tie:
+			outroMessage.text = "You have tied";
+			break;
 		}
-
-
 	}
 
-	void OnGUI ()
+	protected void HandleScoreAddingMessage( Message message )
 	{
-		GUI.matrix = GlobalGameStateManager.PrepareMatrix();
-
-		// prepare the style for the boxes
-		boxStyle.font = guiFont;
-		boxStyle.fontSize = 45;
-		boxStyle.wordWrap = true;
-		boxStyle.alignment = TextAnchor.UpperCenter;
-
-		drawIntroBox ();
-
-		GUI.matrix = Matrix4x4.identity;
+		ScoreAddingMessage mess = message as ScoreAddingMessage;
+		if( mess.adding == false )
+			ReadyButtons();
 	}
 
-	private void drawIntroBox ()
-	{
-		drawBox( message, "Try Again", 85 );
+	void Update()
+	{	
+		if( isPaused )
+		{
+			// Check for mouse
+			if( Input.GetAxis( "Mouse X" ) != 0 || Input.GetAxis( "Mouse Y" ) != 0 )
+			{
+				Screen.showCursor = true;
+				Screen.lockCursor = false;
+				axisBusy = true;
+				EventSystem.current.SetSelectedGameObject( null );
+			}
+			// Check for controller movement
+			else if( !axisBusy && ( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "MenuX" ) != 0 ) )
+			{
+				Screen.showCursor = false;
+				Screen.lockCursor = true;
+				axisBusy = true;
+				
+				if( EventSystem.current.currentSelectedGameObject == null )
+				{
+					EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
+				}
+			}
+			// Exit pause screen
+			else if(  !axisBusy && ( Input.GetButtonDown( "Start" ) || Input.GetButtonDown( "Back" ) || Input.GetButtonDown( "B" ) ) )
+			{
+				Menu();
+				
+				axisBusy = true;
+			}
+			else
+			{
+				axisBusy = false;
+			}
+		}
+		else
+			axisBusy = false;
 	}
 
-	private void restartBattle()
+	private void LevelEnded()
 	{
+		isPaused = true;
+		pauseCanvas.enabled = true;
+		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
+
+		// Disable the other scripts until we are out of the menu
+		IntroScript introScript = GameObject.Find( "IntroCanvas" ).GetComponent<IntroScript>();
+		introScript.enabled = false;
+
+		PauseScript pauseScript = GameObject.Find( "PauseCanvas" ).GetComponent<PauseScript>();
+		pauseScript.enabled = false;
+
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		axisBusy = true;
+	}
+
+	private void ReadyButtons()
+	{
+		EnableAllButtons();
+		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
+	}
+
+	public void Menu()
+	{
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Load the main menu
+		Application.LoadLevel( "InteractiveMenu" );
+	}
+
+	public void Retry()
+	{
+		// Hide the cursor
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
+
+		// Restart the level
 		Application.LoadLevel( Application.loadedLevel );
 	}
 
-	private void drawBox( string boxText, string buttonText, int fontSize )
-	{	
-		// draw the box and text
-		boxContent.text = boxText;
-		boxStyle.fontSize = fontSize;
-		GUI.DrawTexture( boxRect, boxImage, ScaleMode.StretchToFill );
-		GUI.Label( new Rect ( boxRect.x + 100, boxRect.y + 100, boxRect.width - 200, boxRect.height - 200 ), boxContent, boxStyle );
+	private void EnableAllButtons()
+	{
+		foreach( Button button in pauseButtons )
+			button.interactable = true;
+	}
+	
+	private void DisableAllButtons()
+	{
+		foreach( Button button in pauseButtons ) 
+			button.interactable = false;
 	}
 }
