@@ -109,12 +109,42 @@ public class AIController : GameBehavior
 	int avoidCounter = 0;
 	Vector3 avoidCurrentDirection;
 
-	// NPC Sounds
-	public AudioClip gasp1;
-	public AudioClip gasp2;
-	public AudioClip gasp3;
-	protected ArrayList gasps = new ArrayList();
-	protected bool playGasp = true;
+	/********** NPC SOUNDS **********/
+	// Mowing
+	public AudioClip mowing;
+	// Eaten
+	public AudioClip bopperEaten;
+	public AudioClip hippieEaten;
+	public AudioClip mowerEaten;
+	public AudioClip oldmanEaten;
+	// Curious
+	public AudioClip[] bopperCuriousSounds;
+	public AudioClip[] hippieCuriousSounds;
+	public AudioClip[] mowerCuriousSounds;
+	public AudioClip[] oldmanCuriousSounds;
+	// Idle
+	public AudioClip[] bopperIdleSounds;
+	public AudioClip[] hippieIdleSounds;
+	public AudioClip[] mowerIdleSounds;
+	public AudioClip[] oldmanIdleSounds;
+	protected float idlePlayTime = 90.0f;
+	protected float idleCounter = 0.0f;
+	// Alert 
+	public AudioClip[] bopperAlertSounds;
+	public AudioClip[] hippieAlertSounds;
+	public AudioClip[] mowerAlertSounds;
+	public AudioClip[] oldmanAlertSounds;
+	//public AudioClip[] hottieAlertSounds;
+	// Panic
+	public AudioClip[] bopperPanicSounds;
+	public AudioClip[] hippiePanicSounds;
+	public AudioClip[] mowerPanicSounds;
+	public AudioClip[] oldmanPanicSounds;
+	// Boolean control vars
+	protected bool playAlert = true;
+	//protected bool playPanic = true;
+	protected bool playCurious = true;
+	protected bool playIdle = true;
 
 	/*void OnGUI() {
 	int sizeX = 20;
@@ -150,11 +180,11 @@ public class AIController : GameBehavior
 	// Use this for initialization
 	public virtual void Start ()
 	{
-		// Initialize gasp sounds
-		gasps.Add (gasp1);
-		gasps.Add (gasp2);
-		gasps.Add (gasp3);
-
+		if (this.SkinType.Equals (NPCSkinType.MowerMan)) 
+		{
+			audio.clip = mowing;
+			audio.Play();
+		}
 		enteredMap = false;
 		// Alert Texture
 		alertTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AIAlert"));
@@ -193,6 +223,7 @@ public class AIController : GameBehavior
 
 		// Register for all messages that entre necessary
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
+		MessageCenter.Instance.RegisterListener (MessageType.NPCEaten, eatenListener);
 		MessageCenter.Instance.RegisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 		MessageCenter.Instance.RegisterListener (MessageType.TrapEntered, trapEnterListener);
 		MessageCenter.Instance.RegisterListener (MessageType.TrapReleased, trapReleaseListener);
@@ -214,6 +245,7 @@ public class AIController : GameBehavior
 	{
 		// Unregister for all messages that were previously registered for
 		MessageCenter.Instance.UnregisterListener (MessageType.PlayerGrabbedNPCs, grabbedListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.NPCEaten, eatenListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.PlayerReleasedNPCs, releasedListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.TrapEntered, trapEnterListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.TrapReleased, trapReleaseListener);
@@ -391,6 +423,38 @@ public class AIController : GameBehavior
 
 	protected bool updateNPC ()
 	{
+		// Play idle sound0
+		if (idleCounter > idlePlayTime)
+		{
+			idlePlayTime = Random.Range (90.0f, 120.0f);
+			idleCounter = 0.0f;
+			AudioClip idle = null;
+			// Get skin type to know which NPC sounds to play
+			if (this.SkinType.Equals (NPCSkinType.Bopper))
+			{
+				idle = (AudioClip)bopperIdleSounds[Random.Range (0, bopperIdleSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.Hippie))
+			{
+				idle = (AudioClip)hippieIdleSounds[Random.Range (0, hippieIdleSounds.Length)];
+			}
+			/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+			{
+				idle = (AudioClip)hottieAlertSounds[Random.Range (0, hottieAlertSounds.Length)];
+			}*/
+			else if (this.SkinType.Equals (NPCSkinType.MowerMan))
+			{
+				idle = (AudioClip)mowerIdleSounds[Random.Range (0, mowerIdleSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.OldMan))
+			{
+				idle = (AudioClip)oldmanIdleSounds[Random.Range (0, oldmanIdleSounds.Length)];
+			}
+			
+			audio.PlayOneShot (idle, 1.0f);
+		}
+		idleCounter += Time.deltaTime;
+
 		if (grabbed)
 			return true;
 
@@ -567,7 +631,7 @@ public class AIController : GameBehavior
 			alertTexture.renderer.enabled = false;
 			alerted = false;
 			alertLevel = 0;
-			playGasp = true;
+			playAlert = true;
 		}
 	}
 
@@ -578,12 +642,33 @@ public class AIController : GameBehavior
 
 		alertTexture.renderer.enabled = true;
 		alerted = true;
-		if (playGasp)
+		if (playAlert)
 		{
-			int rand = Random.Range (0, gasps.Count);
-			AudioClip gasp = (AudioClip)gasps[rand];
-			audio.PlayOneShot (gasp, 0.8f);
-			playGasp = false;
+			AudioClip gasp = null;
+			// Get skin type to know which NPC sounds to play
+			if (this.SkinType.Equals (NPCSkinType.Bopper))
+			{
+				gasp = (AudioClip)bopperAlertSounds[Random.Range (0, bopperAlertSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.Hippie))
+			{
+				gasp = (AudioClip)hippieAlertSounds[Random.Range (0, hippieAlertSounds.Length)];
+			}
+			/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+			{
+				gasp = (AudioClip)hottieAlertSounds[Random.Range (0, hottieAlertSounds.Length)];
+			}*/
+			else if (this.SkinType.Equals (NPCSkinType.MowerMan))
+			{
+				gasp = (AudioClip)mowerAlertSounds[Random.Range (0, mowerAlertSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.OldMan))
+			{
+				gasp = (AudioClip)oldmanAlertSounds[Random.Range (0, oldmanAlertSounds.Length)];
+			}
+
+			audio.PlayOneShot (gasp, 1.0f);
+			playAlert = false;
 		}
 		broadcastAlertLevelChanged (AlertLevelType.Alert);
 		Vector3 direction = getPlayer ().transform.position - gameObject.transform.position;
@@ -599,6 +684,31 @@ public class AIController : GameBehavior
 		panicTexture.renderer.enabled = true;
 		scaredTexture.renderer.enabled = false;
 		scared = false;
+
+		AudioClip scream = null;
+		// Get skin type to know which NPC sounds to play
+		if (this.SkinType.Equals (NPCSkinType.Bopper))
+		{
+			scream = (AudioClip)bopperPanicSounds[Random.Range (0, bopperPanicSounds.Length)];
+		}
+		else if (this.SkinType.Equals (NPCSkinType.Hippie))
+		{
+			scream = (AudioClip)hippiePanicSounds[Random.Range (0, hippiePanicSounds.Length)];
+		}
+		/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+		{
+			scream = (AudioClip)hottiePanicSounds[Random.Range (0, hottiePanicSounds.Length)];
+		}*/
+		else if (this.SkinType.Equals (NPCSkinType.MowerMan))
+		{
+			scream = (AudioClip)mowerPanicSounds[Random.Range (0, mowerPanicSounds.Length)];
+		}
+		else if (this.SkinType.Equals (NPCSkinType.OldMan))
+		{
+		scream = (AudioClip)oldmanPanicSounds[Random.Range (0, oldmanPanicSounds.Length)];
+		}
+		
+		audio.PlayOneShot (scream, 1.0f);
 
 		speed = 1.5f;
 		alerted = false;
@@ -641,6 +751,32 @@ public class AIController : GameBehavior
 		nextPath = new GameObject ();
 		nextPath.transform.position = lurePosition;
 		nextPath.tag = lureTag;
+
+		// Play curious sound for being lured
+		AudioClip curious = null;
+		// Get skin type to know which NPC sounds to play
+		if (this.SkinType.Equals (NPCSkinType.Bopper))
+		{
+			curious = (AudioClip)bopperCuriousSounds[Random.Range (0, bopperCuriousSounds.Length)];
+		}
+		else if (this.SkinType.Equals (NPCSkinType.Hippie))
+		{
+			curious = (AudioClip)hippieCuriousSounds[Random.Range (0, hippieCuriousSounds.Length)];
+		}
+		/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+		{
+			curious = (AudioClip)hottieCuriousSounds[Random.Range (0, hottieAlertSounds.Length)];
+		}*/
+		else if (this.SkinType.Equals (NPCSkinType.MowerMan))
+		{
+			curious = (AudioClip)mowerCuriousSounds[Random.Range (0, mowerCuriousSounds.Length)];
+		}
+		else if (this.SkinType.Equals (NPCSkinType.OldMan))
+		{
+			curious = (AudioClip)oldmanCuriousSounds[Random.Range (0, oldmanCuriousSounds.Length)];
+		}
+		
+		audio.PlayOneShot (curious, 1.0f);
 
 		luredTimeLeft = lureCooldownSeconds;
 	}
@@ -831,6 +967,43 @@ public class AIController : GameBehavior
 			panicTexture.renderer.enabled = false;
 			scaredTexture.renderer.enabled = false;
 		}
+	}
+
+	void eatenListener (Message message)
+	{
+		NPCEatenMessage msg = message as NPCEatenMessage;
+		
+		if( msg.NPC == null )
+			return;
+		if (!(msg.NPC.Equals(gameObject)))
+			return;
+
+		// Play eaten sound
+		AudioClip eaten = null;
+		// Get skin type to know which NPC sounds to play
+		if (this.SkinType.Equals (NPCSkinType.Bopper))
+		{
+			eaten = bopperEaten;
+		}
+		else if (this.SkinType.Equals (NPCSkinType.Hippie))
+		{
+			eaten = hippieEaten;
+		}
+		/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+		{
+			eaten = hottieEaten;
+		}*/
+		else if (this.SkinType.Equals (NPCSkinType.MowerMan))
+		{
+			eaten = mowerEaten;
+		}
+		else if (this.SkinType.Equals (NPCSkinType.OldMan))
+		{
+			eaten = oldmanEaten;
+		}
+		
+		audio.PlayOneShot (eaten, 1.0f);
+
 	}
 
 	void releasedListener (Message message)
