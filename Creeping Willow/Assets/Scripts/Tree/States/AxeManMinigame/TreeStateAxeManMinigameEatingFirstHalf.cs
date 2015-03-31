@@ -3,9 +3,9 @@
 public class TreeStateAxeManMinigameEatingFirstHalf : TreeState
 {
     private const float UpperArmStartAngle = 371.83527f;
-    private const float LowerArmStartAngle = 294.9953f;
+    private const float LowerArmStartAngle = 276f; //294.9953f;
     private const float UpperArmEndAngle = 377.36395f;
-    private const float LowerArmEndAngle = 298.9052f;
+    private const float LowerArmEndAngle = 288.3144f; //298.9052f;
 
 
     private int frame;
@@ -30,6 +30,8 @@ public class TreeStateAxeManMinigameEatingFirstHalf : TreeState
 
     public override void Update()
     {
+        Tree.BodyParts.RightLowerBackgroundArm.transform.localEulerAngles = new Vector3(0f, 0f, 6.799903f);
+        
         if (frame == 10)
         {
             if (!Tree.BodyParts.Trunk.audio.isPlaying)
@@ -84,7 +86,7 @@ public class TreeStateAxeManMinigameEatingFirstHalf : TreeState
 
     public override void UpdateSorting()
     {
-        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+        /*Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
         
         int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
 
@@ -95,7 +97,22 @@ public class TreeStateAxeManMinigameEatingFirstHalf : TreeState
         Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
         Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 5;
+        Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;*/
+
+        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+
+        int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
+
+        Tree.BodyParts.Eyes.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sortingOrder = i + 4;
+        Tree.BodyParts.LeftUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 5;
+        Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;
+        Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sortingOrder = i + 7;
+        Tree.BodyParts.Axe.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
+        //Tree.AxeMan.GetComponent<SpriteRenderer>().sortingOrder = i + 0;
     }
 
     public override void Leave()

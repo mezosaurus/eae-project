@@ -10,6 +10,7 @@ public class TempScript : MonoBehaviour
     {
         AxeMan.GetComponent<AxeManKillActiveTree>().Instantiate(Tree, null);
         Tree.GetComponent<PossessableTree>().ChangeState("AxeManMinigameWaitForChop", null);
+        Tree.GetComponent<PossessableTree>().AxeMan = AxeMan;
 	}
 	
 	// Update is called once per frame

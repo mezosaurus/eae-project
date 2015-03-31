@@ -149,9 +149,7 @@ public class PossessableTree : Possessable
     }
 
     private void HandleDeath(Message m)
-    {
-        Debug.Log("HandleDeath");
-        
+    {        
         PlayerKilledMessage message = m as PlayerKilledMessage;
 
         if(message.Tree == gameObject)
@@ -307,7 +305,9 @@ namespace Tree.Private
     [Serializable]
     public class Sounds
     {
-        public AudioClip Music, Chew, Burp, Laugh, SoulConsumed, SoulConsumed2, AxeManMinigameMusic;
+        public AudioClip Music, Chew, Burp, SoulConsumed, SoulConsumed2, AxeManMinigameMusic;
+        public AudioClip[] Laugh;
+        public AudioClip[] Saying;
         public AudioClip[] Walk;
         public AudioClip Groan, RemoveAxe;
         public AudioClip[] ChewAxeMan;

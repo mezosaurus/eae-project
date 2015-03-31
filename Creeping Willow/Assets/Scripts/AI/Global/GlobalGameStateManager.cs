@@ -43,6 +43,7 @@ public static class GlobalGameStateManager
 	public static PosessionState PosessionState = PosessionState.EXORCISABLE;
 	public static SceneEnum CurrentScene = 0;
     public static GameObject PanicTree;
+    public static bool PlayedJohnny = false;
 
 	public static int[] highscores = new int[10];
 	public static string[] playerNames = new string[10];

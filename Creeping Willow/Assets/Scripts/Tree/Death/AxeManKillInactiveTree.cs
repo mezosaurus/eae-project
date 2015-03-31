@@ -42,7 +42,7 @@ public class AxeManKillInactiveTree : MonoBehaviour
         spriteRenderer.sprite = Sprites[0];
 
         // Play taunt
-        audio.clip = Sounds.Taunt;
+        audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
         audio.Play();
     }
 
@@ -143,7 +143,7 @@ public class AxeManKillInactiveTree : MonoBehaviour
     [System.Serializable]
     public class _Sounds
     {
-        public AudioClip Taunt;
+        public AudioClip[] Taunt;
         public AudioClip[] Chop;
         public AudioClip[] Gloat;
     }

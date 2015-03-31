@@ -2006,6 +2006,7 @@ MonoBehaviour:
   Speed: 40
   Eating: 0
   Dead: 0
+  DisabledForMinigame: []
   AxeMan: {fileID: 0}
   ActualAxeMan: {fileID: 0}
   BodyParts:
@@ -2102,11 +2103,22 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 8300000, guid: 6f051ba3d8cf0a44fb803a3b4516bf7a, type: 3}
-    Laugh: {fileID: 8300000, guid: 6ea6bd0896eea01469b0d2f39fa19275, type: 3}
     SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
     SoulConsumed2: {fileID: 8300000, guid: 84e9141c20a97134dafe807bc7c9f7b2, type: 3}
     AxeManMinigameMusic: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375,
       type: 3}
+    Laugh:
+    - {fileID: 8300000, guid: 137dc40b527280045a756fbb2bff9cac, type: 3}
+    - {fileID: 8300000, guid: 0eeb02a5e1047b1409782917cc716654, type: 3}
+    - {fileID: 8300000, guid: 0b4329d9fa37e7149a140d1e7222520b, type: 3}
+    - {fileID: 8300000, guid: 23c27e1310a4c694e893715fd67a6e88, type: 3}
+    Saying:
+    - {fileID: 8300000, guid: a8c9ec725551b9a4182c956b5b67bbbc, type: 3}
+    - {fileID: 8300000, guid: 2f9c25867ef0da048b8c6a270fab3e5f, type: 3}
+    - {fileID: 8300000, guid: f89b67eeac26de14f9f069a660983579, type: 3}
+    - {fileID: 8300000, guid: d20ad4a78ab797d4eb7cd464aeeac460, type: 3}
+    - {fileID: 8300000, guid: 8e9dfe483f5103445a9002de117ec3ba, type: 3}
+    - {fileID: 8300000, guid: 6c55631832131c74c98c3a16ba80d14c, type: 3}
     Walk:
     - {fileID: 8300000, guid: d5d8a9bf84159ba4f974d31dff8b46aa, type: 3}
     - {fileID: 8300000, guid: 5714bf8515caf374e911a63a5f7ca228, type: 3}
@@ -2117,6 +2129,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 4646d2ad656f7d14d8ae9ec28057315a, type: 3}
     AxeManLastWords:
     - {fileID: 8300000, guid: 999213be3b15b0249b1a0376c1445fd7, type: 3}
+    - {fileID: 8300000, guid: fb1d6bf455928a44da494aa99337c55b, type: 3}
+    - {fileID: 8300000, guid: 13428ce60031637478bdadbb3625715b, type: 3}
+    - {fileID: 8300000, guid: 5d3391a871572ba4b9acece181994d50, type: 3}
   Prefabs:
     LT: {fileID: 106830, guid: 3bcadc3bba60ce54d95f60b0c7246bb5, type: 2}
     ThumbStick: {fileID: 159668, guid: 10c984281b83ab841b7c7ce64c529a8b, type: 2}
@@ -2808,7 +2823,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 31549c28ccdb9004c9c1071100bdfdae, type: 3}
   - {fileID: 21300000, guid: 7506e9b6bf542dd4d8c66d56f997a015, type: 3}
   Sounds:
-    Taunt: {fileID: 8300000, guid: 293bd78d43d02bb49a713c987b4b556c, type: 3}
+    Found:
+    - {fileID: 8300000, guid: c46e2faca7ec3074989ff5a00edcedff, type: 3}
+    - {fileID: 8300000, guid: 063bfbc81b270234580b2683a199afa9, type: 3}
+    Taunt:
+    - {fileID: 8300000, guid: 020ed0c2fcef2cf449e555a3d4adc0e4, type: 3}
     Chop:
     - {fileID: 8300000, guid: ddf6b91ee65cfb54ca01090f82bb1dfb, type: 3}
     - {fileID: 8300000, guid: 502d42b088b7bf14395f805e53b0dea3, type: 3}

@@ -39,6 +39,11 @@ public class CameraScript : MonoBehaviour
 
 		Screen.SetResolution (1600, 900, true);
 
+        foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            Debug.Log(player.name);
+        }
+
         LoadSoulConsumedImages();
     }
 

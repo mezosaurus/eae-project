@@ -30,7 +30,8 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
         else if (range > 0.5f && range <= 0.75f) button = 0;
         else if (range > 0.75f && range <= 1f) button = 3;
 
-        Tree.BodyParts.Trunk.audio.rolloffMode = AudioRolloffMode.Logarithmic;
+        //Tree.BodyParts.Trunk.audio.rolloffMode = AudioRolloffMode.Logarithmic;
+        Tree.BodyParts.Trunk.audio.volume = 0.5f;
         Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.AxeManLastWords[Random.Range(0, Tree.Sounds.AxeManLastWords.Length)];
         Tree.BodyParts.Trunk.audio.Play();
     }
@@ -62,7 +63,7 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
 
     public override void UpdateSorting()
     {
-        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+        /*Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
         
         int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
 
@@ -73,7 +74,22 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
         Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
         Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 5;
+        Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;*/
+
+        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+
+        int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
+
+        Tree.BodyParts.Eyes.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sortingOrder = i + 4;
+        Tree.BodyParts.LeftUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 5;
+        Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;
+        Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sortingOrder = i + 7;
+        Tree.BodyParts.Axe.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
+        //Tree.AxeMan.GetComponent<SpriteRenderer>().sortingOrder = i + 0;
     }
 
     public override void OnGUI()
@@ -99,6 +115,7 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
     public override void Leave()
     {
         //Tree.BodyParts.Trunk.audio.priority = 128;
+        Tree.BodyParts.Trunk.audio.volume = 1f;
     }
 
     public class Data
