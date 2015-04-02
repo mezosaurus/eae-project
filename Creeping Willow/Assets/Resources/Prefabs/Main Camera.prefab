@@ -13,7 +13,6 @@ GameObject:
   - 124: {fileID: 12411664}
   - 81: {fileID: 8111664}
   - 114: {fileID: 11411664}
-  - 114: {fileID: 11411666}
   - 114: {fileID: 11411668}
   - 82: {fileID: 8211664}
   m_Layer: 0
@@ -153,21 +152,6 @@ MonoBehaviour:
   ObjectToFollow: {fileID: 0}
   ObjectToFollowOffset: {x: 0, y: .150000006, z: 0}
   TargetSize: 4
---- !u!114 &11411666
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 111664}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169a61df47228d64f854156d1acd5030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseScreenResume: {fileID: 0}
-  pauseScreenQuit: {fileID: 0}
-  pauseScreenSettings: {fileID: 0}
-  pauseScreenSettingsIn: {fileID: 0}
 --- !u!114 &11411668
 MonoBehaviour:
   m_ObjectHideFlags: 1

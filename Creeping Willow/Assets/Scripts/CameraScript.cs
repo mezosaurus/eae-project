@@ -116,6 +116,19 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		// Check for show mouse if it moves
+		if( Input.GetAxis( "Mouse X" ) != 0 || Input.GetAxis( "Mouse Y" ) != 0 )
+		{
+			Screen.showCursor = true;
+			Screen.lockCursor = false;
+		}
+		// Hide the mouse if you are using the controller
+		else if( Input.GetAxis( "LSX" ) != 0 || Input.GetAxis( "LSY" ) != 0 )
+		{
+			Screen.showCursor = false;
+			Screen.lockCursor = true;
+		}
+
         if(Input.GetButtonDown("LB"))
         {
             Application.LoadLevel("InteractiveMenu");
