@@ -43,9 +43,12 @@ public class AxeManKillActiveTree : MonoBehaviour
 
         spriteRenderer.sprite = Sprites[0];
 
+        audio.rolloffMode = AudioRolloffMode.Linear;
+        audio.volume = 0.5f;
+
         // Play taunt
-        audio.clip = Sounds.Taunt;
-        audio.Play();
+        /*audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
+        audio.Play();*/
 
         MessageCenter.Instance.RegisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
     }
@@ -69,6 +72,7 @@ public class AxeManKillActiveTree : MonoBehaviour
             timer = 0f;
             frame = 4;
             spriteRenderer.sprite = Sprites[frame];
+            //transform.SetParent(tree.BodyParts.RightLowerForegroundArm.transform);
 
             audio.clip = Sounds.Struggle[Random.Range(0, Sounds.Struggle.Length)];
             audio.Play();
@@ -99,6 +103,7 @@ public class AxeManKillActiveTree : MonoBehaviour
             case 1: UpdatePhase1(); break;
             case 2: UpdatePhase2(); break;
             case 3: UpdatePhase3(); break;
+            case 4: UpdatePhase4(); break;
             case 1001: UpdatePhase1001(); break;
             case 9001: UpdatePhase9001(); break;
             case 9002: UpdatePhase9002(); break;
@@ -110,17 +115,49 @@ public class AxeManKillActiveTree : MonoBehaviour
 
     private void UpdatePhase0()
     {
+        if(Camera.main.orthographicSize == Camera.main.GetComponent<CameraScript>().TargetSize)
+        {
+            timer += Time.deltaTime;
+
+            if (timer > 1f)
+            {
+                // Play taunt
+                phase = 1;
+                timer = 0f;
+
+                if(!GlobalGameStateManager.PlayedJohnny)
+                {
+                    audio.clip = Sounds.Found[1];
+                    GlobalGameStateManager.PlayedJohnny = true;
+                }
+                else audio.clip = Sounds.Found[Random.Range(0, Sounds.Found.Length)];
+
+                audio.Play();
+            }
+        }
+    }
+
+    private void UpdatePhase1()
+    {
         if(!audio.isPlaying)
         {
-            // Change to phase 1
-            phase = 1;
-            spriteRenderer.sprite = Sprites[1];
+            timer += Time.deltaTime;
+
+            if (timer > 0.33f)
+            {
+
+                // Change to phase 2
+                phase = 2;
+                spriteRenderer.sprite = Sprites[1];
+                audio.volume = 1f;
+                audio.rolloffMode = AudioRolloffMode.Logarithmic;
+            }
 
             return;
         }
     }
 
-    private void UpdatePhase1()
+    private void UpdatePhase2()
     {
         timer += Time.deltaTime;
 
@@ -138,7 +175,7 @@ public class AxeManKillActiveTree : MonoBehaviour
             else
             {
                 timer = 0f;
-                phase = 2;
+                phase = 3;
                 spriteRenderer.sprite = Sprites[3];
 
                 // Show tree's axe
@@ -150,7 +187,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         }
     }
 
-    private void UpdatePhase2()
+    private void UpdatePhase3()
     {
         /*timer += Time.deltaTime;
 
@@ -163,11 +200,11 @@ public class AxeManKillActiveTree : MonoBehaviour
             MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage("PanToAxe"));
         }*/
 
-        phase = 3;
+        phase = 4;
         MessageCenter.Instance.Broadcast(new AxeManMinigameTreeChangePhaseMessage(targetTree, "Groan"));
     }
 
-    private void UpdatePhase3()
+    private void UpdatePhase4()
     {
     }
 
@@ -207,7 +244,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         if(!audio.isPlaying)
         {
             phase = 9003;
-            audio.clip = Sounds.Taunt;
+            audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
 
             audio.Play();
         }
@@ -303,7 +340,8 @@ public class AxeManKillActiveTree : MonoBehaviour
     [System.Serializable]
     public class _Sounds
     {
-        public AudioClip Taunt;
+        public AudioClip[] Found;
+        public AudioClip[] Taunt;
         public AudioClip[] Chop;
         public AudioClip[] Gloat;
         public AudioClip[] Struggle;

@@ -51,6 +51,8 @@ public class SoundManager : MonoBehaviour
 	{
         /*if (GameObject.FindGameObjectWithTag("MainCamera").audio.isPlaying)
             musicSource.Stop();*/
+
+        musicSource.audio.volume = 0.15f;
 	}
 
 	public void ChangeMusic( AudioClip clip )

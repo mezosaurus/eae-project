@@ -104,6 +104,9 @@ public class PauseScript : MonoBehaviour
 		outroScript.enabled = true;
 
 		DisableAllButtons();
+
+		Screen.showCursor = false;
+		Screen.lockCursor = true;
 	}
 
 	public void Menu()

@@ -42,8 +42,8 @@ public class AxeManKillInactiveTree : MonoBehaviour
         spriteRenderer.sprite = Sprites[0];
 
         // Play taunt
-        audio.clip = Sounds.Taunt;
-        audio.Play();
+        /*audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
+        audio.Play();*/
     }
 
     public void Instantiate(GameObject target, GameObject actualAxeMan, Finished callback)
@@ -60,22 +60,37 @@ public class AxeManKillInactiveTree : MonoBehaviour
             case 0: UpdatePhase0(); break;
             case 1: UpdatePhase1(); break;
             case 2: UpdatePhase2(); break;
+            case 3: UpdatePhase3(); break;
         }
     }
 
     private void UpdatePhase0()
     {
+        timer += Time.deltaTime;
+
+        if(timer > 1f)
+        {
+            phase = 1;
+            timer = 0f;
+
+            audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
+            audio.Play();
+        }
+    }
+
+    private void UpdatePhase1()
+    {
         if(!audio.isPlaying)
         {
-            // Change to phase 1
-            phase = 1;
+            // Change to phase 2
+            phase = 2;
             spriteRenderer.sprite = Sprites[1];
 
             return;
         }
     }
 
-    private void UpdatePhase1()
+    private void UpdatePhase2()
     {
         timer += Time.deltaTime;
 
@@ -104,7 +119,7 @@ public class AxeManKillInactiveTree : MonoBehaviour
                 {
                     // Change to phase 2 if number of chops is complete
                     timer = 0f;
-                    phase = 2;
+                    phase = 3;
                     spriteRenderer.sprite = Sprites[0];
 
                     // Destroy the tree
@@ -118,7 +133,7 @@ public class AxeManKillInactiveTree : MonoBehaviour
         }
     }
 
-    private void UpdatePhase2()
+    private void UpdatePhase3()
     {
         if(!played)
         {
@@ -143,7 +158,7 @@ public class AxeManKillInactiveTree : MonoBehaviour
     [System.Serializable]
     public class _Sounds
     {
-        public AudioClip Taunt;
+        public AudioClip[] Taunt;
         public AudioClip[] Chop;
         public AudioClip[] Gloat;
     }

@@ -39,6 +39,8 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
 
     public override void Update()
     {
+        Tree.BodyParts.RightLowerBackgroundArm.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+        
         float percentage;
         float upperAngle, lowerAngle;
         
@@ -73,7 +75,9 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
                 timer = 0f;
 
                 Tree.audio.volume = 1f;
-                Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Laugh;
+
+                // Choose a saying clip to play
+                Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Saying[Random.Range(0, Tree.Sounds.Saying.Length)];
                 Tree.BodyParts.Trunk.audio.Play();
             }
 
@@ -81,15 +85,23 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
         }
         if(phase == 3)
         {
+
             if (Tree.audio.volume > 0f)
             {
-                Tree.audio.volume -= (Time.deltaTime * 0.5f);
+                Tree.audio.volume -= (Time.deltaTime * 0.8f);
             }
-
-            if (!Tree.BodyParts.Trunk.audio.isPlaying)
+            
+            if(!Tree.BodyParts.Trunk.audio.isPlaying)
             {
-                phase = 4;
-                Tree.audio.volume = 1f;
+                /*timer += Time.deltaTime;
+
+                if (timer > 0.25f)
+                {*/
+                    timer = 0f;
+                    phase = 4;
+                    Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Laugh[Random.Range(0, Tree.Sounds.Laugh.Length)];
+                    Tree.BodyParts.Trunk.audio.Play();
+                //}
             }
 
             percentage = 1f - Tree.audio.volume;
@@ -102,14 +114,37 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
 
             return;
         }
-        if (phase == 4)
+        if(phase == 4)
+        {
+            /*if (Tree.audio.volume > 0f)
+            {
+                Tree.audio.volume -= (Time.deltaTime * 0.5f);
+            }*/
+
+            if (!Tree.BodyParts.Trunk.audio.isPlaying)
+            {
+                phase = 5;
+                Tree.audio.volume = 1f;
+            }
+
+            /*percentage = 1f - Tree.audio.volume;
+
+            upperAngle = UpperArmEndAngle + ((UpperArmEnd2Angle - UpperArmEndAngle) * percentage);
+            lowerAngle = LowerArmEndAngle + ((LowerArmEnd2Angle - LowerArmEndAngle) * percentage);
+
+            Tree.BodyParts.RightUpperArm.transform.localEulerAngles = new Vector3(0f, 0f, upperAngle);
+            Tree.BodyParts.RightLowerForegroundArm.transform.localEulerAngles = new Vector3(0f, 0f, lowerAngle);*/
+
+            return;
+        }
+        if (phase == 5)
         {
             GlobalGameStateManager.SoulConsumedTimer = 3.5f;
 
             Tree.audio.Stop();
 
 			SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
-			soundManager.ResumeMusic();
+			if(soundManager != null) soundManager.ResumeMusic();
 
             Tree.audio.clip = Tree.Sounds.SoulConsumed2;
             Tree.audio.Play();
@@ -189,7 +224,7 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
 
     public override void UpdateSorting()
     {
-        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+        /*Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
         
         int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
 
@@ -200,13 +235,28 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
         Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 5;
         Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
+        Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;*/
+
+        Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder = 800;
+
+        int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
+
+        Tree.BodyParts.Eyes.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sortingOrder = i + 4;
+        Tree.BodyParts.LeftUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 5;
+        Tree.BodyParts.RightLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;
+        Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sortingOrder = i + 7;
+        Tree.BodyParts.Axe.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
+        //Tree.AxeMan.GetComponent<SpriteRenderer>().sortingOrder = i + 0;
     }
 
     public override void Leave()
     {
         //Tree.BodyParts.Eyes.SetActive(false);
-        //Tree.BodyParts.RightGrabbedNPC.SetActive(true);
+        Tree.BodyParts.RightGrabbedNPC.SetActive(true);
         //Tree.BodyParts.Face.SetActive(true);
         //Tree.BodyParts.GrabbedNPC.SetActive(true);*/
 

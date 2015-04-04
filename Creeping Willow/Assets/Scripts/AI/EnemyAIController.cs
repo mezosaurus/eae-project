@@ -52,6 +52,8 @@ public class EnemyAIController : AIController
 				}
 			}
 		}
+		
+		this.SkinType = NPCSkinType.AxeMan;
 	}
 
 	protected override void NPCOnDestroy()
