@@ -5,13 +5,13 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: bush_3_1
+  m_Name: bush_5_1
   serializedVersion: 2
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
-    m_StateMachine: {fileID: 110714846}
+    m_StateMachine: {fileID: 110740278}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
@@ -20,31 +20,31 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &110214846
+--- !u!1102 &110240278
 State:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: bush3possessed_idle
+  m_Name: lure_bush_5
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: 1a32b1504068a0b4288ecfb5511e6589, type: 2}
-  m_ParentStateMachine: {fileID: 110714846}
+  - {fileID: 7400000, guid: 4e8f1be914d6736488517e7c9f977967, type: 2}
+  m_ParentStateMachine: {fileID: 110740278}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
---- !u!1107 &110714846
+--- !u!1107 &110740278
 StateMachine:
   serializedVersion: 2
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Base Layer
-  m_DefaultState: {fileID: 110214846}
+  m_DefaultState: {fileID: 110240278}
   m_States:
-  - {fileID: 110214846}
+  - {fileID: 110240278}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions: {}

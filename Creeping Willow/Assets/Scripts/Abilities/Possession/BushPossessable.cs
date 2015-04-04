@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RoundBushPossessable : PossessableItem
+public class BushPossessable : PossessableItem
 {
 
     protected override void Start()

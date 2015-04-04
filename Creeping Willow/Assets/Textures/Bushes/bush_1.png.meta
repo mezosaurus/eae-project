@@ -1,7 +1,11 @@
 fileFormatVersion: 2
 guid: 6cfcb3d6b76d7b048840b6ab802b88ef
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: bush_1_0
+    21300002: bush_1_1
+    21300004: bush_1_2
+    21300006: bush_1_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -27,7 +31,7 @@ TextureImporter:
     filterMode: -1
     aniso: 16
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -42,6 +46,46 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: bush_1_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 784
+        width: 246
+        height: 212
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bush_1_1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 542
+        width: 253
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bush_1_2
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 300
+        width: 247
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bush_1_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 56
+        width: 260
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
