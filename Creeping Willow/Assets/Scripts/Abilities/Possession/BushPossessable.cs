@@ -3,6 +3,9 @@ using System.Collections;
 
 public class BushPossessable : PossessableItem
 {
+	/******** SOUNDS OF THE BUSH *********/
+	public AudioClip[] bushLureSounds;
+	public AudioClip[] bushScareSounds;
 
     protected override void Start()
     {

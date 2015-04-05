@@ -117,16 +117,19 @@ public class AIController : GameBehavior
 	public AudioClip hippieEaten;
 	public AudioClip mowerEaten;
 	public AudioClip oldmanEaten;
+	public AudioClip hottieEaten;
 	// Curious
 	public AudioClip[] bopperCuriousSounds;
 	public AudioClip[] hippieCuriousSounds;
 	public AudioClip[] mowerCuriousSounds;
 	public AudioClip[] oldmanCuriousSounds;
+	public AudioClip[] hottieCuriousSounds;
 	// Idle
 	public AudioClip[] bopperIdleSounds;
 	public AudioClip[] hippieIdleSounds;
 	public AudioClip[] mowerIdleSounds;
 	public AudioClip[] oldmanIdleSounds;
+	public AudioClip[] hottieIdleSounds;
 	protected float idlePlayTime = 90.0f;
 	protected float idleCounter = 0.0f;
 	// Alert 
@@ -134,12 +137,13 @@ public class AIController : GameBehavior
 	public AudioClip[] hippieAlertSounds;
 	public AudioClip[] mowerAlertSounds;
 	public AudioClip[] oldmanAlertSounds;
-	//public AudioClip[] hottieAlertSounds;
+	public AudioClip[] hottieAlertSounds;
 	// Panic
 	public AudioClip[] bopperPanicSounds;
 	public AudioClip[] hippiePanicSounds;
 	public AudioClip[] mowerPanicSounds;
 	public AudioClip[] oldmanPanicSounds;
+	public AudioClip[] hottiePanicSounds;
 	// Boolean control vars
 	protected bool playAlert = true;
 	//protected bool playPanic = true;
@@ -438,10 +442,10 @@ public class AIController : GameBehavior
 			{
 				idle = (AudioClip)hippieIdleSounds[Random.Range (0, hippieIdleSounds.Length)];
 			}
-			/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+			else if (this.SkinType.Equals (NPCSkinType.Hottie))
 			{
-				idle = (AudioClip)hottieAlertSounds[Random.Range (0, hottieAlertSounds.Length)];
-			}*/
+				idle = (AudioClip)hottieIdleSounds[Random.Range (0, hottieIdleSounds.Length)];
+			}
 			else if (this.SkinType.Equals (NPCSkinType.MowerMan))
 			{
 				idle = (AudioClip)mowerIdleSounds[Random.Range (0, mowerIdleSounds.Length)];
@@ -654,10 +658,10 @@ public class AIController : GameBehavior
 			{
 				gasp = (AudioClip)hippieAlertSounds[Random.Range (0, hippieAlertSounds.Length)];
 			}
-			/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+			else if (this.SkinType.Equals (NPCSkinType.Hottie))
 			{
 				gasp = (AudioClip)hottieAlertSounds[Random.Range (0, hottieAlertSounds.Length)];
-			}*/
+			}
 			else if (this.SkinType.Equals (NPCSkinType.MowerMan))
 			{
 				gasp = (AudioClip)mowerAlertSounds[Random.Range (0, mowerAlertSounds.Length)];
@@ -695,10 +699,10 @@ public class AIController : GameBehavior
 		{
 			scream = (AudioClip)hippiePanicSounds[Random.Range (0, hippiePanicSounds.Length)];
 		}
-		/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+		else if (this.SkinType.Equals (NPCSkinType.Hottie))
 		{
 			scream = (AudioClip)hottiePanicSounds[Random.Range (0, hottiePanicSounds.Length)];
-		}*/
+		}
 		else if (this.SkinType.Equals (NPCSkinType.MowerMan))
 		{
 			scream = (AudioClip)mowerPanicSounds[Random.Range (0, mowerPanicSounds.Length)];
@@ -763,10 +767,10 @@ public class AIController : GameBehavior
 		{
 			curious = (AudioClip)hippieCuriousSounds[Random.Range (0, hippieCuriousSounds.Length)];
 		}
-		/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+		else if (this.SkinType.Equals (NPCSkinType.Hottie))
 		{
-			curious = (AudioClip)hottieCuriousSounds[Random.Range (0, hottieAlertSounds.Length)];
-		}*/
+			curious = (AudioClip)hottieCuriousSounds[Random.Range (0, hottieCuriousSounds.Length)];
+		}
 		else if (this.SkinType.Equals (NPCSkinType.MowerMan))
 		{
 			curious = (AudioClip)mowerCuriousSounds[Random.Range (0, mowerCuriousSounds.Length)];
@@ -989,10 +993,10 @@ public class AIController : GameBehavior
 		{
 			eaten = hippieEaten;
 		}
-		/*else if (this.SkinType.Equals (NPCSkinType.Hottie))
+		else if (this.SkinType.Equals (NPCSkinType.Hottie))
 		{
 			eaten = hottieEaten;
-		}*/
+		}
 		else if (this.SkinType.Equals (NPCSkinType.MowerMan))
 		{
 			eaten = mowerEaten;

@@ -192,20 +192,21 @@ MonoBehaviour:
   hippieEaten: {fileID: 8300000, guid: eaf7015ef7ca22b4c8aea007202b5890, type: 3}
   mowerEaten: {fileID: 8300000, guid: fe9cf9ebde8fbb4488b41979bd9b1a73, type: 3}
   oldmanEaten: {fileID: 8300000, guid: ebb9de9bb73ce57418569dc713286f8d, type: 3}
+  hottieEaten: {fileID: 8300000, guid: 4115518a7fc3b8141a6a09aec60b8a4e, type: 3}
   bopperCuriousSounds:
   - {fileID: 8300000, guid: 15a8ecdb18a57c24daa525d0940c991b, type: 3}
   - {fileID: 8300000, guid: 15b992c850d0e224e8c2396811c9d23d, type: 3}
   - {fileID: 8300000, guid: 26463c17d46b63049b39b9f88824004f, type: 3}
   - {fileID: 8300000, guid: 27a75b01995deb1459d5bc2fb0f1822c, type: 3}
   - {fileID: 8300000, guid: 77f6aac9f0a6ce04995a7d6a5c922f34, type: 3}
-  - {fileID: 8300000, guid: 8f6a106ecd347e644adb8ed48d59e2f8, type: 3}
+  - {fileID: 0}
   - {fileID: 8300000, guid: a39579cf979cac04886bb5ff95ee5db3, type: 3}
   - {fileID: 8300000, guid: b6f33c0bc7bcfda4a82e114372fcad98, type: 3}
   - {fileID: 8300000, guid: bcfd5024a631a2548bf166bffeaba6d6, type: 3}
   - {fileID: 8300000, guid: c44852752cef7e340b1be1eed6093cca, type: 3}
   - {fileID: 8300000, guid: e2495aac620bcd347af8a701402075f4, type: 3}
-  - {fileID: 8300000, guid: e652e45c8d8ed1c4292d99e926df612d, type: 3}
-  - {fileID: 8300000, guid: ec056d908cfd9d7449d5043f3e290673, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 8300000, guid: ef531acebda54de4ea82e78a8bd2af55, type: 3}
   hippieCuriousSounds:
   - {fileID: 8300000, guid: 1493eb34dd436ec4fb82928f1d319f76, type: 3}
@@ -221,6 +222,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 104a13bbf9f20044fa368069d19713d9, type: 3}
   - {fileID: 8300000, guid: 1a1b51513d982374db76e2c0f7952ca8, type: 3}
   - {fileID: 8300000, guid: 6afe6d9de9a3351489100ba4a16c97e9, type: 3}
+  hottieCuriousSounds:
+  - {fileID: 8300000, guid: 0260d97839a197947b35d34aff09dce9, type: 3}
+  - {fileID: 8300000, guid: 02a1a37c813dc4d46a15d507f118a4b1, type: 3}
+  - {fileID: 8300000, guid: 0cced0311f07fef4ea7c6d347cb9d094, type: 3}
+  - {fileID: 8300000, guid: 4607a16b77179b84e943de9cbf590fbe, type: 3}
+  - {fileID: 8300000, guid: 61c13a5bcc6fb924490fd28a6b5c9b97, type: 3}
+  - {fileID: 8300000, guid: 9328722c79f8ac74a9441f112b21a3ef, type: 3}
+  - {fileID: 8300000, guid: 9877b36366bc049438af035377e3a368, type: 3}
+  - {fileID: 8300000, guid: e2b0f57ae6355f14285c0ff971229f00, type: 3}
+  - {fileID: 8300000, guid: e497f2b030f1b0a45b630aa125df1bab, type: 3}
   bopperIdleSounds:
   - {fileID: 8300000, guid: 999b36a3dd14bf6419645d1dc1f5b828, type: 3}
   - {fileID: 8300000, guid: 9fbda63b4f557b24bbcb66db881df21a, type: 3}
@@ -248,6 +259,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c0351fd7305294c4abeb1fe78d5347ef, type: 3}
   - {fileID: 8300000, guid: 75636326598ffc540b9778358cb090bb, type: 3}
   - {fileID: 8300000, guid: 985e8fede85e7794e80a1752b9aac295, type: 3}
+  hottieIdleSounds:
+  - {fileID: 8300000, guid: 17451f3f194a04e47a77398936232035, type: 3}
+  - {fileID: 8300000, guid: 22a9863acf4656e48a6b73bb14c7d21c, type: 3}
+  - {fileID: 8300000, guid: 59dc85d3db9747443b2858674e183049, type: 3}
+  - {fileID: 8300000, guid: 9592d4810c2a21642a8864977986a48b, type: 3}
+  - {fileID: 8300000, guid: b1697f16ccb3ab84b836a737ed109def, type: 3}
+  - {fileID: 8300000, guid: dca714a5678ad9a4e877d1c75ea65e71, type: 3}
   bopperAlertSounds:
   - {fileID: 8300000, guid: 381984314c4ca1647a653cc027539662, type: 3}
   - {fileID: 8300000, guid: db06403ab345ba0489bad20a119c3287, type: 3}
@@ -267,6 +285,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c7546e2f864c9f5428e451c69055f332, type: 3}
   - {fileID: 8300000, guid: 2f69e307cd404634b967f24a25734ec8, type: 3}
   - {fileID: 8300000, guid: 8e0bb1cdcc6369e4ba23559bff9c2ee6, type: 3}
+  hottieAlertSounds:
+  - {fileID: 8300000, guid: 081cb239a050f4545b37bff3bb3c9a76, type: 3}
+  - {fileID: 8300000, guid: 1430457d3e6a24b4d8574d4f90e68828, type: 3}
+  - {fileID: 8300000, guid: 3a8d206369a883742b8e6771252f97e8, type: 3}
+  - {fileID: 8300000, guid: 4d9b82cc235a5924e938292a07725d81, type: 3}
+  - {fileID: 8300000, guid: 8d86f0c6e376d2d4eac5a6159b95c41c, type: 3}
+  - {fileID: 8300000, guid: c2ea79ac22bd1504ab78c4da9ea6703a, type: 3}
+  - {fileID: 8300000, guid: c55d10d3da6153845b42cb1f82e485c3, type: 3}
   bopperPanicSounds:
   - {fileID: 8300000, guid: fe9b31175d3f2214bb9c43753cdaf685, type: 3}
   - {fileID: 8300000, guid: 0d6e627f5f0269a4fb3fbfef3fa6d214, type: 3}
@@ -283,6 +309,13 @@ MonoBehaviour:
   oldmanPanicSounds:
   - {fileID: 8300000, guid: fa9ede8c916993a40a95b7fbbc82ca81, type: 3}
   - {fileID: 8300000, guid: 9505df976e4047c46aa072f382e2b3d2, type: 3}
+  hottiePanicSounds:
+  - {fileID: 8300000, guid: 58911ddd5be045e488c9b545d65d3d64, type: 3}
+  - {fileID: 8300000, guid: 6507ad5e9f839d349ac4198e19b342c1, type: 3}
+  - {fileID: 8300000, guid: 6c19fd9ff4138444d906d021e0474487, type: 3}
+  - {fileID: 8300000, guid: 87a7f3e6f676b34488e52a6bd50bff49, type: 3}
+  - {fileID: 8300000, guid: cc24ef4832dcce5429d49997343313e6, type: 3}
+  - {fileID: 8300000, guid: d65081dbcaa5ee440b2afe2a03923ab0, type: 3}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
