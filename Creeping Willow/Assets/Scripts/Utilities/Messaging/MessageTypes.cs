@@ -39,4 +39,6 @@ public enum MessageType
     CameraZoomAndFocus,
     CameraZoomAndFocus2,
     AxeManKilled,
+	MarkedBountyDestroyed,
+	NewMarkedBounty,
 }

@@ -1274,6 +1274,10 @@ public class ScoreScript : MonoBehaviour {
 	{
 		NPCEatenMessage mess = message as NPCEatenMessage;
 
+		// if in marked mode and npc isn't a bounty
+		if( marked && mess.NPC != BountyNPC )
+			return;
+
 		if( mess.NPC == null )
 			return;
 
@@ -1629,29 +1633,55 @@ public class ScoreScript : MonoBehaviour {
 	void HandleNPCCreated(Message message)
 	{
 		NPCCreatedMessage mess = message as NPCCreatedMessage;
-		
-		// bounty filled or tree is eating
-		if( BountyNPC != null ) //|| GetComponent<TreeController>().state == Tree.State.Eating)
-			return;
-		
-		// bounty can't be an axeman/enemy
-		if( mess.NPC.GetComponent<EnemyAIController>() != null )
-			return;
 
-		// bounty can't be a critter
-		if( mess.NPC.GetComponent<CritterController>() != null )
-			return;
-		
-		// bounty/target
-		if( Random.value > frequency )
-			return;
+		if( marked )
+		{
+			// bounty filled or tree is eating
+			if( BountyNPC != null ) //|| GetComponent<TreeController>().state == Tree.State.Eating)
+				return;
+			
+			// bounty can't be an axeman/enemy
+			if( mess.NPC.GetComponent<EnemyAIController>() != null )
+				return;
+			
+			// bounty can't be a critter
+			if( mess.NPC.GetComponent<CritterController>() != null )
+				return;
+			
+			// if player hasn't started
+			if( !gameStarted )
+				return;
+			
+			BountyNPC = mess.NPC;
 
-		// if player hasn't started
-		if( !gameStarted )
-			return;
+			// send out new bounty message
+			MessageCenter.Instance.Broadcast(new NewMarkedBountyMessage(BountyNPC) );
+		}
+		else
+		{
+			// bounty filled or tree is eating
+			if( BountyNPC != null ) //|| GetComponent<TreeController>().state == Tree.State.Eating)
+				return;
+			
+			// bounty can't be an axeman/enemy
+			if( mess.NPC.GetComponent<EnemyAIController>() != null )
+				return;
+			
+			// bounty can't be a critter
+			if( mess.NPC.GetComponent<CritterController>() != null )
+				return;
+			
+			// bounty/target
+			if( Random.value > frequency )
+				return;
+			
+			// if player hasn't started
+			if( !gameStarted )
+				return;
+			
+			BountyNPC = mess.NPC;
+		}
 		
-		BountyNPC = mess.NPC;
-
 		ParticleSystem ps = BountyNPC.GetComponent<ParticleSystem> ();
 		ps.Play ();
 		
@@ -1674,7 +1704,7 @@ public class ScoreScript : MonoBehaviour {
 		
 		BountyNPCImage.SetPixels (pixels);
 		BountyNPCImage.Apply ();
-
+		
 		bountyState = (int)BountyState.BOUNTY_SHOWING;
 		bountyRaised = true;
 	}
@@ -1686,14 +1716,14 @@ public class ScoreScript : MonoBehaviour {
 		
 		endLevel = true;
 		
-		if( mess.Type == (int)LevelFinishedType.Win )
-		{
-			win = true;
+		//if( mess.Type == (int)LevelFinishedType.Win )
+		//{
 			if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore
 			{
+				win = true;
 				MessageCenter.Instance.Broadcast(new ScoreAddingMessage(true));
 			}
-		}
+		//}
 	}
 
 	void HandleLevelStart(Message message)
