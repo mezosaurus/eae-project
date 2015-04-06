@@ -33160,7 +33160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9188188fd122d8d4eb99f4ea65e7a346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelMusic: {fileID: 8300000, guid: 3d91e6b9f9352904cb18b61414642e1d, type: 3}
+  levelMusic: {fileID: 8300000, guid: 9fa3fc2be1de4534fb69cf14bb754f1d, type: 3}
   pauseButtons:
   - {fileID: 897881875}
   - {fileID: 914712826}
@@ -36901,7 +36901,6 @@ GameObject:
   - 124: {fileID: 2103054489}
   - 81: {fileID: 2103054488}
   - 114: {fileID: 2103054487}
-  - 114: {fileID: 2103054486}
   - 114: {fileID: 2103054485}
   - 82: {fileID: 2103054484}
   m_Layer: 0
@@ -36982,19 +36981,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f660c4f1aa57b384e83923026316fdb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2103054486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11411666, guid: 1d01082685195354687da97c5698f3f6,
-    type: 2}
-  m_PrefabInternal: {fileID: 1027171330}
-  m_GameObject: {fileID: 2103054482}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169a61df47228d64f854156d1acd5030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseButtons: []
 --- !u!114 &2103054487
 MonoBehaviour:
   m_ObjectHideFlags: 0

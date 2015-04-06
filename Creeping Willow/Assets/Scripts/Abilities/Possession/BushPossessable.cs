@@ -24,6 +24,8 @@ public class BushPossessable : PossessableItem
     {
         //base.lure();
         //blinking = true;
+		AudioClip lure = (AudioClip)bushLureSounds[Random.Range (0, bushLureSounds.Length)];
+		audio.PlayOneShot (lure, 1.0f);
         Animator anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Lure");
         AbilityPlacedMessage message = new AbilityPlacedMessage(transform.position.x, transform.position.y, AbilityType.PossessionLure);
@@ -35,6 +37,8 @@ public class BushPossessable : PossessableItem
     {
         //base.scare();
         //shaking = true;
+		AudioClip scare = (AudioClip)bushScareSounds[Random.Range (0, bushScareSounds.Length)];
+		audio.PlayOneShot (scare, 1.0f);
         Animator anim = gameObject.GetComponent<Animator>();
         anim.SetTrigger("Lure");
         AbilityPlacedMessage message = new AbilityPlacedMessage(transform.position.x, transform.position.y, AbilityType.PossessionScare);
