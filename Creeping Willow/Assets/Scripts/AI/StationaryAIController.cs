@@ -66,7 +66,7 @@ public class StationaryAIController : AIController
 				leaveTime = Time.time + sittingTime;
 			}
 
-			if (leaveTime <= Time.time && !nextPath.tag.Equals(spawnTag))
+			if ((leaveTime <= Time.time && !nextPath.tag.Equals(spawnTag)) && !marked)
 			{
 				sitting = false;
 				killSelf = true;

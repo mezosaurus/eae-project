@@ -102,7 +102,7 @@ public class WanderAIController : AIController {
 			
 			int max = 5;
 			int rand = Random.Range (0, max);
-			if (rand < max - 1)
+			if (rand < max - 1 || marked)
 			{
 				nextMoveTime = Time.time + waitTime;
 				isOnPath = false;

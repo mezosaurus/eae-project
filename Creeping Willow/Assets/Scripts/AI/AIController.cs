@@ -157,6 +157,8 @@ public class AIController : GameBehavior
 	protected bool playCurious = true;
 	protected bool playIdle = true;
 
+	protected bool marked = false;
+
 	/*void OnGUI() {
 	int sizeX = 20;
 	int sizeY = 60;
@@ -241,6 +243,7 @@ public class AIController : GameBehavior
 		MessageCenter.Instance.RegisterListener (MessageType.LureRadiusEntered, lureEnterListener);
 		MessageCenter.Instance.RegisterListener (MessageType.LureReleased, lureReleaseListener);
 		MessageCenter.Instance.RegisterListener (MessageType.AbilityPlaced, abilityPlacedListener);
+		MessageCenter.Instance.RegisterListener (MessageType.NewMarkedBounty, markedBountyListener);
 
 		// Ignore collision with other AI
 		int npcLayer = LayerMask.NameToLayer (npcTag);
@@ -263,6 +266,7 @@ public class AIController : GameBehavior
 		MessageCenter.Instance.UnregisterListener (MessageType.LureRadiusEntered, lureEnterListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.LureReleased, lureReleaseListener);
 		MessageCenter.Instance.UnregisterListener (MessageType.AbilityPlaced, abilityPlacedListener);
+		MessageCenter.Instance.UnregisterListener (MessageType.NewMarkedBounty, markedBountyListener);
 
 		if (alertTexture != null) {
 				Destroy (alertTexture.gameObject);
@@ -272,6 +276,11 @@ public class AIController : GameBehavior
 		}
 		if (scaredTexture != null)
 				Destroy (scaredTexture.gameObject);
+
+		if (marked)
+		{
+			MessageCenter.Instance.Broadcast (new MarkedBountyDestroyedMessage());
+		}
 
 		NPCDestroyedMessage message = new NPCDestroyedMessage (gameObject, false);
 		MessageCenter.Instance.Broadcast (message);
@@ -1146,6 +1155,19 @@ public class AIController : GameBehavior
 				lure (possessedPosition);
 		}
 	}
+
+	void markedBountyListener (Message message)
+	{
+		NewMarkedBountyMessage markedMessage = message as NewMarkedBountyMessage;
+		if (markedMessage.NPC.Equals(this.gameObject))
+		{
+			marked = true;
+		}
+	}
+
+	// --------------------
+	// Avoid
+	// --------------------
 
 	protected Vector3 avoid (Vector3 currentNPCDirection)
 	{
