@@ -27,7 +27,7 @@ public class EnemyAIController : AIController
 	public override void Start()
 	{
 		base.Start ();
-		xScale = -xScale;
+		//xScale = -xScale;
 	}
 
 	protected void initAxeMan()

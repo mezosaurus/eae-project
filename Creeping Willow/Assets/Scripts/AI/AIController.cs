@@ -609,6 +609,15 @@ public class AIController : GameBehavior
 		Physics2D.IgnoreCollision (other, box, ignore);
 	}
 
+	protected void setAnimatorInteger (int animation)
+	{
+		Animator anim = gameObject.GetComponent<Animator> ();
+		if (anim != null) 
+		{
+			gameObject.GetComponent<Animator> ().SetInteger (walkingKey, animation);
+		}
+	}
+
 	protected void setAnimatorInteger (string key, int animation)
 	{
 		Animator anim = gameObject.GetComponent<Animator> ();
@@ -905,6 +914,56 @@ public class AIController : GameBehavior
 	protected void setNPCDirection (Vector3 direction)
 	{
 		npcDir = direction;
+
+		WalkingDirection anim = WalkingDirection.STILL_DOWN_LEFT;
+		/*
+		 * Old
+		switch (npcDir)
+		{
+		case NPCDirection.L:
+		case NPCDirection.BL:
+		case NPCDirection.B:
+			anim = WalkingDirection.MOVING_DOWN_LEFT;
+			break;
+		case NPCDirection.R:
+		case NPCDirection.BR:
+			anim = WalkingDirection.MOVING_DOWN_RIGHT;
+			break;
+		case Vector3.zero:
+			anim = WalkingDirection.STILL_DOWN_LEFT;
+		}
+		*/
+
+		// Testing
+		if (npcDir.Equals(NPCDirection.TL) 
+		    || npcDir.Equals(NPCDirection.T) 
+		    || npcDir.Equals(NPCDirection.TR))
+		{
+			anim = WalkingDirection.MOVING_UP_LEFT;
+		}
+		else if (npcDir.Equals(NPCDirection.R)
+		         || npcDir.Equals(NPCDirection.BR)
+		         || npcDir.Equals(NPCDirection.BL)
+		         || npcDir.Equals(NPCDirection.L)
+		         || npcDir.Equals(NPCDirection.B)
+		         )
+		{
+			anim = WalkingDirection.MOVING_DOWN_LEFT;
+		}
+
+		/*
+		 * New
+		if (npcDir.Equals(NPCDirection.TL))
+		{
+			anim = WalkingDirection.MOVING_UP_LEFT;
+		}
+		else if (npcDir.Equals(NPCDirection.T) || npcDir.Equals(NPCDirection.TR))
+		{
+			anim = WalkingDirection.MOVING_UP_RIGHT;
+		}
+		setAnimatorInteger ((int)anim);
+		*/
+
 	}
 
 	protected GameObject getLeavingPath ()
