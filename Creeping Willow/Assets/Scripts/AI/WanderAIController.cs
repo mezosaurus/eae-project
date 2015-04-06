@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class WanderAIController : AIController {
@@ -71,15 +71,15 @@ public class WanderAIController : AIController {
 		
 		if (biasPosition.x == 0 && biasPosition.y == 0)
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 		}
 		else if (biasPosition.y >= 0)
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 		}
 		else
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP_LEFT);
 		}
 
 		Vector3 changeMovement = lured ? Vector3.zero : avoid (direction);
@@ -106,7 +106,7 @@ public class WanderAIController : AIController {
 			{
 				nextMoveTime = Time.time + waitTime;
 				isOnPath = false;
-				setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+				setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 			}
 			else
 			{
@@ -149,13 +149,13 @@ public class WanderAIController : AIController {
 	protected override void alert()
 	{
 		base.alert ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 	}
 
 	override protected void panic()
 	{
 		base.panic ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 	}
 
 	override protected void lure(Vector3 lurePosition)

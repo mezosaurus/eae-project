@@ -151,7 +151,7 @@ public class EnemyAIControllerWander : EnemyAIController
 			nextInvestigateTime = Time.time + sittingTime;
 			investigating = true;
 			investigatePath = false;
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 		}
 		
 		if (nextPath.transform.position.Equals(panickedNPCPosition) || killSelf)

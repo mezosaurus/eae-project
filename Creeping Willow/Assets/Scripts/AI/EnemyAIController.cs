@@ -127,7 +127,7 @@ public class EnemyAIController : AIController
 		//if (biasPosition.x == 0 && biasPosition.y == 0)
 		if (movement != moveTo || biasPosition.x != 0 || biasPosition.y != 0)
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 		}
 		/*
 		else
@@ -243,7 +243,7 @@ public class EnemyAIController : AIController
 		if (!angry)
 		{
 			base.alert ();
-			setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
+			setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 		}
 	}
 

@@ -39,20 +39,18 @@ public class PathAIController : AIController
 		Vector3 direction = Vector3.Normalize(movement - transform.position);
 
 		Vector3 biasPosition = new Vector3 (transform.position.x - movement.x, transform.position.y - movement.y);
-		bool flipX = false;
 
 		if (biasPosition.x == 0)
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 		}
 		else if (biasPosition.y >= 0)
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 		}
 		else
 		{
-			flipX = true;
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP_LEFT);
 		}
 
 		Vector3 changeMovement = lured ? Vector3.zero : avoid (direction);
@@ -69,10 +67,6 @@ public class PathAIController : AIController
 			transform.position = movement;
 		}
 
-		if (flipX)
-		{
-			flipXScale(biasPosition.x > 0);
-		}
 		if (movement == pathPosition && !lured)
 		{
 			if (killSelf)
@@ -119,13 +113,13 @@ public class PathAIController : AIController
 	protected override void alert()
 	{
 		base.alert ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 	}
 
 	override protected void panic()
 	{
 		base.panic ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 	}
 }
 

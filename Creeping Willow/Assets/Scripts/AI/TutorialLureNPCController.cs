@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class TutorialLureNPCController : AIController {
@@ -34,11 +34,11 @@ public class TutorialLureNPCController : AIController {
 		if (Mathf.Abs (biasPosition.x) < 0.1 && Mathf.Abs (biasPosition.y) < 0.001)
 		{
 			//To the right
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 		}
 		else
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);		
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);		
 		}
 
 		transform.position = movement;

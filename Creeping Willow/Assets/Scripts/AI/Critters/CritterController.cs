@@ -81,16 +81,16 @@ public class CritterController : AIController {
 
 		if (biasPosition.x == 0 && biasPosition.y == 0)
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 			audio.PlayOneShot (idleSound, 0.7f);
 		}
 		else if (biasPosition.y >= 0)
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 		}
 		else
 		{
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_UP_LEFT);
 		}
 		Vector3 changeMovement = avoid (direction);
 		if( changeMovement != Vector3.zero )
@@ -116,7 +116,7 @@ public class CritterController : AIController {
 			{
 				nextMoveTime = Time.time + waitTime;
 				isOnPath = false;
-				setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+				setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 			}
 			else
 			{

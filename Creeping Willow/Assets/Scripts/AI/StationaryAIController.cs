@@ -36,10 +36,10 @@ public class StationaryAIController : AIController
 		{
 			//To the right
 			flipXScale(false);
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 		}
 		else
-			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN);
+			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 
 		Vector3 changeMovement = lured ? Vector3.zero : avoid (direction);
 
@@ -91,7 +91,7 @@ public class StationaryAIController : AIController
 	protected override void alert()
 	{
 		base.alert ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 	}
 
 	override protected GameObject getNextPath()
@@ -105,7 +105,7 @@ public class StationaryAIController : AIController
 		base.panic ();
 		sitting = false;
 		this.GetComponent<BoxCollider2D>().isTrigger = false;
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN);
+		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
 	}
 
 	protected override void OnCollisionEnter2D(Collision2D collision)

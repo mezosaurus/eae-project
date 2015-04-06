@@ -31,10 +31,17 @@ public class AIController : GameBehavior
 	protected string walkingKey = "direction";
 	protected enum WalkingDirection
 	{
-		STILL = 0,
-		MOVING_DOWN = 1,
-		MOVING_UP = 2,
+		STILL_DOWN_LEFT = 0,
+		MOVING_DOWN_LEFT = 1,
+		MOVING_UP_LEFT = 2,
 		STILL_ACTION = 3,
+		STILL_DOWN_RIGHT = 4,
+		MOVING_DOWN_RIGHT = 5,
+		MOVING_UP_RIGHT = 6,
+		PANIC_DOWN_LEFT = 7,
+		PANIC_UP_LEFT = 8,
+		PANIC_DOWN_RIGHT = 9,
+		PANIC_UP_RIGHT = 10,
 	}
 
 	// NPC variables
@@ -814,7 +821,7 @@ public class AIController : GameBehavior
 			if (luredTimeLeft == lureCooldownSeconds) 
 			{
 				Debug.Log ("Sitting");
-				setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL);
+				setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 			}
 
 			nextPath.transform.position = transform.position; // Set the nextpath to current path to stop moving
