@@ -228,6 +228,8 @@ public class PossessableTree : Possessable
     public void UpdateSorting()
     {        
         currentState.UpdateSorting();
+
+        BodyParts.Shadow.GetComponent<SpriteRenderer>().sortingOrder = BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder - 1;
     }
 
     public void ChangeState(string newState)
@@ -260,7 +262,7 @@ namespace Tree.Private
     [Serializable]
     public class BodyParts
     {
-        public GameObject Trunk, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, RightGrabbedNPC, EatenNPC, MinigameCircle, Eyes, FlameEyes, Axe;
+        public GameObject Trunk, Shadow, Face, LeftArm, RightArm, LeftUpperArm, LeftLowerForegroundArm, LeftLowerBackgroundArm, RightUpperArm, RightLowerForegroundArm, RightLowerBackgroundArm, Legs, RightGrabbedNPC, EatenNPC, MinigameCircle, Eyes, FlameEyes, Axe;
     }
     
     [Serializable]

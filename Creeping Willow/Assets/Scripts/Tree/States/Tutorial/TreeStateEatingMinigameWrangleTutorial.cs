@@ -56,14 +56,16 @@ public class TreeStateEatingMinigameWrangleTutorial : TreeState
         MessageCenter.Instance.Broadcast(new CameraZoomMessage(1.8f, 20f));
 
         // Play music if necessary
-        if (parameters.PlayMusic)
-        {
-        	SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
-			soundManager.PauseMusic();
+        /*if (parameters.PlayMusic)
+        {*/
+        	/*SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+			soundManager.PauseMusic();*/
 
             Tree.audio.clip = Tree.Sounds.Music;
             Tree.audio.Play();
-        }
+
+            Debug.Log("Did we get here...?");
+        /*}*/
 
         // Handle tutorial
         if (TutorialManager.Instance.Phase == 0 || TutorialManager.Instance.Phase == 6 || TutorialManager.Instance.Phase == 12 || TutorialManager.Instance.Phase == 16)
