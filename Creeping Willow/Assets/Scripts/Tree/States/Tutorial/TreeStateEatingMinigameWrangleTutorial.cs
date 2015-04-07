@@ -63,8 +63,6 @@ public class TreeStateEatingMinigameWrangleTutorial : TreeState
 
             Tree.audio.clip = Tree.Sounds.Music;
             Tree.audio.Play();
-
-            Debug.Log("Did we get here...?");
         /*}*/
 
         // Handle tutorial
