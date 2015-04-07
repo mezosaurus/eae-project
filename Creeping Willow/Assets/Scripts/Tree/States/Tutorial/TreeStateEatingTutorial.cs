@@ -46,8 +46,8 @@ public class TreeStateEatingTutorial : TreeState
 
         Tree.audio.Stop();
 
-		SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
-		soundManager.ResumeMusic();
+		/*SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+		soundManager.ResumeMusic();*/
 
         Tree.audio.clip = Tree.Sounds.SoulConsumed;
         Tree.audio.Play();

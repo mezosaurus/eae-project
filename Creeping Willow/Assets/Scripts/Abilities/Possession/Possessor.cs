@@ -27,6 +27,10 @@ public class Possessor : GameBehavior {
 		particleSystem.renderer.sortingOrder = -1;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
+
+        ParticleSystem ps = GetComponent<ParticleSystem>();
+        ParticleSystemRenderer psr = (ParticleSystemRenderer)ps.renderer;
+        psr.sortingLayerName = "GUI";
 	}
 
 	// Update is called once per frame
