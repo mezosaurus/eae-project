@@ -252,9 +252,32 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
-  gasp1: {fileID: 8300000, guid: 9df9bced205b0774bb37cce377cec3c5, type: 3}
-  gasp2: {fileID: 8300000, guid: a2a6602589f633a419c5a77367816d42, type: 3}
-  gasp3: {fileID: 8300000, guid: 0b6f231c80294d94cb5ec8221b0b0f63, type: 3}
+  mowing: {fileID: 0}
+  bopperEaten: {fileID: 0}
+  hippieEaten: {fileID: 0}
+  mowerEaten: {fileID: 0}
+  oldmanEaten: {fileID: 0}
+  hottieEaten: {fileID: 0}
+  bopperCuriousSounds: []
+  hippieCuriousSounds: []
+  mowerCuriousSounds: []
+  oldmanCuriousSounds: []
+  hottieCuriousSounds: []
+  bopperIdleSounds: []
+  hippieIdleSounds: []
+  mowerIdleSounds: []
+  oldmanIdleSounds: []
+  hottieIdleSounds: []
+  bopperAlertSounds: []
+  hippieAlertSounds: []
+  mowerAlertSounds: []
+  oldmanAlertSounds: []
+  hottieAlertSounds: []
+  bopperPanicSounds: []
+  hippiePanicSounds: []
+  mowerPanicSounds: []
+  oldmanPanicSounds: []
+  hottiePanicSounds: []
 --- !u!50 &8596086
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -1242,9 +1265,32 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
-  gasp1: {fileID: 8300000, guid: 9df9bced205b0774bb37cce377cec3c5, type: 3}
-  gasp2: {fileID: 8300000, guid: a2a6602589f633a419c5a77367816d42, type: 3}
-  gasp3: {fileID: 8300000, guid: 0b6f231c80294d94cb5ec8221b0b0f63, type: 3}
+  mowing: {fileID: 0}
+  bopperEaten: {fileID: 0}
+  hippieEaten: {fileID: 0}
+  mowerEaten: {fileID: 0}
+  oldmanEaten: {fileID: 0}
+  hottieEaten: {fileID: 0}
+  bopperCuriousSounds: []
+  hippieCuriousSounds: []
+  mowerCuriousSounds: []
+  oldmanCuriousSounds: []
+  hottieCuriousSounds: []
+  bopperIdleSounds: []
+  hippieIdleSounds: []
+  mowerIdleSounds: []
+  oldmanIdleSounds: []
+  hottieIdleSounds: []
+  bopperAlertSounds: []
+  hippieAlertSounds: []
+  mowerAlertSounds: []
+  oldmanAlertSounds: []
+  hottieAlertSounds: []
+  bopperPanicSounds: []
+  hippiePanicSounds: []
+  mowerPanicSounds: []
+  oldmanPanicSounds: []
+  hottiePanicSounds: []
 --- !u!50 &373030589
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -1637,10 +1683,12 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 0}
-    Laugh: {fileID: 0}
     SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
     SoulConsumed2: {fileID: 0}
     AxeManMinigameMusic: {fileID: 0}
+    Laugh:
+    - {fileID: 0}
+    Saying: []
     Walk:
     - {fileID: 8300000, guid: d5d8a9bf84159ba4f974d31dff8b46aa, type: 3}
     - {fileID: 8300000, guid: 5714bf8515caf374e911a63a5f7ca228, type: 3}
@@ -2081,9 +2129,32 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
-  gasp1: {fileID: 0}
-  gasp2: {fileID: 0}
-  gasp3: {fileID: 0}
+  mowing: {fileID: 0}
+  bopperEaten: {fileID: 0}
+  hippieEaten: {fileID: 0}
+  mowerEaten: {fileID: 0}
+  oldmanEaten: {fileID: 0}
+  hottieEaten: {fileID: 0}
+  bopperCuriousSounds: []
+  hippieCuriousSounds: []
+  mowerCuriousSounds: []
+  oldmanCuriousSounds: []
+  hottieCuriousSounds: []
+  bopperIdleSounds: []
+  hippieIdleSounds: []
+  mowerIdleSounds: []
+  oldmanIdleSounds: []
+  hottieIdleSounds: []
+  bopperAlertSounds: []
+  hippieAlertSounds: []
+  mowerAlertSounds: []
+  oldmanAlertSounds: []
+  hottieAlertSounds: []
+  bopperPanicSounds: []
+  hippiePanicSounds: []
+  mowerPanicSounds: []
+  oldmanPanicSounds: []
+  hottiePanicSounds: []
 --- !u!50 &553533871
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -2362,10 +2433,12 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: cc57d2a04a3bf33438a1561ae0e892af, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 0}
-    Laugh: {fileID: 0}
     SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
     SoulConsumed2: {fileID: 0}
     AxeManMinigameMusic: {fileID: 0}
+    Laugh:
+    - {fileID: 0}
+    Saying: []
     Walk:
     - {fileID: 8300000, guid: d5d8a9bf84159ba4f974d31dff8b46aa, type: 3}
     - {fileID: 8300000, guid: 5714bf8515caf374e911a63a5f7ca228, type: 3}
@@ -3638,9 +3711,32 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
-  gasp1: {fileID: 0}
-  gasp2: {fileID: 0}
-  gasp3: {fileID: 0}
+  mowing: {fileID: 0}
+  bopperEaten: {fileID: 0}
+  hippieEaten: {fileID: 0}
+  mowerEaten: {fileID: 0}
+  oldmanEaten: {fileID: 0}
+  hottieEaten: {fileID: 0}
+  bopperCuriousSounds: []
+  hippieCuriousSounds: []
+  mowerCuriousSounds: []
+  oldmanCuriousSounds: []
+  hottieCuriousSounds: []
+  bopperIdleSounds: []
+  hippieIdleSounds: []
+  mowerIdleSounds: []
+  oldmanIdleSounds: []
+  hottieIdleSounds: []
+  bopperAlertSounds: []
+  hippieAlertSounds: []
+  mowerAlertSounds: []
+  oldmanAlertSounds: []
+  hottieAlertSounds: []
+  bopperPanicSounds: []
+  hippiePanicSounds: []
+  mowerPanicSounds: []
+  oldmanPanicSounds: []
+  hottiePanicSounds: []
 --- !u!50 &896119673
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -5840,7 +5936,6 @@ GameObject:
   - 124: {fileID: 1251184662}
   - 81: {fileID: 1251184661}
   - 114: {fileID: 1251184660}
-  - 114: {fileID: 1251184659}
   - 114: {fileID: 1251184658}
   - 82: {fileID: 1251184657}
   - 114: {fileID: 1251184666}
@@ -5922,19 +6017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f660c4f1aa57b384e83923026316fdb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1251184659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11411666, guid: 1d01082685195354687da97c5698f3f6,
-    type: 2}
-  m_PrefabInternal: {fileID: 357501391}
-  m_GameObject: {fileID: 1251184656}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169a61df47228d64f854156d1acd5030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseButtons: []
 --- !u!114 &1251184660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6836,7 +6918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9188188fd122d8d4eb99f4ea65e7a346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelMusic: {fileID: 8300000, guid: 3d91e6b9f9352904cb18b61414642e1d, type: 3}
+  levelMusic: {fileID: 8300000, guid: 9fa3fc2be1de4534fb69cf14bb754f1d, type: 3}
   pauseButtons:
   - {fileID: 1584916767}
   - {fileID: 1340674086}
