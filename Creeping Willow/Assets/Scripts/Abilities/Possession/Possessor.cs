@@ -23,7 +23,7 @@ public class Possessor : GameBehavior {
 		possessing = false;
 		objectToPossess = null;
 		ParticleSystem particleSystem = gameObject.GetComponent<ParticleSystem> ();
-		particleSystem.renderer.sortingLayerID = 2;
+        particleSystem.renderer.sortingLayerName = "GUI";
 		particleSystem.renderer.sortingOrder = -1;
 		MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
 		MessageCenter.Instance.Broadcast(new PossessorSpawnedMessage(this));
