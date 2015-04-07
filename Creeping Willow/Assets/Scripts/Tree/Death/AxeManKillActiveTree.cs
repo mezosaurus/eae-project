@@ -8,7 +8,8 @@ public class AxeManKillActiveTree : MonoBehaviour
 
 
     public GameObject Axe;
-    public Sprite[] Sprites;
+    //public Sprite[] Sprites;
+    public _Sprites Sprites;
     public _Sounds Sounds;
 
 
@@ -41,7 +42,8 @@ public class AxeManKillActiveTree : MonoBehaviour
         frame1 = true;
         played = false;
 
-        spriteRenderer.sprite = Sprites[0];
+        //spriteRenderer.sprite = Sprites[0];
+        spriteRenderer.sprite = Sprites.Stand[0];
 
         audio.rolloffMode = AudioRolloffMode.Linear;
         audio.volume = 0.5f;
@@ -70,8 +72,9 @@ public class AxeManKillActiveTree : MonoBehaviour
         if (phase == 1001)
         {
             timer = 0f;
-            frame = 4;
-            spriteRenderer.sprite = Sprites[frame];
+            frame = 0;
+            //spriteRenderer.sprite = Sprites[frame];
+            spriteRenderer.sprite = Sprites.Struggle[frame];
             //transform.SetParent(tree.BodyParts.RightLowerForegroundArm.transform);
 
             audio.clip = Sounds.Struggle[Random.Range(0, Sounds.Struggle.Length)];
@@ -83,7 +86,8 @@ public class AxeManKillActiveTree : MonoBehaviour
             chopIndex = 0;
             numChops = 0;
             frame1 = true;
-            spriteRenderer.sprite = Sprites[2];
+            //spriteRenderer.sprite = Sprites[2];
+            spriteRenderer.sprite = Sprites.Swing[1];
             played = false;
         }
         // Phase 9875 is when the tree has won
@@ -148,7 +152,8 @@ public class AxeManKillActiveTree : MonoBehaviour
 
                 // Change to phase 2
                 phase = 2;
-                spriteRenderer.sprite = Sprites[1];
+                //spriteRenderer.sprite = Sprites[1];
+                spriteRenderer.sprite = Sprites.Swing[0];
                 audio.volume = 1f;
                 audio.rolloffMode = AudioRolloffMode.Logarithmic;
             }
@@ -168,7 +173,8 @@ public class AxeManKillActiveTree : MonoBehaviour
                 timer = 0f;
                 frame1 = false;
                 audio.clip = Sounds.Chop[1];
-                spriteRenderer.sprite = Sprites[2];
+                //spriteRenderer.sprite = Sprites[2];
+                spriteRenderer.sprite = Sprites.Swing[1];
 
                 audio.Play();
             }
@@ -176,7 +182,8 @@ public class AxeManKillActiveTree : MonoBehaviour
             {
                 timer = 0f;
                 phase = 3;
-                spriteRenderer.sprite = Sprites[3];
+                //spriteRenderer.sprite = Sprites[3];
+                spriteRenderer.sprite = Sprites.StandNoAxe[0];
 
                 // Show tree's axe
                 tree.BodyParts.Axe.SetActive(true);
@@ -217,9 +224,10 @@ public class AxeManKillActiveTree : MonoBehaviour
         {
             frame++;
 
-            if(frame > 7) frame = 4;
+            if(frame > 3) frame = 0;
 
-            spriteRenderer.sprite = Sprites[frame];
+            //spriteRenderer.sprite = Sprites[frame];
+            spriteRenderer.sprite = Sprites.Struggle[frame];
             timer = 0f;
         }
     }
@@ -232,7 +240,8 @@ public class AxeManKillActiveTree : MonoBehaviour
         {
             timer = 0f;
             audio.clip = Sounds.Chop[2];
-            spriteRenderer.sprite = Sprites[0];
+            //spriteRenderer.sprite = Sprites[0];
+            spriteRenderer.sprite = Sprites.Stand[0];
             phase = 9002;
 
             audio.Play();
@@ -258,7 +267,8 @@ public class AxeManKillActiveTree : MonoBehaviour
         {
             timer = 0f;
             phase = 9004;
-            spriteRenderer.sprite = Sprites[1];
+            //spriteRenderer.sprite = Sprites[1];
+            spriteRenderer.sprite = Sprites.Swing[0];
         }
     }
 
@@ -275,7 +285,8 @@ public class AxeManKillActiveTree : MonoBehaviour
                 audio.clip = (numChops == 9) ? Sounds.Chop[2] : Sounds.Chop[chopIndex % 2];
                 chopIndex++;
                 numChops++;
-                spriteRenderer.sprite = Sprites[2];
+                //spriteRenderer.sprite = Sprites[2];
+                spriteRenderer.sprite = Sprites.Swing[1];
 
                 audio.Play();
             }
@@ -285,14 +296,16 @@ public class AxeManKillActiveTree : MonoBehaviour
                 {
                     timer = 0f;
                     frame1 = true;
-                    spriteRenderer.sprite = Sprites[1];
+                    //spriteRenderer.sprite = Sprites[1];
+                    spriteRenderer.sprite = Sprites.Swing[0];
                 }
                 else
                 {
                     // Change to phase 2 if number of chops is complete
                     timer = 0f;
                     phase = 9005;
-                    spriteRenderer.sprite = Sprites[0];
+                    //spriteRenderer.sprite = Sprites[0];
+                    spriteRenderer.sprite = Sprites.Stand[0];
 
                     // Destroy the tree
                     Destroy(targetTree);
@@ -335,6 +348,15 @@ public class AxeManKillActiveTree : MonoBehaviour
     void OnDestroy()
     {
         MessageCenter.Instance.UnregisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
+    }
+
+    [System.Serializable]
+    public class _Sprites
+    {
+        public Sprite[] Stand;
+        public Sprite[] StandNoAxe;
+        public Sprite[] Swing;
+        public Sprite[] Struggle;
     }
 
     [System.Serializable]

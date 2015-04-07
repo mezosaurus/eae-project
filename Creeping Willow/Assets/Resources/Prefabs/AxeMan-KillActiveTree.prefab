@@ -101,14 +101,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Axe: {fileID: 169416, guid: 2b2ffbd472d0438498a66e9b9a82fbff, type: 2}
   Sprites:
-  - {fileID: 21300000, guid: 690b1f9f0bba9074ca3ae3f9fdd74a98, type: 3}
-  - {fileID: 21300000, guid: 926b78eae9cd2fe4b96c805f5b7853f9, type: 3}
-  - {fileID: 21300000, guid: a7a4bf6e38bb5e041b7d2894e16693b2, type: 3}
-  - {fileID: 21300000, guid: 849fd5f009c83ea4f8b49c6217284a20, type: 3}
-  - {fileID: 21300000, guid: f645cf2cf2854ad4a9d7b48dcd0949ab, type: 3}
-  - {fileID: 21300000, guid: a65b87fd746a5ac46a902ef9d5a6aa18, type: 3}
-  - {fileID: 21300000, guid: 31549c28ccdb9004c9c1071100bdfdae, type: 3}
-  - {fileID: 21300000, guid: 7506e9b6bf542dd4d8c66d56f997a015, type: 3}
+    Stand:
+    - {fileID: 21300000, guid: 18247a868e43f2c46b1b80699b27b46b, type: 3}
+    - {fileID: 21300000, guid: 74fbe4dbbffb9204998665391f77c611, type: 3}
+    StandNoAxe:
+    - {fileID: 21300000, guid: 00080911454a57f45a4e6f95e09b8601, type: 3}
+    - {fileID: 21300000, guid: e29bd5a861e13dc43ba0909ae0aa955f, type: 3}
+    Swing:
+    - {fileID: 21300000, guid: 58b109aa6f4b92b49a44813f41893512, type: 3}
+    - {fileID: 21300000, guid: baaa77f5235eeef48bb22a4752aac416, type: 3}
+    - {fileID: 21300000, guid: 8a8b0807e8100c74fb0f54d5e9753b56, type: 3}
+    Struggle:
+    - {fileID: 21300000, guid: f645cf2cf2854ad4a9d7b48dcd0949ab, type: 3}
+    - {fileID: 21300000, guid: a65b87fd746a5ac46a902ef9d5a6aa18, type: 3}
+    - {fileID: 21300000, guid: 31549c28ccdb9004c9c1071100bdfdae, type: 3}
+    - {fileID: 21300000, guid: 7506e9b6bf542dd4d8c66d56f997a015, type: 3}
   Sounds:
     Found:
     - {fileID: 8300000, guid: c46e2faca7ec3074989ff5a00edcedff, type: 3}
