@@ -1177,9 +1177,9 @@ public class AIController : GameBehavior
 			avoidCurrentDirection = Vector3.zero;
 			return Vector3.zero;
 		}
-		//Debug.DrawLine (transform.position, transform.position + currentNPCDirection, Color.blue);
-		//return Vector3.zero;
-		if( avoidCounter < 15 )
+
+		//return Vector3.zero; // uncomment if testing without object avoidance
+		if( avoidCounter < 25 )
 		{
 			avoidCounter++;
 			return avoidCurrentDirection;
@@ -1225,6 +1225,7 @@ public class AIController : GameBehavior
 				}
 				
 				if (hit.transform.gameObject.tag == "NPC" ||
+				    hit.transform.gameObject.tag == "Possessor" ||
 				    hit.transform.gameObject.tag == "Border") // also invalid
 				{
 					avoidCurrentDirection = Vector3.zero;
@@ -1248,6 +1249,11 @@ public class AIController : GameBehavior
 					{
 						nextPath = getLeavingPath ();
 						
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+					else if (transform.gameObject.GetComponent<EnemyAIController> () != null) 
+					{
 						avoidCurrentDirection = Vector3.zero;
 						return Vector3.zero;
 					}
@@ -1296,6 +1302,7 @@ public class AIController : GameBehavior
 				}
 				
 				if (hit.transform.gameObject.tag == "NPC" ||
+				    hit.transform.gameObject.tag == "Possessor" ||
 				    hit.transform.gameObject.tag == "Border") // also invalid
 				{
 					avoidCurrentDirection = Vector3.zero;
@@ -1319,6 +1326,11 @@ public class AIController : GameBehavior
 					{
 						nextPath = getLeavingPath ();
 						
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+					else if (transform.gameObject.GetComponent<EnemyAIController> () != null) 
+					{
 						avoidCurrentDirection = Vector3.zero;
 						return Vector3.zero;
 					}
@@ -1367,6 +1379,7 @@ public class AIController : GameBehavior
 				}
 				
 				if (hit.transform.gameObject.tag == "NPC" ||
+				    hit.transform.gameObject.tag == "Possessor" ||
 				    hit.transform.gameObject.tag == "Border") // also invalid
 				{
 					avoidCurrentDirection = Vector3.zero;
@@ -1390,6 +1403,11 @@ public class AIController : GameBehavior
 					{
 						nextPath = getLeavingPath ();
 						
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+					else if (transform.gameObject.GetComponent<EnemyAIController> () != null) 
+					{
 						avoidCurrentDirection = Vector3.zero;
 						return Vector3.zero;
 					}
