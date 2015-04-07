@@ -18,6 +18,9 @@ public class EnemyAIController : AIController
 
 	protected float nextInvestigateTime = 0;
 
+	/********* THE WEE AXE MAN SOUNDS *********/
+	public AudioClip[] axemanIntroSounds;
+	public AudioClip[] axemanWrongSounds;
 	// Hit sound vars
 	public AudioClip hitSound1;
 	public AudioClip hitSound2;
@@ -32,6 +35,11 @@ public class EnemyAIController : AIController
 
 	protected void initAxeMan()
 	{
+		// Get the main camera
+		Camera mainCam = Camera.main;
+		// Play sound from main camera when axeman spawns
+		mainCam.audio.PlayOneShot((AudioClip)axemanIntroSounds[Random.Range (0, bopperIdleSounds.Length)]);
+
 		SpriteRenderer[] sceneObjects = FindObjectsOfType<SpriteRenderer>();
 		treeList = new ArrayList ();
 		if (player == null)
