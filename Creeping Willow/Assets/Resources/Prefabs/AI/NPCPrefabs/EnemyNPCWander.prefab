@@ -185,12 +185,39 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
-  gasp1: {fileID: 0}
-  gasp2: {fileID: 0}
-  gasp3: {fileID: 0}
+  mowing: {fileID: 0}
+  bopperEaten: {fileID: 0}
+  hippieEaten: {fileID: 0}
+  mowerEaten: {fileID: 0}
+  oldmanEaten: {fileID: 0}
+  hottieEaten: {fileID: 0}
+  bopperCuriousSounds: []
+  hippieCuriousSounds: []
+  mowerCuriousSounds: []
+  oldmanCuriousSounds: []
+  hottieCuriousSounds: []
+  bopperIdleSounds: []
+  hippieIdleSounds: []
+  mowerIdleSounds: []
+  oldmanIdleSounds: []
+  hottieIdleSounds: []
+  bopperAlertSounds: []
+  hippieAlertSounds: []
+  mowerAlertSounds: []
+  oldmanAlertSounds: []
+  hottieAlertSounds: []
+  bopperPanicSounds: []
+  hippiePanicSounds: []
+  mowerPanicSounds: []
+  oldmanPanicSounds: []
+  hottiePanicSounds: []
   investigateTime: 60
   sittingTime: 5
   wanderRadius: 5
+  axemanIntroSounds:
+  - {fileID: 8300000, guid: ed91a27f76654974d9a0c0b7e3832ed2, type: 3}
+  - {fileID: 8300000, guid: ec1043c9f1c67b64b82b4221a6b8fd1f, type: 3}
+  axemanWrongSounds: []
   hitSound1: {fileID: 8300000, guid: ddf6b91ee65cfb54ca01090f82bb1dfb, type: 3}
   hitSound2: {fileID: 8300000, guid: 502d42b088b7bf14395f805e53b0dea3, type: 3}
   hitSound3: {fileID: 8300000, guid: f8dbc99db1af97a4eaf6a04d30b521eb, type: 3}

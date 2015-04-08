@@ -123,11 +123,6 @@ public class CameraScript : MonoBehaviour
 			Screen.showCursor = false;
 			Screen.lockCursor = true;
 		}
-
-        if(Input.GetButtonDown("LB"))
-        {
-            Application.LoadLevel("InteractiveMenu");
-        }
         
         if(ObjectToFollow != null)
         {

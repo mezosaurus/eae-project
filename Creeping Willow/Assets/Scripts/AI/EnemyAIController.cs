@@ -71,7 +71,9 @@ public class EnemyAIController : AIController
 
 	protected virtual bool updateEnemyNPC()
 	{
-		if (grabbed)
+        SkinType = NPCSkinType.AxeMan;
+        
+        if (grabbed)
 			return true;
 		
 		if (angry)

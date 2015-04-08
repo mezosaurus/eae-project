@@ -21,6 +21,8 @@ public class OutroScript : MonoBehaviour
 		pauseCanvas = GameObject.Find( "OutroCanvas" ).GetComponent<Canvas>();
 		pauseCanvas.enabled = false;
 
+        //outroMessage = new Text();
+
 		RegisterListeners();
 	}
 
@@ -41,7 +43,7 @@ public class OutroScript : MonoBehaviour
 		LevelEnded();
 
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
-		switch( mess.Type )
+		/*switch( mess.Type )
 		{
 		case LevelFinishedType.Loss:
 			switch( mess.Reason )
@@ -86,7 +88,7 @@ public class OutroScript : MonoBehaviour
 		case LevelFinishedType.Tie:
 			outroMessage.text = "You have tied";
 			break;
-		}
+		}*/
 	}
 
 	protected void HandleScoreAddingMessage( Message message )
