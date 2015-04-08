@@ -77,7 +77,7 @@ public class NotorietyMeter : MonoBehaviour
 		}
 	}
 
-	Texture2D getMultiplierBarImage(float num, float total)
+	Texture2D getNotorietyBarImage(float num, float total)
 	{
 		//Debug.Log ("num image: " + num);
 		
@@ -145,7 +145,7 @@ public class NotorietyMeter : MonoBehaviour
 
 		//GUI.Box( new Rect( left, top, width, height ), GUIContent.none );
 		//GUI.Box( new Rect( left, top + height * ( 1 - percentFull ), width, height * percentFull ), GUIContent.none );
-		GUI.DrawTexture (new Rect (left, top, width, height), getMultiplierBarImage(notoriety,notorietyMax));
+		GUI.DrawTexture (new Rect (left, top, width, height), getNotorietyBarImage(notoriety,notorietyMax));
 
         // Matt changed this, feel free to change back
         float w = 80f;
