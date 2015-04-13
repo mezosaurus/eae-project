@@ -9,16 +9,43 @@ public class PossessorTrigger : GameBehavior {
 	private GameObject objectToPossess;
 	public Texture2D possessionControls;
 	public GameObject parent;
+
+    private float buttonScale, buttonScaleDirection, buttonLowerScale, buttonInitialScale, buttonUpperScale;
+    bool triggered;
+
 	// Use this for initialization
 	protected virtual void Start () {
 		colors.Add("transparent", new Color(1f, 1f, 1f, .5f));
 		colors.Add("opaque", new Color(1f, 1f, 1f, 1f));
-		objectToPossess = null;
+        objectToPossess = null;
+
+        buttonScale = 1f;
+        buttonScaleDirection = 1f;
+        triggered = false;
 	}
 
 	// Update is called once per frame
 	protected override void GameUpdate () {
 		HandleInput();
+
+        if(triggered)
+        {
+            buttonScale += (Time.deltaTime * buttonScaleDirection * 0.9f);
+
+            if (buttonScale > buttonUpperScale)
+            {
+                buttonScale = buttonUpperScale;
+                buttonScaleDirection = -1f;
+            }
+
+            if (buttonScale < buttonLowerScale)
+            {
+                buttonScale = buttonLowerScale;
+                buttonScaleDirection = 1f;
+            }
+
+            objectToPossess.transform.GetChild(0).localScale = new Vector3(buttonScale, buttonScale, 1f);
+        }
 	}
 
 	protected virtual void HandleInput(){
@@ -66,7 +93,12 @@ public class PossessorTrigger : GameBehavior {
 					}
 					if(colors.TryGetValue("opaque", out color)){
 						hintRenderer.color = color;
-					}
+                    }
+
+                    buttonInitialScale = objectToPossess.transform.GetChild(0).localScale.x;
+                    buttonLowerScale = buttonInitialScale - 0.15f;
+                    buttonUpperScale = buttonInitialScale + 0.15f;
+                    triggered = true;
 				}
 			}
 		}
@@ -85,7 +117,12 @@ public class PossessorTrigger : GameBehavior {
 				}
 				if(colors.TryGetValue("transparent", out color)){
 					hintRenderer.color = color;
-				}
+                }
+
+                buttonScale = 1f;
+                buttonScaleDirection = 1f;
+                triggered = false;
+                objectToPossess.transform.GetChild(0).localScale = new Vector3(buttonInitialScale, buttonInitialScale, 1f);
 			}
 			objectToPossess = null;
 		}

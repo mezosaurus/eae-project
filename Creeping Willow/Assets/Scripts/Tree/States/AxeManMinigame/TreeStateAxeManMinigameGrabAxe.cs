@@ -14,6 +14,7 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
     private int intPercentage, ticks;
     private bool won;
     private float timer;
+    private float buttonScale, buttonScaleDirection;
 
 
     public override void Enter(object data)
@@ -56,6 +57,9 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
 
         won = false;
         timer = 0f;
+
+        buttonScale = 1f;
+        buttonScaleDirection = 1f;
     }
 
     public override void Update()
@@ -79,6 +83,20 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
 
             return;
         }
+
+        buttonScale += (Time.deltaTime * buttonScaleDirection * 2f);
+
+        if(buttonScale > 1.25f)
+        {
+            buttonScale = 1.25f;
+            buttonScaleDirection = -1f;
+        }
+
+        if(buttonScale < 0.75f)
+        {
+            buttonScale = 0.75f;
+            buttonScaleDirection = 1f;
+        }
     }
 
     protected void Lose()
@@ -88,8 +106,8 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
 
         Tree.audio.Stop();
 
-		SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
-		soundManager.ResumeMusic();
+		/*SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+		soundManager.ResumeMusic();*/
 
         MessageCenter.Instance.Broadcast(new AxeManMinigameAxeManChangePhaseMessage(9001));
 
@@ -138,8 +156,8 @@ public class TreeStateAxeManMinigameGrabAxe : TreeState
 
     public override void OnGUI()
     {
-        int width = Tree.Sprites.EatingMinigame.Buttons[0].width;
-        int height = Tree.Sprites.EatingMinigame.Buttons[0].height;
+        float width = Tree.Sprites.EatingMinigame.Buttons[0].width * buttonScale;
+        float height = Tree.Sprites.EatingMinigame.Buttons[0].height * buttonScale;
         Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.Axe.transform.position + new Vector3(0f, 0.2f));
 
         GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (height / 2f), width, height), Tree.Sprites.EatingMinigame.Buttons[button]);
