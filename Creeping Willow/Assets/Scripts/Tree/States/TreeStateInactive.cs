@@ -12,6 +12,9 @@ public class TreeStateInactive : TreeState
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.None;
         aButton = (GameObject)GameObject.Instantiate(Tree.Prefabs.A, Tree.transform.position + new Vector3(0f, 1.8f), Quaternion.identity);
         aButton.transform.parent = Tree.transform;
+
+        Tree.rigidbody2D.mass = 1000000f;
+        Tree.rigidbody2D.drag = 1000000f;
     }
 
     private void SetAlpha(Transform root, float alpha)
@@ -46,6 +49,8 @@ public class TreeStateInactive : TreeState
 
     public override void Update()
     {
+        Tree.rigidbody2D.velocity = Vector2.zero;
+        
         if(Tree.Dead)
         {
             aButton.SetActive(false);
@@ -76,5 +81,8 @@ public class TreeStateInactive : TreeState
     {
         SetAlpha(Tree.transform, 1f);
         GameObject.Destroy(aButton);
+
+        Tree.rigidbody2D.mass = 1000f;
+        Tree.rigidbody2D.drag = 0f;
     }
 }
