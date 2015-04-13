@@ -315,8 +315,10 @@ public class InteractiveMenuController : MonoBehaviour
 		// Persist the level loader
 		levelLoader.levelName = i_levelName;
 
-		if( i_levelName == "Evan_Level1" )
+		if( i_levelName == "Tutorial_Level" )
 			levelName = "Bloody Beginnings";
+		else if( i_levelName == "Evan_Level1" )
+			levelName = "A Stalk in the Park";
 		else if( i_levelName == "Quadrants" )
 			levelName = "Lakeside Lullaby";
 		else if( i_levelName == "Bridge_Level" )
