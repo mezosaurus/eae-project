@@ -4,6 +4,7 @@ using System.Collections;
 public class PathAIController : AIController 
 {
 	protected bool inMaze = false;
+	protected bool panickedMaze = false;
 
 	new void Start()
 	{
@@ -26,8 +27,13 @@ public class PathAIController : AIController
 	// Update is called once per frame
 	protected override void GameUpdate () 
 	{
-		if (updateNPC())
+		if (updateNPC() && !panickedMaze)
 			return;
+
+		if (panickedMaze)
+		{
+			// TODO: update maze logic to run towards exit
+		}
 
 		// if lure is deleted
 		if( nextPath == null ) return;
@@ -83,6 +89,13 @@ public class PathAIController : AIController
 				return;
 			}
 
+			if (panickedMaze && nextPath.tag.Equals("MazePath1Away"))
+			{
+				nextPath = GameObject.FindGameObjectWithTag("MazePathEnter");
+				killSelf = true;
+				return;
+			}
+
 			int max = 10;
 			int rand = Random.Range (0, max);
 			if (rand == max - 1 && !marked)
@@ -112,14 +125,38 @@ public class PathAIController : AIController
 
 	protected override void alert()
 	{
-		base.alert ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
+		if (!panickedMaze)
+		{
+			base.alert ();
+			setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
+		}
 	}
 
 	override protected void panic()
 	{
-		base.panic ();
-		setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
+		if (!panickedMaze)
+		{
+			base.panic ();
+			setAnimatorInteger (walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);
+		}
+		if (inMaze && !panickedMaze)
+		{
+			panicked = false;
+			panickedMaze = true;
+			speed = speed * 1.5f;
+		}
+	}
+
+	override protected void OnTriggerExit2D (Collider2D other)
+	{
+		base.OnTriggerExit2D (other);
+
+		if (other.tag == "Border" && panickedMaze)
+		{
+			//NPCPanickedOffMapMessage message = new NPCPanickedOffMapMessage (panickedPos);
+			//MessageCenter.Instance.Broadcast (message);
+			//destroyNPC ();
+		}
 	}
 }
 
