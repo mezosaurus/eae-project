@@ -13,6 +13,7 @@ public class TreeStateEatingMinigameMash : TreeState
     private float percentage, timeElapsed, sampledTime, averagePercentage;
     private int intPercentage, ticks;
     private bool won;
+    private float buttonScale, buttonScaleDirection;
 
 
     public override void Enter(object data)
@@ -47,6 +48,8 @@ public class TreeStateEatingMinigameMash : TreeState
         sampledTime = 0f;
         averagePercentage = 0f;
         ticks = 0;
+        buttonScale = 1f;
+        buttonScaleDirection = 1f;
 
         won = false;
     }
@@ -104,6 +107,20 @@ public class TreeStateEatingMinigameMash : TreeState
             sampledTime = 0f;
             ticks = 0;
         }
+
+        buttonScale += (Time.deltaTime * buttonScaleDirection * 2f);
+
+        if (buttonScale > 1.25f)
+        {
+            buttonScale = 1.25f;
+            buttonScaleDirection = -1f;
+        }
+
+        if (buttonScale < 0.75f)
+        {
+            buttonScale = 0.75f;
+            buttonScaleDirection = 1f;
+        }
     }
     protected void UpdateArms(float percentage)
     {
@@ -145,8 +162,8 @@ public class TreeStateEatingMinigameMash : TreeState
 
     public override void OnGUI()
     {
-        int width = Tree.Sprites.EatingMinigame.Buttons[0].width;
-        int height = Tree.Sprites.EatingMinigame.Buttons[0].height;
+        float width = Tree.Sprites.EatingMinigame.Buttons[0].width * buttonScale;
+        float height = Tree.Sprites.EatingMinigame.Buttons[0].height * buttonScale;
         Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.MinigameCircle.transform.position + new Vector3(0f, 0.6f));
 
         GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (height / 2f), width, height), Tree.Sprites.EatingMinigame.Buttons[button]);

@@ -10,6 +10,7 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
     private float minWidth, minHeight;
     private float percentage, direction;
     private int button;
+    private float buttonScale, buttonScaleDirection;
 
 
     public override void Enter(object data)
@@ -21,6 +22,9 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
 
         percentage = 0f;
         direction = 1f;
+
+        buttonScale = 1f;
+        buttonScaleDirection = 1f;
 
         // Choose a random button
         float range = Random.Range(0f, 1f);
@@ -57,6 +61,20 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
             if(Input.GetButton(Buttons[button]))
             {
                 Tree.ChangeState("AxeManMinigameEatingLastHalf");
+            }
+
+            buttonScale += (Time.deltaTime * buttonScaleDirection * 2f);
+
+            if (buttonScale > 1.25f)
+            {
+                buttonScale = 1.25f;
+                buttonScaleDirection = -1f;
+            }
+
+            if (buttonScale < 0.75f)
+            {
+                buttonScale = 0.75f;
+                buttonScaleDirection = 1f;
             }
         }
     }
@@ -96,8 +114,8 @@ public class TreeStateAxeManMinigameEatingLastWords : TreeState
     {
         if (!Tree.BodyParts.Trunk.audio.isPlaying)
         {
-            int width = Tree.Sprites.EatingMinigame.Buttons[0].width;
-            int height = Tree.Sprites.EatingMinigame.Buttons[0].height;
+            float width = Tree.Sprites.EatingMinigame.Buttons[0].width * buttonScale;
+            float height = Tree.Sprites.EatingMinigame.Buttons[0].height * buttonScale;
             Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.MinigameCircle.transform.position + new Vector3(0f, 0.6f));
 
             GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (height / 2f), width, height), Tree.Sprites.EatingMinigame.Buttons[button]);

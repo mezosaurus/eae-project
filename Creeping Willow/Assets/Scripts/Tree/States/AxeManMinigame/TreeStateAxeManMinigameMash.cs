@@ -19,6 +19,7 @@ public class TreeStateAxeManMinigameMash : TreeState
     private int intPercentage, ticks;
     private bool won;
     private bool started;
+    private float buttonScale, buttonScaleDirection;
 
 
     public override void Enter(object data)
@@ -60,6 +61,8 @@ public class TreeStateAxeManMinigameMash : TreeState
         started = false;
 
         won = false;
+        buttonScale = 1f;
+        buttonScaleDirection = 1f;
     }
 
     /*public override void Update()
@@ -120,6 +123,20 @@ public class TreeStateAxeManMinigameMash : TreeState
     public override void Update()
     {
         timeElapsed += Time.deltaTime;
+
+        buttonScale += (Time.deltaTime * buttonScaleDirection * 2f);
+
+        if (buttonScale > 1.25f)
+        {
+            buttonScale = 1.25f;
+            buttonScaleDirection = -1f;
+        }
+
+        if (buttonScale < 0.75f)
+        {
+            buttonScale = 0.75f;
+            buttonScaleDirection = 1f;
+        }
     }
 
     public override void FixedUpdate()
@@ -232,8 +249,8 @@ public class TreeStateAxeManMinigameMash : TreeState
 
     public override void OnGUI()
     {
-        int width = Tree.Sprites.EatingMinigame.Buttons[0].width;
-        int height = Tree.Sprites.EatingMinigame.Buttons[0].height;
+        float width = Tree.Sprites.EatingMinigame.Buttons[0].width * buttonScale;
+        float height = Tree.Sprites.EatingMinigame.Buttons[0].height * buttonScale;
         Vector3 position = Camera.main.WorldToScreenPoint(Tree.BodyParts.MinigameCircle.transform.position + new Vector3(0f, 0.6f));
 
         GUI.DrawTexture(new Rect(position.x - (width / 2f), position.y - (height / 2f), width, height), Tree.Sprites.EatingMinigame.Buttons[button]);
