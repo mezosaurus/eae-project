@@ -65,6 +65,22 @@ public class FontConverter : MonoBehaviour {
 		}
 	}
 
+	public void parseStringToTextures(float startX, float startY, float sizeX, float sizeY, string text, float alpha)
+	{
+		float offset = 0;
+
+		// change alpha
+		Color guiColor = GUI.color;
+		guiColor.a = alpha;
+		GUI.color = guiColor;
+
+		for( int i = 0; i < text.Length; i++ )
+		{
+			GUI.DrawTexture(new Rect (startX + offset, startY, sizeX, sizeY), getTexture( text.Substring(i,1)) );
+			offset += sizeX;
+		}
+	}
+
 	/// <summary>
 	/// Return a texture resembling the string passed in as a parameter anchored to the right
 	/// </summary>
@@ -76,6 +92,23 @@ public class FontConverter : MonoBehaviour {
 	public void rightAnchorParseStringToTextures(float startX, float startY, float sizeX, float sizeY, string text)
 	{
 		float offset = 0;
+		
+		for( int i = text.Length - 1; i >= 0; i-- )
+		{
+			GUI.DrawTexture(new Rect (startX + offset, startY, sizeX, sizeY), getTexture( text.Substring(i,1)) );
+			offset -= sizeX;
+		}
+	}
+
+
+	public void rightAnchorParseStringToTextures(float startX, float startY, float sizeX, float sizeY, string text, float alpha)
+	{
+		float offset = 0;
+
+		// change alpha
+		Color guiColor = GUI.color;
+		guiColor.a = alpha;
+		GUI.color = guiColor;
 		
 		for( int i = text.Length - 1; i >= 0; i-- )
 		{

@@ -847,6 +847,7 @@ public class AIController : GameBehavior
 			if (luredTimeLeft <= 0) 
 			{
 				lured = false;
+				MessageCenter.Instance.Broadcast(new LureReleasedMessage(null, gameObject));
 				if (nextPath.tag.Equals (lureTag)) 
 				{
 					Destroy (nextPath);
@@ -1113,8 +1114,8 @@ public class AIController : GameBehavior
 
 	void lureEnterListener (Message message)
 	{
-//		if (true)
-//			return;
+		if (true)
+			return;
 
 		LureEnteredMessage lureMessage = message as LureEnteredMessage;
 		if (lureMessage.NPC.Equals (gameObject)) {
@@ -1131,8 +1132,8 @@ public class AIController : GameBehavior
 
 	void lureReleaseListener (Message message)
 	{
-//		if (true)
-//			return;
+		if (true)
+			return;
 		LureReleasedMessage lureMessage = message as LureReleasedMessage;
 		if (lureMessage.NPC.Equals (gameObject)) {
 			lured = false;
@@ -1152,7 +1153,10 @@ public class AIController : GameBehavior
 				scare (possessedPosition);
 		} else if (placedMessage.AType.Equals (AbilityType.PossessionLure)) {
 			if (Vector3.Distance (transform.position, possessedPosition) <= radius)
+			{
 				lure (possessedPosition);
+				MessageCenter.Instance.Broadcast(new LureEnteredMessage(null,gameObject));
+			}
 		}
 	}
 

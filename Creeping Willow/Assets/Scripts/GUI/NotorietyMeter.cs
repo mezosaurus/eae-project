@@ -42,11 +42,12 @@ public class NotorietyMeter : MonoBehaviour
 	{
 		RegisterListeners();
 
-		width = 160;
-		height = 800;
+		width = Screen.width / 4;
+		height = Screen.height / 10;
 		
-		top = GlobalGameStateManager.originalHeight / 2 - height / 2;
-		left = 80;
+		//top = GlobalGameStateManager.originalHeight / 2 - height / 2;
+		top = 10;
+		left = 170;
 	}
 
 	void OnDestroy()
@@ -139,27 +140,36 @@ public class NotorietyMeter : MonoBehaviour
 
 	void OnGUI ()
 	{
-		GUI.matrix = GlobalGameStateManager.PrepareMatrix();
+		FontConverter.instance.parseStringToTextures (20, top + height / 4, 15, Screen.height / 20, "notoriety");
+
+		//GUI.matrix = GlobalGameStateManager.PrepareMatrix();
+
 
 		float percentFull = notoriety / notorietyMax;
+
+		//GUIUtility.RotateAroundPivot (90, new Vector2 (left, top));
 
 		//GUI.Box( new Rect( left, top, width, height ), GUIContent.none );
 		//GUI.Box( new Rect( left, top + height * ( 1 - percentFull ), width, height * percentFull ), GUIContent.none );
 		GUI.DrawTexture (new Rect (left, top, width, height), getNotorietyBarImage(notoriety,notorietyMax));
 
+
         // Matt changed this, feel free to change back
-        float w = 80f;
+        float w = height / 2;
         float h = w;
-        float t = top + (height / 2f) - ((axemanCount * h) / 2f);
+		float t = top + (height / 2f) - ((axemanCount * h) / 2f);
+		
+		//GUI.matrix = Matrix4x4.identity;
 
 		axemanCount = CountAxemen();
-
+		float offset = 10;
 		for( int i = 0; i < axemanCount; i++ )
 		{
-			GUI.DrawTexture( new Rect( left + width, t + (i * h), w, h), axemanHeadTexture, ScaleMode.ScaleToFit );
-		}
+			//GUI.DrawTexture( new Rect( left + width, t + (i * h), w, h), axemanHeadTexture, ScaleMode.ScaleToFit );
 
-		GUI.matrix = Matrix4x4.identity;
+			GUI.DrawTexture( new Rect(left + width + offset,10 + height / 4,w,h), axemanHeadTexture, ScaleMode.ScaleToFit );
+			offset += w + 10;
+		}
 	}
 
 	private int CountAxemen()

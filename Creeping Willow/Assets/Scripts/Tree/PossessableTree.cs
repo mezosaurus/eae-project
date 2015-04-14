@@ -193,6 +193,10 @@ public class PossessableTree : Possessable
         currentState.Update();
     }
 
+	// gui alpha variables
+	float alpha = 1;
+	bool alphaIncreasing = false;
+
     protected void OnGUI()
     {
 
@@ -204,20 +208,48 @@ public class PossessableTree : Possessable
 
             if (BonusPoisonTimer > 0f)
             {
+				// update alpha
+				if( alpha >= 1 && alphaIncreasing )
+					alphaIncreasing = false;
+				else if( alpha <= 0 && !alphaIncreasing )
+					alphaIncreasing = true;
+				else if( alphaIncreasing )
+					alpha += .02f;
+				else
+					alpha -= .02f;
+
                 string content = "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s";
                 Vector2 size = BonusSkin.GetStyle("Label").CalcSize(new GUIContent(content));
                 Vector2 size2 = BonusSkin.GetStyle("Label").CalcSize(new GUIContent("Bonus Speed"));
 
-                GUI.Label(new Rect(20f, 1080f - size2.y - size.y - 20f, size.x, size.y), content);
-            }
+                //GUI.Label(new Rect(20f, 1080f - size2.y - size.y - 20f, size.x, size.y), content);
+				if( BonusPoisonTimer < MaxBonusTime - 3 )
+					FontConverter.instance.parseStringToTextures(20f, 1080f - size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
+            	else
+					FontConverter.instance.parseStringToTextures(Screen.width / 2 - size.x / content.Length, 600f - size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
+			}
 
             if(BonusSpeedTimer > 0f)
             {
+				// update alpha
+				if( alpha >= 1 && alphaIncreasing )
+					alphaIncreasing = false;
+				else if( alpha <= 0 && !alphaIncreasing )
+					alphaIncreasing = true;
+				else if( alphaIncreasing )
+					alpha += .02f;
+				else
+					alpha -= .02f;
+
                 string content = "Bonus Speed: " + Mathf.RoundToInt(BonusSpeedTimer) + " s";
                 Vector2 size = BonusSkin.GetStyle("Label").CalcSize(new GUIContent(content));
 
-                GUI.Label(new Rect(20f, 1080f - size.y - 20f, size.x, size.y), content);
-            }
+                //GUI.Label(new Rect(20f, 1080f - size.y - 20f, size.x, size.y), content);
+				if( BonusSpeedTimer < MaxBonusTime - 3 )
+					FontConverter.instance.parseStringToTextures(20f, 1080f - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Bonus Speed: " + Mathf.RoundToInt(BonusSpeedTimer) + " s", alpha);
+				else
+					FontConverter.instance.parseStringToTextures(Screen.width / 2 - size.x / content.Length, 600f - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Bonus Speed: " + Mathf.RoundToInt(BonusSpeedTimer) + " s", alpha);
+			}
 
             GUI.matrix = Matrix4x4.identity;
         }
