@@ -20,10 +20,10 @@ public class BushPossessable : PossessableItem
         base.Start();
     }
 
-
     // Update is called once per frame
     protected override void GameUpdate()
     {
+		HandleInput ();
         base.GameUpdate();
 		if (luring)
 		{
@@ -44,6 +44,40 @@ public class BushPossessable : PossessableItem
 			}
 		}
     }
+
+	protected override void  HandleInput(){
+		/*if (((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("X"))) && GameObject.FindGameObjectWithTag("Player").GetComponent<TreeController>().state != Tree.State.Eating)
+		{
+			if(luresLeft > 0 && !abilityInUse){
+				AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
+				MessageCenter.Instance.Broadcast(message);
+				GameObject obj = (GameObject)Resources.Load("Prefabs/Abilities/LurePlacer");
+				LurePlacer lp = obj.GetComponent<LurePlacer>();
+				lp.luresAllowed = luresLeft;
+				GameObject.Instantiate(lp, transform.position, Quaternion.identity);
+				abilityInUse = true;
+			}
+		}*/
+		base.HandleInput();
+		if (Input.GetAxis("LT") > 0.2f || Input.GetKeyDown(KeyCode.LeftBracket)) {
+			if(Active){
+				if(!scaring){
+					useAbility(true);
+					//scaring = true;
+				}
+			}
+		}else if (Input.GetAxis("RT") > 0.2f || Input.GetKeyDown (KeyCode.RightBracket)) {
+			if(Active){
+				if(!luring){
+					useAbility(false);
+					//luring = true;
+				}
+			}
+		}/*else{
+			scaring = false;
+			luring = false;
+		}*/
+	}
 
     protected override void lure()
     {
@@ -91,23 +125,46 @@ public class BushPossessable : PossessableItem
 
     public override void possess()
     {
+		audio.PlayOneShot (enterSound, 0.7f);
         Animator anim = gameObject.GetComponent<Animator>();
         anim.SetBool("Exorcise", false);
         anim.SetBool("Possess", true);
         anim.enabled = true;
-        base.possess();
+		Active = true;
+        //base.possess();
     }
 
     public override void exorcise()
     {
+		audio.PlayOneShot (exitSound, 0.7f);
         Animator anim = gameObject.GetComponent<Animator>();
         anim.SetBool("Possess", false);
         anim.SetBool("Exorcise", true);
-        Invoke("baseExorcise", .5f);
+		Active = false;
+		Instantiate(Resources.Load("Prefabs/Abilities/soulsmoke"), transform.position, Quaternion.identity);
+        //Invoke("baseExorcise", .5f);
+		//base.exorcise ();
         //Invoke(base.possess());
     }
 
-    public void baseExorcise(){
+	public void useAbility(bool leftTrigger){
+		if (Active) {
+			if(leftTrigger){
+				scare();
+				/*audio.Stop();
+				audio.clip = actionSound;
+				audio.Play();*/
+				acting = true;
+				needToSend = true;
+			}else{
+				lure();
+				acting = true;
+				needToSend = true;
+			}
+		}
+	}
+
+    /*public void baseExorcise(){
         base.exorcise();
-    }
+    }*/
 }

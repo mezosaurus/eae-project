@@ -145,8 +145,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
   hintOffset: {x: -.150000006, y: .5}
   bushLureSounds:
@@ -173,6 +173,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!212 &21251752
 SpriteRenderer:
   m_ObjectHideFlags: 1

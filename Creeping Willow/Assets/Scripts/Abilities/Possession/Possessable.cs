@@ -48,11 +48,11 @@ public abstract class Possessable : GameBehavior {
 	}
 
 	public virtual void possess(){
-		audio.PlayOneShot (enterSound, 0.7f);
+
 	}
 
 	public virtual void exorcise(){
-		audio.PlayOneShot (exitSound, 0.7f);
+
 		Active = false;
 		Instantiate(Resources.Load("Prefabs/Abilities/soulsmoke"), transform.position, Quaternion.identity);
 	}
