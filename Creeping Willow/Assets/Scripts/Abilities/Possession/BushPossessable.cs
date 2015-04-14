@@ -27,7 +27,7 @@ public class BushPossessable : PossessableItem
         base.GameUpdate();
 		if (luring)
 		{
-			Debug.Log ("lure time left = " + lureTimeleft);
+			//Debug.Log ("lure time left = " + lureTimeleft);
 			lureTimeleft -= Time.deltaTime;
 			if (lureTimeleft <= 0)
 			{
@@ -36,7 +36,7 @@ public class BushPossessable : PossessableItem
 		}
 		if (scaring)
 		{
-			Debug.Log("scare time left = " + scareTimeLeft);
+			//Debug.Log("scare time left = " + scareTimeLeft);
 			scareTimeLeft -= Time.deltaTime;
 			if (scareTimeLeft <= 0)
 			{
