@@ -85,9 +85,9 @@ public abstract class PossessableItem : Possessable {
 		if (Active) {
 			if(leftTrigger){
 				scare();
-				audio.Stop();
+				/*audio.Stop();
 				audio.clip = actionSound;
-				audio.Play();
+				audio.Play();*/
 				acting = true;
 				needToSend = true;
 			}else{
