@@ -1020,6 +1020,7 @@ GameObject:
   - 4: {fileID: 203465889}
   - 212: {fileID: 203465888}
   - 114: {fileID: 203465887}
+  - 114: {fileID: 203465890}
   m_Layer: 0
   m_Name: B
   m_TagString: Untagged
@@ -1073,6 +1074,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 232489938}
   m_RootOrder: 12
+--- !u!114 &203465890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 203465886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621dfeff6a7d1c44ab97683d6bfda491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &211890300
 GameObject:
   m_ObjectHideFlags: 0
@@ -3007,8 +3019,8 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: 10b478d2e610fda478e66ac376a0aec9, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 8300000, guid: 6f051ba3d8cf0a44fb803a3b4516bf7a, type: 3}
-    SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
-    SoulConsumed2: {fileID: 8300000, guid: 84e9141c20a97134dafe807bc7c9f7b2, type: 3}
+    SoulConsumed: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    SoulConsumed2: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
     AxeManMinigameMusic: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375,
       type: 3}
     Laugh:
@@ -4615,8 +4627,8 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: 10b478d2e610fda478e66ac376a0aec9, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 8300000, guid: 6f051ba3d8cf0a44fb803a3b4516bf7a, type: 3}
-    SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
-    SoulConsumed2: {fileID: 8300000, guid: 84e9141c20a97134dafe807bc7c9f7b2, type: 3}
+    SoulConsumed: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    SoulConsumed2: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
     AxeManMinigameMusic: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375,
       type: 3}
     Laugh:
@@ -4778,6 +4790,7 @@ GameObject:
   - 4: {fileID: 603970502}
   - 212: {fileID: 603970501}
   - 114: {fileID: 603970500}
+  - 114: {fileID: 603970503}
   m_Layer: 0
   m_Name: RT
   m_TagString: Untagged
@@ -4831,6 +4844,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 232489938}
   m_RootOrder: 10
+--- !u!114 &603970503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 603970499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621dfeff6a7d1c44ab97683d6bfda491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &607793857
 GameObject:
   m_ObjectHideFlags: 0
@@ -7978,7 +8002,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 21eea88a77b1df14982f0ddec30ce40f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2026e955502764283bda9c6d64564931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1132038974
 Transform:
@@ -9335,6 +9359,7 @@ GameObject:
   - 4: {fileID: 1227799167}
   - 212: {fileID: 1227799166}
   - 114: {fileID: 1227799168}
+  - 114: {fileID: 1227799169}
   m_Layer: 0
   m_Name: LT
   m_TagString: Untagged
@@ -9388,6 +9413,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivePhases: 0a000000
+--- !u!114 &1227799169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1227799165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621dfeff6a7d1c44ab97683d6bfda491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1227840353
 Prefab:
   m_ObjectHideFlags: 0
@@ -13354,7 +13390,7 @@ GameObject:
   - 68: {fileID: 1520442645}
   m_Layer: 0
   m_Name: cw_bench_2_1
-  m_TagString: Untagged
+  m_TagString: Bench
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13471,6 +13507,7 @@ GameObject:
   - 4: {fileID: 1552834442}
   - 212: {fileID: 1552834441}
   - 114: {fileID: 1552834440}
+  - 114: {fileID: 1552834443}
   m_Layer: 0
   m_Name: B
   m_TagString: Untagged
@@ -13524,6 +13561,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 232489938}
   m_RootOrder: 11
+--- !u!114 &1552834443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1552834439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621dfeff6a7d1c44ab97683d6bfda491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1555531813
 GameObject:
   m_ObjectHideFlags: 0
@@ -15691,6 +15739,7 @@ GameObject:
   - 4: {fileID: 1710358440}
   - 212: {fileID: 1710358439}
   - 114: {fileID: 1710358441}
+  - 114: {fileID: 1710358442}
   m_Layer: 0
   m_Name: B
   m_TagString: Untagged
@@ -15744,6 +15793,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivePhases: 02000000080000000e000000
+--- !u!114 &1710358442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1710358438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621dfeff6a7d1c44ab97683d6bfda491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1717927052
 GameObject:
   m_ObjectHideFlags: 0

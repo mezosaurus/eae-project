@@ -326,7 +326,7 @@ public class AIController : GameBehavior
 			enteredMap = true;
 			ignoreBorder (false, other);
 		}
-		if (other.tag.Equals ("Possessor")) 
+		if (other.tag.Equals ("PossessorTrigger")) 
 		{
 			alertLevel = previousAlertLevel;
 			decrementAlertLevel ();
@@ -404,7 +404,7 @@ public class AIController : GameBehavior
 			// Increment alertLevel
 			increaseAlertLevel (hearingAlertMultiplier);
 		}
-		if (other.tag.Equals ("Possessor")) 
+		if (other.tag.Equals ("PossessorTrigger")) 
 		{
 			if (panicked || alerted)
 				return;
@@ -1229,7 +1229,7 @@ public class AIController : GameBehavior
 				}
 				
 				if (hit.transform.gameObject.tag == "NPC" ||
-				    hit.transform.gameObject.tag == "Possessor" ||
+				    hit.transform.gameObject.tag == "PossessorTrigger" ||
 				    hit.transform.gameObject.tag == "Border") // also invalid
 				{
 					avoidCurrentDirection = Vector3.zero;
