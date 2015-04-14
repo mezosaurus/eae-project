@@ -23,6 +23,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public GameObject gateRight;
 	public Text levelDescriptionText;
 	public Text levelText;
+	public Text modeDescriptionText;
 
 	private bool axisBusy;
 	private AudioSource clickAudio;
@@ -229,8 +230,17 @@ public class InteractiveMenuController : MonoBehaviour
 				levelDescriptionText.text = "The fourth level";
 				break;
 
+			case "ModeSurvivalButton":
+				modeDescriptionText.text = "Eat and survive for as long as you can";
+				break;
+
+			case "ModeFeastButton":
+				modeDescriptionText.text = "Eat 5 people with the best score";
+				break;
+
 			default:
 				levelDescriptionText.text = "";
+				modeDescriptionText.text = "";
 				break;
 			}
 		}
