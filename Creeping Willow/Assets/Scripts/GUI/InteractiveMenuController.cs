@@ -231,11 +231,19 @@ public class InteractiveMenuController : MonoBehaviour
 				break;
 
 			case "ModeSurvivalButton":
-				modeDescriptionText.text = "Eat and survive for as long as you can";
+				modeDescriptionText.text = "Go on an endless killing spree to collect as much soul matter as possible\n\nYour reign of terror will end when all Hollow Trees have been chopped down";
 				break;
 
 			case "ModeFeastButton":
 				modeDescriptionText.text = "Eat 5 people with the best score";
+				break;
+
+			case "ModeMarkedButton":
+				modeDescriptionText.text = "Kill the five marked for harvest\nYour multiplier will start at 666 and drop continually\nIt can not be replenished\nThe faster they die, the better";
+				break;
+
+			case "ModeTimedButton":
+				modeDescriptionText.text = "You have five minutes to consume as many of the living as possible\nBe creative with your kills and you will be rewarded";
 				break;
 
 			default:
