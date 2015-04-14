@@ -116,7 +116,7 @@ public class ScoreScript : MonoBehaviour {
 	
 	// multiplier points
 	public readonly int scaredNPCMultiplier = 1;
-	
+	public readonly int luredNPCMultiplier = 1;
 	
 	
 	int tmpMultiplier = 0;
@@ -257,8 +257,8 @@ public class ScoreScript : MonoBehaviour {
 	
 	// score multiplier variables
 	readonly int multIncre = 5;
-	float multYOffset = 20;
-	float multXOffset = 20;
+	float multYOffset;
+	float multXOffset;
 	float multLength;
 	float multHeight;
 
@@ -327,7 +327,9 @@ public class ScoreScript : MonoBehaviour {
 		names = GlobalGameStateManager.LoadNames ();
 		
 		// mult variabes
-		multLength = Screen.width / 3;
+		multXOffset = 170;
+		multYOffset = Screen.height / 10 + 20;
+		multLength = Screen.width / 4;
 		multHeight = Screen.height / 10;
 		lastMultiplierTime = Time.time;
 		currentMultiplierTime = Time.time;
@@ -734,8 +736,8 @@ public class ScoreScript : MonoBehaviour {
 		}
 		
 		// score
-		FontConverter.instance.parseStringToTextures (Screen.width - offsetX + sizeX * 5, Screen.height-offsetY, sizeX, sizeY, "score");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, Screen.height-offsetY, sizeX, sizeY, "" + _score);
+		FontConverter.instance.parseStringToTextures (Screen.width - offsetX + sizeX * 5, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "score");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "" + _score);
 		
 		// high score
 		FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
@@ -856,7 +858,9 @@ public class ScoreScript : MonoBehaviour {
 		
 		/***** Score Multiplier GUI *****/
 
-		FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 50, multYOffset, 40, multHeight, currentMultiplier + "x");
+		FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 40, multYOffset * 5 / 4, 20, multHeight / 2, currentMultiplier + "x");
+
+		FontConverter.instance.parseStringToTextures (multXOffset - 150, multYOffset * 5 / 4, 15, multHeight / 2, "multiplier");
 
 		// multiplier bar
 		if( multiplierIsChanging )
@@ -1163,7 +1167,7 @@ public class ScoreScript : MonoBehaviour {
 	void HandleLureEntered(Message message)
 	{
 		LureEnteredMessage mess = message as LureEnteredMessage;
-		
+
 		GameObject NPC = mess.NPC;
 		
 		if( NPC.GetComponent<AIController>() as AIController == null )
@@ -1174,8 +1178,12 @@ public class ScoreScript : MonoBehaviour {
 			if( NPC.GetComponent<AIController>().getLastLure().Equals(mess.Lure) )
 				return;
 		}
-		
-		luredNPCs.Add (NPC);
+
+		if( !luredNPCs.Contains(NPC) )
+		{
+			luredNPCs.Add (NPC);
+			addMultiplier (luredNPCMultiplier);
+		}
 	}
 	
 	
@@ -1240,7 +1248,7 @@ public class ScoreScript : MonoBehaviour {
 	void HandleLureReleased(Message message)
 	{
 		LureReleasedMessage mess = message as LureReleasedMessage;
-		
+
 		GameObject NPC = mess.NPC;
 		
 		if( luredNPCs.Contains(NPC) )

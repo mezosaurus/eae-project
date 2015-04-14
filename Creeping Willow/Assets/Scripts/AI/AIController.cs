@@ -326,7 +326,7 @@ public class AIController : GameBehavior
 			enteredMap = true;
 			ignoreBorder (false, other);
 		}
-		if (other.tag.Equals ("Possessor")) 
+		if (other.tag.Equals ("PossessorTrigger")) 
 		{
 			alertLevel = previousAlertLevel;
 			decrementAlertLevel ();
@@ -404,7 +404,7 @@ public class AIController : GameBehavior
 			// Increment alertLevel
 			increaseAlertLevel (hearingAlertMultiplier);
 		}
-		if (other.tag.Equals ("Possessor")) 
+		if (other.tag.Equals ("PossessorTrigger")) 
 		{
 			if (panicked || alerted)
 				return;
@@ -880,6 +880,7 @@ public class AIController : GameBehavior
 			if (luredTimeLeft <= 0) 
 			{
 				lured = false;
+				MessageCenter.Instance.Broadcast(new LureReleasedMessage(null, gameObject));
 				if (nextPath.tag.Equals (lureTag)) 
 				{
 					Destroy (nextPath);
@@ -1146,8 +1147,8 @@ public class AIController : GameBehavior
 
 	void lureEnterListener (Message message)
 	{
-//		if (true)
-//			return;
+		if (true)
+			return;
 
 		LureEnteredMessage lureMessage = message as LureEnteredMessage;
 		if (lureMessage.NPC.Equals (gameObject)) {
@@ -1164,8 +1165,8 @@ public class AIController : GameBehavior
 
 	void lureReleaseListener (Message message)
 	{
-//		if (true)
-//			return;
+		if (true)
+			return;
 		LureReleasedMessage lureMessage = message as LureReleasedMessage;
 		if (lureMessage.NPC.Equals (gameObject)) {
 			lured = false;
@@ -1185,7 +1186,10 @@ public class AIController : GameBehavior
 				scare (possessedPosition);
 		} else if (placedMessage.AType.Equals (AbilityType.PossessionLure)) {
 			if (Vector3.Distance (transform.position, possessedPosition) <= radius)
+			{
 				lure (possessedPosition);
+				MessageCenter.Instance.Broadcast(new LureEnteredMessage(null,gameObject));
+			}
 		}
 	}
 
@@ -1258,7 +1262,7 @@ public class AIController : GameBehavior
 				}
 				
 				if (hit.transform.gameObject.tag == "NPC" ||
-				    hit.transform.gameObject.tag == "Possessor" ||
+				    hit.transform.gameObject.tag == "PossessorTrigger" ||
 				    hit.transform.gameObject.tag == "Border") // also invalid
 				{
 					avoidCurrentDirection = Vector3.zero;

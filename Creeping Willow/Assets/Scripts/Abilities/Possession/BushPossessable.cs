@@ -18,7 +18,6 @@ public class BushPossessable : PossessableItem
     protected override void Start()
     {
         base.Start();
-        hintOffset = new Vector2(.25f, .85f);
     }
 
 

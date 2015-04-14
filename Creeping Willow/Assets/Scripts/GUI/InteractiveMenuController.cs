@@ -21,7 +21,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public Button[] optionsButtons;
 	public GameObject gateLeft;
 	public GameObject gateRight;
+	public Text levelDescriptionText;
 	public Text levelText;
+	public Text modeDescriptionText;
 
 	private bool axisBusy;
 	private AudioSource clickAudio;
@@ -204,6 +206,45 @@ public class InteractiveMenuController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if( EventSystem.current.currentSelectedGameObject )
+		{
+			switch( EventSystem.current.currentSelectedGameObject.name )
+			{
+			case "Level0Button":
+				levelDescriptionText.text = "Learn to play";
+				break;
+
+			case "Level1Button":
+				levelDescriptionText.text = "The first level";
+				break;
+
+			case "Level2Button":
+				levelDescriptionText.text = "The second level";
+				break;
+
+			case "Level3Button":
+				levelDescriptionText.text = "The third level";
+				break;
+
+			case "Level4Button":
+				levelDescriptionText.text = "The fourth level";
+				break;
+
+			case "ModeSurvivalButton":
+				modeDescriptionText.text = "Eat and survive for as long as you can";
+				break;
+
+			case "ModeFeastButton":
+				modeDescriptionText.text = "Eat 5 people with the best score";
+				break;
+
+			default:
+				levelDescriptionText.text = "";
+				modeDescriptionText.text = "";
+				break;
+			}
+		}
+
 		// Check for mouse
 		if( Input.GetAxis( "Mouse X" ) != 0 || Input.GetAxis( "Mouse Y" ) != 0 )
 		{
@@ -315,8 +356,10 @@ public class InteractiveMenuController : MonoBehaviour
 		// Persist the level loader
 		levelLoader.levelName = i_levelName;
 
-		if( i_levelName == "Evan_Level1" )
+		if( i_levelName == "Tutorial_Level" )
 			levelName = "Bloody Beginnings";
+		else if( i_levelName == "Evan_Level1" )
+			levelName = "A Stalk in the Park";
 		else if( i_levelName == "Quadrants" )
 			levelName = "Lakeside Lullaby";
 		else if( i_levelName == "Bridge_Level" )
