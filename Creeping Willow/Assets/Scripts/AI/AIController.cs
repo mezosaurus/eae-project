@@ -759,6 +759,35 @@ public class AIController : GameBehavior
 	{
 		if (panicked)
 			return;
+		// Play only if not scared so that sounds only plays once for a scare, and then can be played again when scare cooldown is up
+		if (!scared)
+		{
+			// Play alert sound when NPC gets scared
+			AudioClip gasp = null;
+			// Get skin type to know which NPC sounds to play
+			if (this.SkinType.Equals (NPCSkinType.Bopper))
+			{
+				gasp = (AudioClip)bopperAlertSounds[Random.Range (0, bopperAlertSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.Hippie))
+			{
+				gasp = (AudioClip)hippieAlertSounds[Random.Range (0, hippieAlertSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.Hottie))
+			{
+				gasp = (AudioClip)hottieAlertSounds[Random.Range (0, hottieAlertSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.MowerMan))
+			{
+				gasp = (AudioClip)mowerAlertSounds[Random.Range (0, mowerAlertSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.OldMan))
+			{
+				gasp = (AudioClip)oldmanAlertSounds[Random.Range (0, oldmanAlertSounds.Length)];
+			}
+			
+			audio.PlayOneShot (gasp, 1.0f);
+		}
 
 		alertTexture.renderer.enabled = false;
 		scaredTexture.renderer.enabled = true;
@@ -767,6 +796,7 @@ public class AIController : GameBehavior
 		scaredTimeLeft = scaredCooldownSeconds;
 		moveDir = transform.position - scaredPosition;
 		broadcastAlertLevelChanged (AlertLevelType.Scared);
+
 	}
 
 	protected virtual void lure (Vector3 lurePosition)
@@ -774,38 +804,41 @@ public class AIController : GameBehavior
 		if (panicked || alerted)
 			return;
 
-		Debug.Log ("Becoming Lured: " + lurePosition);
+		//Debug.Log ("Becoming Lured: " + lurePosition);
+		// Play only if not lured so that sounds only plays once for a lure, and then can be played again when lure cooldown is up
+		if (!lured)
+		{
+			// Play curious sound for being lured
+			AudioClip curious = null;
+			// Get skin type to know which NPC sounds to play
+			if (this.SkinType.Equals (NPCSkinType.Bopper))
+			{
+				curious = (AudioClip)bopperCuriousSounds[Random.Range (0, bopperCuriousSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.Hippie))
+			{
+				curious = (AudioClip)hippieCuriousSounds[Random.Range (0, hippieCuriousSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.Hottie))
+			{
+				curious = (AudioClip)hottieCuriousSounds[Random.Range (0, hottieCuriousSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.MowerMan))
+			{
+				curious = (AudioClip)mowerCuriousSounds[Random.Range (0, mowerCuriousSounds.Length)];
+			}
+			else if (this.SkinType.Equals (NPCSkinType.OldMan))
+			{
+				curious = (AudioClip)oldmanCuriousSounds[Random.Range (0, oldmanCuriousSounds.Length)];
+			}
+			
+			audio.PlayOneShot (curious, 1.0f);
+		}
 
 		lured = true;
 		nextPath = new GameObject ();
 		nextPath.transform.position = lurePosition;
 		nextPath.tag = lureTag;
-
-		// Play curious sound for being lured
-		AudioClip curious = null;
-		// Get skin type to know which NPC sounds to play
-		if (this.SkinType.Equals (NPCSkinType.Bopper))
-		{
-			curious = (AudioClip)bopperCuriousSounds[Random.Range (0, bopperCuriousSounds.Length)];
-		}
-		else if (this.SkinType.Equals (NPCSkinType.Hippie))
-		{
-			curious = (AudioClip)hippieCuriousSounds[Random.Range (0, hippieCuriousSounds.Length)];
-		}
-		else if (this.SkinType.Equals (NPCSkinType.Hottie))
-		{
-			curious = (AudioClip)hottieCuriousSounds[Random.Range (0, hottieCuriousSounds.Length)];
-		}
-		else if (this.SkinType.Equals (NPCSkinType.MowerMan))
-		{
-			curious = (AudioClip)mowerCuriousSounds[Random.Range (0, mowerCuriousSounds.Length)];
-		}
-		else if (this.SkinType.Equals (NPCSkinType.OldMan))
-		{
-			curious = (AudioClip)oldmanCuriousSounds[Random.Range (0, oldmanCuriousSounds.Length)];
-		}
-		
-		audio.PlayOneShot (curious, 1.0f);
 
 		luredTimeLeft = lureCooldownSeconds;
 	}
@@ -847,6 +880,7 @@ public class AIController : GameBehavior
 			if (luredTimeLeft <= 0) 
 			{
 				lured = false;
+				MessageCenter.Instance.Broadcast(new LureReleasedMessage(null, gameObject));
 				if (nextPath.tag.Equals (lureTag)) 
 				{
 					Destroy (nextPath);
@@ -1113,8 +1147,8 @@ public class AIController : GameBehavior
 
 	void lureEnterListener (Message message)
 	{
-//		if (true)
-//			return;
+		if (true)
+			return;
 
 		LureEnteredMessage lureMessage = message as LureEnteredMessage;
 		if (lureMessage.NPC.Equals (gameObject)) {
@@ -1131,8 +1165,8 @@ public class AIController : GameBehavior
 
 	void lureReleaseListener (Message message)
 	{
-//		if (true)
-//			return;
+		if (true)
+			return;
 		LureReleasedMessage lureMessage = message as LureReleasedMessage;
 		if (lureMessage.NPC.Equals (gameObject)) {
 			lured = false;
@@ -1152,7 +1186,10 @@ public class AIController : GameBehavior
 				scare (possessedPosition);
 		} else if (placedMessage.AType.Equals (AbilityType.PossessionLure)) {
 			if (Vector3.Distance (transform.position, possessedPosition) <= radius)
+			{
 				lure (possessedPosition);
+				MessageCenter.Instance.Broadcast(new LureEnteredMessage(null,gameObject));
+			}
 		}
 	}
 

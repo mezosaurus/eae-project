@@ -36,7 +36,7 @@ public abstract class PossessableItem : Possessable {
 
 	// Update is called once per frame
 	protected override void GameUpdate (){
-		HandleInput ();
+		//HandleInput ();
 		if(shaking){
 			float newX = Random.Range(baseX-.05f, baseX+.05f);
 			float newY = Random.Range(baseY-.05f, baseY+.05f);
@@ -85,9 +85,9 @@ public abstract class PossessableItem : Possessable {
 		if (Active) {
 			if(leftTrigger){
 				scare();
-				audio.Stop();
+				/*audio.Stop();
 				audio.clip = actionSound;
-				audio.Play();
+				audio.Play();*/
 				acting = true;
 				needToSend = true;
 			}else{
@@ -112,7 +112,7 @@ public abstract class PossessableItem : Possessable {
 			}
 		}*/
 		base.HandleInput();
-		if (Input.GetAxis("LT") > 0.2f || Input.GetKeyDown(KeyCode.LeftBracket)) {
+		/*if (Input.GetAxis("LT") > 0.2f || Input.GetKeyDown(KeyCode.LeftBracket)) {
 			if(Active){
 				if(!scaring){
 					useAbility(true);
@@ -129,7 +129,7 @@ public abstract class PossessableItem : Possessable {
 		}else{
 			scaring = false;
 			luring = false;
-		}
+		}*/
 	}
 
 	public override void possess(){

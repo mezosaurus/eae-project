@@ -21,7 +21,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public Button[] optionsButtons;
 	public GameObject gateLeft;
 	public GameObject gateRight;
+	public Text levelDescriptionText;
 	public Text levelText;
+	public Text modeDescriptionText;
 
 	private bool axisBusy;
 	private AudioSource clickAudio;
@@ -204,6 +206,53 @@ public class InteractiveMenuController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if( EventSystem.current.currentSelectedGameObject )
+		{
+			switch( EventSystem.current.currentSelectedGameObject.name )
+			{
+			case "Level0Button":
+				levelDescriptionText.text = "Learn to play";
+				break;
+
+			case "Level1Button":
+				levelDescriptionText.text = "The first level";
+				break;
+
+			case "Level2Button":
+				levelDescriptionText.text = "The second level";
+				break;
+
+			case "Level3Button":
+				levelDescriptionText.text = "The third level";
+				break;
+
+			case "Level4Button":
+				levelDescriptionText.text = "The fourth level";
+				break;
+
+			case "ModeSurvivalButton":
+				modeDescriptionText.text = "Go on an endless killing spree to collect as much soul matter as possible\n\nYour reign of terror will end when all Hollow Trees have been chopped down";
+				break;
+
+			case "ModeFeastButton":
+				modeDescriptionText.text = "Eat 5 people with the best score";
+				break;
+
+			case "ModeMarkedButton":
+				modeDescriptionText.text = "Kill the five marked for harvest\nYour multiplier will start at 666 and drop continually\nIt can not be replenished\nThe faster they die, the better";
+				break;
+
+			case "ModeTimedButton":
+				modeDescriptionText.text = "You have five minutes to consume as many of the living as possible\nBe creative with your kills and you will be rewarded";
+				break;
+
+			default:
+				levelDescriptionText.text = "";
+				modeDescriptionText.text = "";
+				break;
+			}
+		}
+
 		// Check for mouse
 		if( Input.GetAxis( "Mouse X" ) != 0 || Input.GetAxis( "Mouse Y" ) != 0 )
 		{

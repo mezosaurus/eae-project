@@ -49,6 +49,7 @@ public class TreeStateActive : TreeState
 
 		//Debug.Log ("THERE IS SOMETHING BROKEN HERE!!!!!!!!!\nPLEASE FIX THIS!!!!\nI CAN\'T PLAY THE GAME WITH THIS LINE UNCOMMENTED\nMAKE SURE TO RUN YOUR CODE BEFORE PUSHING!!!!!\nNO CODE SHOULD BE PUSHED THAT REQUIRES UNCOMMENTING!!!!!\nTHIS IS IN FILE TreeStateActive.cs");
         Tree.BodyParts.Trunk.audio.clip = Tree.Sounds.Walk[walkAudio];
+		Tree.BodyParts.Trunk.audio.volume = 0.3f;
     }
 
     public override void Update()
