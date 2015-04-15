@@ -211,23 +211,23 @@ public class InteractiveMenuController : MonoBehaviour
 			switch( EventSystem.current.currentSelectedGameObject.name )
 			{
 			case "Level0Button":
-				levelDescriptionText.text = "Learn to play";
+				levelDescriptionText.text = "Learn the art of the kill\nGet your roots dirty";
 				break;
 
 			case "Level1Button":
-				levelDescriptionText.text = "The first level";
+				levelDescriptionText.text = "On a beautiful day they come to play\nbut you will take their souls away";
 				break;
 
 			case "Level2Button":
-				levelDescriptionText.text = "The second level";
+				levelDescriptionText.text = "There are days at the lake that can be calming and cool\nThis is not one of those days";
 				break;
 
 			case "Level3Button":
-				levelDescriptionText.text = "The third level";
+				levelDescriptionText.text = "They stay safe on the other side\nbut fear will drive them into your arms";
 				break;
 
 			case "Level4Button":
-				levelDescriptionText.text = "The fourth level";
+				levelDescriptionText.text = "Those that enter the maze may never escape\nIf they do they will not be the same";
 				break;
 
 			case "ModeSurvivalButton":
@@ -235,7 +235,7 @@ public class InteractiveMenuController : MonoBehaviour
 				break;
 
 			case "ModeFeastButton":
-				modeDescriptionText.text = "Eat 5 people with the best score";
+				modeDescriptionText.text = "Get the highest score you can with using scares and lures to get bigger combos\n\nThe game ends when you eat 5 people";
 				break;
 
 			case "ModeMarkedButton":
