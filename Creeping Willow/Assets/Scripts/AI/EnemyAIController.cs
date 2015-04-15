@@ -245,6 +245,7 @@ public class EnemyAIController : AIController
 			panicked = false;
 			
 			angry = true;
+			MessageCenter.Instance.Broadcast(new AxeManAngerChangedMessage(true));
 		}
 	}
 	
@@ -274,6 +275,7 @@ public class EnemyAIController : AIController
 		{
             PlayerKilledMessage message = new PlayerKilledMessage(gameObject, collision.gameObject);
 			MessageCenter.Instance.Broadcast(message);
+			MessageCenter.Instance.Broadcast(new AxeManAngerChangedMessage(false));
 			angry = false;
 			killSelf = true;
 		}

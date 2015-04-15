@@ -51,7 +51,10 @@ public class ScoreScript : MonoBehaviour {
 
 	// bounty images
 	public Texture2D bountyBoxImage;
+	public Texture2D newBountyBoxImage;
 	public Texture2D bountyBoxTextImage;
+
+	public Texture2D soultiplier;
 
 	// multiplier bar images
 	public Texture2D bar1;
@@ -184,7 +187,7 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 	// Score GUI variables
-	float offsetX = 450;
+	float offsetX = 600;
 	float offsetY = 50;
 	float sizeX = 20;
 	float sizeY = 40;
@@ -686,7 +689,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// multiplier pop-up text
-			FontConverter.instance.parseStringToTextures (Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY, multiplierSign + multiplierPointImage);
+			FontConverter.instance.parseStringToTextures (500 - popupX/2, 150 - popupY/2 - popupIncrement2 + 75, popupX, popupY, multiplierSign + multiplierPointImage);
 
 
 			// increment height
@@ -727,7 +730,7 @@ public class ScoreScript : MonoBehaviour {
 				GUI.color = guiColor;
 			}
 			
-			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, Screen.height-offsetY-sizeY-popupIncrement, sizeX, sizeY, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 20 + offsetY + sizeY + popupIncrement, sizeX, sizeY, "" + (displayScore * currentMultiplier * displayMultiplier));
 
 			if( !paused )
 				popupIncrement += .75f;
@@ -737,18 +740,23 @@ public class ScoreScript : MonoBehaviour {
 		
 		// score
 		FontConverter.instance.parseStringToTextures (Screen.width - offsetX + sizeX * 5, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "score");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "" + _score);
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "" + _score);
 		
 		// high score
 		FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 10, sizeX, sizeY, "" + highscores[0]);
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 10, sizeX, sizeY, "" + highscores[0]);
 		
 		
 		
 		
 		
 		/***** Bounty GUI *****/
-		
+
+		GUI.DrawTexture (new Rect (Screen.width - 110, 10, 100, 100), newBountyBoxImage);
+		if( BountyNPCImage != null )
+			GUI.DrawTexture (new Rect(Screen.width - 90, 20, 60, 60), BountyNPCImage);
+
+		/*
 		// probably should use switch-case, but meh
 		if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
 		{
@@ -819,7 +827,7 @@ public class ScoreScript : MonoBehaviour {
 			if( BountyNPCImage != null )
 				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/8,Screen.height+bountyRectSizeY/4,bountySizeX/4,bountyRectSizeY*3/5), BountyNPCImage);
 		}
-		
+		*/
 		
 		
 		
@@ -858,12 +866,17 @@ public class ScoreScript : MonoBehaviour {
 		
 		/***** Score Multiplier GUI *****/
 
-		FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 40, multYOffset * 5 / 4, 20, multHeight / 2, currentMultiplier + "x");
 
-		FontConverter.instance.parseStringToTextures (multXOffset - 150, multYOffset * 5 / 4, 15, multHeight / 2, "multiplier");
+		GUI.DrawTexture (new Rect (240, 10, 200, 50), soultiplier);
+		FontConverter.instance.rightAnchorParseStringToTextures (440 + 120, 50f / 4f, 40, 40, currentMultiplier + "x");
+
+
+		//FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 40, multYOffset * 5 / 4, 20, multHeight / 2, currentMultiplier + "x");
+
+		//FontConverter.instance.parseStringToTextures (multXOffset - 150, multYOffset * 5 / 4, 15, multHeight / 2, "multiplier");
 
 		// multiplier bar
-		if( multiplierIsChanging )
+		/*if( multiplierIsChanging )
 		{
 			// change(slide) data
 			if( Time.time - lastMultiplierTime <= multiplierSliderTime )
@@ -882,7 +895,7 @@ public class ScoreScript : MonoBehaviour {
 		else
 		{
 			GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage((multiplierPoints % multIncre) / (float)multIncre * (multLength - 4),multLength));
-		}
+		}*/
 	}
 	
 	

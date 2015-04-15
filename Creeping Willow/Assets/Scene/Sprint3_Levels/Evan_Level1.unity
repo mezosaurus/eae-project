@@ -879,8 +879,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c123a7cea88ed647a4c7d79b47105f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notorietyMax: 1
+  notorietyMax: 100
   axemanHeadTexture: {fileID: 2800000, guid: ba7d52548efade9429825ce3f25575f3, type: 3}
+  angryAxemanHeadTexture: {fileID: 2800000, guid: efc498db60179e146beb72efbdb72806,
+    type: 3}
   bar1: {fileID: 2800000, guid: 011404c289f42104dbdc307f4a898ead, type: 3}
   bar2: {fileID: 2800000, guid: 8dc7b9e19c077a84b8ff72c6bcda0c76, type: 3}
   bar3: {fileID: 2800000, guid: bc7fd0a93a743cd4f9a7ba58da874646, type: 3}
@@ -929,7 +931,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frequency: .400000006
   bountyBoxImage: {fileID: 2800000, guid: 2a77f529de579d144ab1b2321da1e1f5, type: 3}
+  newBountyBoxImage: {fileID: 2800000, guid: c170abb4e16718f428cc96a2fc02037f, type: 3}
   bountyBoxTextImage: {fileID: 2800000, guid: cd5e34e59e9bd8b418dad6199edea91d, type: 3}
+  soultiplier: {fileID: 2800000, guid: e7eec365f66b2eb4e9dca8b09d222e39, type: 3}
   bar1: {fileID: 2800000, guid: f96189ffbc09ff247856221d09fb582c, type: 3}
   bar2: {fileID: 2800000, guid: ea4ac3ad1b17a014c9b827a6101ce13e, type: 3}
   bar3: {fileID: 2800000, guid: f06fe2a3067ae90489c9f9e5d06c7680, type: 3}
@@ -1894,10 +1898,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .5}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -1922,6 +1926,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!50 &145153784
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -2381,10 +2391,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: 2ad3c4d3ce04af94a8b58a7e5c73ddee, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.100000001, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -2409,6 +2419,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!58 &169645323
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2907,10 +2923,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: 2ad3c4d3ce04af94a8b58a7e5c73ddee, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.100000001, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -2935,6 +2951,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!58 &215229172
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3533,7 +3555,6 @@ GameObject:
   - 4: {fileID: 241093259}
   - 212: {fileID: 241093261}
   - 68: {fileID: 241093260}
-  - 50: {fileID: 241093262}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -3592,22 +3613,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2026e955502764283bda9c6d64564931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &241093262
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
-    type: 2}
-  m_PrefabInternal: {fileID: 1496953817}
-  m_GameObject: {fileID: 241093258}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &243649999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,10 +4126,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -4149,6 +4154,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &256872612
 Animator:
   serializedVersion: 3
@@ -4679,10 +4690,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -4707,6 +4718,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &276061243
 Animator:
   serializedVersion: 3
@@ -5008,10 +5025,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .5}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -5036,6 +5053,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!50 &277944263
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -7274,9 +7297,9 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: 10b478d2e610fda478e66ac376a0aec9, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 8300000, guid: 6f051ba3d8cf0a44fb803a3b4516bf7a, type: 3}
-    SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
-    SoulConsumed2: {fileID: 8300000, guid: 84e9141c20a97134dafe807bc7c9f7b2, type: 3}
-    AxeManMinigameMusic: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375,
+    SoulConsumed: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    SoulConsumed2: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    AxeManMinigameMusic: {fileID: 8300000, guid: 10c41d9e1b3086944b55637ec602a98b,
       type: 3}
     Laugh:
     - {fileID: 8300000, guid: 137dc40b527280045a756fbb2bff9cac, type: 3}
@@ -8914,10 +8937,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -8942,6 +8965,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &444664160
 Animator:
   serializedVersion: 3
@@ -9619,10 +9648,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.0500000007, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -9647,6 +9676,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!61 &486395681
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10122,9 +10157,9 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: 10b478d2e610fda478e66ac376a0aec9, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 8300000, guid: 6f051ba3d8cf0a44fb803a3b4516bf7a, type: 3}
-    SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
-    SoulConsumed2: {fileID: 8300000, guid: 84e9141c20a97134dafe807bc7c9f7b2, type: 3}
-    AxeManMinigameMusic: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375,
+    SoulConsumed: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    SoulConsumed2: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    AxeManMinigameMusic: {fileID: 8300000, guid: 10c41d9e1b3086944b55637ec602a98b,
       type: 3}
     Laugh:
     - {fileID: 8300000, guid: 137dc40b527280045a756fbb2bff9cac, type: 3}
@@ -10889,7 +10924,6 @@ GameObject:
   - 4: {fileID: 528949781}
   - 212: {fileID: 528949780}
   - 68: {fileID: 528949779}
-  - 50: {fileID: 528949777}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -10897,22 +10931,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &528949777
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
-    type: 2}
-  m_PrefabInternal: {fileID: 501588588}
-  m_GameObject: {fileID: 528949773}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!68 &528949779
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -11251,7 +11269,6 @@ GameObject:
   - 4: {fileID: 546705533}
   - 212: {fileID: 546705535}
   - 68: {fileID: 546705534}
-  - 50: {fileID: 546705536}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -11315,22 +11332,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &546705536
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 1730480859}
-  m_GameObject: {fileID: 546705532}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &547843781
 GameObject:
   m_ObjectHideFlags: 0
@@ -12629,10 +12630,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .5}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -12657,6 +12658,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!50 &633912996
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -13404,10 +13411,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -13432,6 +13439,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &657944004
 Animator:
   serializedVersion: 3
@@ -13975,10 +13988,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .649999976}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -14003,6 +14016,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &689452052
 Animator:
   serializedVersion: 3
@@ -17766,7 +17785,6 @@ GameObject:
   - 4: {fileID: 850236909}
   - 212: {fileID: 850236911}
   - 68: {fileID: 850236910}
-  - 50: {fileID: 850236912}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -17825,22 +17843,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2026e955502764283bda9c6d64564931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &850236912
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
-    type: 2}
-  m_PrefabInternal: {fileID: 413464634}
-  m_GameObject: {fileID: 850236908}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &850924387
 Prefab:
   m_ObjectHideFlags: 0
@@ -19909,7 +19911,6 @@ GameObject:
   - 4: {fileID: 977065064}
   - 212: {fileID: 977065066}
   - 68: {fileID: 977065065}
-  - 50: {fileID: 977065067}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -19973,22 +19974,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &977065067
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 1736269949}
-  m_GameObject: {fileID: 977065063}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &978721584
 GameObject:
   m_ObjectHideFlags: 0
@@ -20490,7 +20475,6 @@ GameObject:
   - 4: {fileID: 1002917924}
   - 212: {fileID: 1002917926}
   - 68: {fileID: 1002917925}
-  - 50: {fileID: 1002917927}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -20554,22 +20538,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &1002917927
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 1111040725}
-  m_GameObject: {fileID: 1002917923}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1003003649
 GameObject:
   m_ObjectHideFlags: 0
@@ -20691,7 +20659,6 @@ GameObject:
   - 4: {fileID: 1010658277}
   - 212: {fileID: 1010658284}
   - 68: {fileID: 1010658283}
-  - 50: {fileID: 1010658281}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -20711,22 +20678,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2079197271}
   m_RootOrder: 18
---- !u!50 &1010658281
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 404895649}
-  m_GameObject: {fileID: 1010658276}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!68 &1010658283
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -21894,7 +21845,6 @@ GameObject:
   - 4: {fileID: 1094527624}
   - 212: {fileID: 1094527626}
   - 68: {fileID: 1094527625}
-  - 50: {fileID: 1094527627}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -21958,22 +21908,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &1094527627
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 1570663504}
-  m_GameObject: {fileID: 1094527623}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1094808432
 Prefab:
   m_ObjectHideFlags: 0
@@ -22097,10 +22031,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -22125,6 +22059,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &1098619422
 Animator:
   serializedVersion: 3
@@ -23959,7 +23899,6 @@ GameObject:
   - 4: {fileID: 1201490601}
   - 212: {fileID: 1201490603}
   - 68: {fileID: 1201490602}
-  - 50: {fileID: 1201490604}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -24018,22 +23957,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2026e955502764283bda9c6d64564931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &1201490604
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
-    type: 2}
-  m_PrefabInternal: {fileID: 1098874770}
-  m_GameObject: {fileID: 1201490600}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1203209834
 GameObject:
   m_ObjectHideFlags: 0
@@ -25324,10 +25247,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: 2ad3c4d3ce04af94a8b58a7e5c73ddee, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.100000001, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -25352,6 +25275,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!58 &1321658240
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -25631,10 +25560,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -25659,6 +25588,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &1344066686
 Animator:
   serializedVersion: 3
@@ -26112,6 +26047,7 @@ GameObject:
   - 223: {fileID: 1373251710}
   - 114: {fileID: 1373251709}
   - 114: {fileID: 1373251708}
+  - 114: {fileID: 1373251711}
   m_Layer: 5
   m_Name: OutroCanvas
   m_TagString: Untagged
@@ -26197,6 +26133,23 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 3618055817
   m_SortingOrder: 0
+--- !u!114 &1373251711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11497004, guid: d074ac821972e0b4792a7eb9594f9bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 995922687}
+  m_GameObject: {fileID: 1373251706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &1378136207
 Prefab:
   m_ObjectHideFlags: 0
@@ -26699,7 +26652,6 @@ GameObject:
   - 4: {fileID: 1417152100}
   - 212: {fileID: 1417152102}
   - 68: {fileID: 1417152101}
-  - 50: {fileID: 1417152103}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -26763,22 +26715,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &1417152103
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 1800921412}
-  m_GameObject: {fileID: 1417152099}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1417221548
 GameObject:
   m_ObjectHideFlags: 0
@@ -26945,7 +26881,6 @@ GameObject:
   - 4: {fileID: 1424735757}
   - 212: {fileID: 1424735759}
   - 68: {fileID: 1424735758}
-  - 50: {fileID: 1424735760}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -27009,22 +26944,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &1424735760
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 1618171925}
-  m_GameObject: {fileID: 1424735756}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &1431375798
 GameObject:
   m_ObjectHideFlags: 0
@@ -27795,10 +27714,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.0500000007, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -27823,6 +27742,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!61 &1479029393
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28202,6 +28127,7 @@ GameObject:
   - 223: {fileID: 1497999001}
   - 114: {fileID: 1497999000}
   - 114: {fileID: 1497998999}
+  - 114: {fileID: 1497999002}
   m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
@@ -28285,6 +28211,23 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 3618055817
   m_SortingOrder: 0
+--- !u!114 &1497999002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11492046, guid: d074ac821972e0b4792a7eb9594f9bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 995922687}
+  m_GameObject: {fileID: 1497998997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &1504864321
 Prefab:
   m_ObjectHideFlags: 0
@@ -29793,10 +29736,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .649999976}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -29821,6 +29764,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &1527546667
 Animator:
   serializedVersion: 3
@@ -30276,7 +30225,6 @@ GameObject:
   - 4: {fileID: 1545302625}
   - 212: {fileID: 1545302627}
   - 68: {fileID: 1545302626}
-  - 50: {fileID: 1545302628}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -30340,22 +30288,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &1545302628
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 2020128521}
-  m_GameObject: {fileID: 1545302624}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &1557622180
 Prefab:
   m_ObjectHideFlags: 0
@@ -30688,10 +30620,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.0500000007, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -30716,6 +30648,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!61 &1574550153
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31153,6 +31091,7 @@ GameObject:
   - 223: {fileID: 1594925673}
   - 114: {fileID: 1594925671}
   - 114: {fileID: 1594925672}
+  - 114: {fileID: 1594925674}
   m_Layer: 5
   m_Name: IntroCanvas
   m_TagString: Untagged
@@ -31238,6 +31177,23 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 3618055817
   m_SortingOrder: 0
+--- !u!114 &1594925674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11432158, guid: d074ac821972e0b4792a7eb9594f9bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 995922687}
+  m_GameObject: {fileID: 1594925669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &1610663928
 Prefab:
   m_ObjectHideFlags: 0
@@ -33935,10 +33891,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -33963,6 +33919,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &1764502737
 Animator:
   serializedVersion: 3
@@ -36106,10 +36068,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .649999976}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -36134,6 +36096,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &1881784642
 Animator:
   serializedVersion: 3
@@ -36350,10 +36318,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .649999976}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -36378,6 +36346,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &1888076829
 Animator:
   serializedVersion: 3
@@ -36700,10 +36674,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 11400008, guid: 25339d73221062946b64e720c3069606, type: 2}
-      propertyPath: notorietyMax
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 25339d73221062946b64e720c3069606, type: 2}
       propertyPath: m_IsActive
       value: 1
@@ -36903,10 +36873,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.150000006, y: .5}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -36931,6 +36901,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!50 &1923593558
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -37223,10 +37199,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: 2ad3c4d3ce04af94a8b58a7e5c73ddee, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.100000001, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -37251,6 +37227,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!58 &1927435803
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -38362,9 +38344,9 @@ MonoBehaviour:
     Music: {fileID: 8300000, guid: 10b478d2e610fda478e66ac376a0aec9, type: 3}
     Chew: {fileID: 8300000, guid: c0eb690a4bae7564d904ee2175fed085, type: 3}
     Burp: {fileID: 8300000, guid: 6f051ba3d8cf0a44fb803a3b4516bf7a, type: 3}
-    SoulConsumed: {fileID: 8300000, guid: 89381a68eb5e2e74c988a082b88a25af, type: 3}
-    SoulConsumed2: {fileID: 8300000, guid: 84e9141c20a97134dafe807bc7c9f7b2, type: 3}
-    AxeManMinigameMusic: {fileID: 8300000, guid: 13b969b462735fe4eb025c3f82251375,
+    SoulConsumed: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    SoulConsumed2: {fileID: 8300000, guid: 7851302f672af374d9bd69c5bec2afec, type: 3}
+    AxeManMinigameMusic: {fileID: 8300000, guid: 10c41d9e1b3086944b55637ec602a98b,
       type: 3}
     Laugh:
     - {fileID: 8300000, guid: 137dc40b527280045a756fbb2bff9cac, type: 3}
@@ -39757,7 +39739,6 @@ GameObject:
   - 4: {fileID: 2040384499}
   - 212: {fileID: 2040384501}
   - 68: {fileID: 2040384500}
-  - 50: {fileID: 2040384502}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -39821,22 +39802,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &2040384502
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 1240925827}
-  m_GameObject: {fileID: 2040384498}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1001 &2040638705
 Prefab:
   m_ObjectHideFlags: 0
@@ -40536,7 +40501,6 @@ GameObject:
   - 4: {fileID: 2072091281}
   - 212: {fileID: 2072091283}
   - 68: {fileID: 2072091282}
-  - 50: {fileID: 2072091284}
   m_Layer: 0
   m_Name: StreetLamp
   m_TagString: Untagged
@@ -40600,22 +40564,6 @@ SpriteRenderer:
   m_SortingOrder: 87
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &2072091284
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 190835a3b95024d4ca2538885f619cae,
-    type: 2}
-  m_PrefabInternal: {fileID: 2097303672}
-  m_GameObject: {fileID: 2072091280}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &2077910182
 GameObject:
   m_ObjectHideFlags: 0
@@ -40651,10 +40599,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.0500000007, y: .449999988}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -40679,6 +40627,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!61 &2077910184
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -41041,10 +40995,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   actionSound: {fileID: 0}
-  enterSound: {fileID: 0}
-  exitSound: {fileID: 0}
+  enterSound: {fileID: 8300000, guid: 9fad4529360ff824ab5145be207c2073, type: 3}
+  exitSound: {fileID: 8300000, guid: e2d382a1c6f49aa40b42a32ee59bfeb7, type: 3}
   possessionTexture: {fileID: 0}
-  hintOffset: {x: 0, y: 0}
+  hintOffset: {x: -.119999997, y: .479999989}
   bushLureSounds:
   - {fileID: 8300000, guid: 6f1dfd004f688184a80d76e091700018, type: 3}
   - {fileID: 8300000, guid: fc41b2d213b174746ab2cecafcce3242, type: 3}
@@ -41069,6 +41023,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 870ffb1e53d58414db9d39f4cdeed4fd, type: 3}
   - {fileID: 8300000, guid: a2f6a83e1654e004c830d49d7cd1522a, type: 3}
   - {fileID: 8300000, guid: d1ba5eee139edeb4dba83206cf7b7c3d, type: 3}
+  lureCooldownSeconds: 2
+  lureTimeleft: 0
+  luring: 0
+  scaredCooldownSeconds: 6
+  scareTimeLeft: 0
+  scaring: 0
 --- !u!95 &2079912472
 Animator:
   serializedVersion: 3
@@ -42176,7 +42136,6 @@ GameObject:
   - 4: {fileID: 2140823191}
   - 212: {fileID: 2140823193}
   - 68: {fileID: 2140823192}
-  - 50: {fileID: 2140823194}
   m_Layer: 0
   m_Name: Trashcan
   m_TagString: Untagged
@@ -42235,22 +42194,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2026e955502764283bda9c6d64564931, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!50 &2140823194
-Rigidbody2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5000000, guid: 5d1fc8b66b46f07449abed87392a9b23,
-    type: 2}
-  m_PrefabInternal: {fileID: 680225621}
-  m_GameObject: {fileID: 2140823190}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_FixedAngle: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!1 &2141635536
 GameObject:
   m_ObjectHideFlags: 0
@@ -42361,6 +42304,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 2147255670}
+  - 225: {fileID: 2147255671}
   m_Layer: 0
   m_Name: GUICanvases
   m_TagString: Untagged
@@ -42384,6 +42328,18 @@ Transform:
   - {fileID: 1497998998}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!225 &2147255671
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 22580120, guid: d074ac821972e0b4792a7eb9594f9bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 995922687}
+  m_GameObject: {fileID: 2147255669}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &2147382061
 Prefab:
   m_ObjectHideFlags: 0
