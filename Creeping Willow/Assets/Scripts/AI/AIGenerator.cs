@@ -221,6 +221,9 @@ public class AIGenerator : GameBehavior
 			case 4:
 				loadNPCWithSkin(newNPC, "oldman_skin", NPCSkinType.OldMan);
 				break;
+			case 5:
+				loadNPCWithSkin(newNPC, "boppina_skin", NPCSkinType.Boppina);
+				break;
 			}
 		}
 		else
@@ -243,7 +246,14 @@ public class AIGenerator : GameBehavior
 		GameObject[] benches = GameObject.FindGameObjectsWithTag (benchTag);
 		int rand = Random.Range (0, benches.Length);
 		newNPC.GetComponent<StationaryAIController> ().setStationaryPoint (benches [rand]);
-		loadNPCWithSkin (newNPC, "oldman_skin", NPCSkinType.OldMan);
+		if (Random.Range (0,2) == 0)
+		{
+			loadNPCWithSkin(newNPC, "oldman_skin", NPCSkinType.OldMan);
+		}
+		else
+		{
+			loadNPCWithSkin (newNPC, "boppina_skin", NPCSkinType.Boppina);
+		}
 	}
 	
 	void createWanderNPC()
@@ -453,6 +463,7 @@ public enum NPCSkinType
     AxeMan,
 	Hottie,
     Critter,
+	Boppina,
 }
 
 
