@@ -22,6 +22,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public GameObject gateLeft;
 	public GameObject gateRight;
 	public Text levelText;
+	public Image descriptionImage;
 	public Text descriptionText;
 
 	private bool axisBusy;
@@ -212,9 +213,18 @@ public class InteractiveMenuController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if( EventSystem.current.currentSelectedGameObject )
+		// TODO don't call this every update
+		GameObject currentSelection = EventSystem.current.currentSelectedGameObject;
+		if( currentSelection )
 		{
-			switch( EventSystem.current.currentSelectedGameObject.name )
+			Transform imageObject = currentSelection.transform.parent.Find( "LevelImageBox/LevelImage" );
+			if( imageObject )
+			{
+				descriptionImage.enabled = true;
+				descriptionImage.sprite = imageObject.GetComponent<Image>().sprite;
+			}
+
+			switch( currentSelection.name )
 			{
 			case "Level0Button":
 				descriptionText.text = "Learn the art of the kill\n\nGet your roots dirty";
@@ -253,6 +263,7 @@ public class InteractiveMenuController : MonoBehaviour
 				break;
 
 			default:
+				descriptionImage.enabled = false;
 				descriptionText.text = "";
 				break;
 			}
