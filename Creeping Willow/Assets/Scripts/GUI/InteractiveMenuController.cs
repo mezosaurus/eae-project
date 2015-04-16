@@ -21,9 +21,8 @@ public class InteractiveMenuController : MonoBehaviour
 	public Button[] optionsButtons;
 	public GameObject gateLeft;
 	public GameObject gateRight;
-	public Text levelDescriptionText;
 	public Text levelText;
-	public Text modeDescriptionText;
+	public Text descriptionText;
 
 	private bool axisBusy;
 	private AudioSource clickAudio;
@@ -36,6 +35,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private LevelLoader levelLoader;
 	private string levelName;
 	private GameObject camera;
+	private GameObject descriptionBox;
 
 	// menu sounds
 	public AudioClip gateSound;
@@ -66,6 +66,8 @@ public class InteractiveMenuController : MonoBehaviour
 		Screen.lockCursor = true;
 
 		camera = GameObject.Find( "Main Camera" );
+
+		descriptionBox = GameObject.Find( "DescriptionBox" );
 	}
 
 	void OnDestroy() {}
@@ -138,6 +140,8 @@ public class InteractiveMenuController : MonoBehaviour
 		currentPosition = MenuPosition.LevelSelect;
 
 		elapsedZoomTime = 0.0f;
+
+		descriptionBox.transform.position = new Vector3( 0, -20, 700 );
 	}
 
 	public void GoToModeSelect()
@@ -165,6 +169,8 @@ public class InteractiveMenuController : MonoBehaviour
 		currentPosition = MenuPosition.ModeSelect;
 		
 		elapsedZoomTime = 0.0f;
+
+		descriptionBox.transform.position = new Vector3( 1500, -20, 700 );
 	}
 
 	public void GoToHighScores()
@@ -211,44 +217,43 @@ public class InteractiveMenuController : MonoBehaviour
 			switch( EventSystem.current.currentSelectedGameObject.name )
 			{
 			case "Level0Button":
-				levelDescriptionText.text = "Learn the art of the kill\nGet your roots dirty";
+				descriptionText.text = "Learn the art of the kill\n\nGet your roots dirty";
 				break;
 
 			case "Level1Button":
-				levelDescriptionText.text = "On a beautiful day they come to play\nbut you will take their souls away";
+				descriptionText.text = "On a beautiful day they come to play\nbut you will take their souls away";
 				break;
 
 			case "Level2Button":
-				levelDescriptionText.text = "There are days at the lake that can be calming and cool\nThis is not one of those days";
+				descriptionText.text = "There are days at the lake that can be calming and cool\n\nThis is not one of those days";
 				break;
 
 			case "Level3Button":
-				levelDescriptionText.text = "They stay safe on the other side\nbut fear will drive them into your arms";
+				descriptionText.text = "They stay safe on the other side\nbut fear will drive them into your arms";
 				break;
 
 			case "Level4Button":
-				levelDescriptionText.text = "Those that enter the maze may never escape\nIf they do they will not be the same";
+				descriptionText.text = "Those that enter the maze may never escape\n\nIf they do they will not be the same";
 				break;
 
 			case "ModeSurvivalButton":
-				modeDescriptionText.text = "Go on an endless killing spree to collect as much soul matter as possible\n\nYour reign of terror will end when all Hollow Trees have been chopped down";
+				descriptionText.text = "Go on an endless killing spree to collect as much soul matter as possible\n\nYour reign of terror will end when all Hollow Trees have been chopped down";
 				break;
 
 			case "ModeFeastButton":
-				modeDescriptionText.text = "Get the highest score you can with using scares and lures to get bigger combos\n\nThe game ends when you eat 5 people";
+				descriptionText.text = "Get the highest score you can with using scares and lures to get bigger combos\n\nThe game ends when you eat 5 people";
 				break;
 
 			case "ModeMarkedButton":
-				modeDescriptionText.text = "Kill the five marked for harvest\nYour multiplier will start at 666 and drop continually\nIt can not be replenished\nThe faster they die, the better";
+				descriptionText.text = "Kill the five marked for harvest\nYour multiplier will start at 666 and drop continually\nIt can not be replenished\nThe faster they die, the better";
 				break;
 
 			case "ModeTimedButton":
-				modeDescriptionText.text = "You have five minutes to consume as many of the living as possible\nBe creative with your kills and you will be rewarded";
+				descriptionText.text = "You have five minutes to consume as many of the living as possible\nBe creative with your kills and you will be rewarded";
 				break;
 
 			default:
-				levelDescriptionText.text = "";
-				modeDescriptionText.text = "";
+				descriptionText.text = "";
 				break;
 			}
 		}
