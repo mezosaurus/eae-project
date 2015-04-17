@@ -21,6 +21,8 @@ public class AxeManKillActiveTree : MonoBehaviour
     private uint phase;
     private float timer;
 
+	private bool levelEndedMessageSent;
+
     // Phase 1 variables
     bool frame1;
 
@@ -53,6 +55,8 @@ public class AxeManKillActiveTree : MonoBehaviour
         audio.Play();*/
 
         MessageCenter.Instance.RegisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
+
+		levelEndedMessageSent = false;
     }
 
     public void Instantiate(GameObject target, GameObject actualAxeMan)
@@ -340,7 +344,11 @@ public class AxeManKillActiveTree : MonoBehaviour
                 /*actualAxeMan.SetActive(true);
                 Destroy(gameObject);*/
 
-                MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
+				if( !levelEndedMessageSent )
+				{
+					levelEndedMessageSent = true;
+                	MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
+				}
             }
         }
     }

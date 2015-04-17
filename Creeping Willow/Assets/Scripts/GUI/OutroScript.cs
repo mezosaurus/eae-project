@@ -43,6 +43,10 @@ public class OutroScript : MonoBehaviour
 		LevelEnded();
 
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
+
+		if( mess.Type == LevelFinishedType.Loss )
+			ReadyButtons();
+
 		/*switch( mess.Type )
 		{
 		case LevelFinishedType.Loss:
