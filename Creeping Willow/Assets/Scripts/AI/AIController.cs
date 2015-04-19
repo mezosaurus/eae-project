@@ -52,6 +52,7 @@ public class AIController : GameBehavior
 	public float panicCooldownSeconds = 2;	// How long the NPC will be panicked for
 	public float lureCooldownSeconds = 2;
 	public float detectLevel = 0.2f; 		// This variable determines an NPC's awareness, or how easily they are able to detect things going on in their surroundings. Range (0,1)
+	public float hearingRadiusLevelMultiplier = 1.0f;  // Multiply the radius for hearing on possession and lure
 	public float visionDistance = 3; 		// distance that player's view extends to
 	public float visionAngleSize = 120; 	// The total angle size that the player can see
 	public float hearingAlertMultiplier = 1.0f;	// How aware they are of their hearing
@@ -1176,11 +1177,12 @@ public class AIController : GameBehavior
 		}
 	}
 
+
 	void abilityPlacedListener (Message message)
 	{
 		AbilityPlacedMessage placedMessage = message as AbilityPlacedMessage;
 		Vector3 possessedPosition = new Vector3 (placedMessage.X, placedMessage.Y);
-		float radius = GetComponent<CircleCollider2D> ().radius;
+		float radius = GetComponent<CircleCollider2D> ().radius * hearingRadiusLevelMultiplier;
 		if (placedMessage.AType.Equals (AbilityType.PossessionScare)) {
 			if (Vector3.Distance (transform.position, possessedPosition) <= radius)
 				scare (possessedPosition);
