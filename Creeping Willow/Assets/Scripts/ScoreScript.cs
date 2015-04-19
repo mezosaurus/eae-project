@@ -51,7 +51,10 @@ public class ScoreScript : MonoBehaviour {
 
 	// bounty images
 	public Texture2D bountyBoxImage;
+	public Texture2D newBountyBoxImage;
 	public Texture2D bountyBoxTextImage;
+
+	public Texture2D soultiplier;
 
 	// multiplier bar images
 	public Texture2D bar1;
@@ -184,7 +187,7 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 	// Score GUI variables
-	float offsetX = 450;
+	float offsetX = 600;
 	float offsetY = 50;
 	float sizeX = 20;
 	float sizeY = 40;
@@ -358,6 +361,30 @@ public class ScoreScript : MonoBehaviour {
 		// end of level
 		if (endLevel) 
 		{	
+			Debug.Log ("in end");
+			// not a high score
+			if( _score <= highscores[9] )
+				entered = true;
+			Debug.Log ( "after enter");
+			if( win && !entered )
+			{
+				GUIStyle myStyle = new GUIStyle();
+				GUI.skin.textField.alignment = TextAnchor.UpperCenter;
+				GUI.skin.textField.fontSize = 30;
+				GUI.skin.textField.normal.textColor = Color.white;
+				myStyle.fontSize = 30;
+				GUI.Label(new Rect(Screen.width/2,Screen.height/2+5,100,100), "Top 10 High Score", myStyle);
+				GUI.Label(new Rect(Screen.width/2-200,Screen.height/2+50,100,100), "Enter Your Initials ", myStyle);
+				GUI.SetNextControlName("MyTextField");
+				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2+70,100,50), initials, 3);
+				GUI.FocusControl("MyTextField");
+				
+				if( initials.Length == 3 )
+				{
+					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
+				}
+			}
+
 			if (win && !entered) 
 			{
 				// check input
@@ -686,7 +713,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// multiplier pop-up text
-			FontConverter.instance.parseStringToTextures (Screen.width/2 - popupX/2, Screen.height/2 - popupY/2 - popupIncrement2 + 75, popupX, popupY, multiplierSign + multiplierPointImage);
+			FontConverter.instance.parseStringToTextures (500 - popupX/2, 150 - popupY/2 - popupIncrement2 + 75, popupX, popupY, multiplierSign + multiplierPointImage);
 
 
 			// increment height
@@ -727,28 +754,39 @@ public class ScoreScript : MonoBehaviour {
 				GUI.color = guiColor;
 			}
 			
-			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, Screen.height-offsetY-sizeY-popupIncrement, sizeX, sizeY, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 20 + offsetY + sizeY + popupIncrement, sizeX, sizeY, "" + (displayScore * currentMultiplier * displayMultiplier));
 
 			if( !paused )
 				popupIncrement += .75f;
 			
 			GUI.color = savedGuiColor; // revert to previous alpha
 		}
-		
+
+		float tmpXScaler = Screen.width * 10 / 1440;
+		float tmpYScaler = Screen.height * 10 / 742;
+
 		// score
-		FontConverter.instance.parseStringToTextures (Screen.width - offsetX + sizeX * 5, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "score");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "" + _score);
+		FontConverter.instance.parseStringToTextures (Screen.width - 2*sizeX - 66 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "soul essence");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 12 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "" + _score);
 		
 		// high score
-		FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 10, sizeX, sizeY, "" + highscores[0]);
+		/*FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 10, sizeX, sizeY, "" + highscores[0]);*/
 		
 		
 		
 		
 		
 		/***** Bounty GUI *****/
-		
+
+		float tmpWidth = Screen.width * 100f / 1440;
+
+
+		GUI.DrawTexture (new Rect (Screen.width - tmpWidth * 1.1f, .1f * tmpWidth, tmpWidth, tmpWidth), newBountyBoxImage);
+		if( BountyNPCImage != null )
+			GUI.DrawTexture (new Rect(Screen.width - .9f * tmpWidth, .2f * tmpWidth, .6f * tmpWidth, .6f * tmpWidth), BountyNPCImage);
+
+		/*
 		// probably should use switch-case, but meh
 		if( bountyState == (int)BountyState.BOUNTY_HIDDEN )
 		{
@@ -819,7 +857,7 @@ public class ScoreScript : MonoBehaviour {
 			if( BountyNPCImage != null )
 				GUI.DrawTexture (new Rect(Screen.width/2-bountySizeX/8,Screen.height+bountyRectSizeY/4,bountySizeX/4,bountyRectSizeY*3/5), BountyNPCImage);
 		}
-		
+		*/
 		
 		
 		
@@ -828,14 +866,15 @@ public class ScoreScript : MonoBehaviour {
 		myStyle.alignment = TextAnchor.MiddleCenter;
 		myStyle.fontSize = 50;
 		myStyle.normal.textColor = Color.white;
-		
+
 		// end of level
 		if( endLevel )
 		{
+			Debug.Log ("in end");
 			// not a high score
 			if( _score <= highscores[9] )
 				entered = true;
-			
+			Debug.Log ( "after enter");
 			if( win && !entered )
 			{
 				GUI.skin.textField.alignment = TextAnchor.UpperCenter;
@@ -858,12 +897,16 @@ public class ScoreScript : MonoBehaviour {
 		
 		/***** Score Multiplier GUI *****/
 
-		FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 40, multYOffset * 5 / 4, 20, multHeight / 2, currentMultiplier + "x");
+		GUI.DrawTexture (new Rect (24 * tmpXScaler, tmpYScaler, 20 * tmpXScaler, 5 * tmpYScaler), soultiplier);
+		FontConverter.instance.rightAnchorParseStringToTextures (56 * tmpXScaler, 1.25f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, currentMultiplier + "x");
 
-		FontConverter.instance.parseStringToTextures (multXOffset - 150, multYOffset * 5 / 4, 15, multHeight / 2, "multiplier");
+
+		//FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 40, multYOffset * 5 / 4, 20, multHeight / 2, currentMultiplier + "x");
+
+		//FontConverter.instance.parseStringToTextures (multXOffset - 150, multYOffset * 5 / 4, 15, multHeight / 2, "multiplier");
 
 		// multiplier bar
-		if( multiplierIsChanging )
+		/*if( multiplierIsChanging )
 		{
 			// change(slide) data
 			if( Time.time - lastMultiplierTime <= multiplierSliderTime )
@@ -882,7 +925,7 @@ public class ScoreScript : MonoBehaviour {
 		else
 		{
 			GUI.DrawTexture (new Rect (multXOffset, multYOffset, multLength, multHeight), getMultiplierBarImage((multiplierPoints % multIncre) / (float)multIncre * (multLength - 4),multLength));
-		}
+		}*/
 	}
 	
 	
@@ -1723,7 +1766,7 @@ public class ScoreScript : MonoBehaviour {
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
 		
 		endLevel = true;
-		
+
 		//if( mess.Type == (int)LevelFinishedType.Win )
 		//{
 			if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore

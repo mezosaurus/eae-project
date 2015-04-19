@@ -41,4 +41,5 @@ public enum MessageType
     AxeManKilled,
 	MarkedBountyDestroyed,
 	NewMarkedBounty,
+	AxeManAngerChanged,
 }

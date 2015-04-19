@@ -220,7 +220,7 @@ public class CameraScript : MonoBehaviour
         if (GlobalGameStateManager.SoulConsumedTimer > 0f)
         {
             GUI.matrix = GlobalGameStateManager.PrepareMatrix();
-            GUI.DrawTexture(new Rect(448f, 24f, 1024f, 194f), SoulConsumed[soulConsumed]);
+            GUI.DrawTexture(new Rect(448f, 148f, 1024f, 194f), SoulConsumed[soulConsumed]);
             GUI.matrix = Matrix4x4.identity;
         }
     }

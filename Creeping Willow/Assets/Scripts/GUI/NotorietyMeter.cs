@@ -8,6 +8,7 @@ public class NotorietyMeter : MonoBehaviour
 
 	private int axemanCount = 0;
 	public Texture2D axemanHeadTexture;
+	public Texture2D angryAxemanHeadTexture;
 
 	private float width;
 	private float height;
@@ -37,10 +38,25 @@ public class NotorietyMeter : MonoBehaviour
 	public Texture2D bar21;
 	public Texture2D bar22;
 
+	int angerCount = 0;
+
+
+	
+	// gui variables
+	float startX = 30;
+	float startY = 10;
+	float xWidth = 50;
+	float yHeight = 50;
+
 
 	void Start()
 	{
 		RegisterListeners();
+
+		startX = Screen.width * startX / 1440;
+		xWidth = Screen.width * xWidth / 1440;
+		startY = Screen.height * startY / 742;
+		yHeight = Screen.height * yHeight / 742;
 
 		width = Screen.width / 4;
 		height = Screen.height / 10;
@@ -58,11 +74,13 @@ public class NotorietyMeter : MonoBehaviour
 	protected void RegisterListeners()
 	{
 		MessageCenter.Instance.RegisterListener( MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage );
+		MessageCenter.Instance.RegisterListener( MessageType.AxeManAngerChanged, HandleAngerChanged );
 	}
 	
 	protected void UnregisterListeners()
 	{
 		MessageCenter.Instance.UnregisterListener( MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
+		MessageCenter.Instance.UnregisterListener( MessageType.AxeManAngerChanged, HandleAngerChanged );
 	}
 
 	protected void HandleNPCPanickedMessage( Message message )
@@ -76,6 +94,28 @@ public class NotorietyMeter : MonoBehaviour
 			MessageCenter.Instance.Broadcast( new NotorietyMaxedMessage( mess.PanickedPosition ) );
 			notoriety = notorietyMax;
 		}
+	}
+
+	// pulsating axeman head variables
+	bool pulsating = false;
+	bool increasingPulse = true;
+	float currentPulse = 0;
+	float currentPulseTime = 0;
+	float pulseMax = 20;
+	float pulseIncrement = .5f;
+	float pulseTime = 200;
+
+	protected void HandleAngerChanged( Message message )
+	{
+		AxeManAngerChangedMessage mess = message as AxeManAngerChangedMessage;
+
+		if( mess.Angry )
+		{
+			angerCount++;
+			pulsating = true;
+		}
+		else
+			angerCount--;
 	}
 
 	Texture2D getNotorietyBarImage(float num, float total)
@@ -140,28 +180,63 @@ public class NotorietyMeter : MonoBehaviour
 
 	void OnGUI ()
 	{
-		FontConverter.instance.parseStringToTextures (20, top + height / 4, 15, Screen.height / 20, "notoriety");
+		//FontConverter.instance.parseStringToTextures (20, top + height / 4, 15, Screen.height / 20, "notoriety");
+
+		if( pulsating )
+		{
+			if( angerCount > 0 )//currentPulseTime >= pulseTime )
+			{
+				pulsating = false;
+				currentPulseTime = 0;
+				currentPulse = 0;
+			}
+			else
+			{
+				currentPulseTime += pulseIncrement; // update time left for pulse
+
+				// if max range of pulse is reached
+				if( currentPulse >= pulseMax && increasingPulse || currentPulse <= 0 && !increasingPulse )
+					increasingPulse = !increasingPulse;
+
+				// update current pulse
+				if( increasingPulse )
+					currentPulse += pulseIncrement;
+				else
+					currentPulse -= pulseIncrement;
+				
+			}
+		}
+
+		// axeman
+		if( angerCount == 0 ) // if angry
+			GUI.DrawTexture( new Rect(startX - .5f * currentPulse, startY - .5f * currentPulse, xWidth + currentPulse, yHeight + currentPulse), axemanHeadTexture );
+		else
+			GUI.DrawTexture( new Rect(startX - .5f * currentPulse, startY - .5f * currentPulse, xWidth + currentPulse, yHeight + currentPulse), angryAxemanHeadTexture );
+
+		axemanCount = CountAxemen();
+
+		FontConverter.instance.rightAnchorParseStringToTextures (startX + xWidth + startX * 2, startY * 1.5f, Screen.width * 30f / 1440f, Screen.height * 50f / 742f, axemanCount + "x");
+
+		// count texture
 
 		//GUI.matrix = GlobalGameStateManager.PrepareMatrix();
 
 
-		float percentFull = notoriety / notorietyMax;
-
-		//GUIUtility.RotateAroundPivot (90, new Vector2 (left, top));
+		//float percentFull = notoriety / notorietyMax;
 
 		//GUI.Box( new Rect( left, top, width, height ), GUIContent.none );
 		//GUI.Box( new Rect( left, top + height * ( 1 - percentFull ), width, height * percentFull ), GUIContent.none );
-		GUI.DrawTexture (new Rect (left, top, width, height), getNotorietyBarImage(notoriety,notorietyMax));
+		//GUI.DrawTexture (new Rect (left, top, width, height), getNotorietyBarImage(notoriety,notorietyMax));
 
 
         // Matt changed this, feel free to change back
-        float w = height / 2;
+        /*float w = height / 2;
         float h = w;
-		float t = top + (height / 2f) - ((axemanCount * h) / 2f);
+		float t = top + (height / 2f) - ((axemanCount * h) / 2f);*/
 		
 		//GUI.matrix = Matrix4x4.identity;
 
-		axemanCount = CountAxemen();
+		/*axemanCount = CountAxemen();
 		float offset = 10;
 		for( int i = 0; i < axemanCount; i++ )
 		{
@@ -169,7 +244,7 @@ public class NotorietyMeter : MonoBehaviour
 
 			GUI.DrawTexture( new Rect(left + width + offset,10 + height / 4,w,h), axemanHeadTexture, ScaleMode.ScaleToFit );
 			offset += w + 10;
-		}
+		}*/
 	}
 
 	private int CountAxemen()

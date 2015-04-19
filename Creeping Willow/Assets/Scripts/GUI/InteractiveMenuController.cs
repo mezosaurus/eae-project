@@ -21,9 +21,9 @@ public class InteractiveMenuController : MonoBehaviour
 	public Button[] optionsButtons;
 	public GameObject gateLeft;
 	public GameObject gateRight;
-	public Text levelDescriptionText;
 	public Text levelText;
-	public Text modeDescriptionText;
+	public Image descriptionImage;
+	public Text descriptionText;
 
 	private bool axisBusy;
 	private AudioSource clickAudio;
@@ -36,6 +36,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private LevelLoader levelLoader;
 	private string levelName;
 	private GameObject camera;
+	private GameObject descriptionBox;
 
 	// menu sounds
 	public AudioClip gateSound;
@@ -66,6 +67,8 @@ public class InteractiveMenuController : MonoBehaviour
 		Screen.lockCursor = true;
 
 		camera = GameObject.Find( "Main Camera" );
+
+		descriptionBox = GameObject.Find( "DescriptionBox" );
 	}
 
 	void OnDestroy() {}
@@ -138,6 +141,8 @@ public class InteractiveMenuController : MonoBehaviour
 		currentPosition = MenuPosition.LevelSelect;
 
 		elapsedZoomTime = 0.0f;
+
+		descriptionBox.transform.position = new Vector3( 0, -20, 700 );
 	}
 
 	public void GoToModeSelect()
@@ -165,6 +170,8 @@ public class InteractiveMenuController : MonoBehaviour
 		currentPosition = MenuPosition.ModeSelect;
 		
 		elapsedZoomTime = 0.0f;
+
+		descriptionBox.transform.position = new Vector3( 1500, -20, 700 );
 	}
 
 	public void GoToHighScores()
@@ -206,49 +213,58 @@ public class InteractiveMenuController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if( EventSystem.current.currentSelectedGameObject )
+		// TODO don't call this every update
+		GameObject currentSelection = EventSystem.current.currentSelectedGameObject;
+		if( currentSelection )
 		{
-			switch( EventSystem.current.currentSelectedGameObject.name )
+			Transform imageObject = currentSelection.transform.parent.Find( "LevelImageBox/LevelImage" );
+			if( imageObject )
+			{
+				descriptionImage.enabled = true;
+				descriptionImage.sprite = imageObject.GetComponent<Image>().sprite;
+			}
+
+			switch( currentSelection.name )
 			{
 			case "Level0Button":
-				levelDescriptionText.text = "Learn to play";
+				descriptionText.text = "Learn the art of the kill\n\nGet your roots dirty";
 				break;
 
 			case "Level1Button":
-				levelDescriptionText.text = "The first level";
+				descriptionText.text = "On a beautiful day they come to play\nbut you will take their souls away";
 				break;
 
 			case "Level2Button":
-				levelDescriptionText.text = "The second level";
+				descriptionText.text = "There are days at the lake that can be calming and cool\n\nThis is not one of those days";
 				break;
 
 			case "Level3Button":
-				levelDescriptionText.text = "The third level";
+				descriptionText.text = "They stay safe on the other side\nbut fear will drive them into your arms";
 				break;
 
 			case "Level4Button":
-				levelDescriptionText.text = "The fourth level";
+				descriptionText.text = "Those that enter the maze may never escape\n\nIf they do they will not be the same";
 				break;
 
 			case "ModeSurvivalButton":
-				modeDescriptionText.text = "Go on an endless killing spree to collect as much soul matter as possible\n\nYour reign of terror will end when all Hollow Trees have been chopped down";
+				descriptionText.text = "Go on an endless killing spree to collect as much soul matter as possible\n\nYour reign of terror will end when all Hollow Trees have been chopped down";
 				break;
 
 			case "ModeFeastButton":
-				modeDescriptionText.text = "Eat 5 people with the best score";
+				descriptionText.text = "Get the highest score you can with using scares and lures to get bigger combos\n\nThe game ends when you eat 5 people";
 				break;
 
 			case "ModeMarkedButton":
-				modeDescriptionText.text = "Kill the five marked for harvest\nYour multiplier will start at 666 and drop continually\nIt can not be replenished\nThe faster they die, the better";
+				descriptionText.text = "Kill the five marked for harvest\nYour multiplier will start at 666 and drop continually\nIt can not be replenished\nThe faster they die, the better";
 				break;
 
 			case "ModeTimedButton":
-				modeDescriptionText.text = "You have five minutes to consume as many of the living as possible\nBe creative with your kills and you will be rewarded";
+				descriptionText.text = "You have five minutes to consume as many of the living as possible\nBe creative with your kills and you will be rewarded";
 				break;
 
 			default:
-				levelDescriptionText.text = "";
-				modeDescriptionText.text = "";
+				descriptionImage.enabled = false;
+				descriptionText.text = "";
 				break;
 			}
 		}

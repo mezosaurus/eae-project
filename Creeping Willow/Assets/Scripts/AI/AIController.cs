@@ -1239,6 +1239,8 @@ public class AIController : GameBehavior
 		// get offset positions
 		Vector3 leftPos = transform.position + Quaternion.AngleAxis (90, new Vector3 (0, 0, 1)) * direction * radius;
 		Vector3 rightPos = transform.position - Quaternion.AngleAxis (90, new Vector3 (0, 0, 1)) * direction * radius;
+		Vector3 tmpLeftPos = transform.position + Quaternion.AngleAxis (45, new Vector3 (0, 0, 1)) * direction * radius;
+		Vector3 tmpRightPos = transform.position - Quaternion.AngleAxis (45, new Vector3 (0, 0, 1)) * direction * radius;
 
 		RaycastHit2D hit;
 		// check for object in the way
@@ -1319,6 +1321,83 @@ public class AIController : GameBehavior
 				return Vector3.zero;
 			}
 		}
+		else if (hit = Physics2D.Raycast (tmpRightPos, direction, checkDistance, layermask)) // 45 degree right raycast
+		{
+			//RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask);
+			
+			// ignore self
+			if( hit.transform != transform )
+			{
+				if (hit.transform.gameObject == nextPath)
+				{
+					avoidCurrentDirection = Vector3.zero;
+					return Vector3.zero;
+				}
+				
+				if (hit.transform.gameObject.GetComponent<Rigidbody2D> () == null 
+				    && hit.transform.gameObject.GetComponent<EdgeCollider2D> () == null
+				    && hit.transform.gameObject.GetComponent<BoxCollider2D> () == null) // hit is invalid
+				{
+					avoidCurrentDirection = Vector3.zero;
+					return Vector3.zero;
+				}
+				
+				if (hit.transform.gameObject.tag == "NPC" ||
+				    hit.transform.gameObject.tag == "PossessorTrigger" ||
+				    hit.transform.gameObject.tag == "Border") // also invalid
+				{
+					avoidCurrentDirection = Vector3.zero;
+					return Vector3.zero;
+				}
+				
+				// VALID HIT!!!
+				
+				// if object is on top of next path location
+				if (Vector3.Distance (hit.transform.position, nextPath.transform.position) < .5f && hit.transform.gameObject != nextPath.transform.gameObject) 
+				{
+					if (transform.gameObject.GetComponent<PathAIController> () != null) 
+					{
+						PathAIController script = transform.gameObject.GetComponent<PathAIController> ();
+						nextPath = script.movePath.getNextPath (nextPath, gameObject); // go to next 
+						
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+					else if (transform.gameObject.GetComponent<StationaryAIController> () != null) 
+					{
+						nextPath = getLeavingPath ();
+						
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+					else if (transform.gameObject.GetComponent<EnemyAIController> () != null) 
+					{
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+				}
+				
+				// avoid object
+				Vector3 newPos;
+				
+				// go left
+				Vector3 leftDir = Quaternion.AngleAxis (45, new Vector3 (0, 0, 1)) * direction;
+				
+				if (Physics2D.Raycast (transform.position, leftDir, .2f, layermask)) {
+					leftDir = Quaternion.AngleAxis (90, new Vector3 (0, 0, 1)) * direction;
+				}
+				
+				newPos = transform.position + 5 * leftDir;
+				
+				avoidCurrentDirection = newPos;
+				return newPos;
+			}
+			else
+			{
+				avoidCurrentDirection = Vector3.zero;
+				return Vector3.zero;
+			}
+		}
 		else if (hit = Physics2D.Raycast (leftPos, direction, checkDistance, layermask)) // left raycast
 		{
 			//RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask);
@@ -1387,6 +1466,83 @@ public class AIController : GameBehavior
 
 				newPos = transform.position + 5 * rightDir;
 
+				avoidCurrentDirection = newPos;
+				return newPos;
+			}
+			else
+			{
+				avoidCurrentDirection = Vector3.zero;
+				return Vector3.zero;
+			}
+		}
+		else if (hit = Physics2D.Raycast (tmpLeftPos, direction, checkDistance, layermask)) // 45 degree left raycast
+		{
+			//RaycastHit2D hit = Physics2D.CircleCast (transform.position, radius, direction, checkDistance, layermask);
+			
+			// ignore self
+			if( hit.transform != transform )
+			{
+				if (hit.transform.gameObject == nextPath)
+				{
+					avoidCurrentDirection = Vector3.zero;
+					return Vector3.zero;
+				}
+				
+				if (hit.transform.gameObject.GetComponent<Rigidbody2D> () == null 
+				    && hit.transform.gameObject.GetComponent<EdgeCollider2D> () == null
+				    && hit.transform.gameObject.GetComponent<BoxCollider2D> () == null) // hit is invalid
+				{
+					avoidCurrentDirection = Vector3.zero;
+					return Vector3.zero;
+				}
+				
+				if (hit.transform.gameObject.tag == "NPC" ||
+				    hit.transform.gameObject.tag == "Possessor" ||
+				    hit.transform.gameObject.tag == "Border") // also invalid
+				{
+					avoidCurrentDirection = Vector3.zero;
+					return Vector3.zero;
+				}
+				
+				// VALID HIT!!!
+				
+				// if object is on top of next path location
+				if (Vector3.Distance (hit.transform.position, nextPath.transform.position) < .5f && hit.transform.gameObject != nextPath.transform.gameObject) 
+				{
+					if (transform.gameObject.GetComponent<PathAIController> () != null) 
+					{
+						PathAIController script = transform.gameObject.GetComponent<PathAIController> ();
+						nextPath = script.movePath.getNextPath (nextPath, gameObject); // go to next 
+						
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+					else if (transform.gameObject.GetComponent<StationaryAIController> () != null) 
+					{
+						nextPath = getLeavingPath ();
+						
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+					else if (transform.gameObject.GetComponent<EnemyAIController> () != null) 
+					{
+						avoidCurrentDirection = Vector3.zero;
+						return Vector3.zero;
+					}
+				}
+				
+				// avoid object
+				Vector3 newPos;
+				
+				// go left for now
+				Vector3 rightDir = Quaternion.AngleAxis (-45, new Vector3 (0, 0, 1)) * direction;
+				
+				if (Physics2D.Raycast (transform.position, rightDir, .2f, layermask)) {
+					rightDir = Quaternion.AngleAxis (90, new Vector3 (0, 0, 1)) * direction;
+				}
+				
+				newPos = transform.position + 5 * rightDir;
+				
 				avoidCurrentDirection = newPos;
 				return newPos;
 			}
