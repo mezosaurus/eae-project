@@ -23,7 +23,8 @@ public class AIGenerator : GameBehavior
 	public int axeManStartCount = 1;
 	public bool levelSpawnsAxeMan = false;
 	public float activeEnemySpawnTime = 20f;
-	
+	public float HearingRadiusMultiplierNPC = 1.0f;
+
 	public bool spawnAxeWanderDEBUG = false;
 	public bool spawnAxeActiveDEBUG = false;
 
@@ -344,6 +345,7 @@ public class AIGenerator : GameBehavior
 	{
 		GameObject npc = (GameObject)Instantiate (NPC, spawnPoint, Quaternion.identity);
 		npc.transform.SetParent (transform);
+		npc.GetComponent<AIController>().hearingRadiusLevelMultiplier = HearingRadiusMultiplierNPC;
 		aiList.Add (npc);
 		return npc;
 	}

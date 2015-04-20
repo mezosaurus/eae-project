@@ -361,6 +361,30 @@ public class ScoreScript : MonoBehaviour {
 		// end of level
 		if (endLevel) 
 		{	
+			Debug.Log ("in end");
+			// not a high score
+			if( _score <= highscores[9] )
+				entered = true;
+			Debug.Log ( "after enter");
+			if( win && !entered )
+			{
+				GUIStyle myStyle = new GUIStyle();
+				GUI.skin.textField.alignment = TextAnchor.UpperCenter;
+				GUI.skin.textField.fontSize = 30;
+				GUI.skin.textField.normal.textColor = Color.white;
+				myStyle.fontSize = 30;
+				GUI.Label(new Rect(Screen.width/2,Screen.height/2+5,100,100), "Top 10 High Score", myStyle);
+				GUI.Label(new Rect(Screen.width/2-200,Screen.height/2+50,100,100), "Enter Your Initials ", myStyle);
+				GUI.SetNextControlName("MyTextField");
+				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2+70,100,50), initials, 3);
+				GUI.FocusControl("MyTextField");
+				
+				if( initials.Length == 3 )
+				{
+					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
+				}
+			}
+
 			if (win && !entered) 
 			{
 				// check input
@@ -737,14 +761,17 @@ public class ScoreScript : MonoBehaviour {
 			
 			GUI.color = savedGuiColor; // revert to previous alpha
 		}
-		
+
+		float tmpXScaler = Screen.width * 10 / 1440;
+		float tmpYScaler = Screen.height * 10 / 742;
+
 		// score
-		FontConverter.instance.parseStringToTextures (Screen.width - offsetX + sizeX * 5, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "score");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 20 + sizeY /*Screen.height-offsetY*/, sizeX, sizeY, "" + _score);
+		FontConverter.instance.parseStringToTextures (Screen.width - 2*sizeX - 66 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "soul essence");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 12 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "" + _score);
 		
 		// high score
-		FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 10, sizeX, sizeY, "" + highscores[0]);
+		/*FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 10, sizeX, sizeY, "" + highscores[0]);*/
 		
 		
 		
@@ -752,9 +779,12 @@ public class ScoreScript : MonoBehaviour {
 		
 		/***** Bounty GUI *****/
 
-		GUI.DrawTexture (new Rect (Screen.width - 110, 10, 100, 100), newBountyBoxImage);
+		float tmpWidth = Screen.width * 100f / 1440;
+
+
+		GUI.DrawTexture (new Rect (Screen.width - tmpWidth * 1.1f, .1f * tmpWidth, tmpWidth, tmpWidth), newBountyBoxImage);
 		if( BountyNPCImage != null )
-			GUI.DrawTexture (new Rect(Screen.width - 90, 20, 60, 60), BountyNPCImage);
+			GUI.DrawTexture (new Rect(Screen.width - .9f * tmpWidth, .2f * tmpWidth, .6f * tmpWidth, .6f * tmpWidth), BountyNPCImage);
 
 		/*
 		// probably should use switch-case, but meh
@@ -836,14 +866,15 @@ public class ScoreScript : MonoBehaviour {
 		myStyle.alignment = TextAnchor.MiddleCenter;
 		myStyle.fontSize = 50;
 		myStyle.normal.textColor = Color.white;
-		
+
 		// end of level
 		if( endLevel )
 		{
+			Debug.Log ("in end");
 			// not a high score
 			if( _score <= highscores[9] )
 				entered = true;
-			
+			Debug.Log ( "after enter");
 			if( win && !entered )
 			{
 				GUI.skin.textField.alignment = TextAnchor.UpperCenter;
@@ -866,9 +897,8 @@ public class ScoreScript : MonoBehaviour {
 		
 		/***** Score Multiplier GUI *****/
 
-
-		GUI.DrawTexture (new Rect (240, 10, 200, 50), soultiplier);
-		FontConverter.instance.rightAnchorParseStringToTextures (440 + 120, 50f / 4f, 40, 40, currentMultiplier + "x");
+		GUI.DrawTexture (new Rect (24 * tmpXScaler, tmpYScaler, 20 * tmpXScaler, 5 * tmpYScaler), soultiplier);
+		FontConverter.instance.rightAnchorParseStringToTextures (56 * tmpXScaler, 1.25f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, currentMultiplier + "x");
 
 
 		//FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 40, multYOffset * 5 / 4, 20, multHeight / 2, currentMultiplier + "x");
@@ -1736,7 +1766,7 @@ public class ScoreScript : MonoBehaviour {
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
 		
 		endLevel = true;
-		
+
 		//if( mess.Type == (int)LevelFinishedType.Win )
 		//{
 			if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore

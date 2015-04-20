@@ -41,9 +41,22 @@ public class NotorietyMeter : MonoBehaviour
 	int angerCount = 0;
 
 
+	
+	// gui variables
+	float startX = 30;
+	float startY = 10;
+	float xWidth = 50;
+	float yHeight = 50;
+
+
 	void Start()
 	{
 		RegisterListeners();
+
+		startX = Screen.width * startX / 1440;
+		xWidth = Screen.width * xWidth / 1440;
+		startY = Screen.height * startY / 742;
+		yHeight = Screen.height * yHeight / 742;
 
 		width = Screen.width / 4;
 		height = Screen.height / 10;
@@ -83,12 +96,24 @@ public class NotorietyMeter : MonoBehaviour
 		}
 	}
 
+	// pulsating axeman head variables
+	bool pulsating = false;
+	bool increasingPulse = true;
+	float currentPulse = 0;
+	float currentPulseTime = 0;
+	float pulseMax = 20;
+	float pulseIncrement = .5f;
+	float pulseTime = 200;
+
 	protected void HandleAngerChanged( Message message )
 	{
 		AxeManAngerChangedMessage mess = message as AxeManAngerChangedMessage;
 
 		if( mess.Angry )
+		{
 			angerCount++;
+			pulsating = true;
+		}
 		else
 			angerCount--;
 	}
@@ -153,24 +178,44 @@ public class NotorietyMeter : MonoBehaviour
 	{
 	}
 
-	float startX = 30;
-	float startY = 10;
-	float xWidth = 50;
-	float yHeight = 50;
-
 	void OnGUI ()
 	{
 		//FontConverter.instance.parseStringToTextures (20, top + height / 4, 15, Screen.height / 20, "notoriety");
 
+		if( pulsating )
+		{
+			if( angerCount > 0 )//currentPulseTime >= pulseTime )
+			{
+				pulsating = false;
+				currentPulseTime = 0;
+				currentPulse = 0;
+			}
+			else
+			{
+				currentPulseTime += pulseIncrement; // update time left for pulse
+
+				// if max range of pulse is reached
+				if( currentPulse >= pulseMax && increasingPulse || currentPulse <= 0 && !increasingPulse )
+					increasingPulse = !increasingPulse;
+
+				// update current pulse
+				if( increasingPulse )
+					currentPulse += pulseIncrement;
+				else
+					currentPulse -= pulseIncrement;
+				
+			}
+		}
+
 		// axeman
 		if( angerCount == 0 ) // if angry
-			GUI.DrawTexture( new Rect(startX, startY, xWidth, yHeight), axemanHeadTexture );
+			GUI.DrawTexture( new Rect(startX - .5f * currentPulse, startY - .5f * currentPulse, xWidth + currentPulse, yHeight + currentPulse), axemanHeadTexture );
 		else
-			GUI.DrawTexture( new Rect(startX, startY, xWidth, yHeight), angryAxemanHeadTexture );
+			GUI.DrawTexture( new Rect(startX - .5f * currentPulse, startY - .5f * currentPulse, xWidth + currentPulse, yHeight + currentPulse), angryAxemanHeadTexture );
 
 		axemanCount = CountAxemen();
 
-		FontConverter.instance.rightAnchorParseStringToTextures (startX + xWidth + 60, startY + 5, 40, 40, axemanCount + "x");
+		FontConverter.instance.rightAnchorParseStringToTextures (startX + xWidth + startX * 2, startY * 1.5f, Screen.width * 30f / 1440f, Screen.height * 50f / 742f, axemanCount + "x");
 
 		// count texture
 
