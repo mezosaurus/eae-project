@@ -15,11 +15,6 @@ public class BushPossessable : PossessableItem
 	public float scareTimeLeft = 0;
 	public bool scaring = false;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     // Update is called once per frame
     protected override void GameUpdate()
     {
@@ -79,7 +74,7 @@ public class BushPossessable : PossessableItem
 		}*/
 	}
 
-    protected override void lure()
+    protected void lure()
     {
         //base.lure();
         //blinking = true;
@@ -101,7 +96,7 @@ public class BushPossessable : PossessableItem
         //anim.SetBool("Lure", false);
     }
 
-    protected override void scare()
+    protected void scare()
     {
         //base.scare();
         //shaking = true;
@@ -154,12 +149,8 @@ public class BushPossessable : PossessableItem
 				/*audio.Stop();
 				audio.clip = actionSound;
 				audio.Play();*/
-				acting = true;
-				needToSend = true;
 			}else{
 				lure();
-				acting = true;
-				needToSend = true;
 			}
 		}
 	}
