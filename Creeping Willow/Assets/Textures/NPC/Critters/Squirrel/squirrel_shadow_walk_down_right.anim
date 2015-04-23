@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: squirrel_still_back_anim
+  m_Name: squirrel_shadow_walk_down_right
   serializedVersion: 4
   m_AnimationType: 2
   m_Compressed: 0
@@ -18,13 +18,15 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300032, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
+      value: {fileID: 21300000, guid: 715f24f59537a0e4b8b7ea007417cfe6, type: 3}
     - time: .0833333358
-      value: {fileID: 21300034, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
+      value: {fileID: 21300000, guid: d4f32dc552ccb9b4f9bb97cc858d40df, type: 3}
     - time: .166666672
-      value: {fileID: 21300036, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
+      value: {fileID: 21300000, guid: 461a6582c5ff6f942a93614caa89c9e1, type: 3}
     - time: .25
-      value: {fileID: 21300038, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
+      value: {fileID: 21300000, guid: 6eebaa71f146f074aacb8e86cbe6374b, type: 3}
+    - time: .333333343
+      value: {fileID: 21300000, guid: 09c0dcd271d966140a2b057b3e2303d1, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -43,14 +45,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300032, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
-    - {fileID: 21300034, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
-    - {fileID: 21300036, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
-    - {fileID: 21300038, guid: 48a75983f014af043b9a991f2fa5a7ed, type: 3}
+    - {fileID: 21300000, guid: 715f24f59537a0e4b8b7ea007417cfe6, type: 3}
+    - {fileID: 21300000, guid: d4f32dc552ccb9b4f9bb97cc858d40df, type: 3}
+    - {fileID: 21300000, guid: 461a6582c5ff6f942a93614caa89c9e1, type: 3}
+    - {fileID: 21300000, guid: 6eebaa71f146f074aacb8e86cbe6374b, type: 3}
+    - {fileID: 21300000, guid: 09c0dcd271d966140a2b057b3e2303d1, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0
-    m_StopTime: .333333343
+    m_StopTime: .416666687
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
