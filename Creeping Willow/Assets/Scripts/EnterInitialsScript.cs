@@ -85,9 +85,9 @@ public class EnterInitialsScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// temporary (will be listening for a message)
-		if( Input.GetButtonDown("Start") )
-			pressed = true;
+
+		//if( Input.GetButtonDown("Start") )
+		//	pressed = true;
 
 		// make sure left thumbstick is close to a resting state
 		if( controllerInUse && Input.GetAxis("LSX") < restThreshold && Input.GetAxis("LSX") > -restThreshold && Input.GetAxis("LSY") < restThreshold && Input.GetAxis("LSY") > -restThreshold )
@@ -185,6 +185,10 @@ public class EnterInitialsScript : MonoBehaviour {
 				{
 					submitted = true;
 					controllerInUse = true;
+
+					// submit scores
+					gameObject.GetComponent<ScoreScript>().submitScores(getSubmittedInitials());
+					this.enabled = false;
 				}
 				if( Input.GetAxis("LSX") < -changeThreshold )
 				{
@@ -431,5 +435,10 @@ public class EnterInitialsScript : MonoBehaviour {
 	string getSubmittedInitials()
 	{
 		return getLetter(letter1) + getLetter(letter2) + getLetter(letter3);
+	}
+
+	public void initialize()
+	{
+		pressed = true;
 	}
 }
