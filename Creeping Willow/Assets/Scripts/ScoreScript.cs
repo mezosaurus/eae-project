@@ -322,7 +322,7 @@ public class ScoreScript : MonoBehaviour {
 		sideR = Screen.width * 2 / 3;
 		startHeight = Screen.height * 1 / 3;
 		endHeight = 100;
-		endX = multXOffset;
+		endX = 20;
 		
 		//highscores = GlobalGameStateManager.highscores;
 		//names = GlobalGameStateManager.playerNames;
@@ -361,31 +361,13 @@ public class ScoreScript : MonoBehaviour {
 		// end of level
 		if (endLevel) 
 		{	
-			Debug.Log ("in end");
-			// not a high score
-			if( _score <= highscores[9] )
-				entered = true;
-			Debug.Log ( "after enter");
-			if( win && !entered )
+			if( !win && entered )
 			{
-				GUIStyle myStyle = new GUIStyle();
-				GUI.skin.textField.alignment = TextAnchor.UpperCenter;
-				GUI.skin.textField.fontSize = 30;
-				GUI.skin.textField.normal.textColor = Color.white;
-				myStyle.fontSize = 30;
-				GUI.Label(new Rect(Screen.width/2,Screen.height/2+5,100,100), "Top 10 High Score", myStyle);
-				GUI.Label(new Rect(Screen.width/2-200,Screen.height/2+50,100,100), "Enter Your Initials ", myStyle);
-				GUI.SetNextControlName("MyTextField");
-				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2+70,100,50), initials, 3);
-				GUI.FocusControl("MyTextField");
-				
-				if( initials.Length == 3 )
-				{
-					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
-				}
+				entered = false;						
+				MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 			}
 
-			if (win && !entered) 
+			/*if (win && !entered) 
 			{
 				// check input
 				if (initials.Length == 3) 
@@ -410,7 +392,7 @@ public class ScoreScript : MonoBehaviour {
                         ServerMessaging.UploadScoreToServer(initials, (System.UInt32)_score, gameType, Application.loadedLevelName);
 					}
 				}
-			}
+			}*/
 			return;
 		}
 		
@@ -732,7 +714,10 @@ public class ScoreScript : MonoBehaviour {
 		}
 		
 		GUI.color = savedGuiColor; // revert to previous alpha
-		
+
+		float tmpXScaler = Screen.width * 10 / 1440;
+		float tmpYScaler = Screen.height * 10 / 742;
+
 		// popup added score
 		if( popupIncrement < popupIncrementMax )
 		{
@@ -754,7 +739,7 @@ public class ScoreScript : MonoBehaviour {
 				GUI.color = guiColor;
 			}
 			
-			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 20 + offsetY + sizeY + popupIncrement, sizeX, sizeY, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 12 * tmpXScaler, 7 * tmpYScaler + popupIncrement, 3 * tmpXScaler, 5 * tmpYScaler, "" + (displayScore * currentMultiplier * displayMultiplier));
 
 			if( !paused )
 				popupIncrement += .75f;
@@ -762,8 +747,7 @@ public class ScoreScript : MonoBehaviour {
 			GUI.color = savedGuiColor; // revert to previous alpha
 		}
 
-		float tmpXScaler = Screen.width * 10 / 1440;
-		float tmpYScaler = Screen.height * 10 / 742;
+
 
 		// score
 		FontConverter.instance.parseStringToTextures (Screen.width - 2*sizeX - 66 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "soul essence");
@@ -868,7 +852,7 @@ public class ScoreScript : MonoBehaviour {
 		myStyle.normal.textColor = Color.white;
 
 		// end of level
-		if( endLevel )
+		/*if( endLevel )
 		{
 			Debug.Log ("in end");
 			// not a high score
@@ -892,7 +876,7 @@ public class ScoreScript : MonoBehaviour {
 					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
 				}
 			}
-		}
+		}*/
 		
 		
 		/***** Score Multiplier GUI *****/
@@ -1136,10 +1120,27 @@ public class ScoreScript : MonoBehaviour {
 		deleteScaredNPCS = new ArrayList ();
 	}
 	
-	
-	void invokeAudio()
+
+	public void submitScores(string nm)
 	{
+		updateHighScores (_score, nm);
+		//GlobalGameStateManager.highscores = highscores;
+		//GlobalGameStateManager.playerNames = names;
+		GlobalGameStateManager.SavePlayerScores(highscores, names);
 		
+		entered = true;						
+		//MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
+		
+		// Upload the high score to the server
+		GameMode gameType = GameMode.Survival;
+		
+		EndConditions ec = GameObject.FindObjectOfType<EndConditions>();
+		
+		if (ec != null) gameType = ec.gameMode;
+		
+		ServerMessaging.UploadScoreToServer(nm, (System.UInt32)_score, gameType, Application.loadedLevelName);
+
+		MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 	}
 	
 	
@@ -1769,11 +1770,14 @@ public class ScoreScript : MonoBehaviour {
 
 		//if( mess.Type == (int)LevelFinishedType.Win )
 		//{
-			if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore
-			{
-				win = true;
-				MessageCenter.Instance.Broadcast(new ScoreAddingMessage(true));
-			}
+		if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore
+		{
+			win = true;
+			MessageCenter.Instance.Broadcast(new ScoreAddingMessage(true));
+			gameObject.GetComponent<EnterInitialsScript>().enabled = true;
+			gameObject.GetComponent<EnterInitialsScript>().initialize();
+		}
+		entered = true;
 		//}
 	}
 
