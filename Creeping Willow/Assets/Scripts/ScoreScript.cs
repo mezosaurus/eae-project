@@ -337,7 +337,7 @@ public class ScoreScript : MonoBehaviour {
 		lastMultiplierTime = Time.time;
 		currentMultiplierTime = Time.time;
 
-		if( LevelLoader.instance.modeName == "Feast" )
+		if( LevelLoader.instance.modeName == "Marked" )
 		{
 			popupMultiplier = 0;
 			multiplierPoints = 95;
@@ -1136,7 +1136,7 @@ public class ScoreScript : MonoBehaviour {
 		
 		EndConditions ec = GameObject.FindObjectOfType<EndConditions>();
 		
-		if (ec != null) gameType = ec.gameMode;
+		if (ec != null) gameType = ec.GameMode;
 		
 		ServerMessaging.UploadScoreToServer(nm, (System.UInt32)_score, gameType, Application.loadedLevelName);
 

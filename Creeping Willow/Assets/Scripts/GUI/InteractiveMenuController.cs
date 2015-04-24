@@ -251,11 +251,11 @@ public class InteractiveMenuController : MonoBehaviour
 				break;
 
 			case "ModeFeastButton":
-				descriptionText.text = "Get the highest score you can with using scares and lures to get bigger combos\n\nThe game ends when you eat 5 people";
+				descriptionText.text = "Get the highest score you can with using scares and lures to get bigger combos\n\nThe game ends when you eat 10 people";
 				break;
 
 			case "ModeMarkedButton":
-				descriptionText.text = "Kill the five marked for harvest\nYour multiplier will start at 666 and drop continually\nIt can not be replenished\nThe faster they die, the better";
+				descriptionText.text = "Kill the five marked for harvest\nYour multiplier will drop continually and cannot be replenished\n\nThe faster they die the better";
 				break;
 
 			case "ModeTimedButton":
