@@ -86,6 +86,10 @@ public class EndConditions : GameBehavior
 	{
 		NPCEatenMessage mess = message as NPCEatenMessage;
 
+		// ignore critters
+		if( mess.NPC.GetComponent<CritterController>() != null )
+			return;
+
 		NPCsEaten++;
 
 		if( gameMode == GameMode.Feast && NPCsEaten >= maxNPCsEatenFeast )

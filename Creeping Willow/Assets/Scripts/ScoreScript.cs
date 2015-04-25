@@ -118,8 +118,8 @@ public class ScoreScript : MonoBehaviour {
 	int streakMultiplier = 1;
 	
 	// multiplier points
-	public readonly int scaredNPCMultiplier = 1;
-	public readonly int luredNPCMultiplier = 1;
+	public readonly int scaredNPCMultiplier = 2;
+	public readonly int luredNPCMultiplier = 2;
 	
 	
 	int tmpMultiplier = 0;
@@ -265,9 +265,9 @@ public class ScoreScript : MonoBehaviour {
 	float multLength;
 	float multHeight;
 
-	int currentMultiplier = 3;
+	int currentMultiplier = 5;
 	int popupMultiplier = 0;
-	int multiplierPoints = 10;
+	int multiplierPoints = 20;
 
 	// multiplier timers
 	float lastMultiplierTime;
@@ -287,6 +287,9 @@ public class ScoreScript : MonoBehaviour {
 	// game mode marked selected
 	bool marked = false;
 	bool paused = false;
+
+	// tmp variables
+	int scoredMultiplier = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -551,12 +554,12 @@ public class ScoreScript : MonoBehaviour {
 			
 			// multiplier
 			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Multiplier");
-			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, currentMultiplier + "");
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, scoredMultiplier + "");
 			offset++;
 			
 			// total score
 			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Total Score");
-			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, "" + (displayScore * scoredMultiplier * displayMultiplier));
 			offset++;
 
 			// increment timer
@@ -633,12 +636,12 @@ public class ScoreScript : MonoBehaviour {
 			
 			// multiplier
 			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Multiplier");
-			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, currentMultiplier + "");
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, scoredMultiplier + "");
 			offset++;
 			
 			// total score
 			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Total Score");
-			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "" + (displayScore * scoredMultiplier * displayMultiplier));
 			offset++;
 
 			// increment timer
@@ -739,7 +742,7 @@ public class ScoreScript : MonoBehaviour {
 				GUI.color = guiColor;
 			}
 			
-			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 12 * tmpXScaler, 7 * tmpYScaler + popupIncrement, 3 * tmpXScaler, 5 * tmpYScaler, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 7 * tmpYScaler + popupIncrement, 3 * tmpXScaler, 5 * tmpYScaler, "" + (displayScore * scoredMultiplier * displayMultiplier));
 
 			if( !paused )
 				popupIncrement += .75f;
@@ -750,8 +753,8 @@ public class ScoreScript : MonoBehaviour {
 
 
 		// score
-		FontConverter.instance.parseStringToTextures (Screen.width - 2*sizeX - 66 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "soul essence");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 12 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "" + _score);
+		FontConverter.instance.parseStringToTextures (Screen.width - 2*sizeX - 55 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "soul matter");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "" + _score);
 		
 		// high score
 		/*FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
@@ -766,9 +769,9 @@ public class ScoreScript : MonoBehaviour {
 		float tmpWidth = Screen.width * 100f / 1440;
 
 
-		GUI.DrawTexture (new Rect (Screen.width - tmpWidth * 1.1f, .1f * tmpWidth, tmpWidth, tmpWidth), newBountyBoxImage);
+		GUI.DrawTexture (new Rect (Screen.width - tmpWidth * 1.1f, Screen.height - tmpWidth - .1f * tmpWidth, tmpWidth, tmpWidth), newBountyBoxImage);
 		if( BountyNPCImage != null )
-			GUI.DrawTexture (new Rect(Screen.width - .9f * tmpWidth, .2f * tmpWidth, .6f * tmpWidth, .6f * tmpWidth), BountyNPCImage);
+			GUI.DrawTexture (new Rect(Screen.width - .9f * tmpWidth, Screen.height - tmpWidth, .6f * tmpWidth, .6f * tmpWidth), BountyNPCImage);
 
 		/*
 		// probably should use switch-case, but meh
@@ -1669,7 +1672,8 @@ public class ScoreScript : MonoBehaviour {
 		displayScore = npcScore * stealth * quick * lure * streakMultiplier;
 
 		currentMultiplier = 1 + multiplierPoints / multIncre;
-		addScore(displayScore*currentMultiplier*displayMultiplier);
+		scoredMultiplier = currentMultiplier;
+		addScore(displayScore*scoredMultiplier*displayMultiplier);
 		
 		scoreState = (int)ScoreState.START_SCORING;
 		
