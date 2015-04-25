@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &2506934
 GameObject:
@@ -394,10 +393,12 @@ EdgeCollider2D:
   m_Points:
   - {x: -5.20436859, y: 5.5939703}
   - {x: -5.27412033, y: 5.63096142}
-  - {x: -5.25285339, y: 6.11821175}
-  - {x: -4.56880188, y: 6.62912941}
-  - {x: -3.75911713, y: 7.20627594}
-  - {x: -2.87324142, y: 7.4177351}
+  - {x: -5.58769798, y: 5.81186581}
+  - {x: -5.22211456, y: 6.23723316}
+  - {x: -4.7326622, y: 6.75024319}
+  - {x: -3.88022995, y: 7.32026577}
+  - {x: -3.00860596, y: 7.52460003}
+  - {x: -2.72815704, y: 7.56426525}
   - {x: -2.48004913, y: 7.50076675}
 --- !u!68 &6079129
 EdgeCollider2D:
@@ -411,11 +412,12 @@ EdgeCollider2D:
   m_Points:
   - {x: -6.86340141, y: 6.59060955}
   - {x: -6.81451797, y: 6.56247425}
-  - {x: -6.20112705, y: 7.32526112}
-  - {x: -5.86103058, y: 7.62701893}
-  - {x: -5.29005623, y: 7.92365932}
-  - {x: -4.69982529, y: 8.07638359}
-  - {x: -4.28097534, y: 8.10621357}
+  - {x: -6.56130981, y: 6.36430836}
+  - {x: -6.03726578, y: 7.03316402}
+  - {x: -5.67579842, y: 7.31354904}
+  - {x: -5.18318939, y: 7.65293503}
+  - {x: -4.64283371, y: 7.85552883}
+  - {x: -4.0672493, y: 7.98509979}
   - {x: -4.08311844, y: 8.1760006}
 --- !u!1001 &7108838
 Prefab:
@@ -2542,7 +2544,7 @@ Transform:
   m_LocalScale: {x: .400000006, y: .400000006, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &71597502
 GameObject:
   m_ObjectHideFlags: 0
@@ -14994,8 +14996,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -19846,10 +19848,12 @@ EdgeCollider2D:
   m_Points:
   - {x: -5.22772408, y: 5.65623093}
   - {x: -5.2773304, y: 5.68616104}
-  - {x: -5.28797054, y: 6.17049503}
-  - {x: -4.61184311, y: 6.68293285}
-  - {x: -3.8830719, y: 7.23255301}
-  - {x: -2.94954967, y: 7.44960117}
+  - {x: -5.54389572, y: 5.82528973}
+  - {x: -5.33455181, y: 6.20722723}
+  - {x: -4.93157005, y: 6.63732624}
+  - {x: -4.63369465, y: 6.87959337}
+  - {x: -3.8830719, y: 7.35637617}
+  - {x: -3.00053596, y: 7.58070803}
   - {x: -2.34901619, y: 7.54939127}
 --- !u!68 &495234048
 EdgeCollider2D:
@@ -19863,10 +19867,11 @@ EdgeCollider2D:
   m_Points:
   - {x: -6.89325809, y: 6.62349844}
   - {x: -6.83603954, y: 6.58399534}
-  - {x: -6.24416924, y: 7.40058517}
-  - {x: -5.3115778, y: 7.98822308}
-  - {x: -4.69982719, y: 8.14094734}
-  - {x: -4.33477974, y: 8.17077923}
+  - {x: -6.55867529, y: 6.4002142}
+  - {x: -5.99515152, y: 7.26467752}
+  - {x: -5.25673676, y: 7.76876593}
+  - {x: -4.63564587, y: 7.95405388}
+  - {x: -4.07625484, y: 8.07968521}
   - {x: -4.14185524, y: 8.18568611}
 --- !u!1 &499109797
 GameObject:
@@ -20072,12 +20077,24 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
       propertyPath: maxNumberOfEachNPC
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
       propertyPath: axemanSoundtrack
       value: 
       objectReference: {fileID: 8300000, guid: dc3bb33d1d8e0214bad22f2104bce233, type: 3}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: startWithActiveAxeMan
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: axeManStartCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
+      propertyPath: critterSpawnTime
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
   m_RootGameObject: {fileID: 1410197346}
@@ -30183,10 +30200,10 @@ EdgeCollider2D:
   m_Points:
   - {x: -5.3014946, y: 5.66031027}
   - {x: -5.36853504, y: 5.70294189}
-  - {x: -5.35509109, y: 6.16465807}
-  - {x: -4.66732693, y: 6.72250271}
-  - {x: -3.88782883, y: 7.26733208}
-  - {x: -2.99844742, y: 7.46461296}
+  - {x: -5.46607494, y: 6.15232658}
+  - {x: -4.77214527, y: 6.82732105}
+  - {x: -3.9618187, y: 7.32282448}
+  - {x: -3.03544235, y: 7.60642624}
   - {x: -2.63453197, y: 7.52988911}
 --- !u!68 &720455785
 EdgeCollider2D:
@@ -30200,10 +30217,11 @@ EdgeCollider2D:
   m_Points:
   - {x: -6.99394226, y: 6.71695805}
   - {x: -6.85756111, y: 6.63995123}
-  - {x: -6.20973587, y: 7.45439148}
-  - {x: -5.36323071, y: 8.01404953}
-  - {x: -4.69982719, y: 8.14094734}
-  - {x: -4.34554005, y: 8.19229984}
+  - {x: -6.62983227, y: 6.49465227}
+  - {x: -5.99393272, y: 7.25708675}
+  - {x: -5.27074337, y: 7.73658943}
+  - {x: -4.69366169, y: 7.94364166}
+  - {x: -4.15440083, y: 8.02582359}
   - {x: -4.19077969, y: 8.25441265}
 --- !u!4 &720455786
 Transform:
@@ -31058,8 +31076,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -44406,7 +44424,7 @@ Transform:
   m_LocalScale: {x: .300000012, y: .300000012, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1089128488
 GameObject:
   m_ObjectHideFlags: 0
@@ -59577,16 +59595,16 @@ MonoBehaviour:
   enemyNPCWander: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
   enemyNPCActive: {fileID: 100000, guid: 1134c49acb1a1fb4092e0f0e51b9f008, type: 2}
   critterNPC: {fileID: 107086, guid: 7d0da34a69c2f5f499c6c32d1d0ed0eb, type: 2}
-  maxNumberOfEachNPC: 5
+  maxNumberOfEachNPC: 6
   spawnTag: Respawn
   pathTag: Paths
   benchTag: Bench
   critterSpawnTag: CritterSpawn
   spawnTime: 5
-  critterSpawnTime: 2
+  critterSpawnTime: 12
   isMaze: 0
-  startWithActiveAxeMan: 0
-  axeManStartCount: 1
+  startWithActiveAxeMan: 1
+  axeManStartCount: 3
   levelSpawnsAxeMan: 0
   activeEnemySpawnTime: 20
   HearingRadiusMultiplierNPC: 1
@@ -65388,8 +65406,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -86238,7 +86256,7 @@ Transform:
   m_LocalScale: {x: .400000006, y: .400000006, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
 --- !u!1001 &2011313392
 Prefab:
   m_ObjectHideFlags: 0
