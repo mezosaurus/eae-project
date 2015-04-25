@@ -231,7 +231,7 @@ public class InteractiveMenuController : MonoBehaviour
 				break;
 
 			case "Level1Button":
-				descriptionText.text = "on a beautiful day they\ncome to play\nbut you will\ntake their souls away";
+				descriptionText.text = "on a beautiful day they come to play\nbut you will take their souls away";
 				break;
 
 			case "Level2Button":
@@ -381,15 +381,15 @@ public class InteractiveMenuController : MonoBehaviour
 		levelLoader.levelName = i_levelName;
 
 		if( i_levelName == "Tutorial_Level" )
-			levelName = "Bloody Beginnings";
+			levelName = "Bloody\nBeginnings";
 		else if( i_levelName == "Evan_Level1" )
-			levelName = "A Stalk in the Park";
+			levelName = "A Stalk\nin the Park";
 		else if( i_levelName == "Quadrants" )
-			levelName = "Lakeside Lullaby";
+			levelName = "Lakeside\nLullaby";
 		else if( i_levelName == "Bridge_Level" )
-			levelName = "Over Troubled Waters";
+			levelName = "Over Troubled\nWaters";
 		else if( i_levelName == "Maze_Level" )
-			levelName = "Hallowed Labyrinth";
+			levelName = "Hallowed\nLabyrinth";
 		else
 			levelName = "Error";
 	}

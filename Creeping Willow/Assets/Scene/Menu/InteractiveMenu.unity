@@ -73,7 +73,6 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &10160817
 GameObject:
@@ -702,8 +701,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -970,9 +969,9 @@ MonoBehaviour:
   m_Color: {r: .485294104, g: 0, b: 0, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 210
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 290
     m_Alignment: 4
@@ -1907,9 +1906,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -2225,9 +2224,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -2538,6 +2537,14 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
         type: 3}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 225
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 498123586}
@@ -3833,9 +3840,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -5807,6 +5814,14 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
         type: 3}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 225
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 2121144093}
@@ -6507,9 +6522,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 300
     m_Alignment: 4
@@ -7787,9 +7802,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -7874,9 +7889,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -8029,9 +8044,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 300
     m_Alignment: 4
@@ -9716,9 +9731,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 300
     m_Alignment: 4
@@ -10042,9 +10057,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -10439,6 +10454,14 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
         type: 3}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 225
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 2046936004}
@@ -10855,9 +10878,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -11418,9 +11441,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 300
     m_Alignment: 4
@@ -13755,6 +13778,14 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
         type: 3}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 225
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 1806878392}
@@ -14092,9 +14123,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -15818,9 +15849,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 300
     m_Alignment: 4
@@ -17483,6 +17514,14 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
         type: 3}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 225
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 1097657620}
@@ -18632,9 +18671,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -19615,9 +19654,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 225
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
@@ -20122,9 +20161,9 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
-    m_FontSize: 28
+    m_FontSize: 300
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 299
     m_Alignment: 4
