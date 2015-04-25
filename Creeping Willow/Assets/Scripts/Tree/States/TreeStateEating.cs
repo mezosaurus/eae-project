@@ -41,21 +41,7 @@ public class TreeStateEating : TreeState
     }
 
     private void Eat()
-    {        
-        GlobalGameStateManager.SoulConsumedTimer = 3.5f;
-
-        Tree.audio.Stop();
-
-		SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
-		soundManager.ResumeMusic();
-
-        Tree.audio.clip = Tree.Sounds.SoulConsumed;
-        Tree.audio.Play();
-
-        MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
-        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
-        MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
-
+    {
         /*Tree.BodyParts.FlameEyes.SetActive(true);
         Tree.BodyParts.FlameEyes.particleSystem.Play();*/
 
@@ -71,7 +57,25 @@ public class TreeStateEating : TreeState
                     Tree.BonusSpeedTimer = Tree.MaxBonusTime;
                     break;
             }
+
+            Tree.audio.clip = Tree.Sounds.Saying[Random.Range(0, Tree.Sounds.Saying.Length)];
         }
+        else
+        {
+            Tree.audio.clip = Tree.Sounds.SoulConsumed;
+            GlobalGameStateManager.SoulConsumedTimer = 3.5f;
+        }
+
+        Tree.audio.Stop();
+
+        SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+        soundManager.ResumeMusic();
+
+        MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
+        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
+        MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
+
+        Tree.audio.Play();
 
         GameObject.Destroy(npc);
     }
