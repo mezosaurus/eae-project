@@ -121,6 +121,15 @@ public class PossessableTree : Possessable
         CreateStates();
         LoadCircle();
 
+        // Sort eating NPC sprites
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Bopper, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Boppina, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Critter, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Hippie, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Hottie, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.MowerMan, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.OldMan, (a, b) => a.name.CompareTo(b.name));
+
         BodyParts.Legs.GetComponent<Animator>().speed = 0f;
 	}
 	
@@ -327,11 +336,24 @@ namespace Tree.Private
             public Sprite[] ButtonSprites;
         }
 
+        [Serializable]
+        public class _EatingNPCs
+        {
+            public Sprite[] Bopper;
+            public Sprite[] Boppina;
+            public Sprite[] Critter;
+            public Sprite[] Hippie;
+            public Sprite[] Hottie;
+            public Sprite[] MowerMan;
+            public Sprite[] OldMan;
+        }
+
 
         public _Trunk Trunk;
         public _Face Face;
         public Sprite LegsStill;
         public _EatingMinigame EatingMinigame;
+        public _EatingNPCs EatingNPCs;
         public Sprite[] EatingAxeMan;
         public Texture2D FinishHim;
     }
