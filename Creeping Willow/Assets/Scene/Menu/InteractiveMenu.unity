@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &10160817
 GameObject:
@@ -701,8 +702,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -968,7 +969,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: .485294104, g: 0, b: 0, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -979,7 +980,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Fill me Seymour
+  m_Text: fill me seymour
 --- !u!222 &67456063
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1196,7 +1197,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_Text
-      value: Options
+      value: options
       objectReference: {fileID: 0}
     - target: {fileID: 11428604, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1283,6 +1284,11 @@ Prefab:
       propertyPath: delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetSelectedGameObject
       objectReference: {fileID: 0}
+    - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
   m_RootGameObject: {fileID: 1891219175}
@@ -1900,7 +1906,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -1911,7 +1917,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Feast
+  m_Text: feast
 --- !u!222 &118993277
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2218,7 +2224,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -2229,7 +2235,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: back
 --- !u!222 &157200765
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2478,9 +2484,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_Text
-      value: 'A Stalk
+      value: 'a stalk
 
-        in the Park'
+        in the park'
       objectReference: {fileID: 0}
     - target: {fileID: 11496112, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -2527,6 +2533,11 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 498123586}
@@ -2783,6 +2794,15 @@ Prefab:
     - target: {fileID: 22487562, guid: b5eda1bf666d88846aa2fbd1226ac76d, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11487562, guid: b5eda1bf666d88846aa2fbd1226ac76d, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
+    - target: {fileID: 11487562, guid: b5eda1bf666d88846aa2fbd1226ac76d, type: 2}
+      propertyPath: m_Text
+      value: fill me seymour
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5eda1bf666d88846aa2fbd1226ac76d, type: 2}
@@ -3101,6 +3121,15 @@ Prefab:
     - target: {fileID: 11479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_Text
+      value: back
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
@@ -3655,6 +3684,15 @@ Prefab:
       propertyPath: delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetSelectedGameObject
       objectReference: {fileID: 0}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_Text
+      value: back
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
   m_RootGameObject: {fileID: 1438685029}
@@ -3794,7 +3832,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -3805,9 +3843,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'A Stalk
+  m_Text: 'a stalk
 
-    in the Park'
+    in the park'
 --- !u!222 &431602332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4242,7 +4280,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_Text
-      value: Credits
+      value: credits
       objectReference: {fileID: 0}
     - target: {fileID: 11428604, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4329,6 +4367,11 @@ Prefab:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 814784420}
+    - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
   m_RootGameObject: {fileID: 1783898571}
@@ -4646,6 +4689,15 @@ Prefab:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 1325138747}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_Text
+      value: back
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
   m_RootGameObject: {fileID: 455967900}
@@ -5694,9 +5746,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_Text
-      value: 'Lakeside
+      value: 'lakeside
 
-        Lullaby'
+        lullaby'
       objectReference: {fileID: 0}
     - target: {fileID: 11496112, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5750,6 +5802,11 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 2121144093}
@@ -6449,7 +6506,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -6460,7 +6517,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Play
+  m_Text: play
 --- !u!222 &763298310
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7470,6 +7527,15 @@ Prefab:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 1925896417}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
+    - target: {fileID: 11479786, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
+      propertyPath: m_Text
+      value: back
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
   m_RootGameObject: {fileID: 1062039588}
@@ -7720,7 +7786,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -7731,7 +7797,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: back
 --- !u!222 &903872706
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7807,7 +7873,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -7818,9 +7884,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Bloody
+  m_Text: 'bloody
 
-    Beginnings'
+    beginnings'
 --- !u!222 &927110840
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7962,7 +8028,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -7973,7 +8039,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: back
 --- !u!222 &956496025
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9649,7 +9715,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -9660,7 +9726,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Credits
+  m_Text: credits
 --- !u!222 &1120173529
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9975,7 +10041,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -9986,9 +10052,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Lakeside
+  m_Text: 'lakeside
 
-    Lullaby'
+    lullaby'
 --- !u!222 &1218008786
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10314,11 +10380,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_Text
-      value: 'Over
+      value: 'over
 
-        Troubled
+        troubled
 
-        Waters'
+        waters'
       objectReference: {fileID: 0}
     - target: {fileID: 11496112, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -10368,6 +10434,11 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 2046936004}
@@ -10783,7 +10854,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -10794,9 +10865,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Soul
+  m_Text: 'soul
 
-    Survivor'
+    survivor'
 --- !u!222 &1263094384
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11346,7 +11417,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -11357,7 +11428,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Options
+  m_Text: options
 --- !u!222 &1301808282
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13598,9 +13669,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_Text
-      value: 'Bloody
+      value: 'bloody
 
-        Beginnings'
+        beginnings'
       objectReference: {fileID: 0}
     - target: {fileID: 11496112, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -13679,6 +13750,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 1806878392}
@@ -14015,7 +14091,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -14026,9 +14102,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Hallowed
+  m_Text: 'hallowed
 
-    Labyrinth'
+    labyrinth'
 --- !u!222 &1583771053
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15741,7 +15817,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -15752,7 +15828,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: back
 --- !u!222 &1715199832
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17337,9 +17413,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_Text
-      value: 'Hallowed
+      value: 'hallowed
 
-        Labyrinth'
+        labyrinth'
       objectReference: {fileID: 0}
     - target: {fileID: 11496112, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -17402,6 +17478,11 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 11496114, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 040a7bd059b07e548bbb1a6d6abf04ea, type: 2}
   m_RootGameObject: {fileID: 1097657620}
@@ -18391,7 +18472,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_Text
-      value: Play
+      value: play
       objectReference: {fileID: 0}
     - target: {fileID: 11428604, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -18490,6 +18571,11 @@ Prefab:
       propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 1783898573}
+    - target: {fileID: 11428602, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df5f561eeafad694dad8e84f94f8d442, type: 2}
   m_RootGameObject: {fileID: 814784418}
@@ -18545,7 +18631,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -18556,11 +18642,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Over
+  m_Text: 'over
 
-    Troubled
+    troubled
 
-    Waters'
+    waters'
 --- !u!222 &1960573159
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19528,7 +19614,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -19539,7 +19625,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Marked
+  m_Text: marked
 --- !u!222 &2096928255
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20035,7 +20121,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 0b3a53d4f0628454dab38e7aeed6a50c, type: 3}
+    m_Font: {fileID: 12800000, guid: 430ce99fe0c1f18419a56fac5c01efdb, type: 3}
     m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
@@ -20046,7 +20132,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Level 1
+  m_Text: level 1
 --- !u!222 &2144177636
 CanvasRenderer:
   m_ObjectHideFlags: 0

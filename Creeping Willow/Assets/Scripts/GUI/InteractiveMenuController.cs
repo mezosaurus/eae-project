@@ -227,39 +227,39 @@ public class InteractiveMenuController : MonoBehaviour
 			switch( currentSelection.name )
 			{
 			case "Level0Button":
-				descriptionText.text = "Learn the art of the kill\n\nGet your roots dirty";
+				descriptionText.text = "learn the art of the kill\n\nget your roots dirty";
 				break;
 
 			case "Level1Button":
-				descriptionText.text = "On a beautiful day they come to play\nbut you will take their souls away";
+				descriptionText.text = "on a beautiful day they\ncome to play\nbut you will\ntake their souls away";
 				break;
 
 			case "Level2Button":
-				descriptionText.text = "There are days at the lake that can be calming and cool\n\nThis is not one of those days";
+				descriptionText.text = "there are days at the lake that can be calming and cool\n\nthis is not one of those days";
 				break;
 
 			case "Level3Button":
-				descriptionText.text = "They stay safe on the other side\nbut fear will drive them into your arms";
+				descriptionText.text = "they stay safe on the other side\nbut fear will drive them into your arms";
 				break;
 
 			case "Level4Button":
-				descriptionText.text = "Those that enter the maze may never escape\n\nIf they do they will not be the same";
+				descriptionText.text = "those that enter the maze may never escape\n\nif they do they will not be the same";
 				break;
 
 			case "ModeSurvivalButton":
-				descriptionText.text = "Go on an endless killing spree to collect as much soul matter as possible\n\nYour reign of terror will end when all Hollow Trees have been chopped down";
+				descriptionText.text = "go on an endless killing spree to collect as much soul matter as possible\n\nyour reign of terror will end when all hollow trees have been chopped down";
 				break;
 
 			case "ModeFeastButton":
-				descriptionText.text = "Get the highest score you can with using scares and lures to get bigger combos\n\nThe game ends when you eat 10 people";
+				descriptionText.text = "get the highest score you can with using scares and lures to get bigger combos\n\nthe game ends when you eat 10 people";
 				break;
 
 			case "ModeMarkedButton":
-				descriptionText.text = "Kill the five marked for harvest\nYour multiplier will drop continually and cannot be replenished\n\nThe faster they die the better";
+				descriptionText.text = "kill the five marked for harvest\nyour multiplier will drop continually and cannot be replenished\n\nthe faster they die the better";
 				break;
 
 			case "ModeTimedButton":
-				descriptionText.text = "You have five minutes to consume as many of the living as possible\nBe creative with your kills and you will be rewarded";
+				descriptionText.text = "you have five minutes to consume as many of the living as possible\nbe creative with your kills and you will be rewarded";
 				break;
 
 			default:
