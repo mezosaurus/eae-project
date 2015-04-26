@@ -42,7 +42,8 @@ public class IntroScript : MonoBehaviour
 
 		// Switch the music
 		soundManager = GameObject.FindObjectOfType<SoundManager>();
-		soundManager.ChangeMusic( levelMusic );
+		if( soundManager )
+			soundManager.ChangeMusic( levelMusic );
 	}
 
 	void Update()
