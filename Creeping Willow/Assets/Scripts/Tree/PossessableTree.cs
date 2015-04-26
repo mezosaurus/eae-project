@@ -14,6 +14,7 @@ public class PossessableTree : Possessable
     public bool Dead;
     public List<GameObject> DisabledForMinigame;
     public GameObject AxeMan, ActualAxeMan;
+    public GameObject NPC;
     public Tree.Private.BodyParts BodyParts;
     public Tree.Private.Sprites Sprites;
     public Tree.Private.Sounds Sounds;
@@ -187,8 +188,19 @@ public class PossessableTree : Possessable
             ActualAxeMan = message.NPC;
 
             // See if the tree is already in the active state
-            if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE && Active)
+            if(/*GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE &&*/ Active)
             {
+                if(NPC != null)
+                {
+                    NPC.SetActive(true);
+                    NPC.GetComponent<AIController>().IsTaggedByTree = true;
+                    NPC.GetComponent<AIController>().scaredByAxeman = true;
+
+                    MessageCenter.Instance.Broadcast(new PlayerReleasedNPCsMessage(new System.Collections.Generic.List<GameObject>() { NPC }));
+
+                    NPC.transform.position = transform.position + new Vector3(-1f, -0.25f);
+                }
+                
                 StartActiveAxeManMinigame();
 
                 return;

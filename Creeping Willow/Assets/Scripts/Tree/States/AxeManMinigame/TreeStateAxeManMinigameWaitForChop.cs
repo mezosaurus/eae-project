@@ -9,7 +9,7 @@ public class TreeStateAxeManMinigameWaitForChop : TreeState
     {
         //Tree.Active = true;
         GlobalGameStateManager.PosessionState = PosessionState.NON_EXORCISABLE;
-        Tree.Eating = false;
+        Tree.Eating = true;
 
         Tree.BodyParts.LeftArm.SetActive(true);
         Tree.BodyParts.RightArm.SetActive(true);
