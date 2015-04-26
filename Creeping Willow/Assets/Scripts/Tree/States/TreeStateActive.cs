@@ -149,9 +149,12 @@ public class TreeStateActive : TreeState
 
             if(closestNPCs[0].name.Contains("Enemy"))
             {
+                Tree.Dead = true;
                 Tree.ActualAxeMan = closestNPCs[0];
 
                 Tree.StartActiveAxeManMinigame();
+
+                return;
             }
             else if (closestNPCs[0].GetComponent<AIController>().isCritterType || Tree.BonusPoisonTimer > 0f)
             {

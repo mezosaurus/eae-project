@@ -138,7 +138,11 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
             return;
         }
         if (phase == 5)
-        {
+        {            
+            MessageCenter.Instance.Broadcast(new NPCEatenMessage(Tree.ActualAxeMan));
+            MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
+            MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
+            
             GlobalGameStateManager.SoulConsumedTimer = 3.5f;
 
             Tree.audio.Stop();
@@ -155,10 +159,6 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
             }
 
             Tree.DisabledForMinigame = new System.Collections.Generic.List<GameObject>();
-
-            MessageCenter.Instance.Broadcast(new NPCEatenMessage(Tree.ActualAxeMan));
-            MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
-            MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
 
             GameObject.Destroy(Tree.ActualAxeMan);
 

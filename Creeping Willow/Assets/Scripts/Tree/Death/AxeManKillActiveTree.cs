@@ -98,7 +98,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         if(phase == 98765)
         {
             MessageCenter.Instance.Broadcast(new AxeManKilledMessage());
-            Destroy(actualAxeMan);
+            //Destroy(actualAxeMan);
             Destroy(gameObject);
         }
     }
