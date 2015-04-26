@@ -35,6 +35,7 @@ public class StationaryAIController : AIController
 		if (biasPosition.x == 0)
 		{
 			//To the right
+			// TODO: Get rid of
 			flipXScale(false);
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 		}
