@@ -80,7 +80,7 @@ public class EnemyAIController : AIController
 		
 		if (angry)
 		{
-			player = getPlayer();
+			//player = getPlayer();
 			chasePlayer();
 			return true;
 		}
@@ -280,6 +280,7 @@ public class EnemyAIController : AIController
 			MessageCenter.Instance.Broadcast(message);
 			MessageCenter.Instance.Broadcast(new AxeManAngerChangedMessage(false));
 			angry = false;
+			panicTexture.renderer.enabled = false;
 			killSelf = true;
 		}
 	}
