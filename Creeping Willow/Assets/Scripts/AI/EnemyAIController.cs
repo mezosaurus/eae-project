@@ -27,6 +27,8 @@ public class EnemyAIController : AIController
 	public AudioClip hitSound3;
 	protected int hitCounter = 1;
 
+	protected GameObject lastPlayer;
+
 	public override void Start()
 	{
 		base.Start ();
@@ -152,7 +154,7 @@ public class EnemyAIController : AIController
 	protected void chasePlayer()
 	{
 		rigidbody2D.velocity = Vector2.zero;
-		Vector3 pathPosition = player.transform.position;
+		Vector3 pathPosition = lastPlayer.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
 		
@@ -243,6 +245,7 @@ public class EnemyAIController : AIController
 		{
 			base.panic ();
 			panicked = false;
+			lastPlayer = getPlayer();
 			
 			angry = true;
 			MessageCenter.Instance.Broadcast(new AxeManAngerChangedMessage(true));
