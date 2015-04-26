@@ -112,6 +112,7 @@ public class AIController : GameBehavior
 	public GameObject alertTexture;
 	public GameObject panicTexture;
 	public GameObject scaredTexture;
+	public GameObject lureTexture;
 
 	// collision detection efficiency
 	int avoidCounter = 0;
@@ -221,6 +222,13 @@ public class AIController : GameBehavior
 		TextureScript scaredTs = scaredTexture.GetComponent<TextureScript> ();
 		scaredTs.target = gameObject;
 
+		// Scare Texture
+		lureTexture = (GameObject)Instantiate (Resources.Load ("prefabs/AI/SceneInitPrefabs/AILure"));
+		lureTexture.transform.SetParent (transform, true);
+		lureTexture.renderer.enabled = false;
+		TextureScript lureTs = lureTexture.GetComponent<TextureScript> ();
+		lureTs.target = gameObject;
+
 		player = GameObject.FindGameObjectWithTag ("Player");
 		// Set initial alert/panick states
 		//timePanicked = panicCooldownSeconds;
@@ -277,7 +285,8 @@ public class AIController : GameBehavior
 		}
 		if (scaredTexture != null)
 				Destroy (scaredTexture.gameObject);
-
+		if (lureTexture != null)
+						Destroy (lureTexture.gameObject);
 		if (marked)
 		{
 			MessageCenter.Instance.Broadcast (new MarkedBountyDestroyedMessage());
@@ -733,6 +742,8 @@ public class AIController : GameBehavior
 		alertTexture.renderer.enabled = false;
 		panicTexture.renderer.enabled = true;
 		scaredTexture.renderer.enabled = false;
+		lureTexture.renderer.enabled = false;
+
 		scared = false;
 
 		AudioClip scream = null;
@@ -820,6 +831,7 @@ public class AIController : GameBehavior
 
 		alertTexture.renderer.enabled = false;
 		scaredTexture.renderer.enabled = true;
+		lureTexture.renderer.enabled = false;
 
 		scared = true;
 		scaredTimeLeft = scaredCooldownSeconds;
@@ -863,6 +875,8 @@ public class AIController : GameBehavior
 			
 			audio.PlayOneShot (curious, 1.0f);
 		}
+
+		lureTexture.renderer.enabled = true;
 
 		lured = true;
 		nextPath = new GameObject ();
@@ -919,6 +933,7 @@ public class AIController : GameBehavior
 				{
 					//Debug.Log ("Didn't destroy: " + nextPath.tag);
 				}
+				lureTexture.renderer.enabled = false;
 				nextPath = getNextPath (); // resume normal behaviour
 			}
 
@@ -1133,6 +1148,7 @@ public class AIController : GameBehavior
 			alertTexture.renderer.enabled = false;
 			panicTexture.renderer.enabled = false;
 			scaredTexture.renderer.enabled = false;
+			lureTexture.renderer.enabled = false;
 		}
 	}
 
