@@ -381,17 +381,17 @@ public class InteractiveMenuController : MonoBehaviour
 		levelLoader.levelName = i_levelName;
 
 		if( i_levelName == "Tutorial_Level" )
-			levelName = "Bloody\nBeginnings";
+			levelName = "bloody\nbeginnings";
 		else if( i_levelName == "Evan_Level1" )
-			levelName = "A Stalk\nin the Park";
+			levelName = "a stalk\nin the park";
 		else if( i_levelName == "Quadrants" )
-			levelName = "Lakeside\nLullaby";
+			levelName = "lakeside\nlullaby";
 		else if( i_levelName == "Bridge_Level" )
-			levelName = "Over Troubled\nWaters";
+			levelName = "over troubled\nwaters";
 		else if( i_levelName == "Maze_Level" )
-			levelName = "Hallowed\nLabyrinth";
+			levelName = "hallowed\nlabyrinth";
 		else
-			levelName = "Error";
+			levelName = "error";
 	}
 
 	public void SetMode( string i_modeName )
