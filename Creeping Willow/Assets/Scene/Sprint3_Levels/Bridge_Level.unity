@@ -343,73 +343,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b038d8ba6e04ea3a3c09f317218332, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &6079126
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 6079127}
-  - 68: {fileID: 6079129}
-  - 68: {fileID: 6079128}
-  m_Layer: 0
-  m_Name: Bridge3Bounds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6079127
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 6079126}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.1800003, y: -17.1200008, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2056351855}
-  m_RootOrder: 2
---- !u!68 &6079128
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 6079126}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: -5.20436859, y: 5.5939703}
-  - {x: -5.27412033, y: 5.63096142}
-  - {x: -5.58769798, y: 5.81186581}
-  - {x: -5.22211456, y: 6.23723316}
-  - {x: -4.7326622, y: 6.75024319}
-  - {x: -3.88022995, y: 7.32026577}
-  - {x: -3.00860596, y: 7.52460003}
-  - {x: -2.72815704, y: 7.56426525}
-  - {x: -2.48004913, y: 7.50076675}
---- !u!68 &6079129
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 6079126}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: -6.86340141, y: 6.59060955}
-  - {x: -6.81451797, y: 6.56247425}
-  - {x: -6.56130981, y: 6.36430836}
-  - {x: -6.03726578, y: 7.03316402}
-  - {x: -5.67579842, y: 7.31354904}
-  - {x: -5.18318939, y: 7.65293503}
-  - {x: -4.64283371, y: 7.85552883}
-  - {x: -4.0672493, y: 7.98509979}
-  - {x: -4.08311844, y: 8.1760006}
 --- !u!1001 &7108838
 Prefab:
   m_ObjectHideFlags: 0
@@ -8324,7 +8257,7 @@ Transform:
   - {fileID: 609721058}
   - {fileID: 1491450229}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
 --- !u!1 &224712599
 GameObject:
   m_ObjectHideFlags: 0
@@ -16608,6 +16541,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 418287536}
+  - 68: {fileID: 418287538}
+  - 68: {fileID: 418287537}
   m_Layer: 0
   m_Name: RiverBounds
   m_TagString: Untagged
@@ -16624,10 +16559,33 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.34927654, y: 8.4848814, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1921635036}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
+--- !u!68 &418287537
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 418287535}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Points:
+  - {x: -13.2241468, y: 5.76403618}
+  - {x: 35.2360077, y: -21.6719265}
+--- !u!68 &418287538
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 418287535}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Points:
+  - {x: -15.4129076, y: 4.07169628}
+  - {x: 33.2495079, y: -23.4937897}
 --- !u!1 &420426642
 GameObject:
   m_ObjectHideFlags: 0
@@ -19488,72 +19446,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 92183170f0fbcd0409c288fc877390de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &495234045
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 495234046}
-  - 68: {fileID: 495234048}
-  - 68: {fileID: 495234047}
-  m_Layer: 0
-  m_Name: Bridge2Bounds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &495234046
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 495234045}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.4899998, y: -7.73999977, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2056351855}
-  m_RootOrder: 1
---- !u!68 &495234047
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 495234045}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: -5.22772408, y: 5.65623093}
-  - {x: -5.2773304, y: 5.68616104}
-  - {x: -5.54389572, y: 5.82528973}
-  - {x: -5.33455181, y: 6.20722723}
-  - {x: -4.93157005, y: 6.63732624}
-  - {x: -4.63369465, y: 6.87959337}
-  - {x: -3.8830719, y: 7.35637617}
-  - {x: -3.00053596, y: 7.58070803}
-  - {x: -2.34901619, y: 7.54939127}
---- !u!68 &495234048
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 495234045}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: -6.89325809, y: 6.62349844}
-  - {x: -6.83603954, y: 6.58399534}
-  - {x: -6.55867529, y: 6.4002142}
-  - {x: -5.99515152, y: 7.26467752}
-  - {x: -5.25673676, y: 7.76876593}
-  - {x: -4.63564587, y: 7.95405388}
-  - {x: -4.07625484, y: 8.07968521}
-  - {x: -4.14185524, y: 8.18568611}
 --- !u!1 &499109797
 GameObject:
   m_ObjectHideFlags: 0
@@ -29475,70 +29367,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f51f3210fd0d0a14ebaaf2042d0d0cf7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &720455783
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 720455786}
-  - 68: {fileID: 720455785}
-  - 68: {fileID: 720455784}
-  m_Layer: 0
-  m_Name: Bridge1Bounds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!68 &720455784
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 720455783}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: -5.3014946, y: 5.66031027}
-  - {x: -5.36853504, y: 5.70294189}
-  - {x: -5.46607494, y: 6.15232658}
-  - {x: -4.77214527, y: 6.82732105}
-  - {x: -3.9618187, y: 7.32282448}
-  - {x: -3.03544235, y: 7.60642624}
-  - {x: -2.63453197, y: 7.52988911}
---- !u!68 &720455785
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 720455783}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: -6.99394226, y: 6.71695805}
-  - {x: -6.85756111, y: 6.63995123}
-  - {x: -6.62983227, y: 6.49465227}
-  - {x: -5.99393272, y: 7.25708675}
-  - {x: -5.27074337, y: 7.73658943}
-  - {x: -4.69366169, y: 7.94364166}
-  - {x: -4.15440083, y: 8.02582359}
-  - {x: -4.19077969, y: 8.25441265}
---- !u!4 &720455786
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 720455783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2056351855}
-  m_RootOrder: 0
 --- !u!1001 &721916850
 Prefab:
   m_ObjectHideFlags: 0
@@ -30771,7 +30599,7 @@ Transform:
   - {fileID: 526003047}
   - {fileID: 1459578134}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
 --- !u!1001 &748129987
 Prefab:
   m_ObjectHideFlags: 0
@@ -44963,7 +44791,7 @@ Transform:
   - {fileID: 1195905864}
   - {fileID: 1206910514}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
 --- !u!1 &1119881236
 GameObject:
   m_ObjectHideFlags: 0
@@ -58604,7 +58432,7 @@ Transform:
   - {fileID: 2142476957}
   - {fileID: 1332109966}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
 --- !u!1 &1414819510
 GameObject:
   m_ObjectHideFlags: 0
@@ -67514,7 +67342,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1620029952}
   - 68: {fileID: 1620029951}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boundaries
   m_TagString: Border
   m_Icon: {fileID: 0}
@@ -80064,7 +79892,7 @@ Transform:
   - {fileID: 630685399}
   - {fileID: 361865720}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
 --- !u!1001 &1890377438
 Prefab:
   m_ObjectHideFlags: 0
@@ -81382,137 +81210,6 @@ Prefab:
   m_RootGameObject: {fileID: 1371259333}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &1921635035
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1921635036}
-  - 68: {fileID: 1921635044}
-  - 68: {fileID: 1921635043}
-  - 68: {fileID: 1921635042}
-  - 68: {fileID: 1921635041}
-  - 68: {fileID: 1921635040}
-  - 68: {fileID: 1921635039}
-  - 68: {fileID: 1921635038}
-  - 68: {fileID: 1921635037}
-  m_Layer: 0
-  m_Name: Bridge1Bounds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1921635036
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.7559996, y: 2.85500002, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 418287536}
-  m_RootOrder: 0
---- !u!68 &1921635037
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: 47.1921425, y: -23.9835529}
-  - {x: 40.6230659, y: -20.2452354}
---- !u!68 &1921635038
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: 44.0977402, y: -25.095932}
-  - {x: 38.1679573, y: -21.7654533}
---- !u!68 &1921635039
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: 23.9861336, y: -10.8435574}
-  - {x: 38.9755325, y: -19.3240662}
---- !u!68 &1921635040
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: 21.5853577, y: -12.3666306}
-  - {x: 36.4844055, y: -20.7696953}
---- !u!68 &1921635041
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: 22.2980747, y: -9.91030121}
-  - {x: 10.4122934, y: -3.0887084}
---- !u!68 &1921635042
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: 19.8290176, y: -11.3484631}
-  - {x: 8.01388454, y: -4.66991901}
---- !u!68 &1921635043
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: 1.90163612, y: 1.54681826}
-  - {x: 8.76843262, y: -2.22512388}
---- !u!68 &1921635044
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1921635035}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Points:
-  - {x: -.489583969, y: .1197896}
-  - {x: 6.24990654, y: -3.64577341}
 --- !u!1001 &1923412797
 Prefab:
   m_ObjectHideFlags: 0
@@ -85844,36 +85541,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f1dfec5ac74d73442aae24fb2f80d6a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &2056351854
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2056351855}
-  m_Layer: 0
-  m_Name: BridgeBounds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2056351855
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2056351854}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.91371059, y: .935692728, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 720455786}
-  - {fileID: 495234046}
-  - {fileID: 6079127}
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
 --- !u!1001 &2057327665
 Prefab:
   m_ObjectHideFlags: 0
