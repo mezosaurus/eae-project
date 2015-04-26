@@ -44,7 +44,7 @@ public class NotorietyMeter : MonoBehaviour
 
 	int currentTreeCount;
 	bool flashing = false;
-	float currentTreeAlpha = 1;
+	float currentTreeAlpha = 1f;
 	bool flashingUp = false;
 
 	
@@ -255,11 +255,11 @@ public class NotorietyMeter : MonoBehaviour
 					if( flashingUp && currentTreeAlpha >= 1f )
 						flashingUp = false;
 					else if( flashingUp )
-						currentTreeAlpha += .05f;
-					else if( !flashingUp && currentTreeAlpha <= 1f )
+						currentTreeAlpha += .03f;
+					else if( !flashingUp && currentTreeAlpha <= 0f )
 						flashingUp = true;
 					else
-						currentTreeAlpha -= .05f;
+						currentTreeAlpha -= .03f;
 
 					Color guiColor = GUI.color;
 					guiColor.a = currentTreeAlpha;
@@ -316,6 +316,7 @@ public class NotorietyMeter : MonoBehaviour
 			flashing = false;
 			flashingUp = false;
 			currentTreeAlpha = 1;
+			currentTreeCount = GameObject.FindObjectsOfType<PossessableTree>().Length;
 		}
 
 		return GameObject.FindObjectsOfType<PossessableTree>().Length;
