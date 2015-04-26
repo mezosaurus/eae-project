@@ -44,6 +44,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: Boppina
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
@@ -90,6 +96,26 @@ Transition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: MowerMan
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
+  m_CanTransitionToSelf: 0
+--- !u!1101 &110122754
+Transition:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 0}
+  m_DstState: {fileID: 110214478}
+  m_TransitionDuration: .100000001
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Boppina
     m_EventTreshold: 0
     m_ExitTime: .899999976
   m_Atomic: 1
@@ -191,6 +217,21 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110214478
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Tree-Grabbed-Boppina
+  m_Speed: .800000012
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: d44ce9028a7930640b927bbd3e5d51c2, type: 2}
+  m_ParentStateMachine: {fileID: 110734024}
+  m_Position: {x: 396, y: -36, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110221916
 State:
   m_ObjectHideFlags: 3
@@ -281,11 +322,12 @@ StateMachine:
   - {fileID: 110221916}
   - {fileID: 110207282}
   - {fileID: 110251878}
+  - {fileID: 110214478}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110251878}
+      first: {fileID: 110214478}
       second: []
     data:
       first: {fileID: 0}
@@ -296,6 +338,7 @@ StateMachine:
       - {fileID: 110141286}
       - {fileID: 110111678}
       - {fileID: 110185400}
+      - {fileID: 110122754}
     data:
       first: {fileID: 110234024}
       second: []
@@ -310,6 +353,9 @@ StateMachine:
       second: []
     data:
       first: {fileID: 110207282}
+      second: []
+    data:
+      first: {fileID: 110251878}
       second: []
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
