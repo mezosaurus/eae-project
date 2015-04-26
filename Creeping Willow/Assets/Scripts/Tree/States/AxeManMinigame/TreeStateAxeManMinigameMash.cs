@@ -206,15 +206,14 @@ public class TreeStateAxeManMinigameMash : TreeState
 
     protected void Lose()
     {
-        /*npc.SetActive(true);
-        npc.GetComponent<AIController>().IsTaggedByTree = true;
+        Tree.BodyParts.RightLowerBackgroundArm.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+        Tree.BodyParts.Axe.SetActive(false);
 
-        MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 20f));
-        MessageCenter.Instance.Broadcast(new PlayerReleasedNPCsMessage(new System.Collections.Generic.List<GameObject>() { npc }));
+        Tree.audio.Stop();
 
-        npc.transform.position = Tree.transform.position + new Vector3(-1f, -0.25f);
+        MessageCenter.Instance.Broadcast(new AxeManMinigameAxeManChangePhaseMessage(8001));
 
-        Tree.ChangeState("Active");*/
+        Tree.ChangeState("AxeManMinigameDead");
     }
 
     public override void UpdateSorting()
