@@ -184,7 +184,7 @@ public class NotorietyMeter : MonoBehaviour
 
 		if( pulsating )
 		{
-			if( angerCount > 0 )//currentPulseTime >= pulseTime )
+			if( angerCount == 0 )//currentPulseTime >= pulseTime )
 			{
 				pulsating = false;
 				currentPulseTime = 0;
