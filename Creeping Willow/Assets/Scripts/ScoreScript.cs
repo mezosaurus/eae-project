@@ -710,7 +710,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// multiplier pop-up text
-			FontConverter.instance.parseStringToTextures (50 * tmpXScaler, 10f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
+			FontConverter.instance.parseStringToTextures (64 * tmpXScaler, 10f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
 
 
 			// increment height
@@ -756,7 +756,7 @@ public class ScoreScript : MonoBehaviour {
 			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 7 * tmpYScaler + popupIncrement, 3 * tmpXScaler, 5 * tmpYScaler, "" + (displayScore * scoredMultiplier * displayMultiplier));
 
 			if( !paused )
-				popupIncrement += .75f;
+				popupIncrement += .6f;
 			
 			GUI.color = savedGuiColor; // revert to previous alpha
 		}
@@ -895,8 +895,8 @@ public class ScoreScript : MonoBehaviour {
 		
 		/***** Score Multiplier GUI *****/
 
-		GUI.DrawTexture (new Rect (24 * tmpXScaler, tmpYScaler, 20 * tmpXScaler, 5 * tmpYScaler), soultiplier);
-		FontConverter.instance.rightAnchorParseStringToTextures (56 * tmpXScaler, 1.25f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, currentMultiplier + "x");
+		GUI.DrawTexture (new Rect (40 * tmpXScaler, tmpYScaler, 20 * tmpXScaler, 5 * tmpYScaler), soultiplier);
+		FontConverter.instance.rightAnchorParseStringToTextures (70 * tmpXScaler, 1.25f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, currentMultiplier + "x");
 
 
 		//FontConverter.instance.rightAnchorParseStringToTextures (multXOffset + multLength + 40, multYOffset * 5 / 4, 20, multHeight / 2, currentMultiplier + "x");
