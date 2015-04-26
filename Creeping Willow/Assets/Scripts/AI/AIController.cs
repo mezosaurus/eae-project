@@ -886,7 +886,7 @@ public class AIController : GameBehavior
 			// compute offset distance to avoid collisions
 			if (luredTimeLeft == lureCooldownSeconds) 
 			{
-				Debug.Log ("Sitting");
+				//Debug.Log ("Sitting");
 				setAnimatorInteger (walkingKey, (int)WalkingDirection.STILL_DOWN_LEFT);
 			}
 
@@ -899,11 +899,11 @@ public class AIController : GameBehavior
 				if (nextPath.tag.Equals (lureTag)) 
 				{
 					Destroy (nextPath);
-					Debug.Log ("Destroyed nextpath");
+					//Debug.Log ("Destroyed nextpath");
 				} 
 				else 
 				{
-					Debug.Log ("Didn't destroy: " + nextPath.tag);
+					//Debug.Log ("Didn't destroy: " + nextPath.tag);
 				}
 				nextPath = getNextPath (); // resume normal behaviour
 			}

@@ -41,6 +41,10 @@ public class WanderAIController : AIController {
 			return;
 		}
 
+		if (nextPath == null)
+		{
+			return;
+		}
 		if (isOnPath)
 		{
 			move();
