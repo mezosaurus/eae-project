@@ -22,6 +22,7 @@ public class PossessableTree : Possessable
 
     protected Dictionary<string, TreeState> states;
     protected TreeState currentState;
+    protected string currentStateName;
 
 
     public readonly float MaxBonusTime = 30f;
@@ -36,6 +37,7 @@ public class PossessableTree : Possessable
         states = new Dictionary<string, TreeState>();
 
         TreeState inactive = new TreeStateInactive();
+        TreeState inactiveDead = new TreeStateInactiveDead();
         TreeState active = new TreeStateActive();
         TreeState eatingMinigameWrangle = new TreeStateEatingMinigameWrangle();
         TreeState eatingMinigameMash = new TreeStateEatingMinigameMash();
@@ -61,6 +63,7 @@ public class PossessableTree : Possessable
         TreeState axeManMinigameEatingLastHalf = new TreeStateAxeManMinigameEatingLastHalf();
 
         states.Add("Inactive", inactive);
+        states.Add("InactiveDead", inactiveDead);
         states.Add("Active", active);
         states.Add("EatingMinigameWrangle", eatingMinigameWrangle);
         states.Add("EatingMinigameMash", eatingMinigameMash);
@@ -132,13 +135,30 @@ public class PossessableTree : Possessable
 
         BodyParts.Legs.GetComponent<Animator>().speed = 0f;
 	}
-	
-	public override void possess()
+
+    public override void possess()
     {
-		base.possess ();
-		ChangeState("Active");
+        base.possess();
+
+        // See if we're currently in an inactive axe man minigame
+        if (AxeMan != null)
+        {
+            Dead = true;
+
+            // Destroy old axe man
+            Destroy(AxeMan);
+
+            // Disable the minigame camera
+            GameObject.FindGameObjectWithTag("KillCamera").GetComponent<TreeMonitor>().KillCamera.enabled = false;
+
+            StartActiveAxeManMinigame();
+
+            return;
+        }
+
+        ChangeState("Active");
         MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(transform, Vector3.zero));
-	}
+    }
 
     public override void exorcise()
     {
@@ -280,6 +300,7 @@ public class PossessableTree : Possessable
         currentState.Leave();
         
         currentState = states[newState];
+        currentStateName = newState;
 
         currentState.Enter(null);
     }
