@@ -29,14 +29,14 @@ public enum ScoreState
 public enum ScoreGameType
 {
     SoulSurvivor = 1,
-    Marked,
-    Timed
+    Feast,
+    Marked
 }
 
 public enum ScoreLevel
 {
-    Tutorial = 1,
-    BloodyBeginnings,
+    BloodyBeginnings = 1,
+    AStalkInThePark,
     LakesideLullaby,
     OverTroubledWaters,
     HallowedLabyrinth

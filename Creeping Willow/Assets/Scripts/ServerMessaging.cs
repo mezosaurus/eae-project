@@ -14,8 +14,8 @@ public class ServerMessaging : MonoBehaviour
 
     private static readonly Dictionary<string, ScoreLevel> levelLookup = new Dictionary<string, ScoreLevel>()
     {
-        {"Tutorial", ScoreLevel.Tutorial},
-        {"Evan_Level1", ScoreLevel.BloodyBeginnings},
+        {"Tutorial", ScoreLevel.BloodyBeginnings},
+        {"Evan_Level1", ScoreLevel.AStalkInThePark},
         {"Quadrants", ScoreLevel.LakesideLullaby},
         {"Bridge_Level", ScoreLevel.OverTroubledWaters},
         {"Maze_Level", ScoreLevel.HallowedLabyrinth}
@@ -23,9 +23,9 @@ public class ServerMessaging : MonoBehaviour
 
     private static readonly Dictionary<GameMode, ScoreGameType> gameTypeLookup = new Dictionary<GameMode, ScoreGameType>()
     {
-        {GameMode.Feast, ScoreGameType.Marked},
+        {GameMode.Feast, ScoreGameType.Feast},
         {GameMode.Survival, ScoreGameType.SoulSurvivor},
-        {GameMode.Timed, ScoreGameType.Timed}
+        {GameMode.Marked, ScoreGameType.Marked}
     };
     
 
