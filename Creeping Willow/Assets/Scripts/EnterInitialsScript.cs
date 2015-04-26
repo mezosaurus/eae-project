@@ -79,13 +79,12 @@ public class EnterInitialsScript : MonoBehaviour {
 		labelXSize = width * .5f / (float)labelStr.Length;
 		labelYSize = labelXSize * 5f / 3f;
 		labelXStart = width * .5f - labelXSize * labelStr.Length * .5f;
-		labelYStart = height * .1f;
+		labelYStart = height * .15f;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		//if( Input.GetButtonDown("Start") )
 		//	pressed = true;
 
@@ -203,6 +202,9 @@ public class EnterInitialsScript : MonoBehaviour {
 
 		if( pressed )
 		{
+			// outside box
+			GUI.Box(new Rect( Screen.width * .15f, Screen.height * .1f, Screen.width * .7f, Screen.height * .8f ), "" );
+
 			if( !submitted ) // temporary
 				FontConverter.instance.parseStringToTextures(labelXStart,labelYStart,labelXSize,labelYSize,labelStr);
 
@@ -277,10 +279,10 @@ public class EnterInitialsScript : MonoBehaviour {
 			else
 				FontConverter.instance.parseStringToTextures(submitXStart,submitYStart,xSize*1.5f/6f,arrowYSize,"submit",.7f);
 		}
-		else // temporary
+		/*else // temporary
 		{
 			FontConverter.instance.parseStringToTextures(width*.5f-xSize*5.5f,height*.5f-ySize*.5f,xSize,ySize,"press start");
-		}
+		}*/
 	}
 
 	void changeGUIAlpha(float a)
