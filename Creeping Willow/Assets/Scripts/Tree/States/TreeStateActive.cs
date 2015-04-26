@@ -228,6 +228,7 @@ public class TreeStateActive : TreeState
     {
         SpriteRenderer trunkSpriteRenderer = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>();
         SpriteRenderer faceSpriteRenderer = Tree.BodyParts.Face.GetComponent<SpriteRenderer>();
+        SpriteRenderer shadowSpriteRenderer = Tree.BodyParts.Shadow.GetComponent<SpriteRenderer>();
         Animator legsAnimator = Tree.BodyParts.Legs.GetComponent<Animator>();
         float x = velocity.x;
         float y = velocity.y;
@@ -253,48 +254,56 @@ public class TreeStateActive : TreeState
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.Front;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.MoveFront;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.Front;
         }
         else if(x > 0f && y < 0f) // Front right
         {
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.FrontRight;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.MoveFrontRight;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.FrontRight;
         }
         else if (x > 0f && y == 0f) // Right
         {
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.Right;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.MoveRight;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.Right;
         }
         else if (x > 0f && y > 0f) // Back right
         {
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.BackRight;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.None;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.BackRight;
         }
         else if (x == 0f && y > 0f) // Back
         {
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.Back;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.None;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.Back;
         }
         else if (x < 0f && y > 0f) // Back left
         {
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.BackRight;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(-1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.None;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.BackRight;
         }
         else if (x < 0f && y == 0f) // Left
         {
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.Right;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(-1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.MoveRight;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.Right;
         }
         else if (x < 0f && y < 0f) // FrontLeft
         {
             trunkSpriteRenderer.sprite = Tree.Sprites.Trunk.FrontRight;
             Tree.BodyParts.Trunk.transform.localScale = new Vector3(-1f, 1f, 1f);
             faceSpriteRenderer.sprite = Tree.Sprites.Face.MoveFrontRight;
+            shadowSpriteRenderer.sprite = Tree.Sprites.Shadows.FrontRight;
         }
     }
 

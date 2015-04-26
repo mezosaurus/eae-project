@@ -350,6 +350,12 @@ namespace Tree.Private
             public Sprite[] OldMan;
         }
 
+        [Serializable]
+        public class _Shadows
+        {
+            public Sprite Front, FrontRight, Right, BackRight, Back;
+        }
+
 
         public _Trunk Trunk;
         public _Face Face;
@@ -358,6 +364,7 @@ namespace Tree.Private
         public _EatingNPCs EatingNPCs;
         public Sprite[] EatingAxeMan;
         public Texture2D FinishHim;
+        public _Shadows Shadows;
     }
 
     [Serializable]
