@@ -936,10 +936,29 @@ public class AIController : GameBehavior
 				lureTexture.renderer.enabled = false;
 				nextPath = getNextPath (); // resume normal behaviour
 			}
-
 			return true;
 		}
-
+		else
+		{
+			luredTimeLeft -= Time.deltaTime;
+			if (luredTimeLeft <= 0)
+			{
+				lured = false;
+				MessageCenter.Instance.Broadcast(new LureReleasedMessage(null, gameObject));
+				if (nextPath.tag.Equals (lureTag)) 
+				{
+					Destroy (nextPath);
+					//Debug.Log ("Destroyed nextpath");
+				} 
+				else 
+				{
+					//Debug.Log ("Didn't destroy: " + nextPath.tag);
+				}
+				lureTexture.renderer.enabled = false;
+				nextPath = getNextPath (); // resume normal behaviour
+			}
+		}
+		
 		return false;
 	}
 
