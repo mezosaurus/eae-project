@@ -87,7 +87,7 @@ public class EndConditions : GameBehavior
 		NPCEatenMessage mess = message as NPCEatenMessage;
 
 		// ignore critters
-		if( mess.NPC.GetComponent<CritterController>() != null )
+		if( mess.NPC.GetComponent<CritterController>() != null || mess.NPC == null )
 			return;
 
 		NPCsEaten++;
