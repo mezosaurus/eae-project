@@ -235,7 +235,7 @@ public class PossessableTree : Possessable
 
                 //GUI.Label(new Rect(20f, 1080f - size2.y - size.y - 20f, size.x, size.y), content);
 				if( BonusPoisonTimer < MaxBonusTime - 3 )
-					FontConverter.instance.parseStringToTextures(20f, 1080f - size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
+					FontConverter.instance.parseStringToTextures(20f, 1080f - 3 * size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
             	else
 					FontConverter.instance.parseStringToTextures(Screen.width / 2 - size.x / content.Length, 600f - size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
 			}

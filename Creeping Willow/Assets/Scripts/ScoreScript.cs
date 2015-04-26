@@ -497,6 +497,13 @@ public class ScoreScript : MonoBehaviour {
 		}
 		else if( scoreState == (int)ScoreState.SCORING )
 		{
+			// add multiplier
+			if( tmpMultiplier != 0 )
+			{
+				addMultiplier(tmpMultiplier);
+				tmpMultiplier = 0;
+			}
+
 			/*** display scores ***/
 			int offset = 1;
 
@@ -666,8 +673,7 @@ public class ScoreScript : MonoBehaviour {
 		}
 		else if( scoreState == (int)ScoreState.END_SCORING )
 		{
-			addMultiplier(tmpMultiplier);
-			tmpMultiplier = 0;
+
 
 			isPattern = false;
 			isLured = false;
@@ -679,7 +685,10 @@ public class ScoreScript : MonoBehaviour {
 			displayScore = 0;
 			displayMultiplier = streakMultiplier;
 		}
-		
+
+		float tmpXScaler = Screen.width * 10 / 1440;
+		float tmpYScaler = Screen.height * 10 / 742;
+
 		// display multiplier points
 		if( scoreDisplay )
 		{
@@ -698,7 +707,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// multiplier pop-up text
-			FontConverter.instance.parseStringToTextures (500 - popupX/2, 150 - popupY/2 - popupIncrement2 + 75, popupX, popupY, multiplierSign + multiplierPointImage);
+			FontConverter.instance.parseStringToTextures (50 * tmpXScaler, 10f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
 
 
 			// increment height
@@ -718,8 +727,7 @@ public class ScoreScript : MonoBehaviour {
 		
 		GUI.color = savedGuiColor; // revert to previous alpha
 
-		float tmpXScaler = Screen.width * 10 / 1440;
-		float tmpYScaler = Screen.height * 10 / 742;
+
 
 		// popup added score
 		if( popupIncrement < popupIncrementMax )
