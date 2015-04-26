@@ -24,7 +24,27 @@ public class StationaryAIController : AIController
 		// if lure is deleted
 		if( nextPath == null ) return;
 
-		Vector3 pathPosition = nextPath == bench ? getBenchOffsetVector() : nextPath.transform.position;
+		bool isThisBenchPos = nextPath == bench;
+		Vector3 benchOffset = getBenchOffsetVector ();
+		Vector3 pathPosition;// = isThisBenchPos ? benchOffset : nextPath.transform.position;
+
+		if (isThisBenchPos)
+		{
+			if (transform.position.Equals(benchOffset))
+			{
+				determineDirectionChange(transform.position, transform.position);
+				return;
+			}
+			else
+			{
+				pathPosition = benchOffset;
+			}
+		}
+		else
+		{
+			pathPosition = nextPath.transform.position;
+		}
+
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;
 		
@@ -84,9 +104,14 @@ public class StationaryAIController : AIController
 		nextPath = bench;
 	}
 
+	private float textureSize = 0.0f;
 	private Vector3 getBenchOffsetVector()
 	{
-		return new Vector3(bench.transform.position.x, bench.transform.position.y - gameObject.transform.renderer.bounds.size.y/5);
+		if (textureSize == 0.0f)
+		{
+			textureSize = gameObject.transform.renderer.bounds.size.y;
+		}
+		return new Vector3 (bench.transform.position.x, bench.transform.position.y - textureSize/5);
 
 	}
 	protected override void alert()

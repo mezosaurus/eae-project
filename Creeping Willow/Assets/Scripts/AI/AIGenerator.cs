@@ -116,6 +116,10 @@ public class AIGenerator : GameBehavior
 			SubpathScript movePath = path.GetComponent<SubpathScript>();
 			Vector2 pathPos = movePath.getNextPath(null, null).transform.position;
 			createPathNPC(pathPos, movePath);
+			if (pathAIList.Count >= maxNumberOfEachNPC)
+			{
+				break;
+			}
 		}
 
 		//3 bench npcs
@@ -129,6 +133,11 @@ public class AIGenerator : GameBehavior
 				Vector2 spawnPos = bench.transform.position;
 				GameObject newStationary = createNPC (this.stationaryNPC, stationaryAIList, spawnPos);
 				newStationary.GetComponent<StationaryAIController> ().setStationaryPoint (bench);
+
+				if (stationaryAIList.Count >= maxNumberOfEachNPC)
+				{
+					break;
+				}
 			}
 		}
 

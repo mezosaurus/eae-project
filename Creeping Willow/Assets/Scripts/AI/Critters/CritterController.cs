@@ -59,6 +59,11 @@ public class CritterController : AIController {
 			nextMoveTime = Time.time + waitTime * 15;
 			move ();
 		}
+		else
+		{
+			Vector3 pos = gameObject.transform.position;
+			determineDirectionChange(pos, pos);
+		}
 	}
 	
 	protected void move()

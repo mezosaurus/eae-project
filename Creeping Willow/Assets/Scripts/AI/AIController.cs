@@ -637,11 +637,13 @@ public class AIController : GameBehavior
 
 	protected void setAnimatorInteger (string key, int animation)
 	{
+		/*
 		Animator anim = gameObject.GetComponent<Animator> ();
 		if (anim != null) 
 		{
 			gameObject.GetComponent<Animator> ().SetInteger (key, animation);
 		}
+		//*/
 	}
 
 	protected void broadcastAlertLevelChanged (AlertLevelType type)
@@ -714,10 +716,15 @@ public class AIController : GameBehavior
 		if( getPlayer() != null )
 		{
 			Vector3 direction = getPlayer ().transform.position - gameObject.transform.position;
+
 			if (direction.x > 0)
-				flipXScale (true);
+			{
+				setAnimatorInteger((int)WalkingDirection.STILL_DOWN_RIGHT);
+			}
 			else
-				flipXScale (false);
+			{
+				setAnimatorInteger((int)WalkingDirection.STILL_DOWN_LEFT);
+			}
 		}
 	}
 
@@ -914,6 +921,8 @@ public class AIController : GameBehavior
 		return false;
 	}
 
+	private float directionThreshold = 0.0005f;
+
 	protected void determineDirectionChange (Vector3 npcPosition, Vector3 newPosition)
 	{
 		// Translate the new position to compare against the origin (easier)
@@ -921,6 +930,7 @@ public class AIController : GameBehavior
 		// Compute the tangent of the new position to compare for angles
 		float biasTan = (Mathf.Abs (biasPosition.y) / Mathf.Abs (biasPosition.x));
 
+		/*
 		if (biasPosition.x > 0) {
 			lastDirectionWasRight = true;
 			flipXScale (true);
@@ -932,17 +942,38 @@ public class AIController : GameBehavior
 		} else {
 			flipXScale (false);
 		}
-		if (biasPosition.x >= 0 && biasPosition.y >= 0) {
+		//*/
+
+		if (Mathf.Abs(biasPosition.x) < directionThreshold && Mathf.Abs(biasPosition.y) < directionThreshold)
+		{
+			if (lastDirectionWasRight)
+			{
+				setAnimatorInteger((int)WalkingDirection.STILL_DOWN_RIGHT);
+			}
+			else
+			{
+				setAnimatorInteger((int)WalkingDirection.STILL_DOWN_LEFT);
+			}
+		}
+		else if (biasPosition.x >= 0 && biasPosition.y >= 0) {
 			// Quadrant 1
+			lastDirectionWasRight = true;
+			setAnimatorInteger((int)WalkingDirection.MOVING_UP_RIGHT);
 			testDirectionChange (biasTan, NPCDirection.R, NPCDirection.TR, NPCDirection.T);
 		} else if (biasPosition.x < 0 && biasPosition.y >= 0) {
 			// Quadrant 2
+			lastDirectionWasRight = false;
+			setAnimatorInteger((int)WalkingDirection.MOVING_UP_LEFT);
 			testDirectionChange (biasTan, NPCDirection.L, NPCDirection.TL, NPCDirection.T);
 		} else if (biasPosition.x < 0 && biasPosition.y < 0) {
 			// Quadrant 3
+			lastDirectionWasRight = false;
+			setAnimatorInteger((int)WalkingDirection.MOVING_DOWN_LEFT);
 			testDirectionChange (biasTan, NPCDirection.L, NPCDirection.BL, NPCDirection.B);
 		} else {
 			// Quadrant 4
+			lastDirectionWasRight = true;
+			setAnimatorInteger((int)WalkingDirection.MOVING_DOWN_RIGHT);
 			testDirectionChange (biasTan, NPCDirection.R, NPCDirection.BR, NPCDirection.B);
 		}
 	}
@@ -953,7 +984,7 @@ public class AIController : GameBehavior
 		if (right)
 			scaleByX = -xScale;
 
-		transform.localScale = new Vector3 (scaleByX, transform.localScale.y, transform.localScale.z);
+		//transform.localScale = new Vector3 (scaleByX, transform.localScale.y, transform.localScale.z);
 	}
 
 	private void testDirectionChange (float biasTan, Vector3 low, Vector3 middle, Vector3 high)
@@ -973,9 +1004,9 @@ public class AIController : GameBehavior
 	{
 		npcDir = direction;
 
-		WalkingDirection anim = WalkingDirection.STILL_DOWN_LEFT;
+		//WalkingDirection anim = WalkingDirection.STILL_DOWN_LEFT;
 		/*
-		 * Old
+		// Old
 		switch (npcDir)
 		{
 		case NPCDirection.L:
@@ -990,9 +1021,10 @@ public class AIController : GameBehavior
 		case Vector3.zero:
 			anim = WalkingDirection.STILL_DOWN_LEFT;
 		}
-		*/
+		//*/
 
 		// Testing
+		/*
 		if (npcDir.Equals(NPCDirection.TL) 
 		    || npcDir.Equals(NPCDirection.T) 
 		    || npcDir.Equals(NPCDirection.TR))
@@ -1008,6 +1040,7 @@ public class AIController : GameBehavior
 		{
 			anim = WalkingDirection.MOVING_DOWN_LEFT;
 		}
+		//*/
 
 		/*
 		 * New
@@ -1019,9 +1052,8 @@ public class AIController : GameBehavior
 		{
 			anim = WalkingDirection.MOVING_UP_RIGHT;
 		}
-		setAnimatorInteger ((int)anim);
 		*/
-
+		//setAnimatorInteger ((int)anim);
 	}
 
 	protected GameObject getLeavingPath ()
