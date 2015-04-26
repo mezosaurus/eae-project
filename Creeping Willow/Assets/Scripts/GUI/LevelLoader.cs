@@ -43,10 +43,6 @@ public class LevelLoader : MonoBehaviour
 
 	void Update()
 	{
-		// Provide a way to force kill the game
-		if( Input.GetButtonDown( "Cancel" ) )
-		{
-			Application.Quit();
-		}
+
 	}
 }

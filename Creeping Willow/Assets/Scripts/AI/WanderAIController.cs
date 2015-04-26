@@ -54,6 +54,11 @@ public class WanderAIController : AIController {
 			nextMoveTime = Time.time + waitTime * 15;
 			move ();
 		}
+		else
+		{
+			Vector3 pos = this.transform.position;
+			determineDirectionChange(pos, pos);
+		}
 	}
 
 	protected void move()
