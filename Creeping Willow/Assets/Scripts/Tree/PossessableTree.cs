@@ -295,6 +295,13 @@ public class PossessableTree : Possessable
 
     private void OnDestroy()
     {
+        foreach (GameObject go in DisabledForMinigame)
+        {
+            go.SetActive(true);
+        }
+
+        DisabledForMinigame = new System.Collections.Generic.List<GameObject>();
+        
         MessageCenter.Instance.UnregisterListener(MessageType.PlayerKilled, HandleDeath);
         MessageCenter.Instance.UnregisterListener(MessageType.AxeManMinigameTreeChangePhase, HandleChangePhase);
     }

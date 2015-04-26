@@ -306,8 +306,9 @@ GameObject:
   - 4: {fileID: 444726}
   - 114: {fileID: 11444692}
   - 50: {fileID: 5044692}
-  - 60: {fileID: 6044692}
   - 82: {fileID: 8244692}
+  - 60: {fileID: 6061852}
+  - 60: {fileID: 6044692}
   m_Layer: 0
   m_Name: PossessableTree
   m_TagString: Player
@@ -636,7 +637,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.2850056, y: 2.9659586, z: -.0703125}
+  m_LocalPosition: {x: -12.7399998, y: 5.05999994, z: -.0700000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444716}
@@ -724,7 +725,7 @@ Rigidbody2D:
   m_CollisionDetection: 0
 --- !u!60 &6044692
 PolygonCollider2D:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144726}
@@ -733,6 +734,34 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_Poly:
     m_Paths: []
+--- !u!60 &6061852
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144726}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Poly:
+    m_Paths:
+    - - {x: -.247364044, y: .0860137939}
+      - {x: .279846191, y: .0765838623}
+      - {x: .481292725, y: .141364574}
+      - {x: .552760124, y: .111965179}
+      - {x: .310172081, y: -.12684536}
+      - {x: .54490757, y: -.458162785}
+      - {x: .46414566, y: -.509446621}
+      - {x: .151755333, y: -.331060886}
+      - {x: -.143370628, y: -.34363842}
+      - {x: -.400811195, y: -.431035519}
+      - {x: -.463712692, y: -.510423183}
+      - {x: -.55004406, y: -.481368065}
+      - {x: -.490520477, y: -.367438793}
+      - {x: -.290122032, y: -.213750839}
+      - {x: -.283394814, y: -.113536358}
+      - {x: -.530518532, y: .111855507}
+      - {x: -.515026093, y: .18323946}
 --- !u!82 &8244692
 AudioSource:
   m_ObjectHideFlags: 1
