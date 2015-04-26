@@ -99,21 +99,21 @@ public class ScoreScript : MonoBehaviour {
 	public readonly int BOUNTY_EATEN = 100;
 	
 	// stationary multipliers
-	public readonly int stealthMultiplier = 4;
-	public readonly int droppingFliesMultiplier = 4;
-	public readonly int lureMultiplier = 2;
+	public readonly int stealthMultiplier = 8;
+	public readonly int droppingFliesMultiplier = 8;
+	public readonly int lureMultiplier = 4;
 
-	public readonly int axemanEaten3Multiplier = 8;
-	public readonly int axemanEaten4Multiplier = 10;
-	public readonly int oldEaten3Multiplier = 6;
-	public readonly int oldEaten4Multiplier = 8;
-	public readonly int childEaten3Multiplier = 6;
-	public readonly int childEaten4Multiplier = 8;
-	public readonly int hottieEaten3Multiplier = 6;
-	public readonly int hottieEaten4Multiplier = 8;
-	public readonly int mowerEaten3Multiplier = 6;
-	public readonly int mowerEaten4Multiplier = 8;
-	public readonly int varietyEaten3Multiplier = 6;
+	public readonly int axemanEaten3Multiplier = 16;
+	public readonly int axemanEaten4Multiplier = 20;
+	public readonly int oldEaten3Multiplier = 12;
+	public readonly int oldEaten4Multiplier = 16;
+	public readonly int childEaten3Multiplier = 12;
+	public readonly int childEaten4Multiplier = 16;
+	public readonly int hottieEaten3Multiplier = 12;
+	public readonly int hottieEaten4Multiplier = 16;
+	public readonly int mowerEaten3Multiplier = 12;
+	public readonly int mowerEaten4Multiplier = 16;
+	public readonly int varietyEaten3Multiplier = 12;
 
 	int streakMultiplier = 1;
 	
@@ -265,9 +265,9 @@ public class ScoreScript : MonoBehaviour {
 	float multLength;
 	float multHeight;
 
-	int currentMultiplier = 5;
 	int popupMultiplier = 0;
-	int multiplierPoints = 20;
+	int multiplierPoints = 45;
+	int currentMultiplier;
 
 	// multiplier timers
 	float lastMultiplierTime;
@@ -340,10 +340,12 @@ public class ScoreScript : MonoBehaviour {
 		lastMultiplierTime = Time.time;
 		currentMultiplierTime = Time.time;
 
+		currentMultiplier = (int)Mathf.Ceil(multiplierPoints/multIncre) + 1;
+
 		if( LevelLoader.instance.modeName == "Marked" )
 		{
 			popupMultiplier = 0;
-			multiplierPoints = 95;
+			multiplierPoints = 195;
 			currentMultiplier = (int)Mathf.Ceil(multiplierPoints/multIncre) + 1;
 			marked = true;
 		}
@@ -1280,7 +1282,7 @@ public class ScoreScript : MonoBehaviour {
 			if( marked )
 				halfMultiplier();
 			else
-				resetMultiplier();
+				halfMultiplier();
 
 			if( !alertedNPCs.Contains(mess.NPC) )
 				alertedNPCs.Add(mess.NPC);
