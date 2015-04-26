@@ -272,7 +272,7 @@ public class ScoreScript : MonoBehaviour {
 	// multiplier timers
 	float lastMultiplierTime;
 	float currentMultiplierTime;
-	readonly float multiplierTimeLength = 10;
+	float multiplierTimeLength = 10;
 
 	// multiplier sliders
 	bool multiplierIsChanging = false;
@@ -348,6 +348,7 @@ public class ScoreScript : MonoBehaviour {
 			multiplierPoints = 195;
 			currentMultiplier = (int)Mathf.Ceil(multiplierPoints/multIncre) + 1;
 			marked = true;
+			multiplierTimeLength = 5;
 		}
 
 		multiplierSign = "+";
