@@ -12,17 +12,18 @@ public class TreeStateActive : TreeState
     public override void Enter(object data)
     {
         // Check to see if we're dead first of all
-        if(Tree.Dead)
+        /*if(Tree.Dead)
         {
             Tree.StartActiveAxeManMinigame();
 
             return;
-        }
+        }*/
 
         Tree.Active = true;
         GlobalGameStateManager.PosessionState = PosessionState.EXORCISABLE;
         Tree.Eating = false;
         npcsInRange = new List<GameObject>();
+        Tree.NPC = null;
 
         Tree.BodyParts.RightUpperArm.SetActive(false);
         Tree.BodyParts.LeftUpperArm.SetActive(false);
@@ -160,11 +161,15 @@ public class TreeStateActive : TreeState
             {
                 TreeStateEatingMinigameMashInstant.Data data = new TreeStateEatingMinigameMashInstant.Data(closestNPCs[0]);
 
+                Tree.NPC = closestNPCs[0];
+
                 Tree.ChangeState("EatingMinigameMashInstant", data);
             }
             else
             {
                 TreeStateEatingMinigameWrangle.Data data = new TreeStateEatingMinigameWrangle.Data(closestNPCs, true);
+
+                Tree.NPC = closestNPCs[0];
 
                 Tree.ChangeState("EatingMinigameWrangle", data);
             }
