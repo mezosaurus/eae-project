@@ -41,6 +41,7 @@ public class TutorialLureNPCController : AIController {
 			setAnimatorInteger(walkingKey, (int)WalkingDirection.MOVING_DOWN_LEFT);		
 		}
 
+		determineDirectionChange (transform.position, movement);
 		transform.position = movement;
 	}
 
