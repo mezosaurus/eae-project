@@ -39,6 +39,8 @@ public class TreeMonitor : MonoBehaviour
 
             transform.position = new Vector3(m.Tree.transform.position.x, m.Tree.transform.position.y + 0.7f, -9f);
             cam.enabled = true;
+
+            MessageCenter.Instance.Broadcast(new AxeManStartedChoppingTreeMessage());
         }
     }
 
