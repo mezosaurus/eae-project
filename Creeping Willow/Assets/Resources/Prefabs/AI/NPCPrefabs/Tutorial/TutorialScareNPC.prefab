@@ -14,6 +14,7 @@ GameObject:
   - 95: {fileID: 9530918}
   - 58: {fileID: 5852550}
   - 61: {fileID: 6196054}
+  - 82: {fileID: 8291756}
   m_Layer: 0
   m_Name: TutorialScareNPC
   m_TagString: NPC
@@ -70,6 +71,64 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .5, y: .349999994}
   m_Center: {x: 0, y: -.100000001}
+--- !u!82 &8291756
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188386}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9530918
 Animator:
   serializedVersion: 3
@@ -108,6 +167,7 @@ MonoBehaviour:
   panicCooldownSeconds: 2
   lureCooldownSeconds: 2
   detectLevel: .200000003
+  hearingRadiusLevelMultiplier: 1
   visionDistance: 3
   visionAngleSize: 120
   hearingAlertMultiplier: 1
@@ -126,9 +186,44 @@ MonoBehaviour:
   alertTexture: {fileID: 0}
   panicTexture: {fileID: 0}
   scaredTexture: {fileID: 0}
-  gasp1: {fileID: 0}
-  gasp2: {fileID: 0}
-  gasp3: {fileID: 0}
+  mowing: {fileID: 0}
+  bopperEaten: {fileID: 0}
+  hippieEaten: {fileID: 0}
+  mowerEaten: {fileID: 0}
+  oldmanEaten: {fileID: 0}
+  hottieEaten: {fileID: 0}
+  bopperCuriousSounds: []
+  hippieCuriousSounds: []
+  mowerCuriousSounds: []
+  oldmanCuriousSounds: []
+  hottieCuriousSounds: []
+  bopperIdleSounds: []
+  hippieIdleSounds: []
+  mowerIdleSounds: []
+  oldmanIdleSounds: []
+  hottieIdleSounds: []
+  bopperAlertSounds:
+  - {fileID: 8300000, guid: 381984314c4ca1647a653cc027539662, type: 3}
+  - {fileID: 8300000, guid: 2d7f0b92cf748314c8156ac6d169a4db, type: 3}
+  - {fileID: 8300000, guid: 3f48d70506aa4a14f890ed066af8649c, type: 3}
+  - {fileID: 8300000, guid: db06403ab345ba0489bad20a119c3287, type: 3}
+  - {fileID: 8300000, guid: 81c177fb003859548b85a61276e43efe, type: 3}
+  - {fileID: 8300000, guid: 7ed1896cee997e84c9ccd59f4fa4d779, type: 3}
+  - {fileID: 8300000, guid: 771ba1de1faaa8d4c96fa4cccea9ef7a, type: 3}
+  hippieAlertSounds: []
+  mowerAlertSounds: []
+  oldmanAlertSounds: []
+  hottieAlertSounds: []
+  bopperPanicSounds:
+  - {fileID: 8300000, guid: 3ff5e2d3c13a77842880b987fbd9f0e9, type: 3}
+  - {fileID: 8300000, guid: 5222eec69e0f006489d89e97e69d3299, type: 3}
+  - {fileID: 8300000, guid: fe9b31175d3f2214bb9c43753cdaf685, type: 3}
+  - {fileID: 8300000, guid: e7debd3d0e0ed2e4bb36e591b2d9998a, type: 3}
+  - {fileID: 8300000, guid: 0d6e627f5f0269a4fb3fbfef3fa6d214, type: 3}
+  hippiePanicSounds: []
+  mowerPanicSounds: []
+  oldmanPanicSounds: []
+  hottiePanicSounds: []
 --- !u!212 &21275144
 SpriteRenderer:
   m_ObjectHideFlags: 1

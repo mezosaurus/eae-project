@@ -9,6 +9,7 @@ public class NotorietyMeter : MonoBehaviour
 	private int axemanCount = 0;
 	public Texture2D axemanHeadTexture;
 	public Texture2D angryAxemanHeadTexture;
+	public Texture2D treeIcon;
 
 	private float width;
 	private float height;
@@ -39,7 +40,12 @@ public class NotorietyMeter : MonoBehaviour
 	public Texture2D bar22;
 
 	int angerCount = 0;
+	int treeCount = 0;
 
+	int currentTreeCount;
+	bool flashing = false;
+	float currentTreeAlpha = 1f;
+	bool flashingUp = false;
 
 	
 	// gui variables
@@ -64,6 +70,8 @@ public class NotorietyMeter : MonoBehaviour
 		//top = GlobalGameStateManager.originalHeight / 2 - height / 2;
 		top = 10;
 		left = 170;
+
+		currentTreeCount = treeCount = CountTrees ();
 	}
 
 	void OnDestroy()
@@ -75,12 +83,14 @@ public class NotorietyMeter : MonoBehaviour
 	{
 		MessageCenter.Instance.RegisterListener( MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage );
 		MessageCenter.Instance.RegisterListener( MessageType.AxeManAngerChanged, HandleAngerChanged );
+		MessageCenter.Instance.RegisterListener( MessageType.AxeManStartedChoppingTree, HandleChopping );
 	}
 	
 	protected void UnregisterListeners()
 	{
 		MessageCenter.Instance.UnregisterListener( MessageType.NPCPanickedOffMap, HandleNPCPanickedMessage);
 		MessageCenter.Instance.UnregisterListener( MessageType.AxeManAngerChanged, HandleAngerChanged );
+		MessageCenter.Instance.UnregisterListener( MessageType.AxeManStartedChoppingTree, HandleChopping );
 	}
 
 	protected void HandleNPCPanickedMessage( Message message )
@@ -94,6 +104,13 @@ public class NotorietyMeter : MonoBehaviour
 			MessageCenter.Instance.Broadcast( new NotorietyMaxedMessage( mess.PanickedPosition ) );
 			notoriety = notorietyMax;
 		}
+	}
+
+	protected void HandleChopping( Message message )
+	{
+		AxeManStartedChoppingTreeMessage mess = message as AxeManStartedChoppingTreeMessage;
+
+		flashing = true;
 	}
 
 	// pulsating axeman head variables
@@ -217,6 +234,45 @@ public class NotorietyMeter : MonoBehaviour
 
 		FontConverter.instance.rightAnchorParseStringToTextures (startX + xWidth + startX * 2, startY * 1.5f, Screen.width * 30f / 1440f, Screen.height * 50f / 742f, axemanCount + "x");
 
+		treeCount = CountTrees ();
+		float offset = 0;
+		for( int i = 0; i < treeCount; i++ )
+		{
+			if( i != treeCount - 1 )
+			{
+				GUI.DrawTexture( new Rect(startX * 3 + 2*xWidth + offset * xWidth, startY - .5f, xWidth, yHeight), treeIcon );
+				offset++;
+			}
+			else // last tree
+			{
+				if( !flashing )
+				{
+					GUI.DrawTexture( new Rect(startX * 3 + 2*xWidth + offset * xWidth, startY - .5f, xWidth, yHeight), treeIcon );
+					offset++;
+				}
+				else
+				{
+					if( flashingUp && currentTreeAlpha >= 1f )
+						flashingUp = false;
+					else if( flashingUp )
+						currentTreeAlpha += .03f;
+					else if( !flashingUp && currentTreeAlpha <= 0f )
+						flashingUp = true;
+					else
+						currentTreeAlpha -= .03f;
+
+					Color guiColor = GUI.color;
+					guiColor.a = currentTreeAlpha;
+					GUI.color = guiColor;
+
+					GUI.DrawTexture( new Rect(startX * 3 + 2*xWidth + offset * xWidth, startY - .5f, xWidth, yHeight), treeIcon );
+					offset++;
+
+					guiColor.a = 1f;
+					GUI.color = guiColor;
+				}
+			}
+		}
 		// count texture
 
 		//GUI.matrix = GlobalGameStateManager.PrepareMatrix();
@@ -250,5 +306,19 @@ public class NotorietyMeter : MonoBehaviour
 	private int CountAxemen()
 	{
 		return GameObject.FindObjectsOfType<EnemyAIController>().Length;
+	}
+
+	private int CountTrees()
+	{
+		// end flashing if needed
+		if( currentTreeCount != GameObject.FindObjectsOfType<PossessableTree>().Length )
+		{
+			flashing = false;
+			flashingUp = false;
+			currentTreeAlpha = 1;
+			currentTreeCount = GameObject.FindObjectsOfType<PossessableTree>().Length;
+		}
+
+		return GameObject.FindObjectsOfType<PossessableTree>().Length;
 	}
 }

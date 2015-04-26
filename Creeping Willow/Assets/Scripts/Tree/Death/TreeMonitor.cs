@@ -5,6 +5,7 @@ public class TreeMonitor : MonoBehaviour
 {
     public GUISkin Skin;
     public GameObject AxeManKillInactive;
+    public Camera KillCamera;
 
 
     private Camera cam;
@@ -16,6 +17,7 @@ public class TreeMonitor : MonoBehaviour
         MessageCenter.Instance.RegisterListener(MessageType.PlayerKilled, HandleTreeDeath);
 
         cam = GetComponent<Camera>();
+        KillCamera = cam;
     }
 
     private void HandleTreeDeath(Message message)
@@ -39,6 +41,10 @@ public class TreeMonitor : MonoBehaviour
 
             transform.position = new Vector3(m.Tree.transform.position.x, m.Tree.transform.position.y + 0.7f, -9f);
             cam.enabled = true;
+
+            MessageCenter.Instance.Broadcast(new AxeManStartedChoppingTreeMessage());
+
+            //m.Tree.GetComponent<PossessableTree>().ChangeState("InactiveDead", axeMan);
         }
     }
 

@@ -72,6 +72,7 @@ public class AxeManKillActiveTree : MonoBehaviour
     {
         targetTree = target;
         this.actualAxeMan = actualAxeMan;
+        actualAxeMan.SetActive(false);
         tree = targetTree.GetComponent<PossessableTree>();
     }
 
