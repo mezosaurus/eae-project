@@ -3330,7 +3330,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
       propertyPath: maxNumberOfEachNPC
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: bdac41be3a009334d935824e3d0370aa, type: 2}
       propertyPath: critterNPC
@@ -24547,6 +24547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Skin: {fileID: 11400000, guid: 1411ddeaf01617545a77371b765309e5, type: 2}
   AxeManKillInactive: {fileID: 127790, guid: 6815b6e671bb7d64a9fd89b5c64f2379, type: 2}
+  KillCamera: {fileID: 0}
 --- !u!1 &1211235188
 GameObject:
   m_ObjectHideFlags: 0
@@ -34742,7 +34743,7 @@ MonoBehaviour:
   enemyNPCWander: {fileID: 100000, guid: aa22c51873fc0cb45b168393eb79b015, type: 2}
   enemyNPCActive: {fileID: 100000, guid: 1134c49acb1a1fb4092e0f0e51b9f008, type: 2}
   critterNPC: {fileID: 107086, guid: 7d0da34a69c2f5f499c6c32d1d0ed0eb, type: 2}
-  maxNumberOfEachNPC: 1
+  maxNumberOfEachNPC: 4
   spawnTag: Respawn
   pathTag: Paths
   benchTag: Bench
@@ -35674,7 +35675,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "feast on the Souls of the living\r\nwithout alerting the axeman\n\nplease
+  m_Text: "feast on the souls of the living\r\nwithout alerting the axeman\n\nplease
     use a controller"
 --- !u!222 &1801111822
 CanvasRenderer:

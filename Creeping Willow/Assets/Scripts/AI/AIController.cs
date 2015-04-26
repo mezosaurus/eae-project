@@ -318,7 +318,7 @@ public class AIController : GameBehavior
 		}
 		if (other.tag == "Border") 
 		{
-			if (panicked) 
+			if (panicked && !scaredByAxeman) 
 			{
 				NPCPanickedOffMapMessage message = new NPCPanickedOffMapMessage (panickedPos);
 				MessageCenter.Instance.Broadcast (message);
@@ -766,17 +766,24 @@ public class AIController : GameBehavior
 		panickedPos = gameObject.transform.position;
 		//panicTime = Time.time;
 		//timePanicked = panicCooldownSeconds;
-		if( getPlayer() != null )
+		GameObject player = getPlayer ();
+		if( player != null )
 			moveDir = transform.position - getPlayer ().transform.position;
 		broadcastAlertLevelChanged (AlertLevelType.Panic);
 
-		if (GameObject.Find("AIGenerator").GetComponent<AIGenerator>().isMaze)
+		if (player.GetComponent<PossessableTree>().AxeMan != null)
+		{
+			scaredByAxeman = true;
+		}
+
+		if (GameObject.Find("AIGenerator").GetComponent<AIGenerator>().isMaze && !scaredByAxeman)
 		{
 			NPCPanickedOffMapMessage message = new NPCPanickedOffMapMessage (panickedPos);
 			MessageCenter.Instance.Broadcast (message);
 		}
 	}
 
+	public bool scaredByAxeman = false;
 	protected virtual void scare (Vector3 scaredPosition)
 	{
 		if (panicked)
