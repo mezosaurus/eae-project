@@ -186,8 +186,6 @@ public class PossessableTree : Possessable
             Dead = true;
             ActualAxeMan = message.NPC;
 
-            Debug.Log(ActualAxeMan);
-
             // See if the tree is already in the active state
             if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE && Active)
             {
