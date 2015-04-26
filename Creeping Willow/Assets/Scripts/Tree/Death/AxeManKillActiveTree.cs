@@ -5,6 +5,8 @@ public class AxeManKillActiveTree : MonoBehaviour
 {
     private const float SwingFrameTime = 0.436f / 2f;
     private const float StruggleFrameTime = 0.1f;
+    private const float BigWinFrameTime1 = 0.1f;
+    private const float BigWinFrameTime2 = 0.2f;
 
 
     public GameObject Axe;
@@ -20,6 +22,7 @@ public class AxeManKillActiveTree : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private uint phase;
     private float timer;
+    private Vector3 startPosition;
 
 	private bool levelEndedMessageSent;
 
@@ -31,6 +34,11 @@ public class AxeManKillActiveTree : MonoBehaviour
 
     // Phase 1001 variables
     int frame;
+
+    // Phase 8001 variables
+    GameObject axe;
+    Vector3 from, peak;
+    float rotation;
 
     // Phase 9001 variables
     int chopIndex, numChops;
@@ -57,6 +65,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         MessageCenter.Instance.RegisterListener(MessageType.AxeManMinigameAxeManChangePhase, HandleChangePhase);
 
 		levelEndedMessageSent = false;
+        startPosition = transform.position;
     }
 
     public void Instantiate(GameObject target, GameObject actualAxeMan)
@@ -64,6 +73,25 @@ public class AxeManKillActiveTree : MonoBehaviour
         targetTree = target;
         this.actualAxeMan = actualAxeMan;
         tree = targetTree.GetComponent<PossessableTree>();
+    }
+
+    private GameObject FindClosestAxe()
+    {
+        float closestDistance = float.MaxValue;
+        GameObject closestAxe = null;
+
+        foreach(GameObject axe in GameObject.FindGameObjectsWithTag("Axe"))
+        {            
+            float distance = Vector3.Distance(transform.position, axe.transform.position);
+
+            if(distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestAxe = axe;
+            }
+        }
+
+        return closestAxe;
     }
 
     private void HandleChangePhase(Message m)
@@ -84,6 +112,23 @@ public class AxeManKillActiveTree : MonoBehaviour
             audio.clip = Sounds.Struggle[Random.Range(0, Sounds.Struggle.Length)];
             audio.Play();
         }
+        if(phase == 8001)
+        {
+            timer = 0f;
+            spriteRenderer.sprite = Sprites.Struggle[2];
+
+            transform.SetParent(null);
+
+            // Calculate x midpoint
+            float xm = (startPosition.x - transform.position.x);
+            from = transform.position;
+            peak = new Vector3(transform.position.x + xm, transform.position.y + 0.1f);
+
+            // Calculate rotation needed
+            rotation = transform.eulerAngles.z;
+
+            axe = FindClosestAxe();
+        }
         if(phase == 9001)
         {
             timer = 0f;
@@ -98,7 +143,7 @@ public class AxeManKillActiveTree : MonoBehaviour
         if(phase == 98765)
         {
             MessageCenter.Instance.Broadcast(new AxeManKilledMessage());
-            Destroy(actualAxeMan);
+            //Destroy(actualAxeMan);
             Destroy(gameObject);
         }
     }
@@ -113,6 +158,9 @@ public class AxeManKillActiveTree : MonoBehaviour
             case 3: UpdatePhase3(); break;
             case 4: UpdatePhase4(); break;
             case 1001: UpdatePhase1001(); break;
+            case 8001: UpdatePhase8001(); break;
+            case 8002: UpdatePhase8002(); break;
+            case 8003: UpdatePhase8003(); break;
             case 9001: UpdatePhase9001(); break;
             case 9002: UpdatePhase9002(); break;
             case 9003: UpdatePhase9003(); break;
@@ -236,6 +284,53 @@ public class AxeManKillActiveTree : MonoBehaviour
         }
     }
 
+    private void UpdatePhase8001()
+    {
+        timer += Time.deltaTime;
+
+        if (timer > BigWinFrameTime1)
+            timer = BigWinFrameTime1;
+
+        transform.position = Vector3.Lerp(from, peak, timer / BigWinFrameTime1);
+        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Lerp(rotation, 360f, timer / (BigWinFrameTime1 + BigWinFrameTime2)));
+
+        if (timer >= BigWinFrameTime1)
+        {
+            timer = 0f;
+            phase = 8002;
+
+            return;
+        }
+    }
+
+    private void UpdatePhase8002()
+    {
+        timer += Time.deltaTime;
+
+        if (timer > BigWinFrameTime2)
+            timer = BigWinFrameTime2;
+
+        transform.position = Vector3.Lerp(peak, startPosition, timer / BigWinFrameTime2);
+        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Lerp(rotation, 360f, (timer + BigWinFrameTime1) / (BigWinFrameTime1 + BigWinFrameTime2)));
+
+        if (timer >= BigWinFrameTime2)
+        {
+            timer = 0f;
+            phase = 9002;
+            spriteRenderer.sprite = Sprites.Stand[0];
+            transform.eulerAngles = Vector3.zero;
+            Destroy(axe);
+
+            return;
+        }
+    }
+
+    private void UpdatePhase8003()
+    {
+        Debug.Log(rotation);
+        //transform.Rotate(new Vector3(0f, 0f, rotation * Time.deltaTime));
+    }
+
     private void UpdatePhase9001()
     {
         timer += Time.deltaTime;
@@ -256,18 +351,21 @@ public class AxeManKillActiveTree : MonoBehaviour
     {
         if(!audio.isPlaying)
         {
-            phase = 9003;
-            audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
+            //timer += Time.deltaTime;
 
-            audio.Play();
+            /*if (timer > 0.25f)
+            {*/
+                phase = 9003;
+                audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
+
+                audio.Play();
+            //}
         }
     }
 
     private void UpdatePhase9003()
     {
-        timer += Time.deltaTime;
-
-        if(timer > 1f)
+        if (!audio.isPlaying)
         {
             timer = 0f;
             phase = 9004;
@@ -348,6 +446,7 @@ public class AxeManKillActiveTree : MonoBehaviour
 				{
 					levelEndedMessageSent = true;
                 	MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
+                    Debug.Log("Sent loss message");
 				}
             }
         }

@@ -99,7 +99,10 @@ public class OutroScript : MonoBehaviour
 	{
 		ScoreAddingMessage mess = message as ScoreAddingMessage;
 		if( mess.adding == false )
+		{
 			ReadyButtons();
+			pauseCanvas.enabled = true;
+		}
 	}
 
 	void Update()
@@ -145,7 +148,7 @@ public class OutroScript : MonoBehaviour
 	private void LevelEnded()
 	{
 		isPaused = true;
-		pauseCanvas.enabled = true;
+		//pauseCanvas.enabled = true;
 		MessageCenter.Instance.Broadcast( new PauseChangedMessage( true ) );
 
 		// Disable the other scripts until we are out of the menu

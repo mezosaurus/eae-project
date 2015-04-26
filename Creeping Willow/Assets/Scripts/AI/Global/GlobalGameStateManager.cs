@@ -75,6 +75,7 @@ public static class GlobalGameStateManager
         Dictionary<NPCSkinType, NPCData> data = new Dictionary<NPCSkinType, NPCData>();
 
         AddNPCType(data, NPCSkinType.Bopper, new NPCDataBopper());
+        AddNPCType(data, NPCSkinType.Boppina, new NPCDataBoppina());
         AddNPCType(data, NPCSkinType.Hippie, new NPCDataHippie());
         AddNPCType(data, NPCSkinType.MowerMan, new NPCDataMowerMan());
         AddNPCType(data, NPCSkinType.OldMan, new NPCDataOldMan());

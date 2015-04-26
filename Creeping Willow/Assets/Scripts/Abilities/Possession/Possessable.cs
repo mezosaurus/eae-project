@@ -39,7 +39,7 @@ public abstract class Possessable : GameBehavior {
 				abilityInUse = true;
 			}
 		}*/
-        if (Input.GetButtonDown("B") && Active && GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE)
+        if ((Input.GetButtonDown("A") || Input.GetButtonDown("B")) && Active && GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE)
         {// && (GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.Eating && GameObject.FindGameObjectWithTag ("Player").GetComponent<TreeController> ().state != Tree.State.AxeManMinigame)) {
 			AbilityStatusChangedMessage message = new AbilityStatusChangedMessage(true);
 			MessageCenter.Instance.Broadcast(message);

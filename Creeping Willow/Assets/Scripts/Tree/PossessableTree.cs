@@ -121,6 +121,15 @@ public class PossessableTree : Possessable
         CreateStates();
         LoadCircle();
 
+        // Sort eating NPC sprites
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Bopper, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Boppina, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Critter, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Hippie, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.Hottie, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.MowerMan, (a, b) => a.name.CompareTo(b.name));
+        System.Array.Sort<Sprite>(Sprites.EatingNPCs.OldMan, (a, b) => a.name.CompareTo(b.name));
+
         BodyParts.Legs.GetComponent<Animator>().speed = 0f;
 	}
 	
@@ -156,6 +165,8 @@ public class PossessableTree : Possessable
         {
             Dead = true;
             ActualAxeMan = message.NPC;
+
+            Debug.Log(ActualAxeMan);
 
             // See if the tree is already in the active state
             if(GlobalGameStateManager.PosessionState == PosessionState.EXORCISABLE && Active)
@@ -224,7 +235,7 @@ public class PossessableTree : Possessable
 
                 //GUI.Label(new Rect(20f, 1080f - size2.y - size.y - 20f, size.x, size.y), content);
 				if( BonusPoisonTimer < MaxBonusTime - 3 )
-					FontConverter.instance.parseStringToTextures(20f, 1080f - size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
+					FontConverter.instance.parseStringToTextures(20f, 1080f - 3 * size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
             	else
 					FontConverter.instance.parseStringToTextures(Screen.width / 2 - size.x / content.Length, 600f - size2.y - size.y * 2 - 20f, size.x / content.Length * 2, size.y * 2, "Poisonous: " + Mathf.RoundToInt(BonusPoisonTimer) + " s", alpha);
 			}
@@ -327,13 +338,33 @@ namespace Tree.Private
             public Sprite[] ButtonSprites;
         }
 
+        [Serializable]
+        public class _EatingNPCs
+        {
+            public Sprite[] Bopper;
+            public Sprite[] Boppina;
+            public Sprite[] Critter;
+            public Sprite[] Hippie;
+            public Sprite[] Hottie;
+            public Sprite[] MowerMan;
+            public Sprite[] OldMan;
+        }
+
+        [Serializable]
+        public class _Shadows
+        {
+            public Sprite Front, FrontRight, Right, BackRight, Back;
+        }
+
 
         public _Trunk Trunk;
         public _Face Face;
         public Sprite LegsStill;
         public _EatingMinigame EatingMinigame;
+        public _EatingNPCs EatingNPCs;
         public Sprite[] EatingAxeMan;
         public Texture2D FinishHim;
+        public _Shadows Shadows;
     }
 
     [Serializable]

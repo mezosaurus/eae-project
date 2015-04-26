@@ -118,8 +118,8 @@ public class ScoreScript : MonoBehaviour {
 	int streakMultiplier = 1;
 	
 	// multiplier points
-	public readonly int scaredNPCMultiplier = 1;
-	public readonly int luredNPCMultiplier = 1;
+	public readonly int scaredNPCMultiplier = 2;
+	public readonly int luredNPCMultiplier = 2;
 	
 	
 	int tmpMultiplier = 0;
@@ -265,9 +265,9 @@ public class ScoreScript : MonoBehaviour {
 	float multLength;
 	float multHeight;
 
-	int currentMultiplier = 3;
+	int currentMultiplier = 5;
 	int popupMultiplier = 0;
-	int multiplierPoints = 10;
+	int multiplierPoints = 20;
 
 	// multiplier timers
 	float lastMultiplierTime;
@@ -287,6 +287,9 @@ public class ScoreScript : MonoBehaviour {
 	// game mode marked selected
 	bool marked = false;
 	bool paused = false;
+
+	// tmp variables
+	int scoredMultiplier = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -322,7 +325,7 @@ public class ScoreScript : MonoBehaviour {
 		sideR = Screen.width * 2 / 3;
 		startHeight = Screen.height * 1 / 3;
 		endHeight = 100;
-		endX = multXOffset;
+		endX = 20;
 		
 		//highscores = GlobalGameStateManager.highscores;
 		//names = GlobalGameStateManager.playerNames;
@@ -337,7 +340,7 @@ public class ScoreScript : MonoBehaviour {
 		lastMultiplierTime = Time.time;
 		currentMultiplierTime = Time.time;
 
-		if( LevelLoader.instance.modeName == "Feast" )
+		if( LevelLoader.instance.modeName == "Marked" )
 		{
 			popupMultiplier = 0;
 			multiplierPoints = 95;
@@ -361,31 +364,13 @@ public class ScoreScript : MonoBehaviour {
 		// end of level
 		if (endLevel) 
 		{	
-			Debug.Log ("in end");
-			// not a high score
-			if( _score <= highscores[9] )
-				entered = true;
-			Debug.Log ( "after enter");
-			if( win && !entered )
+			if( !win && entered )
 			{
-				GUIStyle myStyle = new GUIStyle();
-				GUI.skin.textField.alignment = TextAnchor.UpperCenter;
-				GUI.skin.textField.fontSize = 30;
-				GUI.skin.textField.normal.textColor = Color.white;
-				myStyle.fontSize = 30;
-				GUI.Label(new Rect(Screen.width/2,Screen.height/2+5,100,100), "Top 10 High Score", myStyle);
-				GUI.Label(new Rect(Screen.width/2-200,Screen.height/2+50,100,100), "Enter Your Initials ", myStyle);
-				GUI.SetNextControlName("MyTextField");
-				initials = GUI.TextField(new Rect(Screen.width/2,Screen.height/2+70,100,50), initials, 3);
-				GUI.FocusControl("MyTextField");
-				
-				if( initials.Length == 3 )
-				{
-					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
-				}
+				entered = false;						
+				MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 			}
 
-			if (win && !entered) 
+			/*if (win && !entered) 
 			{
 				// check input
 				if (initials.Length == 3) 
@@ -410,7 +395,7 @@ public class ScoreScript : MonoBehaviour {
                         ServerMessaging.UploadScoreToServer(initials, (System.UInt32)_score, gameType, Application.loadedLevelName);
 					}
 				}
-			}
+			}*/
 			return;
 		}
 		
@@ -512,6 +497,13 @@ public class ScoreScript : MonoBehaviour {
 		}
 		else if( scoreState == (int)ScoreState.SCORING )
 		{
+			// add multiplier
+			if( tmpMultiplier != 0 )
+			{
+				addMultiplier(tmpMultiplier);
+				tmpMultiplier = 0;
+			}
+
 			/*** display scores ***/
 			int offset = 1;
 
@@ -569,12 +561,12 @@ public class ScoreScript : MonoBehaviour {
 			
 			// multiplier
 			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Multiplier");
-			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, currentMultiplier + "");
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, scoredMultiplier + "");
 			offset++;
 			
 			// total score
 			FontConverter.instance.parseStringToTextures (sideL, startHeight + offset*(popupY+2), popupX, popupY, "Total Score");
-			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (sideL + popupX * 20, startHeight + offset*(popupY+2), popupX, popupY, "" + (displayScore * scoredMultiplier * displayMultiplier));
 			offset++;
 
 			// increment timer
@@ -651,12 +643,12 @@ public class ScoreScript : MonoBehaviour {
 			
 			// multiplier
 			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Multiplier");
-			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, currentMultiplier + "");
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, scoredMultiplier + "");
 			offset++;
 			
 			// total score
 			FontConverter.instance.parseStringToTextures (endX, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "Total Score");
-			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (endX + popupXEnd * 20, endHeight + offset*(popupYEnd+2), popupXEnd, popupYEnd, "" + (displayScore * scoredMultiplier * displayMultiplier));
 			offset++;
 
 			// increment timer
@@ -681,8 +673,7 @@ public class ScoreScript : MonoBehaviour {
 		}
 		else if( scoreState == (int)ScoreState.END_SCORING )
 		{
-			addMultiplier(tmpMultiplier);
-			tmpMultiplier = 0;
+
 
 			isPattern = false;
 			isLured = false;
@@ -694,7 +685,10 @@ public class ScoreScript : MonoBehaviour {
 			displayScore = 0;
 			displayMultiplier = streakMultiplier;
 		}
-		
+
+		float tmpXScaler = Screen.width * 10 / 1440;
+		float tmpYScaler = Screen.height * 10 / 742;
+
 		// display multiplier points
 		if( scoreDisplay )
 		{
@@ -713,7 +707,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// multiplier pop-up text
-			FontConverter.instance.parseStringToTextures (500 - popupX/2, 150 - popupY/2 - popupIncrement2 + 75, popupX, popupY, multiplierSign + multiplierPointImage);
+			FontConverter.instance.parseStringToTextures (50 * tmpXScaler, 10f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
 
 
 			// increment height
@@ -732,7 +726,9 @@ public class ScoreScript : MonoBehaviour {
 		}
 		
 		GUI.color = savedGuiColor; // revert to previous alpha
-		
+
+
+
 		// popup added score
 		if( popupIncrement < popupIncrementMax )
 		{
@@ -754,7 +750,7 @@ public class ScoreScript : MonoBehaviour {
 				GUI.color = guiColor;
 			}
 			
-			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 150, 20 + offsetY + sizeY + popupIncrement, sizeX, sizeY, "" + (displayScore * currentMultiplier * displayMultiplier));
+			FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, 7 * tmpYScaler + popupIncrement, 3 * tmpXScaler, 5 * tmpYScaler, "" + (displayScore * scoredMultiplier * displayMultiplier));
 
 			if( !paused )
 				popupIncrement += .75f;
@@ -762,12 +758,11 @@ public class ScoreScript : MonoBehaviour {
 			GUI.color = savedGuiColor; // revert to previous alpha
 		}
 
-		float tmpXScaler = Screen.width * 10 / 1440;
-		float tmpYScaler = Screen.height * 10 / 742;
+
 
 		// score
-		FontConverter.instance.parseStringToTextures (Screen.width - 2*sizeX - 66 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "soul essence");
-		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX - 12 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "" + _score);
+		FontConverter.instance.parseStringToTextures (Screen.width - 2*sizeX - 55 * tmpXScaler, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "soul matter");
+		FontConverter.instance.rightAnchorParseStringToTextures (Screen.width - 2*sizeX, tmpYScaler /*Screen.height-offsetY*/, 3 * tmpXScaler, 5 * tmpYScaler, "" + _score);
 		
 		// high score
 		/*FontConverter.instance.parseStringToTextures (Screen.width - offsetX, 10, sizeX, sizeY, "high score");
@@ -782,9 +777,9 @@ public class ScoreScript : MonoBehaviour {
 		float tmpWidth = Screen.width * 100f / 1440;
 
 
-		GUI.DrawTexture (new Rect (Screen.width - tmpWidth * 1.1f, .1f * tmpWidth, tmpWidth, tmpWidth), newBountyBoxImage);
+		GUI.DrawTexture (new Rect (Screen.width - tmpWidth * 1.1f, Screen.height - tmpWidth - .1f * tmpWidth, tmpWidth, tmpWidth), newBountyBoxImage);
 		if( BountyNPCImage != null )
-			GUI.DrawTexture (new Rect(Screen.width - .9f * tmpWidth, .2f * tmpWidth, .6f * tmpWidth, .6f * tmpWidth), BountyNPCImage);
+			GUI.DrawTexture (new Rect(Screen.width - .9f * tmpWidth, Screen.height - tmpWidth, .6f * tmpWidth, .6f * tmpWidth), BountyNPCImage);
 
 		/*
 		// probably should use switch-case, but meh
@@ -868,7 +863,7 @@ public class ScoreScript : MonoBehaviour {
 		myStyle.normal.textColor = Color.white;
 
 		// end of level
-		if( endLevel )
+		/*if( endLevel )
 		{
 			Debug.Log ("in end");
 			// not a high score
@@ -892,7 +887,7 @@ public class ScoreScript : MonoBehaviour {
 					GUI.Label(new Rect(Screen.width/2+200,Screen.height/2+50,100,100), "Press A To Save", myStyle);
 				}
 			}
-		}
+		}*/
 		
 		
 		/***** Score Multiplier GUI *****/
@@ -1136,10 +1131,27 @@ public class ScoreScript : MonoBehaviour {
 		deleteScaredNPCS = new ArrayList ();
 	}
 	
-	
-	void invokeAudio()
+
+	public void submitScores(string nm)
 	{
+		updateHighScores (_score, nm);
+		//GlobalGameStateManager.highscores = highscores;
+		//GlobalGameStateManager.playerNames = names;
+		GlobalGameStateManager.SavePlayerScores(highscores, names);
 		
+		entered = true;						
+		//MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
+		
+		// Upload the high score to the server
+		GameMode gameType = GameMode.Survival;
+		
+		EndConditions ec = GameObject.FindObjectOfType<EndConditions>();
+		
+		if (ec != null) gameType = ec.GameMode;
+		
+		ServerMessaging.UploadScoreToServer(nm, (System.UInt32)_score, gameType, Application.loadedLevelName);
+
+		MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 	}
 	
 	
@@ -1668,7 +1680,8 @@ public class ScoreScript : MonoBehaviour {
 		displayScore = npcScore * stealth * quick * lure * streakMultiplier;
 
 		currentMultiplier = 1 + multiplierPoints / multIncre;
-		addScore(displayScore*currentMultiplier*displayMultiplier);
+		scoredMultiplier = currentMultiplier;
+		addScore(displayScore*scoredMultiplier*displayMultiplier);
 		
 		scoreState = (int)ScoreState.START_SCORING;
 		
@@ -1769,11 +1782,14 @@ public class ScoreScript : MonoBehaviour {
 
 		//if( mess.Type == (int)LevelFinishedType.Win )
 		//{
-			if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore
-			{
-				win = true;
-				MessageCenter.Instance.Broadcast(new ScoreAddingMessage(true));
-			}
+		if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore
+		{
+			win = true;
+			MessageCenter.Instance.Broadcast(new ScoreAddingMessage(true));
+			gameObject.GetComponent<EnterInitialsScript>().enabled = true;
+			gameObject.GetComponent<EnterInitialsScript>().initialize();
+		}
+		entered = true;
 		//}
 	}
 

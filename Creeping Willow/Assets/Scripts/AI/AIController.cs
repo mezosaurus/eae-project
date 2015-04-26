@@ -396,10 +396,13 @@ public class AIController : GameBehavior
 				panic ();
 			}
 
-			PossessableTree script = getPlayer ().GetComponent<PossessableTree> ();
-			if (script != null && script.Eating) 
+			if( getPlayer() != null )
 			{
-				panic ();
+				PossessableTree script = getPlayer ().GetComponent<PossessableTree> ();
+				if (script != null && script.Eating) 
+				{
+					panic ();
+				}
 			}
 
 			// Increment alertLevel
@@ -481,10 +484,13 @@ public class AIController : GameBehavior
 
 		if (playerInRange) 
 		{
-			Vector2 playerSpeed = getPlayer ().rigidbody2D.velocity;
-			if (playerSpeed == Vector2.zero && alertLevel > 0) 
+			if( getPlayer() != null )
 			{
-				decrementAlertLevel ();
+				Vector2 playerSpeed = getPlayer ().rigidbody2D.velocity;
+				if (playerSpeed == Vector2.zero && alertLevel > 0) 
+				{
+					decrementAlertLevel ();
+				}
 			}
 		} 
 		else if (alertLevel > 0) 
@@ -544,14 +550,15 @@ public class AIController : GameBehavior
 
 			return true;
 		}
-
-		player = getPlayer ();
-		if (checkForPlayer () && player.rigidbody2D != null && player.rigidbody2D.velocity != Vector2.zero) 
+		if( getPlayer() != null )
 		{
-			if (NPCHandleSeeingPlayer ())
-				return true;
+			player = getPlayer ();
+			if (checkForPlayer () && player.rigidbody2D != null && player.rigidbody2D.velocity != Vector2.zero) 
+			{
+				if (NPCHandleSeeingPlayer ())
+					return true;
+			}
 		}
-
 		if (scared) 
 		{
 			scaredTimeLeft -= Time.deltaTime;
@@ -645,8 +652,11 @@ public class AIController : GameBehavior
 
 	private void increaseAlertLevel (float sensitivity)
 	{
-		var playerSpeed = getPlayer ().rigidbody2D.velocity;
-		alertLevel += playerSpeed.magnitude * detectLevel * sensitivity;
+		if( getPlayer() != null )
+		{
+			var playerSpeed = getPlayer ().rigidbody2D.velocity;
+			alertLevel += playerSpeed.magnitude * detectLevel * sensitivity;
+		}
 	}
 
 	protected virtual void decrementAlertLevel ()
@@ -701,11 +711,14 @@ public class AIController : GameBehavior
 			playAlert = false;
 		}
 		broadcastAlertLevelChanged (AlertLevelType.Alert);
-		Vector3 direction = getPlayer ().transform.position - gameObject.transform.position;
-		if (direction.x > 0)
-			flipXScale (true);
-		else
-			flipXScale (false);
+		if( getPlayer() != null )
+		{
+			Vector3 direction = getPlayer ().transform.position - gameObject.transform.position;
+			if (direction.x > 0)
+				flipXScale (true);
+			else
+				flipXScale (false);
+		}
 	}
 
 	protected virtual void panic ()
@@ -746,7 +759,8 @@ public class AIController : GameBehavior
 		panickedPos = gameObject.transform.position;
 		//panicTime = Time.time;
 		//timePanicked = panicCooldownSeconds;
-		moveDir = transform.position - getPlayer ().transform.position;
+		if( getPlayer() != null )
+			moveDir = transform.position - getPlayer ().transform.position;
 		broadcastAlertLevelChanged (AlertLevelType.Panic);
 
 		if (GameObject.Find("AIGenerator").GetComponent<AIGenerator>().isMaze)

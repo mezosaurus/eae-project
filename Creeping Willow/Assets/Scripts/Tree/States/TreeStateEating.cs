@@ -2,9 +2,14 @@
 
 public class TreeStateEating : TreeState
 {
+    private const float FrameTime = 0.05f;
+    
+    
     private GameObject npc;
     private NPCData npcData;
-    private float timeElapsed;
+    private Sprite[] sprites;
+    private int sprite;
+    private float spriteTimer, timeElapsed;
 
 
     public override void Enter(object data)
@@ -22,9 +27,26 @@ public class TreeStateEating : TreeState
         npc = parameters.NPC;
         npcData = GlobalGameStateManager.NPCData[npc.GetComponent<AIController>().SkinType];
 
-        Tree.BodyParts.Face.GetComponent<Animator>().enabled = true;
+        /*Tree.BodyParts.Face.GetComponent<Animator>().enabled = true;
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.Face.Crazy;
-        Tree.BodyParts.Face.GetComponent<Animator>().SetTrigger(npcData.AnimationTrigger);
+        Tree.BodyParts.Face.GetComponent<Animator>().SetTrigger(npcData.AnimationTrigger);*/
+
+        // Choose the texture array based on the character skin
+        switch(npc.GetComponent<AIController>().SkinType)
+        {
+            case NPCSkinType.Bopper: sprites = Tree.Sprites.EatingNPCs.Bopper; break;
+            case NPCSkinType.Boppina: sprites = Tree.Sprites.EatingNPCs.Boppina; break;
+            case NPCSkinType.Critter: sprites = Tree.Sprites.EatingNPCs.Critter; break;
+            case NPCSkinType.Hippie: sprites = Tree.Sprites.EatingNPCs.Hippie; break;
+            case NPCSkinType.Hottie: sprites = Tree.Sprites.EatingNPCs.Hottie; break;
+            case NPCSkinType.MowerMan: sprites = Tree.Sprites.EatingNPCs.MowerMan; break;
+            case NPCSkinType.OldMan: sprites = Tree.Sprites.EatingNPCs.OldMan; break;
+
+            default: throw new System.ApplicationException("The tree ate something it shouldn't have...");
+        }
+
+        sprite = 0;
+        Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = sprites[sprite];
 
         // Set arm angles
         Tree.BodyParts.RightUpperArm.transform.eulerAngles = new Vector3(0f, 0f, npcData.RightUpperArmEndAngle);
@@ -37,25 +59,12 @@ public class TreeStateEating : TreeState
 
         Tree.audio.Play();
 
+        spriteTimer = 0f;
         timeElapsed = 0f;
     }
 
     private void Eat()
-    {        
-        GlobalGameStateManager.SoulConsumedTimer = 3.5f;
-
-        Tree.audio.Stop();
-
-		SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
-		soundManager.ResumeMusic();
-
-        Tree.audio.clip = Tree.Sounds.SoulConsumed;
-        Tree.audio.Play();
-
-        MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
-        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
-        MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
-
+    {
         /*Tree.BodyParts.FlameEyes.SetActive(true);
         Tree.BodyParts.FlameEyes.particleSystem.Play();*/
 
@@ -71,7 +80,25 @@ public class TreeStateEating : TreeState
                     Tree.BonusSpeedTimer = Tree.MaxBonusTime;
                     break;
             }
+
+            Tree.audio.clip = Tree.Sounds.Saying[Random.Range(0, Tree.Sounds.Saying.Length)];
         }
+        else
+        {
+            Tree.audio.clip = Tree.Sounds.SoulConsumed;
+            GlobalGameStateManager.SoulConsumedTimer = 3.5f;
+        }
+
+        Tree.audio.Stop();
+
+        SoundManager soundManager = GameObject.FindObjectOfType<SoundManager>();
+        soundManager.ResumeMusic();
+
+        MessageCenter.Instance.Broadcast(new NPCEatenMessage(npc));
+        MessageCenter.Instance.Broadcast(new CameraChangeFollowedMessage(Tree.transform, new Vector3(0f, 0.7f)));
+        MessageCenter.Instance.Broadcast(new CameraZoomMessage(4f, 10f));
+
+        Tree.audio.Play();
 
         GameObject.Destroy(npc);
     }
@@ -84,6 +111,21 @@ public class TreeStateEating : TreeState
             Tree.ChangeState("Active");
 
             return;
+        }
+
+        // Update animation state
+        if(sprite < 39)
+        {
+            spriteTimer += Time.deltaTime;
+
+            while(spriteTimer > FrameTime && sprite < 39)
+            {
+                sprite++;
+
+                Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sprite = sprites[sprite];
+                spriteTimer -= FrameTime;
+            }
+
         }
         
         // Update arm rotation

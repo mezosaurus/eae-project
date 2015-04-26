@@ -50,6 +50,9 @@ public class TreeMonitor : MonoBehaviour
         Destroy(cinematic);
 
         cam.enabled = false;
+
+        if(GameObject.FindGameObjectsWithTag("Player").Length == 0)
+            MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
     }
 
     // Update is called once per frame
