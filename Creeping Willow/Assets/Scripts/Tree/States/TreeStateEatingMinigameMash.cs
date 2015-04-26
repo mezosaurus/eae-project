@@ -141,6 +141,8 @@ public class TreeStateEatingMinigameMash : TreeState
 
         npc.transform.position = Tree.transform.position + new Vector3(-1f, -0.25f);
 
+        Tree.audio.Stop();
+
         Tree.ChangeState("Active");
     }
 
