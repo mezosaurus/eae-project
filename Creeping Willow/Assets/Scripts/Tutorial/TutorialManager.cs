@@ -8,6 +8,8 @@ public class TutorialManager : MonoBehaviour
     public int Phase;
     public PossessableTree TreeA, TreeB;
     public TutorialItem[] TutorialItems;
+
+    private bool sent;
     
     void Awake()
     {
@@ -19,6 +21,8 @@ public class TutorialManager : MonoBehaviour
         MessageCenter.Instance.RegisterListener(MessageType.PossessorSpawned, HandlePossessorSpawned);
         MessageCenter.Instance.RegisterListener(MessageType.PossessorDestroyed, HandlePossessorDestroyed);
         MessageCenter.Instance.RegisterListener(MessageType.AbilityPlaced, HandleAbilityPlaced);
+
+        sent = false;
     }
 
     public void AdvancePhase()
@@ -50,10 +54,10 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Phase == 18 && GlobalGameStateManager.SoulConsumedTimer <= 0)
+        if(Phase == 18 && GlobalGameStateManager.SoulConsumedTimer <= 0 && !sent
         {
+            sent = true;
             MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Win, LevelFinishedReason.NumNPCsEaten));
-            Debug.Log("Sent");
         }
     }
 
