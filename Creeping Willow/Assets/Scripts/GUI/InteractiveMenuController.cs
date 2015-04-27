@@ -24,6 +24,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public Text levelText;
 	public Image descriptionImage;
 	public Text descriptionText;
+	public Text descriptionScores;
 
 	private bool axisBusy;
 	private AudioSource clickAudio;
@@ -228,34 +229,108 @@ public class InteractiveMenuController : MonoBehaviour
 			{
 			case "Level0Button":
 				descriptionText.text = "learn the art of the kill\n\nget your roots dirty";
+				descriptionScores.text = "";
 				break;
 
 			case "Level1Button":
 				descriptionText.text = "on a beautiful day they come to play\nbut you will take their souls away";
+				descriptionScores.text = "";
 				break;
 
 			case "Level2Button":
 				descriptionText.text = "there are days at the lake that can be calming and cool\n\nthis is not one of those days";
+				descriptionScores.text = "";
 				break;
 
 			case "Level3Button":
 				descriptionText.text = "they stay safe on the other side\nbut fear will drive them into your arms";
+				descriptionScores.text = "";
 				break;
 
 			case "Level4Button":
 				descriptionText.text = "those that enter the maze may never escape\n\nif they do they will not be the same";
+				descriptionScores.text = "";
 				break;
 
 			case "ModeSurvivalButton":
 				descriptionText.text = "go on an endless killing spree to collect as much soul matter as possible\n\nyour reign of terror will end when all hollow trees have been chopped down";
+
+				switch( levelName )
+				{
+				case "a stalk\nin the park":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadStalkSurvivorNames(), GetSavedHighScoresScript.LoadStalkSurvivorScores() );
+					break;
+					
+				case "lakeside\nlullaby":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadQuadrantsSurvivorNames(), GetSavedHighScoresScript.LoadQuadrantsSurvivorScores() );
+					break;
+					
+				case "over troubled\nwaters":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadBridgeSurvivorNames(), GetSavedHighScoresScript.LoadBridgeSurvivorScores() );
+					break;
+					
+				case "hallowed\nlabyrinth":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadMazeSurvivorNames(), GetSavedHighScoresScript.LoadMazeSurvivorScores() );
+					break;
+					
+				default:
+					descriptionScores.text = "";
+					break;
+				}
 				break;
 
 			case "ModeFeastButton":
 				descriptionText.text = "get the highest score you can with using scares and lures to get bigger combos\n\nthe game ends when you eat 10 people";
+
+				switch( levelName )
+				{
+				case "a stalk\nin the park":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadStalkFeastNames(), GetSavedHighScoresScript.LoadStalkFeastScores() );
+					break;
+
+				case "lakeside\nlullaby":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadQuadrantsFeastNames(), GetSavedHighScoresScript.LoadQuadrantsFeastScores() );
+					break;
+
+				case "over troubled\nwaters":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadBridgeFeastNames(), GetSavedHighScoresScript.LoadBridgeFeastScores() );
+					break;
+
+				case "hallowed\nlabyrinth":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadMazeFeastNames(), GetSavedHighScoresScript.LoadMazeFeastScores() );
+					break;
+
+				default:
+					descriptionScores.text = "";
+					break;
+				}
 				break;
 
 			case "ModeMarkedButton":
 				descriptionText.text = "kill the five marked for harvest\nyour multiplier will drop continually and cannot be replenished\n\nthe faster they die the better";
+
+				switch( levelName )
+				{
+				case "a stalk\nin the park":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadStalkMarkedNames(), GetSavedHighScoresScript.LoadStalkMarkedScores() );
+					break;
+					
+				case "lakeside\nlullaby":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadQuadrantsMarkedNames(), GetSavedHighScoresScript.LoadQuadrantsMarkedScores() );
+					break;
+					
+				case "over troubled\nwaters":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadBridgeMarkedNames(), GetSavedHighScoresScript.LoadBridgeMarkedScores() );
+					break;
+					
+				case "hallowed\nlabyrinth":
+					DisplayDescriptionScores( GetSavedHighScoresScript.LoadMazeMarkedNames(), GetSavedHighScoresScript.LoadMazeMarkedScores() );
+					break;
+					
+				default:
+					descriptionScores.text = "";
+					break;
+				}
 				break;
 
 			case "ModeTimedButton":
@@ -265,6 +340,7 @@ public class InteractiveMenuController : MonoBehaviour
 			default:
 				descriptionImage.enabled = false;
 				descriptionText.text = "";
+				descriptionScores.text = "";
 				break;
 			}
 		}
@@ -408,5 +484,21 @@ public class InteractiveMenuController : MonoBehaviour
 		// Hide the mouse
 		Screen.showCursor = false;
 		Screen.lockCursor = true;
+	}
+
+	private void DisplayDescriptionScores( string[] names, int[] scores )
+	{
+		descriptionScores.text = "";
+
+		int i;
+		for( i = 0; i < 5; i++ )
+		{
+			string name = names[ i ];
+			int score = scores[ i ];
+			if( name != null && score > 0 )
+				descriptionScores.text += name + "  " + score + "\n";
+			else
+				break;
+		}
 	}
 }
