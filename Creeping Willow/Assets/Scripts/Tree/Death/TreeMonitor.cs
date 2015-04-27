@@ -50,6 +50,9 @@ public class TreeMonitor : MonoBehaviour
 
     private void HandleCinematicFinished(GameObject cinematic, GameObject actual)
     {
+		if( cinematic == null || actual == null )
+			return;
+
         actual.transform.position = cinematic.transform.position + new Vector3(0.076f, 0.352f);
         actual.SetActive(true);
 

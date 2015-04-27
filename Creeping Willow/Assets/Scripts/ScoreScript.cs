@@ -710,7 +710,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// multiplier pop-up text
-			FontConverter.instance.parseStringToTextures (64 * tmpXScaler, 10f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
+			FontConverter.instance.parseStringToTextures (64 * tmpXScaler, 7f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
 
 
 			// increment height
@@ -1142,7 +1142,7 @@ public class ScoreScript : MonoBehaviour {
 		//GlobalGameStateManager.playerNames = names;
 		GlobalGameStateManager.SavePlayerScores(highscores, names);
 		
-		entered = true;						
+		entered = true;
 		//MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 		
 		// Upload the high score to the server
@@ -1793,6 +1793,9 @@ public class ScoreScript : MonoBehaviour {
 			gameObject.GetComponent<EnterInitialsScript>().initialize();
 		}
 		entered = true;
+
+
+		scoreState = (int)ScoreState.END_SCORING;
 		//}
 	}
 
