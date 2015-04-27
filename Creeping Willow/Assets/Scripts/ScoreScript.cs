@@ -710,7 +710,7 @@ public class ScoreScript : MonoBehaviour {
 			}
 			
 			// multiplier pop-up text
-			FontConverter.instance.parseStringToTextures (64 * tmpXScaler, 10f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
+			FontConverter.instance.parseStringToTextures (64 * tmpXScaler, 7f * tmpYScaler, 3 * tmpXScaler, 5 * tmpYScaler, multiplierSign + multiplierPointImage);
 
 
 			// increment height
