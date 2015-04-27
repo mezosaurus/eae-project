@@ -17,6 +17,7 @@ public class EnterInitialsScript : MonoBehaviour {
 	// public variables (arrows)
 	public Texture2D upArrow;
 	public Texture2D downArrow;
+	public Texture2D box;
 
 	// texture positioning and information variables
 	bool pressed = false;
@@ -72,14 +73,14 @@ public class EnterInitialsScript : MonoBehaviour {
 		submitXStart = width * .5f + xSize * 3f;
 
 		midLetterStart = height * .5f - ySize * .5f;
-		topButtonStart = height * .5f - ySize;
-		bottomButtonStart = height * .5f + ySize *.5f ;
+		topButtonStart = height * .5f - ySize * .9f;
+		bottomButtonStart = height * .5f + ySize * .4f;
 		submitYStart = height * .5f - arrowYSize * .5f;
 
 		labelXSize = width * .5f / (float)labelStr.Length;
 		labelYSize = labelXSize * 5f / 3f;
 		labelXStart = width * .5f - labelXSize * labelStr.Length * .5f;
-		labelYStart = height * .15f;
+		labelYStart = height * .2f;
 
 	}
 	
@@ -203,7 +204,8 @@ public class EnterInitialsScript : MonoBehaviour {
 		if( pressed )
 		{
 			// outside box
-			GUI.Box(new Rect( Screen.width * .15f, Screen.height * .1f, Screen.width * .7f, Screen.height * .8f ), "" );
+			//GUI.Box(new Rect( Screen.width * .15f, Screen.height * .1f, Screen.width * .7f, Screen.height * .8f ), "" );
+			GUI.DrawTexture(new Rect( Screen.width * .15f, Screen.height * .1f, Screen.width * .7f, Screen.height * .8f ), box );
 
 			if( !submitted ) // temporary
 				FontConverter.instance.parseStringToTextures(labelXStart,labelYStart,labelXSize,labelYSize,labelStr);
