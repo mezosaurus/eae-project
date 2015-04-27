@@ -31,7 +31,7 @@ public class SplashScreen : MonoBehaviour
 	private SplashNumber splash;
 
 	private float timer;
-	private const float st = 3.0f;
+	private const float st = 4.0f;
 	private const float ft = 1.0f;
 	private const float bt = 1.0f;
 
