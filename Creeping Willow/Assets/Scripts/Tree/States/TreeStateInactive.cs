@@ -104,7 +104,7 @@ public class TreeStateInactive : TreeState
         
         if(Tree.Dead)
         {
-            Tree.AxeMan.GetComponent<SpriteRenderer>().sortingOrder = i + 10;
+            if(Tree.AxeMan != null) Tree.AxeMan.GetComponent<SpriteRenderer>().sortingOrder = i + 10;
         }
     }
 

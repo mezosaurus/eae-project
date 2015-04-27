@@ -213,6 +213,11 @@ public class CameraScript : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Debug.LogError("Camera destroyed (this should only happen at the start and end of the game)");
+    }
+
     private void OnGUI()
     {
         if (GlobalGameStateManager.SoulConsumedTimer > 0f)
