@@ -154,6 +154,8 @@ public class EnemyAIController : AIController
 	protected void chasePlayer()
 	{
 		rigidbody2D.velocity = Vector2.zero;
+		if( lastPlayer == null )
+			return;
 		Vector3 pathPosition = lastPlayer.transform.position;
 		Vector3 positionNPC = transform.position;
 		float step = speed * Time.deltaTime;

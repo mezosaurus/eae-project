@@ -1142,7 +1142,7 @@ public class ScoreScript : MonoBehaviour {
 		//GlobalGameStateManager.playerNames = names;
 		GlobalGameStateManager.SavePlayerScores(highscores, names);
 		
-		entered = true;						
+		entered = true;
 		//MessageCenter.Instance.Broadcast (new ScoreAddingMessage (false));
 		
 		// Upload the high score to the server
@@ -1793,6 +1793,9 @@ public class ScoreScript : MonoBehaviour {
 			gameObject.GetComponent<EnterInitialsScript>().initialize();
 		}
 		entered = true;
+
+
+		scoreState = (int)ScoreState.END_SCORING;
 		//}
 	}
 

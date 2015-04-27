@@ -47,7 +47,10 @@ public class OutroScript : MonoBehaviour
 
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
 
-		if( mess.Type == LevelFinishedType.Loss || levelLoader.levelName == "Tutorial_Level" )
+		/*if( mess.Type == LevelFinishedType.Loss || levelLoader.levelName == "Tutorial_Level" )
+			ReadyButtons();*/
+
+		if( levelLoader.levelName == "Tutorial_Level" )
 			ReadyButtons();
 
 		/*switch( mess.Type )
@@ -169,6 +172,9 @@ public class OutroScript : MonoBehaviour
 
 	private void ReadyButtons()
 	{
+		if( pauseCanvas == null )
+			pauseCanvas = GameObject.Find( "OutroCanvas" ).GetComponent<Canvas>();
+
 		pauseCanvas.enabled = true;
 		EnableAllButtons();
 		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
