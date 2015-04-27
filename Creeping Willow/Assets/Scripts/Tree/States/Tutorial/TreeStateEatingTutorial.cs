@@ -41,8 +41,10 @@ public class TreeStateEatingTutorial : TreeState
     }
 
     private void Eat()
-    {        
+    {
         GlobalGameStateManager.SoulConsumedTimer = 3.5f;
+
+        if (TutorialManager.Instance.Phase == 17) TutorialManager.Instance.AdvancePhase();
 
         Tree.audio.Stop();
 

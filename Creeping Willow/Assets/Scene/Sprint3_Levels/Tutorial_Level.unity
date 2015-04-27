@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &4021214
 GameObject:
@@ -279,6 +280,7 @@ MonoBehaviour:
   mowerPanicSounds: []
   oldmanPanicSounds: []
   hottiePanicSounds: []
+  scaredByAxeman: 0
 --- !u!50 &8596086
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -439,8 +441,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1594,8 +1596,9 @@ Transform:
   - {fileID: 1227799167}
   - {fileID: 966299224}
   - {fileID: 603157576}
+  - {fileID: 1139815403}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &240570125
 GameObject:
   m_ObjectHideFlags: 0
@@ -2357,7 +2360,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 411664, guid: 1d01082685195354687da97c5698f3f6, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11411664, guid: 1d01082685195354687da97c5698f3f6, type: 2}
       propertyPath: ObjectToFollow
@@ -2585,6 +2588,7 @@ MonoBehaviour:
   mowerPanicSounds: []
   oldmanPanicSounds: []
   hottiePanicSounds: []
+  scaredByAxeman: 0
 --- !u!50 &373030589
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -2992,7 +2996,7 @@ Transform:
   - {fileID: 211890301}
   - {fileID: 1138106520}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!82 &416729465
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3119,6 +3123,7 @@ MonoBehaviour:
   DisabledForMinigame: []
   AxeMan: {fileID: 0}
   ActualAxeMan: {fileID: 0}
+  NPC: {fileID: 0}
   BodyParts:
     Trunk: {fileID: 656902639}
     Shadow: {fileID: 57346550}
@@ -4128,6 +4133,7 @@ MonoBehaviour:
   mowerPanicSounds: []
   oldmanPanicSounds: []
   hottiePanicSounds: []
+  scaredByAxeman: 0
 --- !u!50 &553533871
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -4814,6 +4820,7 @@ MonoBehaviour:
   DisabledForMinigame: []
   AxeMan: {fileID: 0}
   ActualAxeMan: {fileID: 0}
+  NPC: {fileID: 0}
   BodyParts:
     Trunk: {fileID: 1495160071}
     Shadow: {fileID: 1047073260}
@@ -5293,8 +5300,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -5443,8 +5450,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -6595,15 +6602,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 232489938}
     m_Modifications:
     - target: {fileID: 422072, guid: 813ee5bb5d547784da2f49b94f9851b8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.64999998
+      value: -2.85599995
       objectReference: {fileID: 0}
     - target: {fileID: 422072, guid: 813ee5bb5d547784da2f49b94f9851b8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .340000004
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 422072, guid: 813ee5bb5d547784da2f49b94f9851b8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -6627,7 +6634,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 422072, guid: 813ee5bb5d547784da2f49b94f9851b8, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 813ee5bb5d547784da2f49b94f9851b8, type: 2}
@@ -6987,6 +6994,7 @@ MonoBehaviour:
   mowerPanicSounds: []
   oldmanPanicSounds: []
   hottiePanicSounds: []
+  scaredByAxeman: 0
 --- !u!50 &896119673
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -8012,7 +8020,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1 &1076117415
 GameObject:
   m_ObjectHideFlags: 0
@@ -8391,7 +8399,7 @@ Transform:
   m_Children:
   - {fileID: 708742379}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &1138106519
 GameObject:
   m_ObjectHideFlags: 0
@@ -8658,11 +8666,11 @@ Transform:
   m_PrefabInternal: {fileID: 788669639}
   m_GameObject: {fileID: 1139815395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.64999998, y: .340000004, z: 0}
+  m_LocalPosition: {x: -2.85599995, y: 1.5, z: 0}
   m_LocalScale: {x: .300000012, y: .300000012, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 232489938}
+  m_RootOrder: 16
 --- !u!1001 &1143868030
 Prefab:
   m_ObjectHideFlags: 0
@@ -11430,7 +11438,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!114 &1251184666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12678,7 +12686,7 @@ Transform:
   - {fileID: 1155315038}
   - {fileID: 401119481}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1001 &1414256768
 Prefab:
   m_ObjectHideFlags: 0
@@ -16624,7 +16632,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!1001 &1824852014
 Prefab:
   m_ObjectHideFlags: 0
@@ -18084,7 +18092,7 @@ Transform:
   - {fileID: 37356470}
   - {fileID: 645839206}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!225 &2081835872
 CanvasGroup:
   m_ObjectHideFlags: 0

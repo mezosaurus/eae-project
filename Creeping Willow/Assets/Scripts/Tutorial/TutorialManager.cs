@@ -50,6 +50,11 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Phase == 18 && GlobalGameStateManager.SoulConsumedTimer <= 0)
+        {
+            MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Win, LevelFinishedReason.NumNPCsEaten));
+            Debug.Log("Sent");
+        }
     }
 
     private void HandlePossessorSpawned(Message message)
@@ -128,8 +133,8 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    /*void OnGUI()
+    void OnGUI()
     {
         GUI.Label(new Rect(20, 20, 500, 500), "Phase: " + Phase);
-    }*/
+    }
 }

@@ -180,6 +180,10 @@ public class TreeStateEatingMinigameWrangleTutorial : TreeState
 
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[percentage];
 
+        float cameraSize = Mathf.Lerp(1.8f, 1.2f, progress);
+        Camera.main.orthographicSize = cameraSize;
+        Camera.main.GetComponent<CameraScript>().TargetSize = cameraSize;
+
         // To-do
         if (timePercentage >= 1f)
         {
