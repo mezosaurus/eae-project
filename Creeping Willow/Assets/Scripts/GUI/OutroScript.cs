@@ -11,6 +11,7 @@ public class OutroScript : MonoBehaviour
 	private Canvas pauseCanvas;
 	private bool isPaused;
 	private bool axisBusy;
+	private LevelLoader levelLoader;
 
 	void Start()
 	{
@@ -24,6 +25,8 @@ public class OutroScript : MonoBehaviour
         //outroMessage = new Text();
 
 		RegisterListeners();
+
+		levelLoader = GameObject.FindObjectOfType<LevelLoader>();
 	}
 
 	protected void RegisterListeners()
@@ -44,7 +47,7 @@ public class OutroScript : MonoBehaviour
 
 		LevelFinishedMessage mess = message as LevelFinishedMessage;
 
-		if( mess.Type == LevelFinishedType.Loss )
+		if( mess.Type == LevelFinishedType.Loss || levelLoader.levelName == "Tutorial_Level" )
 			ReadyButtons();
 
 		/*switch( mess.Type )
@@ -101,7 +104,6 @@ public class OutroScript : MonoBehaviour
 		if( mess.adding == false )
 		{
 			ReadyButtons();
-			pauseCanvas.enabled = true;
 		}
 	}
 
@@ -167,6 +169,7 @@ public class OutroScript : MonoBehaviour
 
 	private void ReadyButtons()
 	{
+		pauseCanvas.enabled = true;
 		EnableAllButtons();
 		EventSystem.current.SetSelectedGameObject( pauseButtons[ 0 ].gameObject );
 	}
