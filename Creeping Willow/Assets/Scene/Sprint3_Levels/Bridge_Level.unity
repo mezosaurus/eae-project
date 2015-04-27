@@ -9432,14 +9432,14 @@ RectTransform:
   m_GameObject: {fileID: 259351078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .600000024, y: .600000024, z: 1}
+  m_LocalScale: {x: 1.29999995, y: 2.29999995, z: 1}
   m_Children: []
   m_Father: {fileID: 1551492824}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 1919.99988, y: 1080}
+  m_SizeDelta: {x: 1332, y: 378}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &259351080
 MonoBehaviour:
@@ -9455,7 +9455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 2a77f529de579d144ab1b2321da1e1f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 746d89ded298b0141b7056ad6548364b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11820,7 +11820,7 @@ RectTransform:
   m_Children:
   - {fileID: 2058403172}
   m_Father: {fileID: 735056140}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 160, y: -340}
@@ -14022,7 +14022,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1733465509}
+  - {fileID: 803547608}
   - {fileID: 1472721488}
   - {fileID: 1789748780}
   - {fileID: 348733515}
@@ -18705,7 +18705,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 8
 --- !u!1 &484133779
 GameObject:
   m_ObjectHideFlags: 0
@@ -18752,7 +18752,7 @@ Transform:
   m_PrefabInternal: {fileID: 1158096506}
   m_GameObject: {fileID: 484133779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.1775799, y: 8.12660885, z: -.03125}
+  m_LocalPosition: {x: -15.21, y: 8.12699986, z: -.0309999995}
   m_LocalScale: {x: .25, y: .25, z: .25}
   m_Children: []
   m_Father: {fileID: 437557393}
@@ -28357,7 +28357,7 @@ GameObject:
   - 222: {fileID: 715357815}
   - 114: {fileID: 715357814}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Controller Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28375,7 +28375,7 @@ RectTransform:
   m_LocalScale: {x: .600000024, y: .600000024, z: 1}
   m_Children: []
   m_Father: {fileID: 735056140}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: -127.769997}
@@ -29276,6 +29276,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1733465509}
   - {fileID: 715357813}
   - {fileID: 961401462}
   - {fileID: 327643731}
@@ -31551,6 +31552,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1361101742}
   m_RootOrder: 2
+--- !u!1 &803547607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 147078, guid: d074ac821972e0b4792a7eb9594f9bd6, type: 2}
+  m_PrefabInternal: {fileID: 1214630472}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 803547608}
+  - 222: {fileID: 803547610}
+  - 114: {fileID: 803547609}
+  m_Layer: 5
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &803547608
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 22447078, guid: d074ac821972e0b4792a7eb9594f9bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1214630472}
+  m_GameObject: {fileID: 803547607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.29999995, y: 2.29999995, z: 0}
+  m_Children: []
+  m_Father: {fileID: 386986440}
+  m_RootOrder: 0
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 1332, y: 378}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &803547609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11447078, guid: d074ac821972e0b4792a7eb9594f9bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1214630472}
+  m_GameObject: {fileID: 803547607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 746d89ded298b0141b7056ad6548364b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &803547610
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 22247078, guid: d074ac821972e0b4792a7eb9594f9bd6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1214630472}
+  m_GameObject: {fileID: 803547607}
 --- !u!1001 &806326893
 Prefab:
   m_ObjectHideFlags: 0
@@ -37923,7 +37988,7 @@ RectTransform:
   m_Children:
   - {fileID: 146801616}
   m_Father: {fileID: 735056140}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -160, y: -340}
@@ -38059,7 +38124,7 @@ Transform:
   m_PrefabInternal: {fileID: 2144929356}
   m_GameObject: {fileID: 962036632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.39758062, y: .776609123, z: -.03125}
+  m_LocalPosition: {x: -2.41300011, y: .791999996, z: -.0309999995}
   m_LocalScale: {x: .25, y: .25, z: .25}
   m_Children: []
   m_Father: {fileID: 437557393}
@@ -38864,7 +38929,7 @@ Transform:
   - {fileID: 386986440}
   - {fileID: 735056140}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!225 &1001406617
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -39981,6 +40046,7 @@ MonoBehaviour:
   DisabledForMinigame: []
   AxeMan: {fileID: 0}
   ActualAxeMan: {fileID: 0}
+  NPC: {fileID: 0}
   BodyParts:
     Trunk: {fileID: 786438627}
     Shadow: {fileID: 218045546}
@@ -44909,15 +44975,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -15.1775799
+      value: -15.21
       objectReference: {fileID: 0}
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 8.12660885
+      value: 8.12699986
       objectReference: {fileID: 0}
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.03125
+      value: -.0309999995
       objectReference: {fileID: 0}
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalRotation.x
@@ -47826,6 +47892,7 @@ MonoBehaviour:
   DisabledForMinigame: []
   AxeMan: {fileID: 0}
   ActualAxeMan: {fileID: 0}
+  NPC: {fileID: 0}
   BodyParts:
     Trunk: {fileID: 1005517126}
     Shadow: {fileID: 264601785}
@@ -53270,6 +53337,7 @@ MonoBehaviour:
   DisabledForMinigame: []
   AxeMan: {fileID: 0}
   ActualAxeMan: {fileID: 0}
+  NPC: {fileID: 0}
   BodyParts:
     Trunk: {fileID: 2105480792}
     Shadow: {fileID: 1496732423}
@@ -56802,7 +56870,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1001 &1415346795
 Prefab:
   m_ObjectHideFlags: 0
@@ -70419,14 +70487,14 @@ RectTransform:
   m_GameObject: {fileID: 1733465508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .600000024, y: .600000024, z: 0}
+  m_LocalScale: {x: 1.30000007, y: 2.29999971, z: 0}
   m_Children: []
-  m_Father: {fileID: 386986440}
+  m_Father: {fileID: 735056140}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 1919.99988, y: 1080}
+  m_AnchoredPosition: {x: 3.05175781e-05, y: -99.9999847}
+  m_SizeDelta: {x: 1332, y: 378}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1733465510
 MonoBehaviour:
@@ -70442,7 +70510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 2a77f529de579d144ab1b2321da1e1f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 746d89ded298b0141b7056ad6548364b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -71764,7 +71832,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1 &1768639624
 GameObject:
   m_ObjectHideFlags: 0
@@ -80321,7 +80389,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!1001 &1999408996
 Prefab:
   m_ObjectHideFlags: 0
@@ -80530,7 +80598,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 411664, guid: 1d01082685195354687da97c5698f3f6, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11411664, guid: 1d01082685195354687da97c5698f3f6, type: 2}
       propertyPath: ObjectToFollow
@@ -86639,6 +86707,7 @@ MonoBehaviour:
   DisabledForMinigame: []
   AxeMan: {fileID: 0}
   ActualAxeMan: {fileID: 0}
+  NPC: {fileID: 0}
   BodyParts:
     Trunk: {fileID: 692742213}
     Shadow: {fileID: 245207341}
@@ -87154,15 +87223,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.39758062
+      value: -2.41300011
       objectReference: {fileID: 0}
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .776609123
+      value: .791999996
       objectReference: {fileID: 0}
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.03125
+      value: -.0309999995
       objectReference: {fileID: 0}
     - target: {fileID: 486598, guid: 467c1d319b6374770866dd2ce3138d7a, type: 2}
       propertyPath: m_LocalRotation.x
