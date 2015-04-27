@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Phase == 18 && GlobalGameStateManager.SoulConsumedTimer <= 0 && !sent
+        if(Phase == 18 && GlobalGameStateManager.SoulConsumedTimer <= 0 && !sent)
         {
             sent = true;
             MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Win, LevelFinishedReason.NumNPCsEaten));
