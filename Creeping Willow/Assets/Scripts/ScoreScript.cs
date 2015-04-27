@@ -173,8 +173,8 @@ public class ScoreScript : MonoBehaviour {
 	
 	
 	// saved scores
-	int[] highscores = new int[10];
-	string[] names = new string[10];
+	int[] highscores = new int[5];
+	string[] names = new string[5];
 	string initials = "";
 	bool win = false;
 	bool endLevel = false;
@@ -318,7 +318,7 @@ public class ScoreScript : MonoBehaviour {
 		currentBountyTextHeight = Screen.height-bountyLabelSizeY*3/4;
 		currentBountyImageHeight = Screen.height+bountyRectSizeY;
 		
-		popupIncrement = 0;
+		popupIncrement = popupIncrementMax;
 		popupIncrement2 = 0;
 		
 		sideL = Screen.width / 3;
@@ -1082,7 +1082,7 @@ public class ScoreScript : MonoBehaviour {
 		bool newScore = false;
 		
 		// loop through scores
-		for( int i = 0; i < 10; i++ )
+		for( int i = 0; i < highscores.Length; i++ )
 		{
 			if( score > highscores[i] )
 			{
@@ -1096,7 +1096,7 @@ public class ScoreScript : MonoBehaviour {
 		if( newScore )
 		{
 			// move down lower scores
-			for( int i = 9; i > spot; i-- )
+			for( int i = highscores.Length-1; i > spot; i-- )
 			{
 				highscores[i] = highscores[i-1];
 				names[i] = names[i-1];
@@ -1785,7 +1785,7 @@ public class ScoreScript : MonoBehaviour {
 
 		//if( mess.Type == (int)LevelFinishedType.Win )
 		//{
-		if( _score + displayScore > highscores[9] ) // last score not added, needs displayScore
+		if( _score + displayScore > highscores[highscores.Length-1] ) // last score not added, needs displayScore
 		{
 			win = true;
 			MessageCenter.Instance.Broadcast(new ScoreAddingMessage(true));

@@ -94,7 +94,7 @@ public static class GlobalGameStateManager
 
 	public static void SavePlayerScores(int[] highscores, string[] names)
 	{
-		for( int i = 0; i < 10; i++ )
+		for( int i = 0; i < 5; i++ )
 		{
 			PlayerPrefs.SetInt(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_score_" + i, highscores[i]);
 			PlayerPrefs.SetString(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_name_" + i, names[i]);
@@ -103,9 +103,9 @@ public static class GlobalGameStateManager
 
 	public static int[] LoadScores()
 	{
-		int[] scores = new int[10];
+		int[] scores = new int[5];
 
-		for( int i = 0; i < 10; i++ )
+		for( int i = 0; i < 5; i++ )
 		{
 			scores[i] = PlayerPrefs.GetInt(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_score_" + i, 0);
 		}
@@ -115,9 +115,9 @@ public static class GlobalGameStateManager
 
 	public static string[] LoadNames()
 	{
-		string[] names = new string[10];
+		string[] names = new string[5];
 
-		for( int i = 0; i < 10; i++ )
+		for( int i = 0; i < 5; i++ )
 		{
 			names[i] = PlayerPrefs.GetString(Application.loadedLevelName + "_" + LevelLoader.instance.modeName + "_name_" + i, "");
 		}

@@ -504,7 +504,7 @@ public class InteractiveMenuController : MonoBehaviour
 		int i;
 		for( i = 0; i < 5; i++ )
 		{
-			string name = names[ i ];
+			string name = names[ i ].ToLower();
 			int score = scores[ i ];
 			if( name != null && score > 0 )
 				descriptionScores.text += name + "  " + score + "\n";
