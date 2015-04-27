@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &10160817
 GameObject:
@@ -701,8 +702,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3588,7 +3589,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -21.7000008
+      value: -42.5
       objectReference: {fileID: 0}
     - target: {fileID: 22479788, guid: 19bfabc6847725f44a63a01c78d9ef1f, type: 2}
       propertyPath: m_SizeDelta.x
@@ -12632,7 +12633,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 623.099976, y: -21.7000008}
+  m_AnchoredPosition: {x: 623.099976, y: -42.5}
   m_SizeDelta: {x: 50, y: 25}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1438685031
