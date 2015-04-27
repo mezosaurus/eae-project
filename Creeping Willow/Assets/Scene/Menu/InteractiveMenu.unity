@@ -2885,6 +2885,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: .5
       objectReference: {fileID: 0}
+    - target: {fileID: 11487562, guid: b5eda1bf666d88846aa2fbd1226ac76d, type: 2}
+      propertyPath: m_Text
+      value: local high scores
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5eda1bf666d88846aa2fbd1226ac76d, type: 2}
   m_RootGameObject: {fileID: 1067864538}
@@ -8844,7 +8848,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: high scores
+  m_Text: local high scores
 --- !u!222 &1055705373
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14471,6 +14475,7 @@ MonoBehaviour:
   descriptionImage: {fileID: 1494151576}
   descriptionText: {fileID: 67456062}
   descriptionScores: {fileID: 1905340815}
+  descriptionScoresLabel: {fileID: 1055705372}
   gateSound: {fileID: 8300000, guid: 0c804457f114dcd438b743abbe33164b, type: 3}
   levelSound: {fileID: 8300000, guid: 671c734266f4f7a4fa92e5751a506f93, type: 3}
   menuMusic: {fileID: 8300000, guid: 3d91e6b9f9352904cb18b61414642e1d, type: 3}

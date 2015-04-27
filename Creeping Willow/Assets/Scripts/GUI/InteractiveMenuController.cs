@@ -25,6 +25,7 @@ public class InteractiveMenuController : MonoBehaviour
 	public Image descriptionImage;
 	public Text descriptionText;
 	public Text descriptionScores;
+	public Text descriptionScoresLabel;
 
 	private bool axisBusy;
 	private AudioSource clickAudio;
@@ -230,26 +231,31 @@ public class InteractiveMenuController : MonoBehaviour
 			case "Level0Button":
 				descriptionText.text = "learn the art of the kill\n\nget your roots dirty";
 				descriptionScores.text = "";
+				descriptionScoresLabel.enabled = false;
 				break;
 
 			case "Level1Button":
 				descriptionText.text = "on a beautiful day they come to play\nbut you will take their souls away";
 				descriptionScores.text = "";
+				descriptionScoresLabel.enabled = false;
 				break;
 
 			case "Level2Button":
 				descriptionText.text = "there are days at the lake that can be calming and cool\n\nthis is not one of those days";
 				descriptionScores.text = "";
+				descriptionScoresLabel.enabled = false;
 				break;
 
 			case "Level3Button":
 				descriptionText.text = "they stay safe on the other side\nbut fear will drive them into your arms";
 				descriptionScores.text = "";
+				descriptionScoresLabel.enabled = false;
 				break;
 
 			case "Level4Button":
 				descriptionText.text = "those that enter the maze may never escape\n\nif they do they will not be the same";
 				descriptionScores.text = "";
+				descriptionScoresLabel.enabled = false;
 				break;
 
 			case "ModeSurvivalButton":
@@ -275,6 +281,7 @@ public class InteractiveMenuController : MonoBehaviour
 					
 				default:
 					descriptionScores.text = "";
+					descriptionScoresLabel.enabled = false;
 					break;
 				}
 				break;
@@ -302,6 +309,7 @@ public class InteractiveMenuController : MonoBehaviour
 
 				default:
 					descriptionScores.text = "";
+					descriptionScoresLabel.enabled = false;
 					break;
 				}
 				break;
@@ -329,6 +337,7 @@ public class InteractiveMenuController : MonoBehaviour
 					
 				default:
 					descriptionScores.text = "";
+					descriptionScoresLabel.enabled = false;
 					break;
 				}
 				break;
@@ -341,6 +350,7 @@ public class InteractiveMenuController : MonoBehaviour
 				descriptionImage.enabled = false;
 				descriptionText.text = "";
 				descriptionScores.text = "";
+				descriptionScoresLabel.enabled = false;
 				break;
 			}
 		}
@@ -489,6 +499,7 @@ public class InteractiveMenuController : MonoBehaviour
 	private void DisplayDescriptionScores( string[] names, int[] scores )
 	{
 		descriptionScores.text = "";
+		descriptionScoresLabel.enabled = true;
 
 		int i;
 		for( i = 0; i < 5; i++ )
