@@ -84,6 +84,11 @@ public class TreeMonitor : MonoBehaviour
         }*/
     }
 
+    private void OnDestroy()
+    {
+        MessageCenter.Instance.UnregisterListener(MessageType.PlayerKilled, HandleTreeDeath);
+    }
+
     void OnGUI()
     {
         GUI.skin = Skin;

@@ -447,7 +447,6 @@ public class AxeManKillActiveTree : MonoBehaviour
 				{
 					levelEndedMessageSent = true;
                 	MessageCenter.Instance.Broadcast(new LevelFinishedMessage(LevelFinishedType.Loss, LevelFinishedReason.PlayerDied));
-                    Debug.Log("Sent loss message");
 				}
             }
         }

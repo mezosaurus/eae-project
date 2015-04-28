@@ -215,7 +215,10 @@ public class CameraScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.LogError("Camera destroyed (this should only happen at the start and end of the game)");
+        MessageCenter.Instance.UnregisterListener(MessageType.CameraZoom, HandleCameraZoomMessage);
+        MessageCenter.Instance.UnregisterListener(MessageType.CameraChangedObjectFollowed, HandleChangeObjectFollowed);
+        MessageCenter.Instance.UnregisterListener(MessageType.CameraZoomAndFocus, HandleZoomAndFocus);
+        MessageCenter.Instance.UnregisterListener(MessageType.CameraZoomAndFocus2, HandleZoomAndFocus2);
     }
 
     private void OnGUI()
