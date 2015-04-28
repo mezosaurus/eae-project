@@ -243,11 +243,12 @@ public class EnemyAIController : AIController
 
 	protected override void panic()
 	{
-		if (!angry)
+		GameObject curPlayer = getPlayer ();
+		if (!angry && curPlayer.GetComponent<PossessableTree>().AxeMan != null)
 		{
 			base.panic ();
 			panicked = false;
-			lastPlayer = getPlayer();
+			lastPlayer = curPlayer;
 			
 			angry = true;
 			MessageCenter.Instance.Broadcast(new AxeManAngerChangedMessage(true));
