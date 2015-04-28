@@ -41,6 +41,11 @@ public class OutroScript : MonoBehaviour
 		MessageCenter.Instance.UnregisterListener( MessageType.ScoreAdding, HandleScoreAddingMessage );
 	}
 
+	void OnDestroy()
+	{
+		UnregisterListeners ();
+	}
+
 	protected void HandleLevelFinishedMessage( Message message )
 	{
 		LevelEnded();
