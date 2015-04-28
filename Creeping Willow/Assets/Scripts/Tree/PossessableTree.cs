@@ -187,7 +187,7 @@ public class PossessableTree : Possessable
             // If we are already in an axe man minigame, just destroy the new axe man
             if(Active && (AxeMan != null) || (ActualAxeMan != null))
             {
-                Destroy(message.NPC);
+                message.NPC.SetActive(false);
 
                 return;
             }

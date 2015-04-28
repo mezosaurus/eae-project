@@ -38,6 +38,10 @@ public class CameraScript : MonoBehaviour
         locked = true;
 
         LoadSoulConsumedImages();
+
+        GlobalGameStateManager.AxeManMinigameModifier1 = 1f;
+        GlobalGameStateManager.AxeManMinigameModifier2 = 1f;
+        Debug.Log("Setting axe man minigame modifier");
     }
 
     private void LoadSoulConsumedImages()

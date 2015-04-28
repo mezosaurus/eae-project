@@ -24,6 +24,7 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
     private bool grabbedTwo;
     private float timeElapsed;
     private int percentage;
+    private float maxTime;
 
 
     public override void Enter(object data)
@@ -79,6 +80,7 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[0];
 
         timeElapsed = 0f;
+        maxTime = MaxTime * GlobalGameStateManager.AxeManMinigameModifier1;
 
         initialized = true;
     }
@@ -158,7 +160,7 @@ public class TreeStateAxeManMinigameWrangleAxe : TreeState
         // Update timer
         timeElapsed += Time.deltaTime;
 
-        float timePercentage = Mathf.Clamp(timeElapsed / MaxTime, 0f, 1f);
+        float timePercentage = Mathf.Clamp(timeElapsed / maxTime, 0f, 1f);
         percentage = Mathf.RoundToInt(timePercentage * 100f);
 
         Tree.BodyParts.MinigameCircle.GetComponent<SpriteRenderer>().sprite = Tree.Sprites.EatingMinigame.Circle[percentage];
