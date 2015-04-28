@@ -268,10 +268,10 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Tree-Grabbed-Hottie
-  m_Speed: 1
+  m_Speed: .600000024
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: 9cdd18b3f2d2a7a4e83ffa9044380be1, type: 2}
+  - {fileID: 7400000, guid: c7360acd95e1ad14cb3db49ea19a63b5, type: 2}
   m_ParentStateMachine: {fileID: 110734024}
   m_Position: {x: 420, y: 48, z: 0}
   m_IKOnFeet: 0
@@ -327,9 +327,6 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110214478}
-      second: []
-    data:
       first: {fileID: 0}
       second:
       - {fileID: 110199958}
@@ -356,6 +353,9 @@ StateMachine:
       second: []
     data:
       first: {fileID: 110251878}
+      second: []
+    data:
+      first: {fileID: 110214478}
       second: []
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
