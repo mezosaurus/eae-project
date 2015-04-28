@@ -41,6 +41,7 @@ public class AxeManKillActiveTree : MonoBehaviour
     float rotation;
 
     // Phase 9001 variables
+    float oldVolume;
     int chopIndex, numChops;
 
 
@@ -359,6 +360,9 @@ public class AxeManKillActiveTree : MonoBehaviour
                 phase = 9003;
                 audio.clip = Sounds.Taunt[Random.Range(0, Sounds.Taunt.Length)];
 
+                audio.volume = 0.5f;
+                audio.rolloffMode = AudioRolloffMode.Linear;
+
                 audio.Play();
             //}
         }
@@ -372,6 +376,9 @@ public class AxeManKillActiveTree : MonoBehaviour
             phase = 9004;
             //spriteRenderer.sprite = Sprites[1];
             spriteRenderer.sprite = Sprites.Swing[0];
+
+            audio.volume = 1f;
+            audio.rolloffMode = AudioRolloffMode.Logarithmic;
         }
     }
 
