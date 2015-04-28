@@ -71,6 +71,8 @@ public class NotorietyMeter : MonoBehaviour
 		top = 10;
 		left = 170;
 
+		notoriety = 0;
+
 		currentTreeCount = treeCount = CountTrees ();
 	}
 
@@ -97,7 +99,7 @@ public class NotorietyMeter : MonoBehaviour
 	{
 		NPCPanickedOffMapMessage mess = message as NPCPanickedOffMapMessage;
 
-		notoriety += 100.0f;
+		notoriety += 200.0f;
 		
 		if( notoriety > notorietyMax )
 		{
