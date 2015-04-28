@@ -146,7 +146,8 @@ public class AxeManKillActiveTree : MonoBehaviour
         {
             MessageCenter.Instance.Broadcast(new AxeManKilledMessage());
             //Destroy(actualAxeMan);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
         }
     }
 

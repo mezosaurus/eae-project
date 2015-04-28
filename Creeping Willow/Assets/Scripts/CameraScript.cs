@@ -41,7 +41,6 @@ public class CameraScript : MonoBehaviour
 
         GlobalGameStateManager.AxeManMinigameModifier1 = 1f;
         GlobalGameStateManager.AxeManMinigameModifier2 = 1f;
-        Debug.Log("Setting axe man minigame modifier");
     }
 
     private void LoadSoulConsumedImages()
@@ -112,8 +111,8 @@ public class CameraScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-		// Check for show mouse if it moves
+    {        
+        // Check for show mouse if it moves
 		if( Input.GetAxis( "Mouse X" ) != 0 || Input.GetAxis( "Mouse Y" ) != 0 )
 		{
 			Screen.showCursor = true;

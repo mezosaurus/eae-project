@@ -165,6 +165,7 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
             Tree.DisabledForMinigame = new System.Collections.Generic.List<GameObject>();
 
             GameObject.Destroy(Tree.ActualAxeMan);
+            GameObject.Destroy(Tree.AxeMan);
             Tree.AxeMan = null;
 
             Tree.ChangeState("Active");
