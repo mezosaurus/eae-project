@@ -211,4 +211,9 @@ public class OutroScript : MonoBehaviour
 		foreach( Button button in pauseButtons ) 
 			button.interactable = false;
 	}
+
+    private void OnDestroy()
+    {
+        UnregisterListeners();
+    }
 }

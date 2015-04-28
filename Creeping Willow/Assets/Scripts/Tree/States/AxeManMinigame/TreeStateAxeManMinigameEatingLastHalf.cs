@@ -154,8 +154,8 @@ public class TreeStateAxeManMinigameEatingLastHalf : TreeState
             Tree.audio.Play();
 
             // Update axe man minigame difficulty
-            GlobalGameStateManager.AxeManMinigameModifier1 -= 0.025f;
-            GlobalGameStateManager.AxeManMinigameModifier2 -= 0.01f;
+            GlobalGameStateManager.AxeManMinigameModifier1 -= 0.03f;
+            GlobalGameStateManager.AxeManMinigameModifier2 -= 0.015f;
 
             foreach(GameObject go in Tree.DisabledForMinigame)
             {
