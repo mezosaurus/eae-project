@@ -50,6 +50,22 @@ public class TreeStateInactiveTutorial : TreeState
         else aButton.SetActive(false);
     }
 
+    public override void UpdateSorting()
+    {
+        int i = Tree.BodyParts.Trunk.GetComponent<SpriteRenderer>().sortingOrder;
+
+        //Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.LeftArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.RightArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.Legs.GetComponent<SpriteRenderer>().sortingOrder = i - 1;
+
+        if (Tree.Dead)
+        {
+            /*if(Tree.AxeMan != null)*/
+            Tree.AxeMan.GetComponent<SpriteRenderer>().sortingOrder = i + 10;
+        }
+    }
+
     public override void Leave()
     {
         SetAlpha(Tree.transform, 1f);

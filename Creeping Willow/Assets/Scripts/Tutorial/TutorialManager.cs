@@ -137,8 +137,8 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    /*void OnGUI()
+    void OnGUI()
     {
         GUI.Label(new Rect(20, 20, 500, 500), "Phase: " + Phase);
-    }*/
+    }
 }

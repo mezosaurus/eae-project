@@ -110,6 +110,9 @@ public class TreeStateEatingTutorial : TreeState
         //Tree.BodyParts.FlameEyes.particleSystem.renderer.sortingOrder = i + 1;
         Tree.BodyParts.Eyes.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.Face.GetComponent<SpriteRenderer>().sortingOrder = i + 4;
+        Tree.BodyParts.LeftUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
+        Tree.BodyParts.LeftLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
+        Tree.BodyParts.LeftLowerBackgroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
         //Tree.BodyParts.LeftArm.GetComponent<SpriteRenderer>().sortingOrder = i + 1;
         Tree.BodyParts.RightUpperArm.GetComponent<SpriteRenderer>().sortingOrder = i + 2;
         Tree.BodyParts.RightLowerForegroundArm.GetComponent<SpriteRenderer>().sortingOrder = i + 3;
