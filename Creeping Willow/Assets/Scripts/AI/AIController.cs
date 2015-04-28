@@ -1204,7 +1204,7 @@ public class AIController : GameBehavior
 			eaten = oldmanEaten;
 		}
 		
-		audio.PlayOneShot (eaten, 1.0f);
+		//audio.PlayOneShot (eaten, 1.0f);
 
 	}
 
