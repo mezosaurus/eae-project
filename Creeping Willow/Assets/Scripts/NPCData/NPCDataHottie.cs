@@ -8,8 +8,8 @@ public class NPCDataHottie : NPCData
 
         LeftUpperArmEndAngle = 0f;
         LeftLowerArmEndAngle = 0f;
-        RightUpperArmEndAngle = 367.01577f;
-        RightLowerArmEndAngle = 293.9036f;
+        RightUpperArmEndAngle = 378.9408f;
+        RightLowerArmEndAngle = 286.4655f;
 
         ArmEatTime = 0.75f;
 
